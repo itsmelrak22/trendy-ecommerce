@@ -6,14 +6,8 @@
         include '../models/' . $class . '.php';
     });
 
-    $product = new Product;
-    $products = $product->getProducts();
-
-    $category = new Category;
-    $categories = $category->all();
-
-    
-    // print_r($categories);
+    $user = new AdminUser;
+    $users = $user->all();
 ?>
 
 <body id="page-top">
@@ -78,53 +72,47 @@
                         <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Product List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">User List</h6>
                             
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="productTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Category Name </th>
-                                            <th>Product Name </th>
-                                            <th>Description</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Date Created</th>
+                                            <th>First Name </th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Category Name </th>
-                                            <th>Product Name </th>
-                                            <th>Description</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Date Created</th>
+                                            <th>First Name </th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php foreach ($products as $key => $product) { ?>
+                                        <?php foreach ($users as $key => $user) { ?>
                                             <tr>
-                                                <td> <?= $product['category_name'] ?> </td>
-                                                <td> <?= $product['name'] ?> </td>
-                                                <td> <?= $product['description'] ?> </td>
-                                                <td> <?= $product['price'] ?> </td>
-                                                <td> <?= $product['stock_qty'] ?> </td>
-                                                <td> <?= $product['created_at'] ?> </td>
+                                                <td> <?= $user['first_name'] ?> </td>
+                                                <td> <?= $user['last_name'] ?> </td>
+                                                <td> <?= $user['username'] ?> </td>
+                                                <td> <?= $user['email'] ?> </td>
                                                 <td>
-                                                    <form action="product-delete.php" method="POST">
-                                                        <a href="product-edit.php?id=<?=$product['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <form action="user-delete.php" method="POST">
+                                                        <a href="user-edit.php?id=<?=$user['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
-                                                        <a href="product-view.php?id=<?=$product['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
+                                                        <a href="user-view.php?id=<?=$user['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
                                                             <i class="fas fa-arrow-right"></i>
                                                         </a>
-                                                        <input type="hidden" name="id" value="<?=$product['id']?>">
-                                                        <button type="submit" name="delete-product" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
+                                                        <input type="hidden" name="id" value="<?=$user['id']?>">
+                                                        <button type="submit" name="delete-user" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
@@ -185,7 +173,7 @@
     </div>
 
     <!-- MODALS -->
-    <form method="POST" action="product-insert.php">
+    <form method="POST" action="user-insert.php">
         <div class="modal" tabindex="-1" id="addModal">
             <div class="modal-dialog modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -198,33 +186,29 @@
                 <div class="modal-body">
                     <div class="">
                         <div class="input-group">
-                            <select name="category_id" class="custom-select" for="category">
-                                <?php foreach($categories as $key => $category) { ?>
-                                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
-                                <?php } ?>
-                            </select>
+                            <input type="text" name="first_name" id="first_name" class="form-control bg-light border-0 small" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon2" required>
                         </div>
                         <br>
                         <div class="input-group">
-                            <input type="text" name="product_name" id="product_name" class="form-control bg-light border-0 small" placeholder="Product Name" aria-label="Product Name" aria-describedby="basic-addon2" required>
+                            <input type="text" name="last_name" id="last_name" class="form-control bg-light border-0 small" placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon2" required>
                         </div>
                         <br>
                         <div class="input-group">
-                            <input type="text" name="description" id="description" class="form-control bg-light border-0 small" placeholder="Description" aria-label="Description" aria-describedby="basic-addon2" required>
+                            <input type="text" name="username" id="username" class="form-control bg-light border-0 small" placeholder="Username" aria-label="Username" aria-describedby="basic-addon2" required>
                         </div>
                         <br>
                         <div class="input-group">
-                            <input type="number" name="price" id="price" class="form-control bg-light border-0 small" placeholder="Price" aria-label="Price" aria-describedby="basic-addon2" required>
+                            <input type="text" name="email" id="email" class="form-control bg-light border-0 small" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2" required>
                         </div>
                         <br>
                         <div class="input-group">
-                            <input type="number" name="quantity" id="quantity" class="form-control bg-light border-0 small" placeholder="Quantity" aria-label="Quantity" aria-describedby="basic-addon2" required>
+                            <input type="password" name="password" id="password" class="form-control bg-light border-0 small" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" required>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" name="add-product" value="Submit">
+                    <input type="submit" class="btn btn-primary" name="add-user" value="Submit">
                 </div>
                 </div>
             </div>
@@ -243,8 +227,4 @@
     $('#addModal').on('shown.bs.modal', function () {
         $('#addModal').trigger('focus')
     })
-
-    $(document).ready(function() {
-        $('#productTable').DataTable();
-    });
 </script>

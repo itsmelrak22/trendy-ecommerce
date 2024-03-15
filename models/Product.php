@@ -21,6 +21,19 @@ Class Product extends Model {
         return $products;
     }
 
+    public static function getProducts(){
+        $instance = new self;
+        $categories = $instance->setQuery("
+            SELECT P.*, C.id, C.name AS category_name 
+            FROM products AS P
+            LEFT JOIN categories AS C ON P.category_id = C.id
+            ORDER BY P.created_at DESC
+        ")->getAll();
+    
+        return $categories;
+    }
+    
+
     // public function save($param){
     //     try {
     //         // $param = [

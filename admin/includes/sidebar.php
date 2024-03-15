@@ -48,6 +48,13 @@ $location = basename($url);
     Product Master
 </div>
 
+<!-- Nav Item - Admin Users -->
+<li class="nav-item <?= $location ==  "user-list.php" ? "active" : ""?>">
+    <a class="nav-link" href="user-list.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Users</span></a>
+</li>
+
 <!-- Nav Item - Product List Menu -->
 <li class="nav-item <?= $location ==  "product-list.php" ? "active" : ""?>">
     <a class="nav-link" href="product-list.php">
