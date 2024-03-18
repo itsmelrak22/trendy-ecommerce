@@ -21,3 +21,7 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+	<script src="js/colorPick.js"></script>
+    <script src="js/coloris.min.js"></script>

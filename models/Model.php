@@ -145,9 +145,18 @@ class Model
     }
 
     public function delete($id){
-        $today = new \DateTime;
-        $today =  $today->format('Y-m-d H:i:s');
-        $data = $this->setQuery("UPDATE $this->table SET `deleted_at` = '$today' WHERE id = $id");
+        try {
+            //code...
+            $today = new \DateTime;
+            $today =  $today->format('Y-m-d H:i:s');
+            $data = $this->setQuery("UPDATE $this->table SET `deleted_at` = '$today' WHERE id = $id");
+        } catch (\Exception $e) {
+            //throw $th;
+            echo $e->getMessage();
+            exit();
+        }
+
+        print_r($data);
     }
 
 
@@ -215,6 +224,7 @@ class Model
             // SQL query
             $sql = "UPDATE $this->table SET $set WHERE id = :id";
     
+            
             // Prepare statement
             $this->stmt = $this->pdo->prepare($sql);
     
@@ -231,7 +241,10 @@ class Model
                 // Bind the value to the placeholder in the SQL query
                 $this->stmt->bindValue(':'.$key, $value);
             }
-    
+            // print_r($this->stmt);
+            // print_r($param);
+            // print_r($id);
+            // exit();
             // Execute statement
             $this->stmt->execute();
         } catch (\Exception $e) {

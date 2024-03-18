@@ -30,4 +30,20 @@ function diplayDataTest($array){
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="css/colorPick.css">
+    <!-- The following line applies the dark theme -->
+    <link rel="stylesheet" href="css/colorPick.dark.theme.css">
+
+
+    <link rel="stylesheet" type="text/css" href="css/coloris.min.css">
+
+    <style>
+
+
+
+    #clr-picker {
+        z-index: 1050; /* Adjust this value as needed */
+    }
+	</style>
+
 </head>

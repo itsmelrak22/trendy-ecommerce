@@ -1,14 +1,16 @@
 
 <?php 
-include_once("./includes/header.php"); 
+    include_once("./includes/header.php"); 
 
-spl_autoload_register(function ($class) {
-    include '../models/' . $class . '.php';
-  });
+    spl_autoload_register(function ($class) {
+        include '../models/' . $class . '.php';
+    });
 
-  $gender_age_category = new GenderAgeCategory;
-  $gender_age_categories = $gender_age_category->all();
+    $product = new Product;
+    $products = $product->getProducts();
 
+    $sale = new Sale;
+    $sales = $sale->all();
 ?>
 
 <body id="page-top">
@@ -58,7 +60,8 @@ spl_autoload_register(function ($class) {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Gender/Age Category Master Page</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Sale Page</h1>
+
                     <div>
                         <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addModal">
                             <span class="icon text-white-50">
@@ -67,56 +70,76 @@ spl_autoload_register(function ($class) {
                             <span class="text">Add</span>
                         </button>
                     </div>
+
                     <hr>
                         <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gender/Age Category List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Product List</h6>
                             
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="saleTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name </th>
-                                            <th>Date Created</th>
+                                            <th>Customer Name </th>
+                                            <th>Product Name </th>
+                                            <th>Quantity</th>
+                                            <th>Sale Price</th>
+                                            <th>Sales Date</th>
+                                            <th>MOP</th>
+                                            <th>Sub Total</th>
+                                            <th>Order Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Name </th>
-                                            <th>Date Created</th>
+                                            <th>Customer Name </th>
+                                            <th>Product Name </th>
+                                            <th>Quantity</th>
+                                            <th>Sale Price</th>
+                                            <th>Sales Date</th>
+                                            <th>MOP</th>
+                                            <th>Sub Total</th>
+                                            <th>Order Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php foreach ($gender_age_categories as $key => $value) {  ?>
+                                        <?php foreach ($sales as $key => $sale) { ?>
                                             <tr>
-                                                <td> <?=$value['name'] ?> </td>
-                                                <td> <?=$value['created_at'] ?> </td>
+                                                <td> <?= $sale['customer_id'] ?> </td>
+                                                <td> <?= $sale['product_id'] ?> </td>
+                                                <td> <?= $sale['qty'] ?> </td>
+                                                <td> <?= $sale['sale_price'] ?> </td>
+                                                <td> <?= $sale['sales_date'] ?> </td>
+                                                <td> <?= $sale['mop'] ?> </td>
+                                                <td> <?= $sale['sub_total'] ?> </td>
+                                                <td> <?= $sale['order_date'] ?> </td>
                                                 <td>
-                                                    <form action="gender-age-category-delete.php" method="POST">
-                                                        <a href="gender-age-category-edit.php?id=<?=$value['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <form action="sale-delete.php" method="POST">
+                                                        <a href="sale-edit.php?id=<?=$sale['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
-                                                        <a href="gender-age-category-view.php?id=<?=$value['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
+                                                        <a href="sale-view.php?id=<?=$sale['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
                                                             <i class="fas fa-arrow-right"></i>
                                                         </a>
-                                                        <input type="hidden" name="id" value="<?=$value['id']?>">
-                                                        <button type="submit" name="delete-gender-age-category" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
+                                                        <input type="hidden" name="id" value="<?=$sale['id']?>">
+                                                        <button type="submit" name="delete-sale" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
                                                 </td>
                                             </tr>
-                                        <?php  } ?>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -165,12 +188,12 @@ spl_autoload_register(function ($class) {
     </div>
 
     <!-- MODALS -->
-    <form method="POST" action="gender-age-category-insert.php">
+    <form method="POST" action="sale-insert.php">
         <div class="modal" tabindex="-1" id="addModal">
             <div class="modal-dialog modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold text-primary">Add Gender / Age Category</h5>
+                    <h5 class="modal-title font-weight-bold text-primary">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -178,13 +201,32 @@ spl_autoload_register(function ($class) {
                 <div class="modal-body">
                     <div class="">
                         <div class="input-group">
-                            <input type="text" name="name" id="name" class="form-control bg-light border-0 small" placeholder="Name" aria-label="Name" aria-describedby="basic-addon2" required>
+                            <input type="text" name="customer_id" id="customer_id" class="form-control bg-light border-0 small" placeholder="Customer Name" aria-label="Customer Name" aria-describedby="basic-addon2" required>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <input type="text" name="product_id" id="product_id" class="form-control bg-light border-0 small" placeholder="Product Name" aria-label="Product Name" aria-describedby="basic-addon2" required>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <input type="number" name="qty" id="qty" class="form-control bg-light border-0 small" placeholder="Quantity" aria-label="Quantity" aria-describedby="basic-addon2" required>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <input type="number" name="sale_price" id="sale_price" class="form-control bg-light border-0 small" placeholder="Sale Price" aria-label="Sale Price" aria-describedby="basic-addon2" required>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <input type="number" name="mop" id="mop" class="form-control bg-light border-0 small" placeholder="MOP" aria-label="MOP" aria-describedby="basic-addon2" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="number" name="sub_total" id="sub_total" class="form-control bg-light border-0 small" placeholder="Sub Total" aria-label="Sub Total" aria-describedby="basic-addon2" required>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" name="add-gender-age-category" value="Submit">
+                    <input type="submit" class="btn btn-primary" name="add-sale" value="Submit">
                 </div>
                 </div>
             </div>
@@ -203,9 +245,8 @@ spl_autoload_register(function ($class) {
     $('#addModal').on('shown.bs.modal', function () {
         $('#addModal').trigger('focus')
     })
+
+    $(document).ready(function() {
+        $('#productTable').DataTable();
+    });
 </script>
-
-
-
-
-

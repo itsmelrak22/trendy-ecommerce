@@ -54,6 +54,18 @@ $location = basename($url);
         <i class="fas fa-fw fa-table"></i>
         <span>Users</span></a>
 </li>
+<!-- Nav Item - Customers -->
+<li class="nav-item <?= $location ==  "customer-list.php" ? "active" : ""?>">
+    <a class="nav-link" href="customer-list.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Customers</span></a>
+</li>
+<!-- Nav Item - Carts -->
+<li class="nav-item <?= $location ==  "cart-list.php" ? "active" : ""?>">
+    <a class="nav-link" href="cart-list.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Carts</span></a>
+</li>
 
 <!-- Nav Item - Product List Menu -->
 <li class="nav-item <?= $location ==  "product-list.php" ? "active" : ""?>">
@@ -74,6 +86,13 @@ $location = basename($url);
     <a class="nav-link" href="gender-age-category-list.php">
         <i class="fas fa-fw fa-table"></i>
         <span>Age Category Master</span></a>
+</li>
+
+<!-- Nav Item - Sales-->
+<li class="nav-item <?= $location ==  "sale-list.php" ? "active" : ""?>">
+    <a class="nav-link" href="sale-list.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Sales</span></a>
 </li>
 
 <!-- Divider -->
