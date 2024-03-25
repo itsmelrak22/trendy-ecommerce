@@ -1,4 +1,11 @@
 <?php
+    session_start();
+    
+    if (!isset($_SESSION['email'])) {
+        header("Location: login.php");
+        exit();
+    }
+require_once  '../vendor/autoload.php';
 
 function diplayDataTest($array){
     echo "<pre>";
@@ -7,6 +14,7 @@ function diplayDataTest($array){
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,4 +54,6 @@ function diplayDataTest($array){
     }
 	</style>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
 </head>

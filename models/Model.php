@@ -1,8 +1,6 @@
 <?php
 
-require_once  '../vendor/autoload.php';
-
-
+// require_once  '../vendor/autoload.php';
 
 class Model 
 {
@@ -247,9 +245,13 @@ class Model
             // exit();
             // Execute statement
             $this->stmt->execute();
+            return true;
+
         } catch (\Exception $e) {
             // Handle exception
             echo "Error: " . $e->getMessage();
+            return false;
+
         }
     }
 

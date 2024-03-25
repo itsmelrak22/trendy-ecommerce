@@ -1,8 +1,9 @@
 <?php
 
+include_once("./includes/header.php"); 
 spl_autoload_register(function ($class) {
     include '../models/' . $class . '.php';
-  });
+});
 
 
 if ( isset( $_POST['edit-user'] ) && $_POST['edit-user'] ){

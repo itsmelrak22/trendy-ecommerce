@@ -1,8 +1,9 @@
 <?php
 
-spl_autoload_register(function ($class) {
-    include '../models/' . $class . '.php';
-  });
+    include_once("./includes/header.php"); 
+    spl_autoload_register(function ($class) {
+        include '../models/' . $class . '.php';
+    });
 
 
 if ( isset( $_POST['edit-product'] ) && $_POST['edit-product'] ){
@@ -11,7 +12,7 @@ if ( isset( $_POST['edit-product'] ) && $_POST['edit-product'] ){
         'name' => $_POST['product_name'],
         'description' => $_POST['description'],
         'price' => $_POST['price'],
-        'stock_qty' => $_POST['quantity'],
+        // 'stock_qty' => $_POST['quantity'],
         'updated_at' => new \DateTime,
     ];
 

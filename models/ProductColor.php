@@ -1,48 +1,34 @@
 <?php
 
-Class Product extends Model {
+Class ProductColor extends Model {
 
-    protected $table = 'products';
-
-
-    public static function getProductsWithColors(){
-        $intance = new self;
-        $products = $intance->setQuery("SELECT  A.*
-                                FROM products AS A 
-                                WHERE A.status = 'product' ")->getAll();
+    protected $table = 'product_colors';
 
 
-        foreach ($products as $key => $product) {
-            $product_id = $product['product_id'];
-            $colors = $intance->setQuery("SELECT * FROM `product_colors` WHERE `product_id` = $product_id")->getAll();
-            $products[$key]["colors"] = $colors;
-        }
 
-        return $products;
-    }
-
-    public static function getProducts(){
+    public static function getProductColors($product_id){
         $instance = new self;
         $categories = $instance->setQuery("
-            SELECT P.*, C.id as category_id, C.name AS category_name 
-            FROM products AS P
-            LEFT JOIN categories AS C ON P.category_id = C.id
-            WHERE P.deleted_at IS NULL
-            ORDER BY P.created_at DESC
+            SELECT *  FROM `product_colors` 
+            WHERE `deleted_at` IS NULL      
+            AND `product_id` = $product_id 
+            ORDER BY `created_at` DESC;
         ")->getAll();
     
         return $categories;
     }
 
-    public static function findProduct($id){
+    public static function findProductColor($id){
         $instance = new self;
         $prodduct = $instance->setQuery("
-            SELECT P.*, C.id as category_id, C.name AS category_name
-            FROM products AS P
-            LEFT JOIN categories AS C ON P.category_id = C.id
-            WHERE P.id = $id
-            WHERE P.deleted_at IS NULL
-            ORDER BY P.created_at DESC
+           
+            SELECT Color.*, Product.name as product_name
+            FROM `product_colors` AS Color
+            LEFT JOIN `products` AS Product
+            ON Color.product_id = Product.id
+            WHERE Color.id = $id
+            AND Color.deleted_at IS NULL
+            ORDER BY Color.created_at DESC
         ")->getFirst();
     
         return $prodduct;

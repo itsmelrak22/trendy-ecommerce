@@ -83,13 +83,13 @@ spl_autoload_register(function ($class) {
                                                 </div>
                                                 <input value="<?= $product_data->price; ?>" type="text" name="price" id="price" class="form-control" required>
                                             </div>
-                                            <label for="basic-url">Quantity</label>
+                                            <!-- <label for="basic-url">Quantity</label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon3"> </span>
                                                 </div>
-                                                <input value="<?= $product_data->stock_qty; ?>" type="text" name="quantity" id="quantity" class="form-control" required>
-                                            </div>
+                                                <input value="<?php // echo $product_data->stock_qty; ?>" type="text" name="quantity" id="quantity" class="form-control" required>
+                                            </div> -->
                                             <input type="hidden" name="id" value="<?= $product_data->id ?>">
                                         </div>
                                         <div class="">

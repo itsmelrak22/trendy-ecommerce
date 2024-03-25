@@ -1,10 +1,11 @@
 <?php
 
+include_once("./includes/header.php"); 
 spl_autoload_register(function ($class) {
     include '../models/' . $class . '.php';
-  });
+});
 
-  print_r($_POST);
+  // print_r($_POST);
 
 if ( isset( $_POST['delete-user'] ) && $_POST['delete-user'] ){
     $id = $_POST['id'];

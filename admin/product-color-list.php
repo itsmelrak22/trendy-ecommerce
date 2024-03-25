@@ -6,14 +6,22 @@
         include '../models/' . $class . '.php';
     });
 
-    $product = new Product;
-    $products = $product->getProducts();
+    if( !isset($_REQUEST['product_id']) || !$_REQUEST['product_id'] ){
+        header("Location: product-list.php");
+    }
 
-    $category = new Category;
-    $categories = $category->all();
+    $product_id = $_REQUEST['product_id'];
+
+    $product_color = new ProductColor;
+    $product_colors = $product_color->getProductColors($product_id);
 
     
-    // print_r($categories);
+    $parent = new Product;
+    $parentProduct = $parent->find($product_id);
+
+    // print_r($product_colors);
+    // diplayDataTest($product_colors);
+
 ?>
 
 <style>
@@ -74,22 +82,29 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Product Page</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Product Color Page</h1>
+                    <span>
+                        <a href="product-color-list.php" type="button" class="btn btn-warning btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-arrow-left"></i>
+                            </span>
+                            <span class="text">Return</span>
+                        </a>
 
-                    <div>
                         <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addModal">
                             <span class="icon text-white-50">
                                 <i class="fas fa-plus"></i>
                             </span>
                             <span class="text">Add</span>
                         </button>
-                    </div>
+                    </span>
+
 
                     <hr>
                         <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Product List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Product : <?= $parentProduct->name ?></h6>
                             
                         </div>
                         <div class="card-body">
@@ -97,51 +112,51 @@
                                 <table class="table table-bordered" id="productTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Product  </th>
-                                            <th>Category  </th>
-                                            <th>Description</th>
-                                            <th>Price</th>
-                                            <!-- <th>Quantity</th> -->
+                                            <th>Name</th>
+                                            <th>Code</th>
+                                            <th style="width: 75px !important">Color</th>
+                                            <th>Quantity</th>
+                                            <th>Image</th>
                                             <th>Date Created</th>
                                             <th>Date Updated</th>
-                                            <th style="width: 175px;">Action</th>
+                                            <th style="width: 175px">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Product</th>
-                                            <th>Category  </th>
-                                            <th>Description</th>
-                                            <th>Price</th>
-                                            <!-- <th>Quantity</th> -->
+                                            <th>Name</th>
+                                            <th>Code</th>
+                                            <th style="width: 75px !important">Color</th>
+                                            <th>Quantity</th>
+                                            <th>Image</th>
                                             <th>Date Created</th>
                                             <th>Date Updated</th>
-                                            <th>Action</th>
+                                            <th style="width: 175px">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php foreach ($products as $key => $product) { ?>
+                                        <?php foreach ($product_colors as $key => $product_color) { ?>
                                             <tr>
-                                                <td> <?= $product['name'] ?> </td>
-                                                <td> <?= $product['category_name']  ?> </td>
-                                                <td> <?= $product['description'] ?> </td>
-                                                <td> <?= $product['price'] ?> </td>
-                                                <!-- <td> <?php //$product['stock_qty'] ?> </td> -->
-                                                <td> <?= $product['created_at'] ?> </td>
-                                                <td> <?= $product['updated_at'] ?> </td>
+                                                <td> <?= $product_color['name'] ?> </td>
+                                                <td> <?= $product_color['code'] ?> </td>
+                                                <td style="max-width: 70px !important; background-color: <?= $product_color['code'] ?>">  </td>
+                                                <td> <?= $product_color['stock_qty'] ?> </td>
+                                                <td> 
+                                                    <img src="./<?=$product_color['image'] ?>" alt="" width="75" height="75">
+                                                </td>
+                                                <td> <?= $product_color['created_at'] ?> </td>
+                                                <td> <?= $product_color['updated_at'] ?> </td>
                                                 <td>
-                                                    <form action="product-delete.php" method="POST">
-                                                        <a href="product-color-list.php?product_id=<?=$product['id']?>" class="btn btn-success btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Colors">
-                                                            <i class="fa fa-paint-brush" aria-hidden="true"></i>
-                                                        </a>
-                                                        <a href="product-edit.php?id=<?=$product['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <form action="product-color-delete.php" method="POST">
+                                                        <a href="product-color-edit.php?id=<?=$product_color['id']?>&product_id=<?=$product_id ?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
-                                                        <a href="product-view.php?id=<?=$product['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
+                                                        <a href="product-color-view.php?id=<?=$product_color['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
                                                             <i class="fas fa-arrow-right"></i>
                                                         </a>
-                                                        <input type="hidden" name="id" value="<?=$product['id']?>">
-                                                        <button type="submit" name="delete-product" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
+                                                        <input type="hidden" name="id" value="<?=$product_color['id']?>">
+                                                        <input type="hidden" name="product_id" value="<?=$product_color['product_id']?>">
+                                                        <button type="submit" name="delete-product-color" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
@@ -181,33 +196,15 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- MODALS -->
-    <form method="POST" action="product-insert.php" enctype="multipart/form-data">
+    <form method="POST" action="product-color-insert.php" enctype="multipart/form-data">
         <div class="modal" tabindex="-1" id="addModal">
             <div class="modal-dialog modal-lg modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold text-primary">Add Product</h5>
+                    <h5 class="modal-title font-weight-bold text-primary">Add Color</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -218,66 +215,54 @@
 
                             <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="input-group">
-                                    <input type="text" name="product_name" id="product_name" class="form-control bg-light border-0 small" placeholder="Product Name" aria-label="Product Name" aria-describedby="basic-addon2" required>
+                                    <input type="text" name="color" id="color" class="form-control bg-light border-0 small" placeholder="Color" aria-label="Color" aria-describedby="basic-addon2" required>
                                 </div>
                                 <br>
                             </div>
 
                             <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="input-group">
-                                    <select name="category_id" class="custom-select form-control bg-light border-0 small" for="category">
-                                        <?php foreach($categories as $key => $category) { ?>
-                                        <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
-                                        <?php } ?>
-                                    </select>
+                                    <input value="<?= $parentProduct->name ?>" readonly type="text" name="product_name" id="product_name" class="form-control bg-light border-0 small" placeholder="Product Name" aria-label="Product Name" aria-describedby="basic-addon2" required>
+                                    <input type="hidden" name="product_id" value="<?= $parentProduct->id ?>" >
                                 </div>
                                 <br>
                             </div>
 
-                            <!-- <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="input-group">
-                                    <input type="number" name="quantity" id="quantity" class="form-control bg-light border-0 small" placeholder="Quantity" aria-label="Quantity" aria-describedby="basic-addon2" required>
+                                    <input type="number" name="stock_qty" id="stock_qty" class="form-control bg-light border-0 small" placeholder="Quantity" aria-label="Quantity" aria-describedby="basic-addon2" required>
                                 </div>
                                 <br>
-                            </div> -->
+                            </div>
                             
                             <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                <div class="input-group">
-                                    <input type="number" name="price" id="price" class="form-control bg-light border-0 small" placeholder="Price" aria-label="Price" aria-describedby="basic-addon2" required>
-                                </div>
-                                <br>
-                            </div>
-
-                            <!-- <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="input-group example square">
                                     <input type="text" class="coloris form-control bg-light border-0 small" value="#00a5cc" name="color_selected" id="color_selected">
                                 </div>
                                 <br>
-                            </div> -->
+                            </div>
 
-                        </div>
-                        <div class="input-group">
-                            <textarea type="text" name="description" id="description" class="form-control bg-light border-0 small" placeholder="Description" aria-label="Description" aria-describedby="basic-addon2" required cols="15" rows="10"></textarea>
                         </div>
                        
                         <br>
-                        <!-- <div class="input-group">
-                            <input type="file" name="fileToUpload" id="fileToUpload" class="form-control bg-light border-0 small" placeholder="Image" aria-label="Image" required>
-                        </div> -->
+                        <div class="input-group">
+                            <input type="file" name="fileToUpload" id="fileToUpload" class="form-control bg-light border-0 small" 
+                                    placeholder="Image" aria-label="Image" required>
+                        </div>
                         <!-- Image preview element -->
                         <div id="imagePreview"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" name="add-product" value="Submit">
+                    <input type="submit" class="btn btn-primary" name="add-color" value="Submit">
                 </div>
                 </div>
             </div>
         </div>
     </form>
     <?php include_once("./includes/scripts.php"); ?>
-<?php include_once("./includes/footer.php"); ?>
+    <?php include_once("./includes/footer.php"); ?>
 
 <script>
     $(function () {
@@ -291,42 +276,46 @@
 
     $(document).ready(function() {
         $('#productTable').DataTable();
+
     });
+    
+    
+        document.getElementById("fileToUpload").onchange = function (e) {
+            // Get the file extension
+            let fileExtension = e.target.files[0].name.split('.').pop().toLowerCase();
+            let isValidFile = false;
 
-    // document.getElementById("fileToUpload").onchange = function (e) {
-    //     // Get the file extension
-    //     let fileExtension = e.target.files[0].name.split('.').pop().toLowerCase();
-    //     let isValidFile = false;
+            // Define allowed extensions
+            let allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 
-    //     // Define allowed extensions
-    //     let allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            // Check if file is an allowed extension
+            if(allowedExtensions.indexOf(fileExtension) > -1){
+                isValidFile = true;
+            }
 
-    //     // Check if file is an allowed extension
-    //     if(allowedExtensions.indexOf(fileExtension) > -1){
-    //         isValidFile = true;
-    //     }
+            if(isValidFile){
+                // Remove the old image preview
+                let imagePreview = document.getElementById("imagePreview");
+                while(imagePreview.firstChild){
+                    imagePreview.removeChild(imagePreview.firstChild);
+                }
 
-    //     if(isValidFile){
-    //         // Remove the old image preview
-    //         let imagePreview = document.getElementById("imagePreview");
-    //         while(imagePreview.firstChild){
-    //             imagePreview.removeChild(imagePreview.firstChild);
-    //         }
+                // Create a new image preview
+                let img = document.createElement("img");
+                img.src = URL.createObjectURL(e.target.files[0]);
+                img.onload = function () {
+                    URL.revokeObjectURL(img.src);  // free memory
+                };
+                imagePreview.appendChild(img);
+            } else {
+                alert('Please upload a file with a valid image extension (jpg, jpeg, png, gif).');
+                e.target.value = '';  // Clear the input value
+                imagePreview.removeChild(imagePreview.firstChild);
 
-    //         // Create a new image preview
-    //         let img = document.createElement("img");
-    //         img.src = URL.createObjectURL(e.target.files[0]);
-    //         img.onload = function () {
-    //             URL.revokeObjectURL(img.src);  // free memory
-    //         };
-    //         imagePreview.appendChild(img);
-    //     } else {
-    //         alert('Please upload a file with a valid image extension (jpg, jpeg, png, gif).');
-    //         e.target.value = '';  // Clear the input value
-    //         imagePreview.removeChild(imagePreview.firstChild);
+            }
 
-    //     }
-    // };
+
+        };
 
 </script>
 
