@@ -31,7 +31,7 @@ class Model
 
         $this->host =  $_ENV['DB_HOST'];
 
-        if($_ENV['DB_USERNAME'] == 'dev'){
+        if($_ENV['APP_ENV'] == 'dev'){
             $this->database =  $_ENV['DEV_DB_DATABASE'];
             $this->username =  $_ENV['DEV_DB_USERNAME'];
             $this->password =  $_ENV['DEV_DB_PASSWORD'];
