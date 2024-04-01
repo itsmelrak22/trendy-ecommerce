@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 25, 2024 at 12:41 AM
+-- Generation Time: Apr 01, 2024 at 11:07 PM
 -- Server version: 8.0.34
 -- PHP Version: 7.4.2
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ecommerce_store`
+-- Database: `trendy_dev`
 --
 
 -- --------------------------------------------------------
@@ -30,12 +30,12 @@ SET time_zone = "+00:00";
 CREATE TABLE `address` (
   `id` int NOT NULL,
   `customer_id` int NOT NULL,
-  `building_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `street_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `unit_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city_municipality` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `postal_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `barangay` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `building_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `street_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city_municipality` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `postal_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `barangay` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -46,11 +46,11 @@ CREATE TABLE `address` (
 
 CREATE TABLE `admin` (
   `id` int NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL
@@ -75,21 +75,22 @@ CREATE TABLE `carts` (
   `id` int NOT NULL,
   `customer_id` int DEFAULT NULL,
   `product_id` int DEFAULT NULL,
+  `color_id` int NOT NULL,
   `total_price` int DEFAULT NULL,
+  `quantity` int DEFAULT '0',
   `status` int NOT NULL DEFAULT '0',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL
+  `created_at` varchar(199) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_at` varchar(199) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` varchar(199) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `carts`
 --
 
-INSERT INTO `carts` (`id`, `customer_id`, `product_id`, `total_price`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 3, 3, 1001, 2, '2024-03-15 05:55:58', '2024-03-15 08:05:16', '2024-03-15 08:09:31'),
-(2, 2, 2, 199, 0, '2024-03-15 16:01:33', '2024-03-15 16:01:33', NULL),
-(3, 1, 1, 1001, 1, '2024-03-15 16:22:01', '2024-03-15 16:22:01', NULL);
+INSERT INTO `carts` (`id`, `customer_id`, `product_id`, `color_id`, `total_price`, `quantity`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 4, 9, NULL, 3, 0, '2024-04-01 23:02:17', '2024-04-02 00:15:54', NULL),
+(2, 1, 4, 8, NULL, 1, 0, '2024-04-02 00:16:05', '2024-04-02 00:16:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -100,7 +101,7 @@ INSERT INTO `carts` (`id`, `customer_id`, `product_id`, `total_price`, `status`,
 CREATE TABLE `categories` (
   `id` int NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
@@ -128,9 +129,11 @@ INSERT INTO `categories` (`id`, `name`, `description`, `created_at`, `updated_at
 
 CREATE TABLE `customers` (
   `id` int NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(199) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(199) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_no` int DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -141,8 +144,8 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone_no`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'test', 'test', 'user@mail.com', 1212, '2024-03-17 12:04:27', '2024-03-17 12:04:27', NULL);
+INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `phone_no`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'test', 'test', 'test@user.com', 'test user', '0000', 1212, '2024-03-17 12:04:27', '2024-03-17 12:04:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -153,9 +156,9 @@ INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone_no`, `
 CREATE TABLE `gender_age_category` (
   `id` int NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `updated_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -182,8 +185,8 @@ INSERT INTO `gender_age_category` (`id`, `name`, `created_at`, `updated_at`, `de
 
 CREATE TABLE `login` (
   `id` int NOT NULL,
-  `username` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL
+  `username` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -196,6 +199,35 @@ INSERT INTO `login` (`id`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int NOT NULL,
+  `customer_id` int NOT NULL,
+  `created_at` varchar(199) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_at` varchar(199) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `id` int NOT NULL,
+  `order_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `color_id` int NOT NULL,
+  `qty` int NOT NULL DEFAULT '0',
+  `created_at` varchar(199) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_at` varchar(199) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `payment`
 --
 
@@ -204,8 +236,8 @@ CREATE TABLE `payment` (
   `sale_id` int DEFAULT NULL,
   `payment_date` datetime DEFAULT NULL,
   `payment_amount` int DEFAULT NULL,
-  `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `mop` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '0'
+  `payment_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `mop` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -220,7 +252,7 @@ CREATE TABLE `products` (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `price` int DEFAULT NULL,
-  `color` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `updated_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -248,10 +280,10 @@ INSERT INTO `products` (`id`, `category_id`, `name`, `description`, `price`, `co
 CREATE TABLE `product_colors` (
   `id` int NOT NULL,
   `product_id` int DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `stock_qty` int NOT NULL DEFAULT '0',
-  `image` text COLLATE utf8mb4_unicode_ci,
+  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `updated_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -282,24 +314,10 @@ INSERT INTO `product_colors` (`id`, `product_id`, `name`, `code`, `stock_qty`, `
 
 CREATE TABLE `sales` (
   `id` int NOT NULL,
-  `customer_id` int DEFAULT NULL,
-  `product_id` int DEFAULT NULL,
-  `qty` int DEFAULT NULL,
-  `sale_price` int DEFAULT NULL,
-  `sales_date` datetime DEFAULT NULL,
-  `mop` int DEFAULT '0',
-  `sub_total` int DEFAULT NULL,
-  `order_date` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL
+  `order_id` int NOT NULL,
+  `created_at` varchar(199) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_at` varchar(199) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `sales`
---
-
-INSERT INTO `sales` (`id`, `customer_id`, `product_id`, `qty`, `sale_price`, `sales_date`, `mop`, `sub_total`, `order_date`, `deleted_at`) VALUES
-(1, 2, 2, 2, 333, '2024-03-15 08:30:18', 2, 211, '2024-03-15 08:30:18', '2024-03-15 08:36:44'),
-(2, 1, 1, 1, 1111, '2024-03-17 12:05:39', 0, 1, '2024-03-17 12:05:39', NULL);
 
 --
 -- Indexes for dumped tables
@@ -348,6 +366,18 @@ ALTER TABLE `login`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `payment`
 --
 ALTER TABLE `payment`
@@ -391,7 +421,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -418,6 +448,18 @@ ALTER TABLE `login`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_details`
+--
+ALTER TABLE `order_details`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
@@ -439,7 +481,7 @@ ALTER TABLE `product_colors`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

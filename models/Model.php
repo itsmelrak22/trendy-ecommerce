@@ -30,9 +30,16 @@ class Model
         $dotenv->load();
 
         $this->host =  $_ENV['DB_HOST'];
-        $this->database =  $_ENV['DB_DATABASE'];
-        $this->username =  $_ENV['DB_USERNAME'];
-        $this->password =  $_ENV['DB_PASSWORD'];
+
+        if($_ENV['DB_USERNAME'] == 'dev'){
+            $this->database =  $_ENV['DEV_DB_DATABASE'];
+            $this->username =  $_ENV['DEV_DB_USERNAME'];
+            $this->password =  $_ENV['DEV_DB_PASSWORD'];
+        }else{
+            $this->username =  $_ENV['DB_USERNAME'];
+            $this->password =  $_ENV['DB_PASSWORD'];
+        }
+    
         $this->servername =  $_ENV['DB_SERVERNAME'];
         $this->connect();
 

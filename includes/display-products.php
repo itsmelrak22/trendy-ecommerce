@@ -5,6 +5,7 @@
     // diplayDataTest($products);
 
     foreach ($products as $key => $value) {
+
         addItemInProductList(
             $value['name'],
             $value['price'],
@@ -14,6 +15,7 @@
 
 
     function addItemInProductList($name, $price, $id ){
+
         echo '
 
             <div class="col mb-5">

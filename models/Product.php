@@ -24,7 +24,10 @@ Class Product extends Model {
     public static function getProducts(){
         $instance = new self;
         $categories = $instance->setQuery("
-            SELECT P.*, C.id as category_id, C.name AS category_name 
+            SELECT 
+                P.*, 
+                C.id as category_id,
+                C.name AS category_name
             FROM products AS P
             LEFT JOIN categories AS C ON P.category_id = C.id
             WHERE P.deleted_at IS NULL
@@ -34,16 +37,46 @@ Class Product extends Model {
         return $categories;
     }
 
-    public static function findProduct($id){
-        $instance = new self;
-        $prodduct = $instance->setQuery("
-            SELECT P.*, C.id as category_id, C.name AS category_name
+    public static function findProduct($id, $color_id = 0){
+        $qry = "
+            SELECT 
+                P.*, 
+                C.id as category_id,
+                C.name AS category_name,
+                PC.stock_qty,
+                PC.name as color_name,
+                PC.image,
+                PC.id as color_id
             FROM products AS P
             LEFT JOIN categories AS C ON P.category_id = C.id
+            LEFT JOIN product_colors AS PC ON P.id = PC.product_id
             WHERE P.id = $id
-            WHERE P.deleted_at IS NULL
+            AND P.deleted_at IS NULL
             ORDER BY P.created_at DESC
-        ")->getFirst();
+        ";
+
+        if($color_id){
+            $qry = "
+                SELECT 
+                    P.*, 
+                    C.id as category_id,
+                    C.name AS category_name,
+                    PC.stock_qty,
+                    PC.name as color_name,
+                    PC.image,
+                    PC.id as color_id
+                FROM products AS P
+                LEFT JOIN categories AS C ON P.category_id = C.id
+                LEFT JOIN product_colors AS PC ON P.id = PC.product_id
+                WHERE P.id = $id
+                AND PC.id = $color_id
+                AND P.deleted_at IS NULL
+                ORDER BY P.created_at DESC
+            ";
+        }
+
+        $instance = new self;
+        $prodduct = $instance->setQuery($qry)->getFirst();
     
         return $prodduct;
     }

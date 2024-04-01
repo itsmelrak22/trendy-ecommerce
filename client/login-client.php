@@ -1,4 +1,5 @@
 <?php
+    require_once  '../vendor/autoload.php';
     session_start();
 
     spl_autoload_register(function ($class) {
@@ -6,13 +7,13 @@
     });
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $username = $_POST["username"];
+        $email = $_POST["email"];
         $password = $_POST["password"];
 
-        $user = CustomerLogin::loginUser($username, $password);
+        $user = CustomerLogin::loginUser($email, $password);
         
         if ($user) {
-            $_SESSION["username"] = $user["username"];
+            $_SESSION["loggedInUser"] = $user;
             header("Location: ../index.php");
             exit();
         } else {
