@@ -29,13 +29,14 @@
                                 var quantities = document.getElementsByName('quantity');
                                 var prices = document.getElementsByName('price');
                                 var subtotal = 0;
+                                var hiddenInput = document.getElementById('hiddenSubtotal');
                                 for(var i=0, n=checkboxes.length;i<n;i++) {
                                     if (checkboxes[i].checked) {
                                         subtotal += quantities[i].value * prices[i].innerHTML;
                                     }
                                 }
                                 document.getElementById('subtotal').innerHTML = subtotal;
-                                document.querySelector('#hiddenSubtotal').value = subtotal;
+                                hiddenInput.value = subtotal;
 
                             }
                         </script>
@@ -73,7 +74,7 @@
                                 <?php } ?>
 
                                 <p>Subtotal: <span id="subtotal"></span></p>
-                                    
+                                    <input type="hidden" name="subtotal" id="hiddenSubtotal">
                                 <button class="btn btn-outline-dark flex-shrink-0 mt-3" type="submit">Checkout</button>
                             </form>
 
