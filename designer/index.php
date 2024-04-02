@@ -243,7 +243,7 @@
 			      		</tr>
 			      	</table>			
 			      </p>
-					<button type="button" class="btn btn-large btn-block btn-success" name="addToTheBag" id="addToTheBag">Add to bag <i class="icon-briefcase icon-white"></i></button>
+					<button type="button" class="btn btn-large btn-block btn-success" name="addToTheBag" id="addToTheBag">Add to Cart <i class="icon-briefcase icon-white"></i></button>
 		      </div>		      		       		   
 		    </div>
 		
