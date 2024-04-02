@@ -36,6 +36,7 @@ class Model
             $this->username =  $_ENV['DEV_DB_USERNAME'];
             $this->password =  $_ENV['DEV_DB_PASSWORD'];
         }else{
+            $this->database =  $_ENV['DB_DATABASE'];
             $this->username =  $_ENV['DB_USERNAME'];
             $this->password =  $_ENV['DB_PASSWORD'];
         }

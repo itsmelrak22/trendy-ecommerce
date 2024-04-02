@@ -12,7 +12,7 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!--[if IE]><script type="text/javascript" src="js/excanvas.js"></script><![endif]-->
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>	 -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>	
     <script src="../admin/vendor/jquery/jquery.min.js"></script>
 
 	<script type="text/javascript" src="js/fabric.js"></script>
@@ -20,10 +20,10 @@
 	
     <!-- Le styles -->
     <link type="text/css" rel="stylesheet" href="css/jquery.miniColors.css" />
-    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="../css/styles.css" rel="stylesheet" />
 
-    <!-- <link href="css/bootstrap-responsive.min.css" rel="stylesheet"> -->
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
 	<!-- Bootstrap icons-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />

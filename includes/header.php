@@ -78,6 +78,7 @@
                     </form> -->
 
                     <form class="d-flex">
+                        <?php if(isset($client_email)) { ?>
                         <a href="customer-cart.php" method="post" class="me-2 btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Carts
@@ -91,7 +92,6 @@
                                 ?>
                             </span>
                         </a>
-                        <?php if(isset($client_email)) { ?>
                             <div class="me-2">Welcome, <?php echo $client_email; ?>!</div>
                             <a href="./client/logout-customer.php" class="btn btn-outline-dark">Logout</a>
                         <?php } else { ?>
