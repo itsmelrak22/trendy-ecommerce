@@ -18,7 +18,7 @@ spl_autoload_register(function ($class) {
   $product_id = $_GET['product_id'];
   $product_data = new ProductColor;
   $product_color_data = $product_data->findProductColor($id);
-  diplayDataTest($product_color_data);
+//   diplayDataTest($product_color_data);
 ?>
  
 

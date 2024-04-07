@@ -39,6 +39,12 @@ $location = basename($url);
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
 </li>
+<!-- Nav Item - Product List Menu -->
+<li class="nav-item <?= $location ==  "product-list.php" ? "active" : ""?>">
+    <a class="nav-link" href="order-list.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Orders</span></a>
+</li>
 
 <!-- Divider -->
 <hr class="sidebar-divider">

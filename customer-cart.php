@@ -1,113 +1,268 @@
 <?php 
     include_once("./includes/header.php");
+    
+    $checkedOutItems = $cartItem->getCustomerCartCheckedoutItems( $client_id );
+    $checkedOutItemsCount = 0;
+
+    foreach ($checkedOutItems as $key => $value) {
+        $checkedOutItemsCount += (int) $value['quantity']; 
+
+    }
+
+    $processingItems = $cartItem->getCustomerCartProcessingItems( $client_id );
+    $processingItemsCount = 0;
+
+    foreach ($processingItems as $key => $value) {
+        $processingItemsCount += (int) $value['quantity']; 
+
+    }
+
+    $shippedItems = $cartItem->getCustomerCartShippedItems( $client_id );
+    $shippedItemsCount = 0;
+
+    foreach ($shippedItems as $key => $value) {
+        $shippedItemsCount += (int) $value['quantity']; 
+
+    }
+
+    $receivedItems = $cartItem->getCustomerCartReceivedItems( $client_id );
+    $receivedItemsCount = 0;
+
+    foreach ($receivedItems as $key => $value) {
+        $receivedItemsCount += (int) $value['quantity']; 
+
+    }
+
+    $cancelledItems = $cartItem->getCustomerCartCancelledItems( $client_id );
+    $cancelledItemsCount = 0;
+
+    foreach ($cancelledItems as $key => $value) {
+        $cancelledItemsCount += (int) $value['quantity']; 
+
+    }
 ?>
+<style>
+   .tab-pane {
+    display: none; /* hides the content by default */
+}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Shopping Cart</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-8">
-                    <script>
-                        function toggle(source) {
-                            checkboxes = document.getElementsByName('cartCheckbox');
-                            for(var i=0, n=checkboxes.length;i<n;i++) {
-                                checkboxes[i].checked = source.checked;
-                            }
+.tab-pane.active {
+    display: block; /* shows the content when the tab is active */
+}
+</style>
+
+<div class="container mt-2" >
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active me-2 btn btn-outline-dark" id="cart-tab" data-bs-toggle="tab" data-bs-target="#cart-tab-pane" type="button" role="tab" aria-controls="cart-tab-pane" aria-selected="true">
+                Cart
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link me-2 btn btn-outline-dark" id="checked-tab" data-bs-toggle="tab" data-bs-target="#checked-tab-pane" type="button" role="tab" aria-controls="checked-tab-pane" aria-selected="false">
+                Checked Out
+                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                    <?php if(isset($checkedOutItemsCount)) {
+                        echo  $checkedOutItemsCount ;
+                        }else{
+                        echo "0";
                         }
-
-                        function updateQuantity(input, price, total) {
-                            if (input.value < 1) input.value = 1;
-                            total.innerHTML = price * input.value;
-                            calculateSubtotal();
+                        
+                    ?>
+                </span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link me-2 btn btn-outline-dark" id="processing-tab" data-bs-toggle="tab" data-bs-target="#processing-tab-pane" type="button" role="tab" aria-controls="processing-tab-pane" aria-selected="false">
+                Processing
+                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                    <?php if(isset($processingItemsCount)) {
+                        echo  $processingItemsCount ;
+                        }else{
+                        echo "0";
                         }
-
-                        function calculateSubtotal() {
-                            var checkboxes = document.getElementsByName('cartCheckbox');
-                            var quantities = document.getElementsByName('quantity');
-                            var prices = document.getElementsByName('price');
-                            var subtotal = 0;
-                            var hiddenInput = document.getElementById('hiddenSubtotal');
-                            for(var i=0, n=checkboxes.length;i<n;i++) {
-                                if (checkboxes[i].checked) {
-                                    subtotal += quantities[i].value * prices[i].innerHTML;
-                                }
-                            }
-                            document.getElementById('subtotal').innerHTML = subtotal;
-                            hiddenInput.value = subtotal;
-
+                        
+                    ?>
+                </span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link me-2 btn btn-outline-dark" id="shipped-tab" data-bs-toggle="tab" data-bs-target="#shipped-tab-pane" type="button" role="tab" aria-controls="shipped-tab-pane" aria-selected="false">
+                Shipped
+                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                    <?php if(isset($shippedItemsCount)) {
+                        echo  $shippedItemsCount ;
+                        }else{
+                        echo "0";
                         }
-                    </script>
-                    <?php if( isset($cartItems) ){?>
-
-                        <form action="customer-checkout.php" method="post">
-                            <input class="form-check-input" type="checkbox" onClick="toggle(this)" /> Select All
-
-                            <?php foreach ($cartItems as $key => $cart) { ?>
-                                <div class="card mb-3">
-                                    <div class="row g-0">
-                                        <div class="col-md-1">
-                                            <input class="form-check-input" type="checkbox" name="cartCheckbox" id="" onClick="calculateSubtotal()">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <img src="admin/<?=$cart['image']?>" class="img-fluid rounded-start" alt="<?= $cart['product_name'] ?>">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title"><?= $cart['product_name'] ?></h5>
-                                                <p class="card-text">Color: <?= $cart['color'] ?></p>
-                                                <p class="card-text">Price: <span name="price"><?= $cart['price'] ?></span></p>
-                                                <p class="card-text">Quantity: <input type="number" min="1" value="<?= $cart['quantity'] ?>" name="quantity" oninput="updateQuantity(this, <?= $cart['price'] ?>, total<?= $key ?>)"></p>
-                                                <p class="card-text">Total Price: <span id="total<?= $key ?>"><?=  (int) $cart['price'] * (int) $cart['quantity']  ?></span></p>
-                                                <p class="card-text"><small class="text-muted">Date Created: <?= $cart['created_at'] ?></small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" name="items[<?= $key ?>][product_name]" value="<?= $cart['product_name'] ?>">
-                                <input type="hidden" name="items[<?= $key ?>][quantity]" value="<?= $cart['quantity'] ?>">
-                                <input type="hidden" name="items[<?= $key ?>][price]" value="<?= $cart['price'] ?>">
-                            <?php } ?>
-
-                            <!-- <p>Subtotal: <span id="subtotal"></span></p>
-                                <input type="hidden" name="subtotal" id="hiddenSubtotal">
-                            <button class="btn btn-outline-dark flex-shrink-0 mt-3" type="submit">Checkout</button> -->
-                    </div>
-                    <div class="col-md-4 mt-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5><b>Summary</b></h5>
-                                <hr>
-                                <div class="row mt-3">
-                                    <div class="col">Sub Total</div>
-                                    <div  class="col text-right"> <span id="subtotal"></span></div>
-                                
-                                    <input type="hidden" name="subtotal" id="hiddenSubtotal">
-                                </div>
-                                <button class="btn btn-outline-dark flex-shrink-0 mt-3" type="submit">Checkout</button>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
-                    <?php } else{ ?>
-                    <div style="height: 60vh"></div>
-                <?php } ?>
-            </div>
+                        
+                    ?>
+                </span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link me-2 btn btn-outline-dark" id="received-tab" data-bs-toggle="tab" data-bs-target="#received-tab-pane" type="button" role="tab" aria-controls="received-tab-pane" aria-selected="false" >
+                Received
+                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                    <?php if(isset($receivedItemsCount)) {
+                        echo  $receivedItemsCount ;
+                        }else{
+                        echo "0";
+                        }
+                        
+                    ?>
+                </span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link me-2 btn btn-outline-dark" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled-tab-pane" type="button" role="tab" aria-controls="cancelled-tab-pane" aria-selected="false" >
+                Cancelled
+                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                    <?php if(isset($cancelledItemsCount)) {
+                        echo  $cancelledItemsCount ;
+                        }else{
+                        echo "0";
+                        }
+                        
+                    ?>
+                </span>
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="cart-tab-pane" role="tabpanel" aria-labelledby="cart-tab" tabindex="0">
+            <?php include_once("customer-cart-cart-tab.php") ?>
         </div>
-    </body>
-</html>
+        <div class="tab-pane fade" id="checked-tab-pane" role="tabpanel" aria-labelledby="checked-tab" tabindex="0">
+            <?php include_once("customer-cart-checked-out-tab.php") ?>
+        </div>
+        <div class="tab-pane fade show " id="processing-tab-pane" role="tabpanel" aria-labelledby="processing-tab" tabindex="0">
+            <?php include_once("customer-cart-processing-tab.php") ?>
+        </div>
+        <div class="tab-pane fade show " id="shipped-tab-pane" role="tabpanel" aria-labelledby="shipped-tab" tabindex="0">
+            <?php include_once("customer-cart-shipped-tab.php") ?>
+        </div>
+        <div class="tab-pane fade" id="received-tab-pane" role="tabpanel" aria-labelledby="received-tab" tabindex="0">
+            <?php include_once("customer-cart-received-tab.php") ?>
+        </div>
+        <div class="tab-pane fade" id="cancelled-tab-pane" role="tabpanel" aria-labelledby="cancelled-tab" tabindex="0">
+            <?php include_once("customer-cart-cancelled-tab.php") ?>
+        </div>
+
+    </div>
+</div>
+
 <?php include_once("./includes/scripts.php"); ?>
 <?php include_once("./includes/footer.php"); ?>
 
     <script>
-            $(document).ready(function() {
-                $('#customerCartTable').DataTable();
-            });
+    $(document).ready(function() {
+        $('#customerCartTable').DataTable();
+    });
+
+
+    document.querySelector('#checkout-form').addEventListener('submit', function(e) {
+        // Prevent the default form submission
+        e.preventDefault();
+
+        // Create a new FormData object
+        let formData = new FormData(e.target);
+
+        let checkboxes = document.getElementsByName('cartCheckbox');
+        let quantities = document.getElementsByName('quantity');
+        let prices = document.getElementsByName('price');
+        let product_ids = document.getElementsByName('product_id');
+        let color_ids = document.getElementsByName('color_id');
+        let cart_ids = document.getElementsByName('cart_id');
+        const checkoutOrders = [];
+
+        console.log(`product_ids: ${product_ids}`)
+        console.log(`color_ids: ${color_ids}`)
+        console.log(`cart_ids: ${cart_ids}`)
+
+        checkboxes.forEach((element, key) => {
+            if (element.checked) {
+                console.log(`product_ids[${key}]: ${product_ids[key].value}`)
+                console.log(`color_ids[${key}]: ${color_ids[key].value}`)
+                console.log(`cart_ids[${key}]: ${cart_ids[key].value}`)
+                const productId = product_ids[key].value
+                const colorId = color_ids[key].value
+                const cartId = cart_ids[key].value
+
+                checkoutOrders.push({
+                    id: element.id,
+                    product_id: productId,
+                    cart_id: cartId,
+                    color_id: colorId,
+                    quantity: quantities[key].value,
+                    price: prices[key].innerHTML,
+                    subtotal: quantities[key].value * prices[key].innerHTML,
+                })
+            }
+        });
+    
+        console.log("checkoutOrders: ", checkoutOrders)
+
+        // Iterate over the checkoutOrders array and append each item to the FormData
+        checkoutOrders.forEach((item, index) => {
+            for (var key in item) {
+                formData.append(`checkoutOrders[${index}][${key}]`, item[key]);
+            }
+        });
+
+        // Use fetch or XMLHttpRequest to send the form data
+        fetch('customer-checkout.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status == 200){
+                alert("Succesfully Checked out!");
+                window.location.href = "customer-cart.php";
+            }else{
+                alert(data.message);
+                window.location.href = "customer-cart.php";
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+
+    function toggle(source) {
+        console.log('sadas')
+        checkboxes = document.getElementsByName('cartCheckbox');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+        calculateSubtotal();
+    }
+
+    function updateQuantity(input, price, total) {
+        if (input.value < 1) input.value = 1;
+        total.innerHTML = price * input.value;
+        calculateSubtotal();
+    }
+
+    function calculateSubtotal() {
+        var checkboxes = document.getElementsByName('cartCheckbox');
+        var quantities = document.getElementsByName('quantity');
+        var prices = document.getElementsByName('price');
+        var subtotal = 0;
+        var hiddenInput = document.getElementById('hiddenSubtotal');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            if (checkboxes[i].checked) {
+                subtotal += quantities[i].value * prices[i].innerHTML;
+            }
+        }
+        document.getElementById('subtotal').innerHTML = subtotal;
+        hiddenInput.value = subtotal;
+
+        if(Number(subtotal)){
+            document.getElementById('checkout-btn').disabled = false;
+        }else{
+            document.getElementById('checkout-btn').disabled = true;
+        }
+    }
     </script>

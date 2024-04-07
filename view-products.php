@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-md-6">
                     
-                    <h3 class="display-4 fw-bolder"><?= 'Product'. ': '. $products->name  ?></h3>
+                    <h3 class="display-4 fw-bolder"><?=  $products->name  ?></h3>
 
                     <div class="fs-5 mb-3">
                         <div class="small mb-1 lead"><?= 'Price'. ': '. '₱'. $products->price  ?></div>
@@ -75,10 +75,18 @@
                             <?php if( isset($_SESSION["loggedInUser"]) ) { ?>
                                 <input type="hidden" name="customer_id" value="<?=$client_id?>">
 
-                                <button class="btn btn-outline-dark flex-shrink-0" name="add-cart" type="submit">
-                                    <i class="bi-cart-fill me-1"></i>
-                                    Add to cart
-                                </button>
+                                <?php if( count($product_colors) > 0 ){ ?>
+                                    <button class="btn btn-outline-dark flex-shrink-0" name="add-cart" type="submit">
+                                        <i class="bi-cart-fill me-1"></i>
+                                        Add to cart
+                                    </button>
+                                <?php } else {?>
+                                    <button class="btn btn-outline-dark flex-shrink-0" disabled >
+                                        <i class="bi-cart-fill me-1"></i>
+                                        Add to cart (Out of Stock)
+                                    </button>
+                                <?php } ?>
+                                
 
                             <?php } else {?>
                                 <button class="btn btn-outline-dark flex-shrink-0" type="submit" disabled>

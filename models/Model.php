@@ -203,7 +203,7 @@ class Model
             return true;
         } catch (\Exception $e) {
             // Handle exception
-            echo "Error: " . $e->getMessage();
+            // echo "Error: " . $e->getMessage();
             return false;
         }
     }
@@ -257,7 +257,7 @@ class Model
 
         } catch (\Exception $e) {
             // Handle exception
-            echo "Error: " . $e->getMessage();
+            // echo "Error: " . $e->getMessage();
             return false;
 
         }

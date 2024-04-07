@@ -21,10 +21,10 @@
 
 
         <!-- Section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
+        <section class="py-2">
+            <div class="container px-2 px-lg-5 ">
                 <h3 id="product_list">PRODUCT LIST: </h3>
-                <div class="row gx-4 gx-lg-3 row-cols-2 row-cols-md-4 justify-content-center">
+                <div class="row gx-2 gx-lg-3 row-cols-2 row-cols-md-4 justify-content-center">
                     <?php include_once("./includes/display-products.php"); ?>
                 </div>
             </div>

@@ -8,6 +8,21 @@
         echo "</pre>";
     }
 
+    function getImageLink($image){
+        $img_link = '';
+        if(!$image){
+            $img_link = 'https://dummyimage.com/450x450/dee2e6/6c757d.jpg';
+        }else{
+            if(file_exists("./admin/$image")){
+                $img_link = "./admin/$image";
+            }else{
+                $img_link = 'https://dummyimage.com/450x450/dee2e6/6c757d.jpg';
+            }
+        }
+
+        return $img_link;
+    }
+
     spl_autoload_register(function ($class) {
         include './models/' . $class . '.php';
     });

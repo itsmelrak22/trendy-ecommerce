@@ -27,12 +27,27 @@ Class Product extends Model {
             SELECT 
                 P.*, 
                 C.id as category_id,
-                C.name AS category_name
+                C.name AS category_name,
+                PC.stock_qty,
+                PC.name as color_name,
+                PC.image,
+                PC.id as color_id
             FROM products AS P
             LEFT JOIN categories AS C ON P.category_id = C.id
-            WHERE P.deleted_at IS NULL
+            LEFT JOIN product_colors AS PC ON P.id = PC.product_id
+            AND P.deleted_at IS NULL
             ORDER BY P.created_at DESC
         ")->getAll();
+        // $categories = $instance->setQuery("
+        //     SELECT 
+        //         P.*, 
+        //         C.id as category_id,
+        //         C.name AS category_name
+        //     FROM products AS P
+        //     LEFT JOIN categories AS C ON P.category_id = C.id
+        //     WHERE P.deleted_at IS NULL
+        //     ORDER BY P.created_at DESC
+        // ")->getAll();
     
         return $categories;
     }

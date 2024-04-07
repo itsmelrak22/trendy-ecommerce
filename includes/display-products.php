@@ -10,26 +10,29 @@
             $value['name'],
             $value['price'],
             $value['id'],
+            $value['color_name'],
+            $value['image'],
         );
     }
 
 
-    function addItemInProductList($name, $price, $id ){
-
+    function addItemInProductList($name, $price, $id, $color_name, $image ){
+        $img_link = getImageLink($image);
         echo '
 
             <div class="col mb-5">
                 <div class="card h-100">
 
                     <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x450/dee2e6/6c757d.jpg" alt="..." />
+                    <img class="card-img-top" src="'. $img_link .'" alt="..." />
 
                     <!-- Product details-->
-                    <div class="card-body p-4">
+                    <div class="card-body p-3">
                         <div class="text-center">
 
                             <!-- Product name-->
-                            <h5 class="fw-bolder">'. $name .' </h5>
+                            <h4 class="fw-bolder">'. $name .'</h4>
+                            <p class=""> ( '. $color_name .' ) </p>
 
                             <!-- Product price-->
                             ₱'. $price .'.00
