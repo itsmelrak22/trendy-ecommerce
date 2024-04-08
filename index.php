@@ -16,7 +16,7 @@
             </div>
         </header>
 
-        <?php  include_once("./includes/top-four-sales.php"); ?>
+        <?php // include_once("./includes/top-four-sales.php"); ?>
 
 
 

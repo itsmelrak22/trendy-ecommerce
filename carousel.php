@@ -82,6 +82,12 @@
       #carouselExampleIndicators .carousel-item{
          /* min-height: 450px !important; */
       }
+
+      .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* or 'contain' to see the whole image */
+      }
     </style>
     <!-- Custom styles for this template -->
     <link href="css/carousel.css" rel="stylesheet">
@@ -141,33 +147,38 @@
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-    <div class="carousel-inner">
+    <div class="carousel-inner" >
+
       <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+      <img src="./assets/carousel/1.png" alt="">
+
+        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg> -->
         <div class="container">
           <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p>
+            <!-- <h1>Example headline.</h1> -->
+            <!-- <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p> -->
             <!-- <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p> -->
           </div>
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+        <img src="./assets/carousel/2.jpg" alt="">
+        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg> -->
         <div class="container">
           <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p>
+            <!-- <h1>Example headline.</h1>
+            <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p> -->
             <!-- <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p> -->
           </div>
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+        <img src="./assets/carousel/3.jpg" alt="">
+        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg> -->
         <div class="container">
           <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p>
+            <!-- <h1>Example headline.</h1>
+            <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p> -->
             <!-- <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p> -->
           </div>
         </div>
