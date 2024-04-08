@@ -22,7 +22,6 @@ if ( isset( $_POST['edit-order-detail'] ) && $_POST['edit-order-detail'] ){
             'updated_at' => new \DateTime,
         ];
         $result = $carts->update($param, $value['cart_id']);
-    
     }
 
 

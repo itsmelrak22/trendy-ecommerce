@@ -43,7 +43,7 @@ spl_autoload_register(function ($class) {
 
     }
 
-  diplayDataTest($data);
+//   diplayDataTest($data);
 
 ?>
 
