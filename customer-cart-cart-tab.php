@@ -1,5 +1,53 @@
+<style>
+    #cart-item-container .avatar-lg {
+        height: 5rem;
+        width: 5rem;
+    }
 
-<div class="row container"  >
+    #cart-item-container  .font-size-18 {
+        font-size: 18px!important;
+    }
+
+    #cart-item-container  .text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #cart-item-container  a {
+        text-decoration: none!important;
+    }
+
+    #cart-item-container  .w-xl {
+        min-width: 160px;
+    }
+
+    #cart-item-container  .card {
+        margin-bottom: 24px;
+        -webkit-box-shadow: 0 2px 3px #e4e8f0;
+        box-shadow: 0 2px 3px #e4e8f0;
+    }
+
+    #cart-item-container  .card {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid #eff0f2;
+        border-radius: 1rem;
+    }
+</style>
+
+
+<div class="row container" id="cart-item-container" >
         <div class=" card col-md-8 mt-2" >
         <?php if( isset($cartItems) ){?>
         <form id="checkout-form">
@@ -7,53 +55,126 @@
             <input class="form-check-input" type="checkbox" onClick="toggle(this)" /> Select All
 
             <div class="card-text" style="height: 74vh ; overflow-y:auto !important; overflow:auto;">
+
+
                 <?php foreach ($cartItems as $key => $cart) { ?>
         
-                    <?php $img_link = getImageLink($cart['image']);  ?>
-                    <div class="card mb-3">
-                        <div class=" container card-text row">
-                            <div>
-                                <input type="hidden" name="product_id" value="<?= $cart['product_id'] ?>">
-                                <input type="hidden" name="color_id" value="<?= $cart['color_id'] ?>">
-                                <input type="hidden" name="cart_id" value="<?= $cart['id'] ?>">
-                            </div>
-                            <div class="mt-2 col-md-1">
-                                <input class="form-check-input" type="checkbox" name="cartCheckbox" id="<?=$cart['id']?>" onClick="calculateSubtotal()">
-                            </div>
-                            <div class="mt-5 col-md-3">
-                                <img src="<?= $img_link?>" class=" card-img-top" alt="<?= $cart['product_name'] ?>">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?= $cart['product_name'] ?></h5>
-                                    <p class="card-text">Color: <?= $cart['color'] ?></p>
-                                    <p class="card-text">Price: <span name="price"><?= $cart['price'] ?></span></p>
-                                    <p class="card-text">Quantity: <input type="number" min="1" value="<?= $cart['quantity'] ?>" name="quantity" oninput="updateQuantity(this, <?= $cart['price'] ?>, total<?= $key ?>)"></p>
-                                    <p class="card-text">Total Price: <span id="total<?= $key ?>"><?=  (int) $cart['price'] * (int) $cart['quantity']  ?></span></p>
-                                    <p class="card-text"><small class="text-muted">Date Created: <?= $cart['created_at'] ?></small></p>
-                                </div>
-                            </div>
-                        </div>
+                    <?php 
+                        $img_link = getImageLink($cart['image']);  
+                        require_once('customer-cart-cards.php');
+                        generateCartCards($cart, $key, $img_link);
+                    ?>
+                    <div>
+                        <input type="hidden" name="product_id" value="<?= $cart['product_id'] ?>">
+                        <input type="hidden" name="color_id" value="<?= $cart['color_id'] ?>">
+                        <input type="hidden" name="cart_id" value="<?= $cart['id'] ?>">
                     </div>
 
-                <?php } ?>
+            <?php }?>
+
             </div>
             <input type="hidden" name="client_id" value="<?=$client_id?>">
             </div>
         <div class="col-md-4 mt-2">
-            <div class="card">
-                <div class="card-body">
-                    <h5><b>Summary</b></h5>
-                    <hr>
-                    <div class="row mt-3">
-                        <div class="col">Sub Total</div>
-                        <div  class="col text-right"> <span id="subtotal"></span></div>
-                    
-                        <input type="hidden" name="subtotal" id="hiddenSubtotal">
+            <div class="mt-5 mt-lg-0">
+                <div class="card border shadow-none">
+                    <div class="card-header bg-transparent border-bottom py-3 px-4">
+                        <h5 class="font-size-16 mb-0">Order Summary 
+                        <!-- <span class="float-end">#MN0124</span> -->
+                        </h5>
                     </div>
-                    <button class="btn btn-outline-dark flex-shrink-0 mt-3" type="submit" id="checkout-btn" disabled>Checkout</button>
+                    <div class="card-body p-4 pt-2">
+
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Mode of payment :</td>
+                                        <td>
+                                        <select class="form-control form-control-sm" id="mop" name="mop" placeholder="col-form-label-sm" required oninput="calculateSubtotal()">
+                                            <option selected disabled readonly>Please select...</option>
+                                            <option value="cod">Cash on Delivery</option>
+                                            <option value="online">Online Payment</option>
+                                        </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Total : </td>
+                                        <td class="text-end">₱  <span id="itemTotal">0</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping Fee :</td>
+                                        <td class="text-end">₱ <span id="shippingFee">0</span></td>
+                                    </tr>
+                                
+                                    <tr class="bg-light">
+                                        <th>Total :</th>
+                                        <td class="text-end">
+                                            <span class="fw-bold">
+                                                <span id="subtotal">0</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                   
+
+                                </tbody>
+                            </table>
+                            <div class="card-body">
+                                <div class="row mt-3">
+                                    <input type="hidden" name="subtotal" id="hiddenSubtotal">
+                                    <!-- <button class="btn btn-outline-dark flex-shrink-0 mt-3" type="submit" id="checkout-btn" disabled>Checkout</button> -->
+                                    <button class="btn btn-outline-dark flex-shrink-0 mt-3" id="checkout-btn" type="button" disabled data-bs-toggle="modal" data-bs-target="#confirmCheckout">Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end table-responsive -->
+                    </div>
                 </div>
             </div>
+
+            <!-- Modal -->
+                <div class="modal fade" id="confirmCheckout" tabindex="-1" aria-labelledby="confirmCheckoutLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="confirmCheckoutLabel">Confirm Payment?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mt-3">
+                            <div class="row" id="paypalContainer" style="display: none;">
+                                <div class="col-lg-12">
+                                    <div class="p-5">
+                                        <form class="user">
+                                            <div class="form-group row">
+                                                <div class="form-group col-12">
+                                                    <label for="paymentInput">Yout Amount to be paid:</label>
+                                                    <input name="payment" id="paymentInput" type="text" class="form-control form-control-user" placeholder="Payment" required readonly>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr>
+                                    </div>
+                                    <div class="card-body container-fluid" id="paypalDiv">
+                                        <span>Available Payment Methods:</span>
+                                        <hr>
+                                        <div class="form-group col-12">
+                                            <div class="paypal-button-container" id="paypal-button-container"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick="proceedCheckOut()">Close</button>
+                        <input type="button" class="btn btn-primary" value="Proceeed" onClick="proceedCheckOut(true)">
+                    </div>
+                    </div>
+                </div>
+                </div>
+
         </div>
         </form>
         <?php } else{ ?>
@@ -61,3 +182,243 @@
         <?php } ?>
     </div>
 </div>
+
+
+<script>
+    let transaction = {};
+
+    paypal.Buttons({
+        style: {
+            layout: 'vertical',
+            color:  'blue',
+            shape:  'rect',
+            label:  'paypal'
+        },
+        createOrder: function(data, actions) {
+            // Set up the transaction
+            let value = document.getElementById('hiddenSubtotal').value;
+            
+            return actions.order.create({
+                purchase_units: [{
+                amount: {
+                    value:value
+
+                }
+                }]
+            });
+        },
+        // onApprove: function(data, actions) {
+        //     // This function captures the funds from the transaction.
+        //     return actions.order.capture().then(function(details) {
+        //     // This function shows a transaction success message to your buyer.
+        //         alert('Transaction completed by ' + details.payer.name.given_name);
+        //     });
+        // }
+        onApprove: function(data, actions) {
+            console.log('data', data)
+            console.log('actions', actions)
+            // This function captures the funds from the transaction.
+            return actions.order.capture().then(function(details) {
+            // This function shows a transaction success message to your buyer.
+                console.log('details.payers ' + details.payer);
+                console.log('details.purchase_units ' + details.purchase_units);
+
+                //status
+                //id
+
+
+                proceedCheckOut(true);
+            });
+        }
+    }).render('#paypal-button-container');
+
+    function checkOption(){
+        let option = document.getElementById('orderOption');
+        let paypalContainer = document.getElementById('paypalContainer');
+        console.log(option.value);
+        if (option.value == 2){
+            paypalContainer.style.display = "block";
+        }else{
+            paypalContainer.style.display = "none";
+
+        }
+    }
+
+    function togglePaypalDiv(show, subtotal = 0){
+        let paypalContainer = document.getElementById('paypalContainer');
+        if(show && subtotal){
+            const subtotal = document.getElementById('hiddenSubtotal').value;
+            const paymentInput = document.getElementById('paymentInput');
+            paymentInput.value = 0;
+            paymentInput.value = subtotal;
+
+            console.log('paymentInput.value', paymentInput.value)
+            console.log('subtotal', subtotal)
+
+            paypalContainer.style.display = "block";
+        }else{
+            paypalContainer.style.display = "none";
+        }
+    }
+</script>
+
+<script>
+    document.querySelector('#checkout-form').addEventListener('submit', function(e) {
+        // Prevent the default form submission
+        e.preventDefault();
+
+        // Create a new FormData object
+        let formData = new FormData(e.target);
+
+        let checkboxes = document.getElementsByName('cartCheckbox');
+        let quantities = document.getElementsByName('quantity');
+        let prices = document.getElementsByName('price');
+        let product_ids = document.getElementsByName('product_id');
+        let color_ids = document.getElementsByName('color_id');
+        let cart_ids = document.getElementsByName('cart_id');
+        const checkoutOrders = [];
+
+
+        checkboxes.forEach((element, key) => {
+            if (element.checked) {
+                const productId = product_ids[key].value
+                const colorId = color_ids[key].value
+                const cartId = cart_ids[key].value
+
+                checkoutOrders.push({
+                    id: element.id,
+                    product_id: productId,
+                    cart_id: cartId,
+                    color_id: colorId,
+                    quantity: quantities[key].value,
+                    price: prices[key].innerHTML,
+                    subtotal: quantities[key].value * prices[key].innerHTML,
+                })
+            }
+        });
+    
+
+        // Iterate over the checkoutOrders array and append each item to the FormData
+        checkoutOrders.forEach((item, index) => {
+            for (var key in item) {
+                formData.append(`checkoutOrders[${index}][${key}]`, item[key]);
+            }
+        });
+
+        // Use fetch or XMLHttpRequest to send the form data
+        fetch('customer-checkout.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status == 200){
+                alert("Succesfully Checked out!");
+                window.location.href = "customer-cart.php";
+            }else{
+                alert(data.message);
+                window.location.href = "customer-cart.php";
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+
+    
+    function proceedCheckOut(bool){
+        if(bool){
+            let form =  document.querySelector('#checkout-form');
+            let event = new Event('submit');
+            form.dispatchEvent(event);
+        }
+    }
+
+    function proceedPaidCheckOut(bool, paymentDetails){
+        if(bool){
+            let form =  document.querySelector('#checkout-form');
+            let formData = new FormData(form);
+
+            formData.append(`payment_status`, paymentDetails.status);
+            formData.append(`payment_id`, paymentDetails.id);
+            let event = new Event('submit');
+            form.dispatchEvent(event);
+        }
+    }
+        
+
+    function toggle(source) {
+        checkboxes = document.getElementsByName('cartCheckbox');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+        calculateSubtotal();
+    }
+
+    function updateQuantity(input, price, total, key) {
+        if (input.value < 1) input.value = 1;
+        total.innerHTML = price * input.value;
+        calculateSubtotal();
+        updateSpecificTotal(key)
+        
+    }
+
+    function updateSpecificTotal(key){
+        const totalId = `total-id-${key}`;
+        const priceId = `price-id-${key}`;
+        const quantityId = `quantity-id-${key}`;
+
+        let totalText = document.getElementById(totalId);
+        let priceText = document.getElementById(priceId);
+        let quantityText = document.getElementById(quantityId).value;
+        totalText.innerHTML = +priceText.innerHTML * quantityText ;
+    }
+
+    function calculateSubtotal() {
+        let checkboxes = document.getElementsByName('cartCheckbox');
+        let quantities = document.getElementsByName('quantity');
+        let prices = document.getElementsByName('price');
+        let subtotal = 0;
+        let itemTotal = 0;
+        let hiddenInput = document.getElementById('hiddenSubtotal');
+
+        let mop = document.getElementById('mop');
+        let shippingfee = 0
+
+        for(let i=0, n=checkboxes.length;i<n;i++) {
+            if (checkboxes[i].checked) {
+                itemTotal += quantities[i].value * prices[i].innerHTML;
+            }
+        }
+
+        subtotal = eval(itemTotal + shippingfee);
+        document.getElementById('itemTotal').innerHTML = itemTotal;
+        document.getElementById('subtotal').innerHTML = subtotal;
+        hiddenInput.value = subtotal;
+
+        if( mop.value == 'cod' ){ // + 75
+            shippingfee = 75;
+            togglePaypalDiv(false, 0)
+        }else if (mop.value == "online"){
+            shippingfee = 0;
+            togglePaypalDiv(true, subtotal)
+        }
+
+        document.getElementById('shippingFee').innerHTML = shippingfee;
+
+        if((Number(subtotal) && itemTotal) && hasSelectedModeOfPayment()){
+            document.getElementById('checkout-btn').disabled = false;
+        }else{
+            document.getElementById('checkout-btn').disabled = true;
+        }
+    }
+
+    function hasSelectedModeOfPayment(){
+        const mop = document.getElementById('mop');
+        console.log('mop', mop)
+        if(mop.value == 'cod' || mop.value == 'online') return true;
+        return false
+    }
+</script>
+
+

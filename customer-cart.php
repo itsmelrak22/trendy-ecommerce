@@ -123,7 +123,6 @@
                         }else{
                         echo "0";
                         }
-                        
                     ?>
                 </span>
             </button>
@@ -155,114 +154,10 @@
 <?php include_once("./includes/scripts.php"); ?>
 <?php include_once("./includes/footer.php"); ?>
 
+
     <script>
     $(document).ready(function() {
         $('#customerCartTable').DataTable();
     });
 
-
-    document.querySelector('#checkout-form').addEventListener('submit', function(e) {
-        // Prevent the default form submission
-        e.preventDefault();
-
-        // Create a new FormData object
-        let formData = new FormData(e.target);
-
-        let checkboxes = document.getElementsByName('cartCheckbox');
-        let quantities = document.getElementsByName('quantity');
-        let prices = document.getElementsByName('price');
-        let product_ids = document.getElementsByName('product_id');
-        let color_ids = document.getElementsByName('color_id');
-        let cart_ids = document.getElementsByName('cart_id');
-        const checkoutOrders = [];
-
-        console.log(`product_ids: ${product_ids}`)
-        console.log(`color_ids: ${color_ids}`)
-        console.log(`cart_ids: ${cart_ids}`)
-
-        checkboxes.forEach((element, key) => {
-            if (element.checked) {
-                console.log(`product_ids[${key}]: ${product_ids[key].value}`)
-                console.log(`color_ids[${key}]: ${color_ids[key].value}`)
-                console.log(`cart_ids[${key}]: ${cart_ids[key].value}`)
-                const productId = product_ids[key].value
-                const colorId = color_ids[key].value
-                const cartId = cart_ids[key].value
-
-                checkoutOrders.push({
-                    id: element.id,
-                    product_id: productId,
-                    cart_id: cartId,
-                    color_id: colorId,
-                    quantity: quantities[key].value,
-                    price: prices[key].innerHTML,
-                    subtotal: quantities[key].value * prices[key].innerHTML,
-                })
-            }
-        });
-    
-        console.log("checkoutOrders: ", checkoutOrders)
-
-        // Iterate over the checkoutOrders array and append each item to the FormData
-        checkoutOrders.forEach((item, index) => {
-            for (var key in item) {
-                formData.append(`checkoutOrders[${index}][${key}]`, item[key]);
-            }
-        });
-
-        // Use fetch or XMLHttpRequest to send the form data
-        fetch('customer-checkout.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.status == 200){
-                alert("Succesfully Checked out!");
-                window.location.href = "customer-cart.php";
-            }else{
-                alert(data.message);
-                window.location.href = "customer-cart.php";
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    });
-
-    function toggle(source) {
-        console.log('sadas')
-        checkboxes = document.getElementsByName('cartCheckbox');
-        for(var i=0, n=checkboxes.length;i<n;i++) {
-            checkboxes[i].checked = source.checked;
-        }
-        calculateSubtotal();
-    }
-
-    function updateQuantity(input, price, total) {
-        if (input.value < 1) input.value = 1;
-        total.innerHTML = price * input.value;
-        calculateSubtotal();
-    }
-
-    function calculateSubtotal() {
-        var checkboxes = document.getElementsByName('cartCheckbox');
-        var quantities = document.getElementsByName('quantity');
-        var prices = document.getElementsByName('price');
-        var subtotal = 0;
-        var hiddenInput = document.getElementById('hiddenSubtotal');
-        for(var i=0, n=checkboxes.length;i<n;i++) {
-            if (checkboxes[i].checked) {
-                subtotal += quantities[i].value * prices[i].innerHTML;
-            }
-        }
-        document.getElementById('subtotal').innerHTML = subtotal;
-        hiddenInput.value = subtotal;
-
-        if(Number(subtotal)){
-            document.getElementById('checkout-btn').disabled = false;
-        }else{
-            document.getElementById('checkout-btn').disabled = true;
-        }
-    }
     </script>
