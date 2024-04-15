@@ -19,5 +19,5 @@ if ( isset( $_POST['edit-category'] ) && $_POST['edit-category'] ){
 
 
     header("Location: category-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

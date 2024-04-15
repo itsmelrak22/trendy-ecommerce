@@ -9,7 +9,7 @@
     $order = new Order;
     $orders = $order->getOrderAndOrderDetails();
 
-    // diplayDataTest($orders);
+    // displayDataTest($orders);
 ?>
 
 <body id="page-top">

@@ -4,7 +4,7 @@
 
 
 
-    // diplayDataTest($products);
+    // displayDataTest($products);
 
     foreach ($products as $key => $value) {
 

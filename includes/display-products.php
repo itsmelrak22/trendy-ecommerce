@@ -2,7 +2,7 @@
     $product = new Product;
     $products = $product->getProducts();
 
-    // diplayDataTest($products);
+    // displayDataTest($products);
 
     foreach ($products as $key => $value) {
 
@@ -12,11 +12,12 @@
             $value['id'],
             $value['color_name'],
             $value['image'],
+            $value['color_id'] ? $value['color_id'] : 0,
         );
     }
 
 
-    function addItemInProductList($name, $price, $id, $color_name, $image ){
+    function addItemInProductList($name, $price, $id, $color_name, $image, $color_id ){
         $img_link = getImageLink($image);
         echo '
 
@@ -42,7 +43,7 @@
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="./view-products.php?id='. $id .'">View</a>
+                            <a class="btn btn-outline-dark mt-auto" href="./view-products.php?id='.$id.'&color_id='.$color_id.'">View</a>
                         </div>
                     </div>
 

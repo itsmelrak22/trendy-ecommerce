@@ -2,7 +2,7 @@
     require_once  '../vendor/autoload.php';
 
     session_start(); 
-    function diplayDataTest($array){
+    function displayDataTest($array){
         echo "<pre>";
         echo print_r($array);
         echo "</pre>";
@@ -19,7 +19,7 @@
 
         $cartItem = new Cart;
         $cartItems = $cartItem->getCustomerCartItems( $client_id );
-        // diplayDataTest($cartItems);
+        // displayDataTest($cartItems);
         $cartItemCount = 0;
 
         foreach ($cartItems as $key => $value) {

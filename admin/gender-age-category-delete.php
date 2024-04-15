@@ -14,5 +14,5 @@ if ( isset( $_POST['delete-gender-age-category'] ) && $_POST['delete-gender-age-
     $result = $gender_age_category->delete($id);
 
     header("Location: gender-age-category-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

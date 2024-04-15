@@ -11,7 +11,7 @@ spl_autoload_register(function ($class) {
   $order = new Order;
   $orders = $order->getOrderAndOrderDetails($id);
 
-//   diplayDataTest($orders);
+//   displayDataTest($orders);
 
 ?>
 

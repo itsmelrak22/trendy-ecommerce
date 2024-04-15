@@ -7,7 +7,7 @@
     }
 require_once  '../vendor/autoload.php';
 
-function diplayDataTest($array){
+function displayDataTest($array){
     echo "<pre>";
     echo print_r($array);
     echo "</pre>";

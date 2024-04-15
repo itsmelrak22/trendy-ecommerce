@@ -52,6 +52,38 @@ Class Product extends Model {
         return $categories;
     }
 
+    public static function getRelatedProducts(){
+        $instance = new self;
+        $categories = $instance->setQuery("
+            SELECT 
+                P.*, 
+                C.id as category_id,
+                C.name AS category_name,
+                PC.stock_qty,
+                PC.name as color_name,
+                PC.image,
+                PC.id as color_id
+            FROM products AS P
+            LEFT JOIN categories AS C ON P.category_id = C.id
+            LEFT JOIN product_colors AS PC ON P.id = PC.product_id
+            AND P.deleted_at IS NULL
+            ORDER BY P.created_at DESC
+            LIMIT 4
+        ")->getAll();
+        // $categories = $instance->setQuery("
+        //     SELECT 
+        //         P.*, 
+        //         C.id as category_id,
+        //         C.name AS category_name
+        //     FROM products AS P
+        //     LEFT JOIN categories AS C ON P.category_id = C.id
+        //     WHERE P.deleted_at IS NULL
+        //     ORDER BY P.created_at DESC
+        // ")->getAll();
+    
+        return $categories;
+    }
+
     public static function findProduct($id, $color_id = 0){
         $qry = "
             SELECT 

@@ -13,5 +13,5 @@ if ( isset( $_POST['delete-cart'] ) && $_POST['delete-cart'] ){
     $result = $cart->delete($id);
 
     header("Location: cart-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

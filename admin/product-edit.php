@@ -10,7 +10,7 @@ spl_autoload_register(function ($class) {
 
   $product = new Product;
   $product_data = $product->find($id);
-//   diplayDataTest($gender_age_category_data);
+//   displayDataTest($gender_age_category_data);
 ?>
 
 <body id="page-top">

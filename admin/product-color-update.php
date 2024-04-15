@@ -9,7 +9,7 @@ if ( isset( $_POST['edit-product-color'] ) && $_POST['edit-product-color'] ){
     $id = $_POST['id'];
     $product_id = $_POST['product_id'];
 
-    // diplayDataTest($_FILES);
+    // displayDataTest($_FILES);
     // exit();
 
     if(isset( $_FILES["fileToUpload"] ) && $_FILES["fileToUpload"]["tmp_name"]){

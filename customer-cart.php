@@ -1,6 +1,17 @@
 <?php 
     include_once("./includes/header.php");
-    
+
+    if( !isset($client_id) ) {
+        echo "
+            <script>
+                let link = document.createElement('a');
+                link.href = 'index.php';
+                link.click()
+            </script>
+        ";
+    }
+    require_once('customer-cart-cards.php');
+
     $checkedOutItems = $cartItem->getCustomerCartCheckedoutItems( $client_id );
     $checkedOutItemsCount = 0;
 
@@ -8,6 +19,7 @@
         $checkedOutItemsCount += (int) $value['quantity']; 
 
     }
+
 
     $processingItems = $cartItem->getCustomerCartProcessingItems( $client_id );
     $processingItemsCount = 0;
@@ -50,6 +62,55 @@
     display: block; /* shows the content when the tab is active */
 }
 </style>
+
+<style>
+    #cart-item-container .avatar-lg {
+        height: 5rem;
+        width: 5rem;
+    }
+
+    #cart-item-container  .font-size-18 {
+        font-size: 18px!important;
+    }
+
+    #cart-item-container  .text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #cart-item-container  a {
+        text-decoration: none!important;
+    }
+
+    #cart-item-container  .w-xl {
+        min-width: 160px;
+    }
+
+    #cart-item-container  .card {
+        margin-bottom: 24px;
+        -webkit-box-shadow: 0 2px 3px #e4e8f0;
+        box-shadow: 0 2px 3px #e4e8f0;
+    }
+
+    #cart-item-container  .card {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid #eff0f2;
+        border-radius: 1rem;
+    }
+</style>
+
 
 <div class="container mt-2" >
     <ul class="nav nav-tabs" id="myTab" role="tablist">

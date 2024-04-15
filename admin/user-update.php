@@ -21,5 +21,5 @@ if ( isset( $_POST['edit-user'] ) && $_POST['edit-user'] ){
 
 
     header("Location: user-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

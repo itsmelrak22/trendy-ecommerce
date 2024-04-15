@@ -18,5 +18,5 @@ if ( isset( $_POST['edit-gender-age-category'] ) && $_POST['edit-gender-age-cate
 
 
     header("Location: gender-age-category-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

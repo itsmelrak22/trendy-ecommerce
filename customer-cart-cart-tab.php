@@ -1,50 +1,3 @@
-<style>
-    #cart-item-container .avatar-lg {
-        height: 5rem;
-        width: 5rem;
-    }
-
-    #cart-item-container  .font-size-18 {
-        font-size: 18px!important;
-    }
-
-    #cart-item-container  .text-truncate {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    #cart-item-container  a {
-        text-decoration: none!important;
-    }
-
-    #cart-item-container  .w-xl {
-        min-width: 160px;
-    }
-
-    #cart-item-container  .card {
-        margin-bottom: 24px;
-        -webkit-box-shadow: 0 2px 3px #e4e8f0;
-        box-shadow: 0 2px 3px #e4e8f0;
-    }
-
-    #cart-item-container  .card {
-        position: relative;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        min-width: 0;
-        word-wrap: break-word;
-        background-color: #fff;
-        background-clip: border-box;
-        border: 1px solid #eff0f2;
-        border-radius: 1rem;
-    }
-</style>
 
 
 <div class="row container" id="cart-item-container" >
@@ -61,7 +14,6 @@
         
                     <?php 
                         $img_link = getImageLink($cart['image']);  
-                        require_once('customer-cart-cards.php');
                         generateCartCards($cart, $key, $img_link);
                     ?>
                     <div>
@@ -220,14 +172,8 @@
             // This function captures the funds from the transaction.
             return actions.order.capture().then(function(details) {
             // This function shows a transaction success message to your buyer.
-                console.log('details.payers ' + details.payer);
-                console.log('details.purchase_units ' + details.purchase_units);
 
-                //status
-                //id
-
-
-                proceedCheckOut(true);
+                proceedPaidCheckOut(true, details);
             });
         }
     }).render('#paypal-button-container');
@@ -334,18 +280,44 @@
         }
     }
 
-    function proceedPaidCheckOut(bool, paymentDetails){
+    function proceedPaidCheckOut(bool, details){
         if(bool){
             let form =  document.querySelector('#checkout-form');
             let formData = new FormData(form);
+            let payer = `${details.payer.name.given_name} ${details.payer.name.surname}`
+            let id = details.id;
+            let status = details.status;
 
-            formData.append(`payment_status`, paymentDetails.status);
-            formData.append(`payment_id`, paymentDetails.id);
+            const paymentInfo = [ 
+                { "payment_status" : status },
+                { "payment_id" : id },
+                { "payer" : payer },
+               ]
+
+            // Append the data to the form
+            formData.append('payment_status', status);
+            formData.append('payment_id', id);
+            formData.append('payer', payer);
+
+            paymentInfo.forEach( (el, key) => {
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = Object.keys(el)[0];
+                input.value = el[input.name];
+
+                form.appendChild(input)
+            });
+
+
+
+   
+
             let event = new Event('submit');
             form.dispatchEvent(event);
         }
     }
-        
+
+
 
     function toggle(source) {
         checkboxes = document.getElementsByName('cartCheckbox');
@@ -391,20 +363,21 @@
             }
         }
 
-        subtotal = eval(itemTotal + shippingfee);
         document.getElementById('itemTotal').innerHTML = itemTotal;
-        document.getElementById('subtotal').innerHTML = subtotal;
-        hiddenInput.value = subtotal;
+
 
         if( mop.value == 'cod' ){ // + 75
             shippingfee = 75;
             togglePaypalDiv(false, 0)
         }else if (mop.value == "online"){
             shippingfee = 0;
-            togglePaypalDiv(true, subtotal)
+            togglePaypalDiv(true, itemTotal)
         }
 
+        subtotal = eval(itemTotal + shippingfee);
         document.getElementById('shippingFee').innerHTML = shippingfee;
+        document.getElementById('subtotal').innerHTML = subtotal;
+        hiddenInput.value = subtotal;
 
         if((Number(subtotal) && itemTotal) && hasSelectedModeOfPayment()){
             document.getElementById('checkout-btn').disabled = false;
@@ -415,7 +388,6 @@
 
     function hasSelectedModeOfPayment(){
         const mop = document.getElementById('mop');
-        console.log('mop', mop)
         if(mop.value == 'cod' || mop.value == 'online') return true;
         return false
     }

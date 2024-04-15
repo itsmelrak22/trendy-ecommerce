@@ -1,7 +1,7 @@
 <?php
     require_once  './vendor/autoload.php';
 
-function diplayDataTest($array){
+function displayDataTest($array){
     echo "<pre>";
     echo print_r($array);
     echo "</pre>";
@@ -60,7 +60,7 @@ try {
         }else{
             echo "Server error";
         }
-        // diplayDataTest($param);
+        // displayDataTest($param);
     }else{
         echo "Else";
     }

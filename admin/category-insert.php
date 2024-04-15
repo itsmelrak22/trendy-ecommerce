@@ -19,5 +19,5 @@ if ( isset( $_POST['add-category'] ) && $_POST['add-category'] ){
     $result = $categories->save($param);
 
     header("Location: category-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

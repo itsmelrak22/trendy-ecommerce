@@ -27,7 +27,7 @@ try {
         if($result){
             header("Location: cart-list.php");
         }
-        // diplayDataTest($param);
+        // displayDataTest($param);
     }
 } catch (\Exception $e) {
     echo $e->getMessage();

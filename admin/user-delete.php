@@ -13,5 +13,5 @@ if ( isset( $_POST['delete-user'] ) && $_POST['delete-user'] ){
     $result = $user->delete($id);
 
     header("Location: user-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

@@ -6,8 +6,25 @@
         include '../models/' . $class . '.php';
     });
 
+    function getStatusText($status){
+        switch ($status) {
+            case 1:
+                return "Checked out";
+            case 2:
+                return "Processing";
+            case 3:
+                return "Shipped";
+            case 4:
+                return "Delivered";
+            case 11:
+                return "Cancelled";
+        }
+    }
+
     $cart = new Cart;
-    $carts = $cart->all();
+    $carts = $cart->getCarts();
+
+    // displayDataTest($carts);
 ?>
 
 <body id="page-top">
@@ -80,46 +97,31 @@
                                 <table class="table table-bordered" id="cartTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Customer Name </th>
-                                            <th>Product Name </th>
+                                            <th>Customer </th>
+                                            <th>Product </th>
                                             <th>Total Price</th>
                                             <th>Status</th>
                                             <th>Date Created</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Customer Name </th>
-                                            <th>Product Name </th>
+                                            <th>Customer </th>
+                                            <th>Product </th>
                                             <th>Total Price</th>
                                             <th>Status</th>
                                             <th>Date Created</th>
-                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php foreach ($carts as $key => $cart) { ?>
                                             <tr>
-                                                <td> <?= $cart['customer_id'] ?> </td>
-                                                <td> <?= $cart['product_id'] ?> </td>
+                                                <td> <?= $cart['email'] ?> </td>
+                                                <td> <?= $cart['product_name'] ?> </td>
                                                 <td> <?= $cart['total_price'] ?> </td>
-                                                <td> <?= $cart['status'] ?> </td>
+                                                <td> <?= getStatusText($cart['status']) ?> </td>
                                                 <td> <?= $cart['created_at'] ?> </td>
-                                                <td>
-                                                    <form action="cart-delete.php" method="POST">
-                                                        <a href="cart-edit.php?id=<?=$cart['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        <a href="cart-view.php?id=<?=$cart['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                            <i class="fas fa-arrow-right"></i>
-                                                        </a>
-                                                        <input type="hidden" name="id" value="<?=$cart['id']?>">
-                                                        <button type="submit" name="delete-cart" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
+                                                
                                             </tr>
                                         <?php } ?>
                                     </tbody>

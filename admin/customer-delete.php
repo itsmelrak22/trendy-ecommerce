@@ -13,5 +13,5 @@ if ( isset( $_POST['delete-customer'] ) && $_POST['delete-customer'] ){
     $result = $customer->delete($id);
 
     header("Location: customer-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

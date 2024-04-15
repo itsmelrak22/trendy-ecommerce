@@ -24,5 +24,5 @@ if ( isset( $_POST['edit-sale'] ) && $_POST['edit-sale'] ){
 
 
     header("Location: sale-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

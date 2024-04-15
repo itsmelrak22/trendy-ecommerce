@@ -14,5 +14,5 @@ if ( isset( $_POST['delete-category'] ) && $_POST['delete-category'] ){
     $result = $category->delete($id);
 
     header("Location: category-list.php");
-    // diplayDataTest($param);
+    // displayDataTest($param);
 }

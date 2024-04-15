@@ -16,6 +16,7 @@
                                 <input type="hidden" name="product_id" value="<?= $cart['product_id'] ?>">
                                 <input type="hidden" name="color_id" value="<?= $cart['color_id'] ?>">
                                 <input type="hidden" name="cart_id" value="<?= $cart['id'] ?>">
+                                <input  name="price" value="<?= $cart['price'] ?>" >
                             </div>
                             <div class="mt-2 col-md-1">
                                 <input class="form-check-input" type="checkbox" name="cartCheckbox" id="<?=$cart['id']?>" onClick="calculateSubtotal()">
@@ -27,7 +28,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title"><?= $cart['product_name'] ?></h5>
                                     <p class="card-text">Color: <?= $cart['color'] ?></p>
-                                    <p class="card-text">Price: <span name="price"><?= $cart['price'] ?></span></p>
+                                    <p class="card-text">Price: <span class="priceText"><?= $cart['price'] ?></span></p>
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon3">Price</span>
                                         <input type="text" class="form-control" readonly disabled value="<?= $cart['price'] ?>">

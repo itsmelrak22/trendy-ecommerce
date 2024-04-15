@@ -10,7 +10,7 @@ spl_autoload_register(function ($class) {
 
   $user = new AdminUser;
   $users = $user->find($id);
-//   diplayDataTest($gender_age_category_data);
+//   displayDataTest($gender_age_category_data);
 ?>
 
 <body id="page-top">

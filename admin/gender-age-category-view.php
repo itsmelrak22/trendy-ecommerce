@@ -10,7 +10,7 @@ spl_autoload_register(function ($class) {
 
   $gender_age_category = new GenderAgeCategory;
   $gender_age_category_data = $gender_age_category->find($id);
-//   diplayDataTest($gender_age_category_data);
+//   displayDataTest($gender_age_category_data);
 ?>
 
 <body id="page-top">

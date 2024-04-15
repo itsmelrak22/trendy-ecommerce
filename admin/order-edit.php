@@ -43,7 +43,7 @@ spl_autoload_register(function ($class) {
 
     }
 
-//   diplayDataTest($data);
+//   displayDataTest($data);
 
 ?>
 
@@ -260,15 +260,22 @@ spl_autoload_register(function ($class) {
                                     <span class="input-group-text" id="basic-addon3"> </span>
                                 </div>
                                 <input type="hidden" name="id" value="<?= $data->id ?>">
-
                                 <select class="form-control" name="status" id="status" placeholder="...">
-                                    <option value="2">Processing</option>
-                                    <option value="3">Shipped</option>
-                                    <option value="4">Delivered</option>
-                                    <!-- <option value="10">Declined</option> -->
-                                    <option value="11">Canceled</option>
+                                    <option value="2" <?= $data->order_details[0]['status'] == 2 ? 'selected' : '' ?>>Processing</option>
+                                    <option value="3" <?= $data->order_details[0]['status'] == 3 ? 'selected' : '' ?>>Shipped</option>
+                                    <option value="4" <?= $data->order_details[0]['status'] == 4 ? 'selected' : '' ?>>Delivered</option>
+                                    <!-- <option value="10" <?= $data->order_details[0]['status'] == 10 ? 'selected' : '' ?>>Declined</option> -->
+                                    <option value="11" <?= $data->order_details[0]['status'] == 11 ? 'selected' : '' ?>>Canceled</option>
                                 </select>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
+                                <label class="form-check-label font-weight-bold text-primary" for="send_email">
+                                    Send Email?
+                                </label>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="modal-footer">

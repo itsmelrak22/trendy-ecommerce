@@ -6,11 +6,11 @@
         include '../models/' . $class . '.php';
     });
 
-    $product = new Product;
-    $products = $product->getProducts();
-
     $sale = new Sale;
-    $sales = $sale->all();
+    $sales_ = $sale->getAllSales();
+
+    // displayDataTest( $sales_);
+
 ?>
 
 <body id="page-top">
@@ -83,55 +83,38 @@
                                 <table class="table table-bordered" id="saleTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Customer Name </th>
-                                            <th>Product Name </th>
-                                            <th>Quantity</th>
-                                            <th>Sale Price</th>
-                                            <th>Sales Date</th>
+                                            <th>Customer </th>
+                                            <th>Order #</th>
+                                            <th>Order Details</th>
                                             <th>MOP</th>
-                                            <th>Sub Total</th>
+                                            <th>Total</th>
                                             <th>Order Date</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Customer Name </th>
-                                            <th>Product Name </th>
-                                            <th>Quantity</th>
-                                            <th>Sale Price</th>
-                                            <th>Sales Date</th>
+                                            <th>Customer </th>
+                                            <th>Order #</th>
+                                            <th>Order Details</th>
                                             <th>MOP</th>
-                                            <th>Sub Total</th>
+                                            <th>Total</th>
                                             <th>Order Date</th>
-                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php foreach ($sales as $key => $sale) { ?>
+                                        <?php foreach ($sales_ as $key => $sale) { ?>
                                             <tr>
-                                                <td> <?= $sale['customer_id'] ?> </td>
-                                                <td> <?= $sale['product_id'] ?> </td>
-                                                <td> <?= $sale['qty'] ?> </td>
-                                                <td> <?= $sale['sale_price'] ?> </td>
-                                                <td> <?= $sale['sales_date'] ?> </td>
-                                                <td> <?= $sale['mop'] ?> </td>
-                                                <td> <?= $sale['sub_total'] ?> </td>
-                                                <td> <?= $sale['order_date'] ?> </td>
+                                                <td> <?= $sale['email'] ?> </td>
+                                                <td> <?= $sale['order_id'] ?> </td>
                                                 <td>
-                                                    <form action="sale-delete.php" method="POST">
-                                                        <a href="sale-edit.php?id=<?=$sale['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        <a href="sale-view.php?id=<?=$sale['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                            <i class="fas fa-arrow-right"></i>
-                                                        </a>
-                                                        <input type="hidden" name="id" value="<?=$sale['id']?>">
-                                                        <button type="submit" name="delete-sale" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
+                                                    <a href="order-view.php?id=<?=$sale['order_id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View Order Details">
+                                                        <i class="bi bi-list-ul"></i>
+                                                    </a>
                                                 </td>
+                                                <td> <?= $sale['mop'] ?> </td>
+                                                <td> <?= $sale['total'] ?> </td>
+                                                <td> <?= $sale['created_at'] ?> </td>
+                                               
                                             </tr>
                                         <?php } ?>
                                     </tbody>

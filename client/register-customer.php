@@ -1,30 +1,53 @@
+<?php
+    require_once  '../vendor/autoload.php';
+    session_start();
+
+    spl_autoload_register(function ($class) {
+        include '../models/' . $class . '.php';
+    });
+
+    date_default_timezone_set("Asia/Manila");
 
 
-<div class="container mt-5">
-    <h2>Registration Form</h2>
-    <form>
-        <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <input type="text" class="form-control" id="fullName" placeholder="Enter full name">
-        </div>
-        <div class="form-group">
-            <label for="emailAddress">Email address</label>
-            <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
-        </div>
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="checkTerms">
-            <label class="form-check-label" for="checkTerms">Accept Terms & Conditions</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+    try {
+        if ( isset( $_POST['add-customer'] ) && $_POST['add-customer'] ){
 
+            $existingUser = Customer::findByEmail($_POST['reg_email']);
+
+            if ($existingUser) {
+                throw new Exception("User with this email already exists");
+            }
+            $param = [
+                
+                'first_name' => $_POST['first_name'],
+                'last_name' => $_POST['last_name'],
+                'username' => $_POST['username'],
+                'email' => $_POST['reg_email'],
+                'password' => $_POST['reg_password'],
+                'phone_no' => $_POST['phone_number'],
+                'province' => $_POST['province'],
+                'city_municipality' => $_POST['city_municipality'],
+                'barangay' => $_POST['barangay'],
+                'complete_address' => $_POST['complete_add'],
+                'created_at' => new \DateTime,
+                'updated_at' => new \DateTime,
+            ];
+        
+            $customers = new Customer;
+            $result = $customers->save($param);
+        
+        
+            if($result){
+                $_SESSION['snackbar_color'] = "green";
+                $_SESSION['success_message'] = "Registration successful!";
+                header("Location: ../index.php");
+            }
+        }
+    } catch (\Exception $e) {
+        $_SESSION['snackbar_color'] = "red";
+        $_SESSION['error_message'] = $e->getMessage();
+        echo $e->getMessage();
+        header("Location: ../index.php");
+    }
+
+?>

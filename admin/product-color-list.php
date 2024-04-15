@@ -20,7 +20,7 @@
     $parentProduct = $parent->find($product_id);
 
     // print_r($product_colors);
-    // diplayDataTest($product_colors);
+    // displayDataTest($product_colors);
 
 ?>
 

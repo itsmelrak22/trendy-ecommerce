@@ -14,6 +14,9 @@
             <div>
                 <?php include_once('carousel.php'); ?>
             </div>
+            <div>
+                <?php include_once('snackbar.php'); ?>
+            </div>
         </header>
 
         <?php // include_once("./includes/top-four-sales.php"); ?>
