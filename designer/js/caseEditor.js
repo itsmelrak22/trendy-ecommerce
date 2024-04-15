@@ -118,6 +118,7 @@ var line4;
 		
 	  	$(".img-polaroid").click(function(e){
 	  		var el = e.target;	  		
+
 	  		var design = $(this).attr("src");
 	  		$('#phoneDiv').css({
 				'backgroundImage': 'url(' + design +')',
