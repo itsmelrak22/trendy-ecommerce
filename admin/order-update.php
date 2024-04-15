@@ -63,7 +63,7 @@ if ( isset( $_POST['edit-order-detail'] ) && $_POST['edit-order-detail'] ){
         if($send_email){
             $fullname = $customer_->first_name .' '. $customer_->last_name;
             $email = $customer_->email;
-            $email = "medinformationsystem44@gmail.com";
+            // $email = "medinformationsystem44@gmail.com";
 
 
             sendCustomerEmail($email, $fullname, $status, "Order: $status confirmation.");
