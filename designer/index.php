@@ -1,3 +1,12 @@
+<?php session_start(); 
+
+if( !isset($_SESSION['loggedInUser']) ){
+	echo "<script>
+		alert('Please Login!');
+		window.location = '../';
+	</script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -89,9 +98,9 @@
 		    	<div class="tabbable"> <!-- Only required for left/right tabs -->
 				  <ul class="nav nav-tabs">
 				  	<li class="active"><a href="#tab1" data-toggle="tab">T-Shirt Options</a></li>				    
-				    <li><a href="#tab2" data-toggle="tab">Gravatar</a></li>
+				    <li><a href="#tab2" data-toggle="tab">Avatars</a></li>
 				  </ul>
-				  <div class="tab-content">
+				  <div class="tab-content" style="overflow: hidden !important;">
 				     <div class="tab-pane active" id="tab1">
 				     	<div class="well">
 					      	<h3>Shirt Styles</h3>
@@ -143,8 +152,46 @@
 									height: 100px;
 									margin: 10px;
 								}
+
+								#avatarlist .row {
+									display: flex;
+									flex-wrap: wrap;
+									padding: 0 4px;
+								}
+
+									/* Create four equal columns that sits next to each other */
+								#avatarlist .column {
+									flex: 25%;
+									max-width: 25%;
+									padding: 0 4px;
+									margin-left: 3px;
+									margin-right: 3px;
+								}
+
+								#avatarlist .column img {
+									margin-top: 8px;
+									vertical-align: middle;
+									width: 100%;
+								}
+
+								/* Responsive layout - makes a two column-layout instead of four columns */
+								#avatarlist @media screen and (max-width: 800px) {
+									.column {
+										flex: 50%;
+										max-width: 50%;
+									}
+								}
+
+								/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+								#avatarlist @media screen and (max-width: 600px) {
+									.column {
+										flex: 100%;
+										max-width: 100%;
+									}
+								}
+
 							</style>
-							<div id="avatarlist">
+							<div id="avatarlist" >
 								<?php include_once("stock-avatar-list.php") ?>
 							</div>	
 
@@ -181,18 +228,18 @@
 													image.set({
 														left: left,
 														top: top,
-														angle: 0,
-														padding: 10,
-														cornersize: 10,
+														// angle: 0,
+														// padding: 10,
+														// cornersize: 10,
 														hasRotatingPoint: true
 													});
 
 													// Set custom scale
-													var minScale = 0.1; // Minimum scale value
-													image.scaleX = minScale;
-													image.scaleY = minScale;
+													// var minScale = 0.1; // Minimum scale value
+													// image.scaleX = minScale;
+													// image.scaleY = minScale;
 													canvas.add(image);
-													canvas.renderAll();
+													// canvas.renderAll();
 												});
 
 											})
@@ -272,30 +319,50 @@
 		      <div class="well">
 		      	<h3>Select Sizes</h3>
 			      <p>
-			      	<table class="table">
-			      		<tr>
-			      			<td><input type="checkbox">&emsp;S</td>
-			      			<td align="right"><input min="0" style="width: 40px;" value="1" type="number"></td>
-			      		</tr>
-			      		<tr>
-			      			<td><input type="checkbox">&emsp;M</td>
-			      			<td align="right"><input min="0" style="width: 40px;" placeholder="1" type="number"></td>
-			      		</tr>
-			      		<tr>
-			      			<td><input type="checkbox">&emsp;L</td>
-			      			<td align="right"><input min="0" style="width: 40px;"  placeholder="1" type="number"></td>
-			      		</tr>
-			      		<tr>
-			      			<td><input type="checkbox">&emsp;XL</td>
-			      			<td align="right"><input min="0" style="width: 40px;"  placeholder="1" type="number"></td>
-			      		</tr>
-                        <tr>
-			      			<td><input type="checkbox">&emsp;XXL</td>
-			      			<td align="right"><input min="0" style="width: 40px;"  placeholder="1" type="number"></td>
-			      		</tr>
-			      	</table>			
+					<form action="" id="customize_form">
+						<div class="form-action">
+							<select name="customize_by" id="customize_by">
+								<option value="embroide">Embroide</option>
+								<option value="print">Print</option>
+							</select>
+						</div>
+						<table class="table">
+							<tr>
+								<td><input type="checkbox" name="s-checked">&emsp;S</td>
+								<td align="right">
+									<input name="s" min="0" style="width: 40px;" value="0" type="number">
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" name="m-checked">&emsp;M</td>
+								<td align="right">
+								<input name="m" min="0" style="width: 40px;" value="0" type="number">
+								<td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" name="l-checked">&emsp;L</td>
+								<td align="right">
+									<input name="l"  min="0" style="width: 40px;" value="0" type="number">
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" name="xl-checked">&emsp;XL</td>
+								<td align="right">
+									<input name="xl"  min="0" style="width: 40px;" value="0" type="number">
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" name="xxl-checked">&emsp;XXL</td>
+								<td align="right">
+									<input name="xxl" min="0" style="width: 40px;" value="0" type="number">
+								</td>
+							</tr>
+						</table>	
+						<input type="hidden" name="customize-page-submit" value="true">
+						<input type="hidden" name="customer_id" value="<?=$_SESSION['loggedInUser']['id']?>">
+					</form>
 			      </p>
-					<button type="button" class="btn btn-large btn-block btn-success" name="addToTheBag" id="addToTheBag">Add to Cart <i class="icon-briefcase icon-white"></i></button>
+					<button type="button" class="btn btn-large btn-block btn-success" name="addToTheBag"  id="addToTheBag">Add to Cart <i class="icon-briefcase icon-white"></i></button>
 		      </div>		      		       		   
 		    </div>
 		
@@ -304,27 +371,64 @@
 		</section>
     </div><!-- /container -->
 
-    
+	<style>
+        /* The overlay */
+        .overlay {
+            height: 100%;
+            width: 100%;
+            display: none;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgba(0,0,0, 0.5);
+        }
+
+    </style>
+
+	<div id="myOverlay" class="overlay" style="display: block;">
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
+
+
 <!-- Footer ================================================== -->
     <script>
+    	let overlay = document.getElementById('myOverlay');
+
+		function toggleOverlay(value, overlay){
+			if(value){
+				overlay.style.display = "block";
+			}else{
+				overlay.style.display = "none";
+			}
+		}
+
         $(document).ready(function(){
-   $("#tshirttype").change(function(){
-     $("img[name=tshirtview]").attr("src",$(this).val());
+				$("#tshirttype").change(function(){
+					$("img[name=tshirtview]").attr("src",$(this).val());
+				});
 
-   });
 
-});
+			setTimeout(() => {
+				$('#flipback').click()
+				toggleOverlay(false, overlay)
+			}, 1000);
+
+		});
     </script>
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster --> 
     <script>
+	
+
         var valueSelect = $("#tshirttype").val();
         $("#tshirttype").change(function(){
             valueSelect = $(this).val();
         });
-        $('#flipback').click(
-		   function() {	
+
+        $('#flipback').click(() => {	
+			console.log('clicked')
                if (valueSelect === "img/crew_front.png") {
                    if ($(this).attr("data-original-title") == "Show Back View") {
 			   		$(this).attr('data-original-title', 'Show Front View');			        		       
@@ -335,6 +439,8 @@
 			        {
 			           var json = JSON.parse(b);
 			           canvas.loadFromJSON(b);
+
+
 			        }
 			        catch(e)
 			        {}
@@ -471,19 +577,199 @@
         });	
     </script>
     <script src="js/bootstrap.min.js"></script>  
-<script type="text/javascript" src="js/tshirtEditor.js"></script>
+	<script type="text/javascript" src="js/tshirtEditor.js"></script>
 	<script type="text/javascript" src="js/jquery.miniColors.min.js"></script>
-    <script type="text/javascript">
+    <script>
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-35639689-1']);
-  _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+		document.getElementById('customize_form').addEventListener('submit', function(event) {
+			event.preventDefault(); // Prevent default form submission
+			let objectDatas = {
+				front : objects.front,
+				back : objects.back,
+			}
+
+			// Get the current timestamp
+			let timestamp = Date.now();
+
+			// Create the filename with the timestamp
+			let frontImage_ = 'frontImage_' + timestamp + '.png';
+			let backImage_ = 'backImage_' + timestamp + '.png';
+
+
+			let formData = new FormData(this); // Create FormData from the form
+			formData.append('objectDatas', JSON.stringify(objectDatas)); // Append the object
+			formData.append('frontImage_', objects.frontImage, frontImage_);
+			formData.append('backImage_', objects.backImage, backImage_);
+
+			fetch('submit-customize.php', { // Replace '/submit' with your actual submission URL
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if(data == 'DONE!'){
+					alert("Customization Required sucess, we have sent you an email regarding with your request!");
+					window.location = "../";
+				}
+				toggleOverlay(false, overlay);
+
+			})
+			.catch((error) => {
+				toggleOverlay(false, overlay);
+				console.error('Error:', error);
+			});
+
+		});
+
+		const objects = {
+			frontImage: null,
+			front: [],
+			backImage: null,
+			back: [],
+		}
+
+		function getCanvasObjects(){
+			let positionObject = [...canvas.getObjects()];
+			let internalObject = [];
+
+			positionObject.forEach(function(object) {
+				if (object.type === 'text') {
+					internalObject.push( { 
+						type: object.type, 
+						value : object.text, 
+						fill: object.fill, 
+						fontFamily: object.fontFamily, 
+						fontSize: object.fontSize,
+						fontWeight: object.fontWeight,
+						strokeStyle: object.strokeStyle
+						// add other style properties as needed
+					})
+				} else if (object.type === 'image') {
+					internalObject.push( { type: object.type, value : object._element.currentSrc } )
+				}
+				// Add more conditions here for other object types as needed
+			});
+
+			return internalObject;
+		}
+
+
+
+		$('#addToTheBag').click( async () => {
+
+			// testConvert()
+			// return;
+			let testOverlay = document.getElementById('myOverlay');
+			console.log('testOverlay', testOverlay)
+
+			objects.front.length = 0
+			objects.back.length = 0
+
+			toggleOverlay(true, testOverlay);
+
+			console.log($("#tshirtFacing").attr("src"));
+			let bgImage = $("#tshirtFacing").attr("src");
+			let position = null;
+			if(bgImage.includes("front")){
+				position = 'front';
+			}else if(bgImage.includes("back")){
+				position = 'back';
+			}
+		
+			console.log('position', position)
+			objects[position].push(await getCanvasObjects())
+			objects[`${position}Image`] = await convertCanvasToBlob()
+			console.log(objects[position]);
+			$('#flipback').click()
+			
+			await setTimeout(async  () => {
+
+				 console.log($("#tshirtFacing").attr("src"));
+				bgImage = $("#tshirtFacing").attr("src");
+				position = null;
+				if(bgImage.includes("front")){
+					position = 'front';
+				}else if(bgImage.includes("back")){
+					position = 'back';
+				}
+			
+				console.log('position', position)
+				objects[position].push(await getCanvasObjects())
+				objects[`${position}Image`] = await convertCanvasToBlob()
+				console.log(objects[position]);
+
+			}, 500);
+
+
+
+			await setTimeout(async () => {
+				 $('#flipback').click()
+
+			}, 1000);
+
+
+
+
+			setTimeout(() => {
+				let form =  document.querySelector('#customize_form');
+				let event = new Event('submit');
+				form.dispatchEvent(event);
+			}, 1000);
+
+		} )
+
+		function convertCanvasToBlob(){
+			return html2canvas(document.getElementById('shirtDiv')).then(function(canvas) {
+				return new Promise(function(resolve, reject) {
+					canvas.toBlob(function(blob) {
+						resolve(blob);
+					}, 'image/png');
+				});
+			});
+		}
+
+		// function dataURLToBlob(dataURL) {
+		// 	var parts = dataURL.split(';base64,');
+		// 	var contentType = parts[0].split(":")[1];
+		// 	var raw = window.atob(parts[1]);
+		// 	var rawLength = raw.length;
+		// 	var uInt8Array = new Uint8Array(rawLength);
+
+		// 	for (var i = 0; i < rawLength; ++i) {
+		// 		uInt8Array[i] = raw.charCodeAt(i);
+		// 	}
+
+		// 	return new Blob([uInt8Array], {type: contentType});
+		// }
+
+
+		// function testConvert(){
+		// 				// Then in your JavaScript code
+		// 	html2canvas(document.getElementById('shirtDiv')).then(function(canvas) {
+		// 		// canvas is the resulting HTML canvas element
+		// 		// you can insert it into the DOM or save it as an image
+		// 		var img = canvas.toDataURL("image/png");
+		// 		// Now you can download the image
+		// 		var link = document.createElement('a');
+		// 		link.href = img;
+		// 		link.download = 'image.png';
+		// 		link.click();
+		// 	});
+		// }
+
+		// function testConvert() {
+		// 	return html2canvas(document.getElementById('shirtDiv')).then(function(canvas) {
+		// 		return new Promise(function(resolve, reject) {
+		// 			canvas.toBlob(function(blob) {
+		// 				resolve(blob);
+		// 			}, 'image/png');
+		// 		});
+		// 	});
+		// }
+
+
+
 
 </script>
   </body>

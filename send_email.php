@@ -6,6 +6,7 @@
 function sendCustomerEmail($MAIL_TO, $RECEIVER_NAME, $STATUS, $SUBJECT){
 
     $statusMessages = array(
+        "Pending" => "We have successfully received your custom order! Our team is now in the process of reviewing and preparing it. We will get back to you immediately once we have an update. Thank you for choosing our store!",
         "Processing" => "We have confirmed your order! We're currently preparing your items. You'll receive an update when your order is ready to ship. Thank you for choosing our store!",
         // "TO_SHIP" => "Your order has been processed and is now ready to be shipped. We'll update you once your package is on its way. Thank you for shopping with us!",
         "Shipped" => "Good news! Your order is on its way. We hope you're as excited as we are!",

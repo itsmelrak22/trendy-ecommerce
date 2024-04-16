@@ -52,6 +52,12 @@
         $cancelledItemsCount += (int) $value['quantity']; 
 
     }
+
+    $customizeOrder = new CustomizeOrder;
+    $customizeItems = $customizeOrder->getCustomerCustomOrders($client_id);
+    $customizeItemsCount = count($customizeItems);
+
+
 ?>
 <style>
    .tab-pane {
@@ -188,6 +194,19 @@
                 </span>
             </button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link me-2 btn btn-outline-dark" id="customize-order-tab" data-bs-toggle="tab" data-bs-target="#customize-order-tab-pane" type="button" role="tab" aria-controls="customize-order-tab-pane" aria-selected="false" >
+                Custom Order
+                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                    <?php if(isset($customizeItemsCount)) {
+                        echo  $customizeItemsCount ;
+                        }else{
+                        echo "0";
+                        }
+                    ?>
+                </span>
+            </button>
+        </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="cart-tab-pane" role="tabpanel" aria-labelledby="cart-tab" tabindex="0">
@@ -207,6 +226,9 @@
         </div>
         <div class="tab-pane fade" id="cancelled-tab-pane" role="tabpanel" aria-labelledby="cancelled-tab" tabindex="0">
             <?php include_once("customer-cart-cancelled-tab.php") ?>
+        </div>
+        <div class="tab-pane fade" id="customize-order-tab-pane" role="tabpanel" aria-labelledby="customize-order-tab" tabindex="0">
+            <?php include_once("customer-custom-order-tab.php") ?>
         </div>
 
     </div>
