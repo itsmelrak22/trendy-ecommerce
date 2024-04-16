@@ -9,10 +9,7 @@
         ?>
                 <div class="card mb-3">
                     <div class=" container card-text row">
-                        <div>
-                            <input type="hidden" name="product_id" value="<?= $item['product_id'] ?>">
-                            <input type="hidden" name="color_id" value="<?= $item['color_id'] ?>">
-                        </div>
+                      
                         <div class="my-2 col-md-3">
                             <h5 class="card-title">FRONT</h5>
 
