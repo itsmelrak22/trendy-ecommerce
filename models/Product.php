@@ -33,9 +33,11 @@ Class Product extends Model {
                 PC.image,
                 PC.id as color_id
             FROM products AS P
-            LEFT JOIN categories AS C ON P.category_id = C.id
-            LEFT JOIN product_colors AS PC ON P.id = PC.product_id
-            AND P.deleted_at IS NULL
+            LEFT JOIN categories AS C 
+            ON P.category_id = C.id
+            LEFT JOIN product_colors AS PC 
+            ON P.id = PC.product_id
+            WHERE P.deleted_at IS NULL
             ORDER BY P.created_at DESC
         ")->getAll();
         // $categories = $instance->setQuery("
@@ -66,7 +68,7 @@ Class Product extends Model {
             FROM products AS P
             LEFT JOIN categories AS C ON P.category_id = C.id
             LEFT JOIN product_colors AS PC ON P.id = PC.product_id
-            AND P.deleted_at IS NULL
+            WHERE P.deleted_at IS NULL
             ORDER BY P.created_at DESC
             LIMIT 4
         ")->getAll();
