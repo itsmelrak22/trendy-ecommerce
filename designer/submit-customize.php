@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
             
         if($result){
             $email = $_SESSION['loggedInUser']['email'];
-            $email = "medinformationsystem44@gmail.com";
+            // $email = "medinformationsystem44@gmail.com";
             $fullname = $_SESSION['loggedInUser']['first_name'] . ' ' . $_SESSION['loggedInUser']['last_name'];
             sendCustomerEmail($email, $fullname, "Pending", "Order: Pending confirmation.");
             echo json_encode("DONE!");
