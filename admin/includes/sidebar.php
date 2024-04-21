@@ -54,6 +54,12 @@ $location = basename($url);
         <i class="fas fa-fw fa-table"></i>
         <span>Orders</span></a>
 </li>
+<!-- Nav Item - Product List Menu -->
+<li class="nav-item <?= $location ==  "custom-order-list.php" ? "active" : ""?>">
+    <a class="nav-link" href="custom-order-list.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Custom Orders</span></a>
+</li>
 
 <!-- Nav Item - Carts -->
 <li class="nav-item <?= $location ==  "cart-list.php" ? "active" : ""?>">

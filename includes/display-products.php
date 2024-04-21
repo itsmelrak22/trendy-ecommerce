@@ -3,6 +3,17 @@
     $products = $product->getProducts();
 
     // displayDataTest($products);
+    // echo '<div class="col-md-2">
+    //     <div class="list-group" style="padding-left: 10px;">
+    //         <h3 class="my-4">Categories</h3>';
+
+    // $categoryFilter = '<span style="cursor: pointer;" class="list-group-item list-group-item-action active" onclick="applyFilter(\'all\')">All</span>';
+    // foreach ($categories as $category) {
+    //     $categoryFilter .= '<span style="cursor: pointer;" class="list-group-item list-group-item-action" onclick="applyFilter(\'' . $category['id'] . '\')">' . $category['name'] . '</span>';
+    // }
+
+    // echo $categoryFilter . '</div></div>';
+
 
     foreach ($products as $key => $value) {
 
@@ -13,15 +24,16 @@
             $value['color_name'],
             $value['image'],
             $value['color_id'] ? $value['color_id'] : 0,
+            $value['category_id']
         );
     }
 
 
-    function addItemInProductList($name, $price, $id, $color_name, $image, $color_id ){
+    function addItemInProductList($name, $price, $id, $color_name, $image, $color_id, $category_id ){
         $img_link = getImageLink($image);
         echo '
 
-            <div class="col mb-5">
+            <div class="col mb-5 product-item" data-category="' . $category_id . '">
                 <div class="card h-100">
 
                     <!-- Product image-->
@@ -57,6 +69,19 @@
 ?>
 
 
+<script>
+    function applyFilter(categoryId) {
+        var productItems = document.querySelectorAll('.product-item');
+
+        productItems.forEach(function(item) {
+            if (categoryId === 'all' || item.getAttribute('data-category') === categoryId) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+</script>
 
 
 
