@@ -11,7 +11,7 @@ if( !isset($_SESSION['loggedInUser']) ){
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Trendy Dress Shop Customize Page</title>
+    <title>TRENDY THREADS APPAREL BY LOVE J'S STORE -  CUSTOMIZE PAGE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">

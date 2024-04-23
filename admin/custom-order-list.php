@@ -81,7 +81,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                             <th>Order ID </th>
+                                            <th>Order ID </th>
                                             <th>Customer Email </th>
                                             <th>Status </th>
                                             <th>Date Ordered</th>
@@ -90,7 +90,7 @@
                                     </tfoot>
                                     <tbody>
                                         <?php foreach ($orders as $key => $cart) { 
-                                            $jsonData = $cart['json_data'];
+                                            $jsonData = json_encode($cart);
                                             // displayDataTest($jsonData);
                                             
                                         ?>
@@ -98,7 +98,7 @@
                                             <tr>
                                                 <td> <?= $cart['id'] ?> </td>
                                                 <td> <?= $cart['email'] ?> </td>
-                                                <td> <?= $cart['status'] ?> </td>
+                                                <td> <?= $cart['status'] ? $cart['status'] : 'For Checking' ?> </td>
                                                 <td> <?= $cart['created_at'] ?> </td>
                                                 <td>
                                                     <form action="order-delete.php" method="POST">
@@ -107,10 +107,6 @@
                                                                 <i class="bi bi-stack"></i>
                                                             </span>
                                                         </button>
-                                                        <a href="order-edit.php?id=<?=$cart['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="bi bi-box-arrow-right"></i>
-                                                        </a>
-                                                      
                                                         <input type="hidden" name="id" value="<?=$cart['id']?>">
                                                         <!-- <button type="submit" name="delete-cart" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
                                                             <i class="fas fa-trash"></i>
@@ -173,7 +169,7 @@
     </div>
 
     <!-- MODALS -->
-    <form method="POST" >
+    <form method="POST" action="custom-order-update.php">
         <div class="modal" tabindex="-1" id="viewCustomOrder">
             <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
@@ -186,26 +182,43 @@
                 <div class="modal-body">
                     <div class="" id="viewOrderCard">
                         <br>
+                        <input type="hidden" name="customer_id" id="customer_id">
+                        <input type="hidden" name="id" id="id">
                         <div class="input-group">
-                            <input type="text" name="customer_id" id="customer_id" class="form-control bg-light border-0 small" placeholder="Customer Name" aria-label="Customer Name" aria-describedby="basic-addon2" required>
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <input type="text" name="product_id" id="product_id" class="form-control bg-light border-0 small" placeholder="Product Name" aria-label="Product Name" aria-describedby="basic-addon2" required>
+                            <input type="text" name="email" id="email" class="form-control bg-light border-0 small" placeholder="Customer Email" aria-label="Customer Email" aria-describedby="basic-addon2" required readonly>
                         </div>
                         <br>
                         <div class="input-group">
                             <input type="number" name="total_price" id="total_price" class="form-control bg-light border-0 small" placeholder="Total Price" aria-label="Total Price" aria-describedby="basic-addon2" required>
                         </div>
                         <br>
+                        <select class="form-control bg-light border-0 small" name="status" id="status" placeholder="Select Status " required>
+                            <option value="" disabled selected>Select Status</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Canceled">Canceled</option>
+                        </select>
+
+                        <br>
                         <div class="input-group">
-                            <input type="number" name="status" id="status" class="form-control bg-light border-0 small" placeholder="Status" aria-label="Status" aria-describedby="basic-addon2" required>
+                            <textarea name="remarks" id="remarks" class="form-control bg-light border-0 small" placeholder="Remarks" row="30" col="30"></textarea>
+                        </div>
+                        <br>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
+                            <label class="form-check-label font-weight-bold text-primary" for="send_email">
+                                Send Email?
+                            </label>
                         </div>
                         <br>
                         <div style="display: flex; justify-content: space-between;">
                             <div style="flex: 1; text-align: center; vertical-align: middle;">
                                 <label for="front_canvas_image">Front Canvas Image</label>
-                                <img id="front_canvas_image" style="max-width: 150px !important; max-height: 150px !important;" src="<?= $img_link ?>" alt="..." />
+                                <div>
+                                    <img id="front_canvas_image" style="max-width: 150px !important; max-height: 150px !important;" src="<?= $img_link ?>" alt="..." />
+                                </div>
                                 <hr>
                                 <label for="front_canvas_image_objects">Front Canvas Customize Images;</label>
                                 <div id="front_canvas_image_objects"></div>
@@ -216,7 +229,9 @@
 
                             <div style="flex: 1; text-align: center; vertical-align: middle;">
                                 <label for="back_canvas_image">Back Canvas Image</label>
+                                <div>
                                 <img id="back_canvas_image" style="max-width: 150px !important; max-height: 150px !important; " src="<?= $img_link ?>" alt="..." />
+                                </div>
                                 <hr>
                                 <label for="back_canvas_image_objects">Back Canvas Customize Images;</label>
                                 <div id="back_canvas_image_objects"></div>
@@ -230,7 +245,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" name="add-cart" value="Submit">
+                    <input type="submit" class="btn btn-primary" name="custom-edit-order-detail" value="Submit">
                 </div>
                 </div>
             </div>
@@ -256,9 +271,40 @@
 </script>
 
 <script>
-    function viewData(jsonData){
 
+    $('#viewCustomOrder').on('hidden.bs.modal', function () {
+        // Clear the contents of the text object containers
+        let frontCanvasTextObjects = document.getElementById('front_canvas_text_objects');
+        let backCanvasTextObjects = document.getElementById('back_canvas_text_objects');
+        frontCanvasTextObjects.innerHTML = '';
+        backCanvasTextObjects.innerHTML = '';
+    });
+    function viewData(cart){
+        console.log('cart', cart)
+        let jsonData = JSON.parse(cart.json_data);
         $('#viewCustomOrder').modal('show');
+
+        let id = document.getElementById('id');
+        let customerId = document.getElementById('customer_id');
+        let email = document.getElementById('email');
+        let status = document.getElementById('status');
+        let total_price = document.getElementById('total_price');
+        let remarks = document.getElementById('remarks');
+
+        customerId.value = cart.customer_id;
+        email.value = cart.email;
+        id.value = cart.id;
+
+        if(cart.status){
+            status.value = cart.status
+        }
+        if(cart.total_price){
+            total_price.value = cart.total_price
+        }
+        if(cart.remarks){
+            remarks.value = cart.remarks
+        }
+
         // Use the DOM's getElementById method to get references to the elements
         let frontCanvasImage = document.getElementById('front_canvas_image');
         let frontCanvasImageObjects = document.getElementById('front_canvas_image_objects');
@@ -276,12 +322,16 @@
         jsonData.front_canvas_image_objects.forEach(function(image) {
             let img = document.createElement('img');
             img.src = `../designer/customize/${image}`;
+            img.style.maxHeight = '150px';
+            img.style.maxWidth = '150px';
             frontCanvasImageObjects.appendChild(img);
         });
 
         jsonData.back_canvas_image_objects.forEach(function(image) {
             let img = document.createElement('img');
             img.src = `../designer/customize/${image}`;
+            img.style.maxHeight = '150px';
+            img.style.maxWidth = '150px';
             backCanvasImageObjects.appendChild(img);
         });
 
@@ -297,8 +347,7 @@
             div.innerText = textObject.value;
             backCanvasTextObjects.appendChild(div);
         });
-
-
     }
+
 
 </script>
