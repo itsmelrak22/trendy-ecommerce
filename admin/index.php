@@ -3,7 +3,13 @@
 
 
     include_once("./includes/header.php"); 
+
+    echo "<script>
+    
+		window.location = 'sale-list.php';
+    </script>";
 ?>
+
 
 <body id="page-top">
 

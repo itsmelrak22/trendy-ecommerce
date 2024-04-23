@@ -42,7 +42,7 @@ function getImageLink($image){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - Trendy Dress Shop</title>
+    <title>Admin - TRENDY THREADS APPAREL BY LOVE J'S STORE</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
