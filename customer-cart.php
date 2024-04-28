@@ -13,45 +13,45 @@
     require_once('customer-cart-cards.php');
 
     $checkedOutItems = $cartItem->getCustomerCartCheckedoutItems( $client_id );
-    $checkedOutItemsCount = 0;
+    $checkedOutItemsCount = count($checkedOutItems);
 
-    foreach ($checkedOutItems as $key => $value) {
-        $checkedOutItemsCount += (int) $value['quantity']; 
+    // foreach ($checkedOutItems as $key => $value) {
+    //     $checkedOutItemsCount += (int) $value['quantity']; 
 
-    }
+    // }
 
 
     $processingItems = $cartItem->getCustomerCartProcessingItems( $client_id );
-    $processingItemsCount = 0;
+    $processingItemsCount = count($processingItems);
 
-    foreach ($processingItems as $key => $value) {
-        $processingItemsCount += (int) $value['quantity']; 
+    // foreach ($processingItems as $key => $value) {
+    //     $processingItemsCount += (int) $value['quantity']; 
 
-    }
+    // }
 
     $shippedItems = $cartItem->getCustomerCartShippedItems( $client_id );
-    $shippedItemsCount = 0;
+    $shippedItemsCount = count($shippedItems);
 
-    foreach ($shippedItems as $key => $value) {
-        $shippedItemsCount += (int) $value['quantity']; 
+    // foreach ($shippedItems as $key => $value) {
+    //     $shippedItemsCount += (int) $value['quantity']; 
 
-    }
+    // }
 
     $receivedItems = $cartItem->getCustomerCartReceivedItems( $client_id );
-    $receivedItemsCount = 0;
+    $receivedItemsCount = count($receivedItems);
 
-    foreach ($receivedItems as $key => $value) {
-        $receivedItemsCount += (int) $value['quantity']; 
+    // foreach ($receivedItems as $key => $value) {
+    //     $receivedItemsCount += (int) $value['quantity']; 
 
-    }
+    // }
 
     $cancelledItems = $cartItem->getCustomerCartCancelledItems( $client_id );
-    $cancelledItemsCount = 0;
+    $cancelledItemsCount = count($cancelledItems);
 
-    foreach ($cancelledItems as $key => $value) {
-        $cancelledItemsCount += (int) $value['quantity']; 
+    // foreach ($cancelledItems as $key => $value) {
+    //     $cancelledItemsCount += (int) $value['quantity']; 
 
-    }
+    // }
 
     $customizeOrder = new CustomizeOrder;
     $customizeItems = $customizeOrder->getCustomerCustomOrders($client_id);

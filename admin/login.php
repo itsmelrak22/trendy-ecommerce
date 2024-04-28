@@ -23,7 +23,7 @@
             header("Location: index.php");
             exit();
         } else {
-            echo '<script> alert("Invalid email or password!")</script>';
+            echo '<script> alert("Invalid email or password.")</script>';
         }
     }
 ?>

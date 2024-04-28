@@ -2,7 +2,7 @@
 
 if( !isset($_SESSION['loggedInUser']) ){
 	echo "<script>
-		alert('Please Login!');
+		alert('Please Login');
 		window.location = '../';
 	</script>";
 }
@@ -609,7 +609,7 @@ if( !isset($_SESSION['loggedInUser']) ){
 			.then(response => response.json())
 			.then(data => {
 				if(data == 'DONE!'){
-					alert("Customization Required sucess, we have sent you an email regarding with your request!");
+					alert("Customization Required sucess, we have sent you an email regarding with your request");
 					window.location = "../";
 				}
 				toggleOverlay(false, overlay);

@@ -259,7 +259,7 @@
         .then(response => response.json())
         .then(data => {
             if(data.status == 200){
-                alert("Succesfully Checked out!");
+                alert("Succesfully Checked out.");
                 window.location.href = "customer-cart.php";
             }else{
                 alert(data.message);

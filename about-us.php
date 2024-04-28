@@ -1,7 +1,4 @@
-<?php 
-    include_once("./includes/header.php");
-?>
-<!-- About 1 - Bootstrap Brain Component -->
+
 <div style="overflow:auto;">
         <div class="container">
             <div class="row gy-3 gy-md-4 gy-lg-0 align-items-lg-center">
@@ -48,6 +45,5 @@
             </div>
         </div>
 </div>
-<?php include_once("./includes/scripts.php"); ?>
-<?php include_once("./includes/footer.php"); ?>
+
 

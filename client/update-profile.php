@@ -18,7 +18,7 @@
     displayDataTest($_POST);
 
     try {
-        if ( isset( $_POST['update_profile'] ) && $_POST['update_profile'] ){
+        if ( isset( $_POST['submit'] ) && $_POST['submit'] == "Update" ){
 
             $id = $_POST['id'];
             $param = [

@@ -7,10 +7,10 @@
     });
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST["email"];
+        $username = $_POST["username"];
         $password = $_POST["password"];
 
-        $user = CustomerLogin::loginUser($email, $password);
+        $user = CustomerLogin::loginUserViaUsername($username, $password);
         
         if ($user) {
             $_SESSION["loggedInUser"] = $user;

@@ -23,8 +23,13 @@
         </header>
 
         <?php // include_once("./includes/top-four-sales.php"); ?>
+        <hr>
 
+        <section class="py-2">
+            <?php include_once('about-us.php'); ?>
+        </section>
 
+        <hr>
 
         <!-- Section-->
         <section class="py-2">
@@ -44,13 +49,16 @@
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div class="row row-cols-2 row-cols-md-4 justify-content-center">
+                        <div class="row row-cols-2 row-cols-md-4 justify-content-center" id="productContainer" >
                             <?php include_once("./includes/display-products.php"); ?>
                         </div>
+                        <button id="loadMore" class="btn btn-primary">See More</button>
+
                     </div>
                 </div>
             </div>
         </section>
+
 
         <!-- <section class="py-2">
             <div class="container px-2 px-lg-5 ">
@@ -63,3 +71,16 @@
         <?php include_once("./includes/scripts.php"); ?>
         <?php include_once("./includes/footer.php"); ?>
 
+        <script>
+            document.getElementById('loadMore').addEventListener('click', loadMoreProducts);
+
+            // document.getElementById('load-more').addEventListener('click', function() {
+            //     var items = Array.from(document.getElementsByClassName('product-item'));
+            //     var hiddenItems = items.filter(function(item) {
+            //         return item.style.display === 'none';
+            //     });
+            //     hiddenItems.slice(0, 5).forEach(function(item) {
+            //         item.style.display = 'block';
+            //     });
+            // });
+        </script>

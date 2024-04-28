@@ -15,18 +15,10 @@
     // echo $categoryFilter . '</div></div>';
 
 
-    foreach ($products as $key => $value) {
-
-        addItemInProductList(
-            $value['name'],
-            $value['price'],
-            $value['id'],
-            $value['color_name'],
-            $value['image'],
-            $value['color_id'] ? $value['color_id'] : 0,
-            $value['category_id']
-        );
+    foreach ($products as $key => &$value) {
+        $value['image_link'] = getImageLink( $value['image'] );
     }
+    // displayDataTest($products);
 
 
     function addItemInProductList($name, $price, $id, $color_name, $image, $color_id, $category_id ){
@@ -67,6 +59,58 @@
     }
 
 ?>
+
+
+<script>
+// JavaScript
+let products = <?php echo json_encode($products); ?>; // Assuming $products is your array of products
+let currentProductIndex = 0;
+const productsPerPage = 8;
+
+
+function addItemInProductList(product) {
+    let productHTML = `
+        <div class="col mb-5 product-item" data-category="${product.category_id}">
+            <div class="card h-100">
+                <img class="card-img-top" src="${product.image_link}" alt="..." />
+                <div class="card-body p-3">
+                    <div class="text-center">
+                        <h4 class="fw-bolder">${product.name}</h4>
+                        <p class=""> ( ${product.color_name} ) </p>
+                        ₱${product.price}.00
+                    </div>
+                </div>
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center">
+                        <a class="btn btn-outline-dark mt-auto" href="./view-products.php?id=${product.id}&color_id=${product.color_id}">View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    let productContainer = document.getElementById('productContainer').innerHTML += productHTML;
+}
+
+function loadMoreProducts() {
+    for (let i = 0; i < productsPerPage; i++) {
+        if (currentProductIndex >= products.length) {
+            // If all products have been displayed, hide the "See More" button
+            document.getElementById('loadMore').style.display = 'none';
+            break;
+        }
+
+        addItemInProductList(products[currentProductIndex]);
+        currentProductIndex++;
+    }
+}
+
+// Load the first set of products when the page loads
+loadMoreProducts();
+
+// Load more products when the "See More" button is clicked
+</script>
+
 
 
 <script>

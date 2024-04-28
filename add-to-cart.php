@@ -55,7 +55,7 @@ try {
     
         if($result){
             // header("Location: view-products.php?id=$product_id&color_id=$color_id");
-            echo '<script> alert("Item Added to Your Cart!"); window.location.href = "view-products.php?id='.$product_id.'&color_id='.$color_id.'";</script>';
+            echo '<script> alert("Item added to your cart."); window.location.href = "view-products.php?id='.$product_id.'&color_id='.$color_id.'";</script>';
 
         }else{
             echo "Server error";

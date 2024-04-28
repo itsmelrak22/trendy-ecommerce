@@ -67,10 +67,23 @@
     $paypal_currency =  "PHP";
     $paypal_components = "buttons,marks";
     $paypal_debug = "false";
-    $paypa_disable_function = "credit,card";
+    $paypal_disable_function = "credit,card";
     
 
     // displayDataTest($customer);
+    function getCurrentUrl() {
+        $protocol = 'http';
+        // Check if HTTPS is used
+        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
+            $protocol .= "s";
+        }
+        // Construct the full URL
+        $currentUrl = $protocol . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+        return $currentUrl;
+    }
+    
+    $url = getCurrentUrl();
+    $location = basename($url);
 
 ?>
 <!DOCTYPE html>
@@ -90,7 +103,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <script src="https://www.paypal.com/sdk/js?client-id=<?=$paypal_client_id?>&components=<?=$paypal_components?>&currency=<?=$paypal_currency?>&debug=<?=$paypal_debug?>"></script>
+        <script src="https://www.paypal.com/sdk/js?client-id=<?=$paypal_client_id?>&components=<?=$paypal_components?>&currency=<?=$paypal_currency?>&debug=<?=$paypal_debug?>&disable-funding=<?=$paypal_disable_function?>"></script>
 
     </head>
     <body>
@@ -101,16 +114,9 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about-us.php">About</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="index.php?#product_list">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="designer">Customize Item</a></li>
-                            </ul>
-                        </li>
+                        <li class="nav-item"><a class="nav-link <?= $location ==  "index.php" ? "active" : ""?>" aria-current="page" href="index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link <?= $location ==  "index.php#product_list" ? "active" : ""?>" href="index.php#product_list">Products</a></li>
+                        <li class="nav-item"><a class="nav-link <?= $location ==  "designer.php" ? "active" : ""?>" href="designer.php">Customize</a></li>
                     </ul>
                     <!-- <form class="d-flex">
                         <button class="me-2 btn btn-outline-dark" type="submit">
@@ -125,10 +131,10 @@
                         </button>
                     </form> -->
 
-                    <form class="d-flex mt-2">
+                    <form class="d-flex">
                         <?php if(isset($client_email)) { ?>
                             <ul class="me-2 navbar-nav">
-                                <li class="navbar-brand"><span class="">Welcome, <?php echo $client_email; ?>!</span></li>
+                                <li class="nav-link"> <span class="">Welcome, <?php echo $client_email; ?>!</span></li>
                             </ul>
 
                         <a href="customer-cart.php" method="post" class=" btn btn-outline-dark" type="submit">
@@ -146,7 +152,7 @@
                         </a>
                             <!-- Button to trigger the modal -->
                             <button type="button" class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                Edit Profile
+                                Profile
                             </button>
                             <a href="./client/logout-customer.php" class="btn btn-outline-dark">Logout</a>
                         <?php } else { ?>
@@ -171,8 +177,8 @@
                     <div class="modal-body" id="loginForm">
                         <form method="POST" action="./client/login-client.php">
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required>
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
@@ -186,36 +192,42 @@
                     </div>
                     <div class="modal-body" id="registerForm" style="display: none;">
                         <form method="POST" action="./client/register-customer.php">
+                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Basic Information </h6>
+                            <hr>
                             <div class="row">
                                 <div class="mb-3 col-sm-6">
-                                    <label for="reg_email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="reg_email" name="reg_email" required>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="reg_password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="reg_password" name="reg_password" required>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="first_name" class="form-label">First Name</label>
+                                    <label for="first_name" class="form-label">Firstname</label>
                                     <input type="text" class="form-control" id="first_name" name="first_name" required>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="mb-3 col-sm-6">
-                                    <label for="last_name" class="form-label">Last Name</label>
+                                    <label for="last_name" class="form-label">Lastname</label>
                                     <input type="text" class="form-control" id="last_name" name="last_name" required>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="mb-3 col-sm-6">
                                     <label for="phone_number" class="form-label">Phone Number</label>
                                     <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
                                 </div>
+                                <div class="mb-3 col-sm-6">
+                                    <label for="reg_email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="reg_email" name="reg_email" required>
+                                </div>
                             </div>
+                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Login Credentials </h6>
+                            <hr>
+                            <div class="row">
+                                <div class="mb-3 col-sm-6">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3 col-sm-6">
+                                    <label for="reg_password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="reg_password" name="reg_password" required>
+                                </div>
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address information </h6>
+                            <hr>
                             <div class="row">
                                 <div class="mb-3 col-sm-6">
                                     <label for="provinceDropdown">Province</label>
@@ -262,7 +274,7 @@
         <?php if( isset($client_id) ){ ?>
             <!-- Edit Profile Modal -->
             <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-                <div style="max-width: 600px;" class="modal-dialog modal-dialog-centered">
+                <div style="" class="modal-dialog modal-lg modal-dialog-centered ">
                     <div class="modal-content">
                         <div class="modal-header ">
                             <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
@@ -270,72 +282,16 @@
                         </div>
                         
                         <div class="modal-body" id="editProfileForm">
-                            <form class="form-horizontal" action="./client/update-profile.php" method="post" enctype="multipart/form-data" ><!-- form-horizontal Starts -->
-                                
-                                <input type="hidden" name="id" value="<?=$customer->id?>">
-                                <div class="form-group" ><!-- form-group Starts -->
-                                    <label class=" control-label" >Email</label>
-                                    <div class="" >
-                                        <input type="email" name="email" class="form-control" value="<?= $customer->email; ?>" required disabled readonly>
-                                    </div>
-                                </div><!-- form-group Ends -->
-    
-                                <div class="form-group" ><!-- form-group Starts -->
-                                    <label class=" control-label" >Customer Contact</label>
-                                    <div class="" >
-                                        <input type="text" name="phone_no" class="form-control" value="<?= $customer->phone_no ?>" required>
-                                    </div>
-                                </div><!-- form-group Ends -->
-                                
-                                <div class="form-group">
-                                    <label class=" control-label">Province</label>
-                                    <div class="">
-                                        <select name="province" id="edit_provinceDropdown" class="form-control"  required value="<?= $customer->province ?>">
-                                            <option  selected disabled readonly>Select Province</option>
-                                        </select>
-                                    </div>
-                                </div>
-    
-                                <div class="form-group">
-                                    <label class=" control-label">Customer City</label>
-                                    <div class="">
-                                        <select name="city_municipality" id="edit_cityDropdown" class="form-control" required  value="<?= $customer->city_municipality ?>">
-                                            <option selected disabled readonly>Select City</option>
-                                        </select>
-                                    </div>
-                                </div>
-    
-                                <div class="form-group">
-                                    <label class=" control-label">Customer Barangay</label>
-                                    <div class="">
-                                        <select name="barangay" id="edit_barangayDropdown" class="form-control" required value="<?= $customer->barangay ?>">
-                                            <option  selected disabled readonly>Select Barangay</option>
-                                        </select>
-                                    </div>
-                                </div>
-    
-                                <div class="form-group  mb-5" ><!-- form-group Starts -->
-                                    <label class=" control-label" > Other Address Info </label>
-                                    <div class="" >
-                                        <textarea  name="complete_address" class="form-control" cols="30" rows="10" required><?=$customer->complete_address ?></textarea>
-                                    </div>
-                                </div><!-- form-group Ends -->
-    
-                                <div class="form-group" ><!-- form-group Starts -->
-                                    <label class=" control-label" ></label>
-                                    <div class="" >
-                                        <input type="submit" name="update_profile" value="Update Profile" class="btn btn-primary form-control">
-                                    </div>
-                                </div><!-- form-group Ends -->
-                            </form><!-- form-horizontal Ends -->
+                            <?php include('./update-profile.php') ?>
                         </div>
                     </div>
                 </div>
             </div>
+
+ 
         <?php } ?>
 
-    </body>
-</html>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
@@ -350,6 +306,20 @@
             success: function(data) {
                 var provinces = data;
                 var provinceDropdown = $('#edit_provinceDropdown');
+
+                // Sort the provinces array by the "name" property
+                provinces.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
 
                 $.each(provinces, function(index, province) {
                     provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
@@ -374,6 +344,21 @@
                 success: function(data) {
                     var citiesMunicipalities = data;
                     var cityDropdown = $('#edit_cityDropdown');
+
+                    // Sort the provinces array by the "name" property
+                    citiesMunicipalities.sort(function(a, b) {
+                        var nameA = a.name.toUpperCase(); // Ignore case
+                        var nameB = b.name.toUpperCase(); // Ignore case
+                        if (nameA < nameB) {
+                            return -1;
+                        }
+                        if (nameA > nameB) {
+                            return 1;
+                        }
+                        return 0; // Names must be equal
+                    });
+
+
                     cityDropdown.empty(); // Clear existing options
                     cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
                     $.each(citiesMunicipalities, function(index, cityMunicipality) {
@@ -399,6 +384,21 @@
                 success: function(data) {
                     var barangays = data;
                     var barangayDropdown = $('#edit_barangayDropdown');
+
+                    // Sort the provinces array by the "name" property
+                    barangays.sort(function(a, b) {
+                        var nameA = a.name.toUpperCase(); // Ignore case
+                        var nameB = b.name.toUpperCase(); // Ignore case
+                        if (nameA < nameB) {
+                            return -1;
+                        }
+                        if (nameA > nameB) {
+                            return 1;
+                        }
+                        return 0; // Names must be equal
+                    });
+
+
                     barangayDropdown.empty(); // Clear existing options
                     barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
                     $.each(barangays, function(index, barangay) {
@@ -452,6 +452,20 @@
                 
                 var citiesMunicipalities = data;
                 var cityDropdown = $('#cityDropdown');
+
+                // Sort the provinces array by the "name" property
+                citiesMunicipalities.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
                 cityDropdown.empty(); // Clear existing options
                 cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
                 $.each(citiesMunicipalities, function(index, cityMunicipality) {
@@ -473,6 +487,20 @@
             success: function(data) {
                 var barangays = data;
                 var barangayDropdown = $('#barangayDropdown');
+
+                // Sort the provinces array by the "name" property
+                barangays.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
                 barangayDropdown.empty(); // Clear existing options
                 barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
                 $.each(barangays, function(index, barangay) {
@@ -493,6 +521,20 @@
             success: function(data) {
                 var provinces = data;
                 var provinceDropdown = $('#provinceDropdown');
+
+                // Sort the provinces array by the "name" property
+                provinces.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
                 provinceDropdown.empty(); // Clear existing options
                 provinceDropdown.append($('<option></option>').val('').text('Select Province')); // Add default option
                 $.each(provinces, function(index, province) {
