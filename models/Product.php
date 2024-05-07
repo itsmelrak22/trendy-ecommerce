@@ -38,7 +38,7 @@ Class Product extends Model {
             LEFT JOIN product_colors AS PC 
             ON P.id = PC.product_id
             WHERE P.deleted_at IS NULL
-            ORDER BY P.created_at DESC
+            ORDER BY P.name
         ")->getAll();
         // $categories = $instance->setQuery("
         //     SELECT 
