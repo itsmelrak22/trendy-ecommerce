@@ -1,7 +1,15 @@
 <?php 
     include_once("./includes/header.php");
 
+    if( !isset($_SESSION['loggedInUser']) ){
+        echo "<script>
+            alert('Please Login');
+            window.location = './';
+        </script>";
+    }
 ?>
+
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>	
     <!-- <script src="http://code.jquery.com/jquery-1.9.0.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> -->
@@ -233,7 +241,7 @@
 
                                             
 
-                                            <div class="card">
+                                            <div class="card" style=" height: 500px;  overflow: auto;  width: 100%;  box-sizing: border-box; overflow-x: hidden;">
                                                 <div class="card-body">
                                                     <div>
                                                         <?php require_once("./designer/fileupload.php") ?>
@@ -288,6 +296,43 @@
                                         <option value="embroide">Embroide</option>
                                         <option value="print">Print</option>
                                     </select>
+                                </div>
+                                <div class="form-action mb-1">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="prices_by_sizes">Prices By Sizes:</label>
+                                            <select class="form-control" name="sizing" id="prices_by_sizes">
+                                                <?php
+                                                $sizesAndPrices = array(
+                                                    "1x1" => 265.00,
+                                                    "1x2" => 265.00,
+                                                    "1x3" => 265.00,
+                                                    "1x4" => 265.00,
+                                                    "2x1" => 285.00,
+                                                    "2x2" => 285.00,
+                                                    "2x3" => 285.00,
+                                                    "2x4" => 285.00,
+                                                    "3x1" => 300.00,
+                                                    "3x2" => 300.00,
+                                                    "3x3" => 300.00,
+                                                    "3x4" => 300.00,
+                                                    "4x1" => 350.00,
+                                                    "4x2" => 350.00,
+                                                    "4x3" => 350.00,
+                                                    "4x4" => 350.00
+                                                );
+
+                                                foreach ($sizesAndPrices as $size => $price) {
+                                                    echo '<option value="' . $size . '">' . $size . '</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="selected_price"></label>
+                                            <input type="text" class="form-control" id="selected_price" name="price" readonly>
+                                        </div>
+                                    </div>
                                 </div>
                                 <table class="table">
                                     <tr>
@@ -828,4 +873,16 @@
         }
 
         });
+        </script>
+
+        <script>
+            function updateSelectedPrice() {
+                var selectElement = document.getElementById('prices_by_sizes');
+                var selectedSize = selectElement.options[selectElement.selectedIndex].value;
+                var pricesAndSizes = <?php echo json_encode($sizesAndPrices); ?>;
+                document.getElementById('selected_price').value = pricesAndSizes[selectedSize];
+            }
+            document.getElementById('prices_by_sizes').addEventListener('change', updateSelectedPrice);
+
+            updateSelectedPrice();
         </script>

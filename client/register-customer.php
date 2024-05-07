@@ -8,9 +8,18 @@
 
     date_default_timezone_set("Asia/Manila");
 
+    function displayDataTest($array){
+        echo "<pre>";
+        echo print_r($array);
+        echo "</pre>";
+    }
+
+
+    // displayDataTest($_POST);
+
 
     try {
-        if ( isset( $_POST['add-customer'] ) && $_POST['add-customer'] ){
+        if ( isset( $_POST['add-customer'] ) && $_POST['add-customer'] == 'Submit' ){
 
             $existingUser = Customer::findByEmail($_POST['reg_email']);
 
@@ -21,7 +30,7 @@
                 
                 'first_name' => $_POST['first_name'],
                 'last_name' => $_POST['last_name'],
-                'username' => $_POST['username'],
+                'username' => $_POST['reg_username'],
                 'email' => $_POST['reg_email'],
                 'password' => $_POST['reg_password'],
                 'phone_no' => $_POST['phone_number'],
@@ -37,10 +46,11 @@
             $result = $customers->save($param);
         
         
-            if($result){
+            if ($result) {
                 $_SESSION['snackbar_color'] = "green";
                 $_SESSION['success_message'] = "Registration successful!";
                 header("Location: ../index.php");
+                exit;
             }
         }
     } catch (\Exception $e) {

@@ -207,7 +207,11 @@
                             <div class="row">
                                 <div class="mb-3 col-sm-6">
                                     <label for="phone_number" class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
+                                    <div class="input-group">
+                                        <span class="input-group-text">+63</span>
+                                        <input type="tel" class="form-control" id="phone_number" name="phone_number" required maxlength="10">
+                                    </div>
+                                    <!-- <input type="tel" class="form-control" id="phone_number" name="phone_number" required> -->
                                 </div>
                                 <div class="mb-3 col-sm-6">
                                     <label for="reg_email" class="form-label">Email</label>
@@ -219,7 +223,7 @@
                             <div class="row">
                                 <div class="mb-3 col-sm-6">
                                     <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
+                                    <input type="text" class="form-control" id="username" name="reg_username" required>
                                 </div>
                                 <div class="mb-3 col-sm-6">
                                     <label for="reg_password" class="form-label">Password</label>
@@ -274,7 +278,7 @@
         <?php if( isset($client_id) ){ ?>
             <!-- Edit Profile Modal -->
             <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-                <div style="" class="modal-dialog modal-lg modal-dialog-centered ">
+                <div class="modal-dialog modal-lg modal-dialog-centered ">
                     <div class="modal-content">
                         <div class="modal-header ">
                             <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>

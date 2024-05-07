@@ -15,13 +15,15 @@
     }
 
 
-    displayDataTest($_POST);
+    // displayDataTest($_POST);
 
     try {
         if ( isset( $_POST['submit'] ) && $_POST['submit'] == "Update" ){
 
             $id = $_POST['id'];
             $param = [
+                'first_name' => $_POST['first_name'],
+                'last_name' => $_POST['last_name'],
                 'phone_no' => $_POST['phone_no'],
                 'province' => $_POST['province'],
                 'city_municipality' => $_POST['city_municipality'],
@@ -29,9 +31,11 @@
                 'complete_address' => $_POST['complete_address'],
                 'updated_at' => new \DateTime,
             ];
+            
         
             $customers = new Customer;
             $result = $customers->update($param, $id);
+            
         
         
             if($result){

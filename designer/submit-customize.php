@@ -23,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
 
     try {
         $customize_by = $_POST['customize_by'];
+        $sizing = $_POST['sizing'];
+        $price = $_POST['price'];
         $sizes = [];
         foreach($_POST as $key => $value) {
             if (strpos($key, '-checked') !== false && $value == 'on') {
@@ -38,6 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
     
         $data = array(
             'customize_by' => $customize_by,
+            'price' => $price,
+            'sizing' => $sizing,
             'sizes_ordered' => $sizes,
             'front_canvas_image' => '',
             'front_canvas_image_objects' => [],

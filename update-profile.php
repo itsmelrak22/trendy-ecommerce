@@ -88,7 +88,10 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group" >
                                 <label for="phone" class="form-label">Phone</label>
-                                <input type="tel" class="form-control" id="phone_no" name="phone_no" required value="<?= $customer->phone_no; ?>">
+                                <div class="input-group">
+                                    <span class="input-group-text">+63</span>
+                                    <input type="tel" class="form-control" id="phone_no" name="phone_no" required maxlength="10" value="<?= $customer->phone_no; ?>">
+                                </div>
                             </div>
                         </div>
                     </div>
