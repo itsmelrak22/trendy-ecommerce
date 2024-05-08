@@ -1,8 +1,9 @@
 <?php
     $product = new Product;
     $products = $product->getProducts();
+ 
+    // print_r($grouped);
 
-    // displayDataTest($products);
     // echo '<div class="col-md-2">
     //     <div class="list-group" style="padding-left: 10px;">
     //         <h3 class="my-4">Categories</h3>';
@@ -18,8 +19,22 @@
     foreach ($products as $key => &$value) {
         $value['image_link'] = getImageLink( $value['image'] );
     }
-    // displayDataTest($products);
 
+    $grouped = [];
+
+    foreach ($products as $product) {
+        $category = $product['category_name'];
+
+        if (!isset($grouped[$category])) {
+            $grouped[$category] = [];
+        }
+
+        $grouped[$category][] = $product;
+    }
+
+    // displayDataTest($grouped);
+
+    ksort($grouped);
 
     function addItemInProductList($name, $price, $id, $color_name, $image, $color_id, $category_id ){
         $img_link = getImageLink($image);
@@ -60,6 +75,72 @@
 
 ?>
 
+<?php 
+
+    // <div class="accordion-item">
+    //     <h2 class="accordion-header">
+    //     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+    //         Accordion Item #1
+    //     </button>
+    //     </h2>
+    //     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+    //     <div class="accordion-body">
+    //         <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+    //     </div>
+    //     </div>
+    // </div>
+    // <div class="accordion-item">
+    //     <h2 class="accordion-header">
+    //     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+    //         Accordion Item #2
+    //     </button>
+    //     </h2>
+    //     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+    //     <div class="accordion-body">
+    //         <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+    //     </div>
+    //     </div>
+    // </div>
+    
+    $count = 0;
+    foreach ($grouped as $key => $value) { $count++;?>
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button <?= $count == 1 ? '' : 'collapsed' ?> " type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$count?>" aria-expanded="<?= $count == 1 ? 'true' : 'false' ?>" aria-controls="collapse<?=$count?>">
+               
+                <figure class="text-center">
+                    <blockquote class="blockquote">
+                        <p> <?= $key ?> </p>
+                    </blockquote>
+                </figure>
+            </button>
+            </h2>
+            <div id="collapse<?=$count?>" class="accordion-collapse collapse <?= $count == 1 ? 'show' : '' ?>" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="row row-cols-2 row-cols-md-4">
+                    <?php 
+                        foreach ($value as $key => $product) {
+
+                            addItemInProductList(
+                                $product['name'],
+                                $product['price'],
+                                $product['id'],
+                                $product['color_name'],
+                                $product['image'],
+                                $product['color_id'] ? $product['color_id'] : 0,
+                                $product['category_id']
+                            );
+                        }
+                    ?>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+
 
 <script>
 // JavaScript
@@ -93,12 +174,12 @@ function addItemInProductList(product) {
 }
 
 function loadMoreProducts() {
-    for (let i = 0; i < productsPerPage; i++) {
-        if (currentProductIndex >= products.length) {
-            // If all products have been displayed, hide the "See More" button
-            document.getElementById('loadMore').style.display = 'none';
-            break;
-        }
+    for (let i = 0; i < products.length; i++) {
+        // if (currentProductIndex >= products.length) {
+        //     // If all products have been displayed, hide the "See More" button
+        //     document.getElementById('loadMore').style.display = 'none';
+        //     break;
+        // }
 
         addItemInProductList(products[currentProductIndex]);
         currentProductIndex++;
@@ -106,9 +187,8 @@ function loadMoreProducts() {
 }
 
 // Load the first set of products when the page loads
-loadMoreProducts();
+// loadMoreProducts();
 
-// Load more products when the "See More" button is clicked
 </script>
 
 
@@ -329,6 +409,44 @@ loadMoreProducts();
 //         <!-- Product actions-->
 //         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 //             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+//         </div>
+//     </div>
+// </div>
+// <div class="accordion" id="accordionExample">
+//     <div class="accordion-item">
+//         <h2 class="accordion-header">
+//         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+//             Accordion Item #1
+//         </button>
+//         </h2>
+//         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+//         <div class="accordion-body">
+//             <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+//         </div>
+//         </div>
+//     </div>
+//     <div class="accordion-item">
+//         <h2 class="accordion-header">
+//         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+//             Accordion Item #2
+//         </button>
+//         </h2>
+//         <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+//         <div class="accordion-body">
+//             <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+//         </div>
+//         </div>
+//     </div>
+//     <div class="accordion-item">
+//         <h2 class="accordion-header">
+//         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+//             Accordion Item #3
+//         </button>
+//         </h2>
+//         <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+//         <div class="accordion-body">
+//             <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+//         </div>
 //         </div>
 //     </div>
 // </div>

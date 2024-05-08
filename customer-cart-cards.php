@@ -20,7 +20,7 @@
             </div>
             <div class="input-group">
                 <span class="input-group-text" id="basic-addon3">Quantity</span>
-                <input class="form-control form-control-sm"  type="number" min="1" value="<?= $cart['quantity'] ?>" name="quantity" oninput="updateQuantity(this, <?= $cart['price'] ?>, total<?= $key ?>)">
+                <input class="form-control form-control-sm"  type="number" min="1" value="<?= $cart['quantity'] ?>" name="quantity" oninput="updateCartQuantity(this, <?= $cart['price'] ?>, total<?= $key ?>)">
             </div>
             <p class="card-text"><small class="text-muted">Date Ordered: <?= $cart['created_at'] ?></small></p>
         </div>
@@ -81,8 +81,9 @@ function generateCartCards($cart, $key, $img_link){
                                     <div class="mt-3">
                                         <p class="text-muted mb-2">Quantity</p>
                                         <div class="d-inline-flex">
-                                        <input class="form-control form-control-sm" id="quantity-id-'.$key.'" type="number" min="1" value="'.$quantity.'" name="quantity" oninput="updateQuantity(this, '.$price.', total'.$key.', '.$key.')"">
-
+                                        <button class="btn btn-md btn-outline-dark"  type="button" onClick="updateCartQuantity(`quantity-id-'.$key.'`, '.$price.', `total-id-'.$key.'`, '.$key.', `minus`)">-</button>
+                                        <input readonly class="mx-2 form-control form-control-sm" id="quantity-id-'.$key.'" type="number" min="1" value="'.$quantity.'" name="quantity" >
+                                        <button class="btn btn-md btn-outline-dark" type="button" onClick="updateCartQuantity(`quantity-id-'.$key.'`, '.$price.', `total-id-'.$key.'`, '.$key.', `add`)">+</button>
                                         
                                         </div>
                                     </div>
@@ -90,7 +91,7 @@ function generateCartCards($cart, $key, $img_link){
                                 <div class="col-md-3">
                                     <div class="mt-3">
                                         <p class="text-muted mb-2">Total</p>
-                                        <h5 >₱ <span id="total-id-'.$key.'">'.$total_price.'</span></h5>
+                                        <h5 >₱ <span id="total-id-'.$key.'">'.($quantity * $price).'</span></h5>
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +151,7 @@ function generateViewCards($cart, $key, $img_link){
                                     <div class="mt-3">
                                         <p class="text-muted mb-2">Quantity</p>
                                         <div class="d-inline-flex">
-                                        <input disabled class="form-control  form-control-sm" id="quantity-id-'.$key.'" type="number" min="1" value="'.$quantity.'" name="quantity" oninput="updateQuantity(this, '.$price.', total'.$key.', '.$key.')"">
+                                        <input disabled class="form-control  form-control-sm" id="quantity-id-'.$key.'" type="number" min="1" value="'.$quantity.'" name="quantity" oninput="updateCartQuantity(this, '.$price.', total'.$key.', '.$key.')"">
                                         
                                         </div>
                                     </div>
@@ -172,3 +173,26 @@ function generateViewCards($cart, $key, $img_link){
 
     ';
 }
+
+?>
+
+<script>
+    function updateCartQuantity(inputId, price, total, key, operation) {
+        console.log(inputId)
+        console.log(operation)
+        let input = document.getElementById(inputId);
+        console.log(input)
+        if(operation == 'add'){
+            input.value++
+        }else{
+            input.value--
+        }
+        console.log(input.value)
+
+        if (input.value < 1) input.value = 1;
+        total.innerHTML = price * input.value;
+        calculateSubtotal();
+        updateSpecificTotal(key)
+        
+    }
+</script>

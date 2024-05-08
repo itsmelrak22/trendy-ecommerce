@@ -36,23 +36,23 @@
             <div class="container px-2 px-lg-5">
                 <h3 id="product_list">PRODUCT LIST:</h3>
                 <div class="row gx-2 gx-lg-3 justify-content-center">
-                    <div class="col-md-2">
+                    <!-- <div class="col-md-2">
                         <div class="list-group" style="padding-left: 10px;">
                             <h3 class="my-4">Categories</h3>
                             <?php 
-                            $categoryFilter = '<span style="cursor: pointer;" class="list-group-item list-group-item-action" onclick="applyFilter(\'all\')">All</span>';
-                            foreach ($categories as $category) {
-                                $categoryFilter .= '<span style="cursor: pointer;" class="list-group-item list-group-item-action" onclick="applyFilter(\'' . $category['id'] . '\')">' . $category['name'] . '</span>';
-                            }
-                            echo $categoryFilter;
+                            // $categoryFilter = '<span style="cursor: pointer;" class="list-group-item list-group-item-action" onclick="applyFilter(\'all\')">All</span>';
+                            // foreach ($categories as $category) {
+                            //     $categoryFilter .= '<span style="cursor: pointer;" class="list-group-item list-group-item-action" onclick="applyFilter(\'' . $category['id'] . '\')">' . $category['name'] . '</span>';
+                            // }
+                            // echo $categoryFilter;
                             ?>
                         </div>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="row row-cols-2 row-cols-md-4 justify-content-center" id="productContainer" >
+                    </div> -->
+                    <div class="col-md-12">
+                        <div class="row justify-content-center" id="productContainer" >
                             <?php include_once("./includes/display-products.php"); ?>
                         </div>
-                        <button id="loadMore" class="btn btn-primary">See More</button>
+                        <!-- <button id="loadMore" class="btn btn-primary">See More</button> -->
 
                     </div>
                 </div>
@@ -72,7 +72,7 @@
         <?php include_once("./includes/footer.php"); ?>
 
         <script>
-            document.getElementById('loadMore').addEventListener('click', loadMoreProducts);
+            // document.getElementById('loadMore').addEventListener('click', loadMoreProducts);
 
             // document.getElementById('load-more').addEventListener('click', function() {
             //     var items = Array.from(document.getElementsByClassName('product-item'));
