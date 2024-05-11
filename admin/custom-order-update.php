@@ -17,6 +17,7 @@ if ( isset( $_POST['custom-edit-order-detail'] ) && $_POST['custom-edit-order-de
         $id = $_POST['id'];
         $remarks = $_POST['remarks'];
         $status = $_POST['status'];
+        $shipping_fee = $_POST['shipping_fee'];
         $total_price = $_POST['total_price'];
         $customer_id = $_POST['customer_id'];
         $send_email = isset( $_POST['send_email'] ) ? true : false;
@@ -25,6 +26,7 @@ if ( isset( $_POST['custom-edit-order-detail'] ) && $_POST['custom-edit-order-de
         $order_ = $order->getSpecificCustomOrders($id);
         $param = [
             'status' => "$status",
+            'shipping_fee' => "$shipping_fee",
             'total_price' => "$total_price",
             'remarks' => "$remarks",
             'updated_at' => new \DateTime,

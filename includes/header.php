@@ -105,11 +105,20 @@
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <script src="https://www.paypal.com/sdk/js?client-id=<?=$paypal_client_id?>&components=<?=$paypal_components?>&currency=<?=$paypal_currency?>&debug=<?=$paypal_debug?>&disable-funding=<?=$paypal_disable_function?>"></script>
 
+        <style>
+            .navbar-nav > .nav-item > .active {
+                background-color: #454e57;
+                border-radius: 13%;
+                font-weight: bold;
+                color: white !important;
+            }
+        </style>
+
     </head>
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-4 px-lg-5">
+            <div class="container ">
                 <a class="navbar-brand" href="index.php">TRENDY THREADS APPAREL BY LOVE J'S STORE</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -137,7 +146,7 @@
                                 <li class="nav-link"> <span class="">Welcome, <?php echo $client_email; ?>!</span></li>
                             </ul>
 
-                        <a href="customer-cart.php" method="post" class=" btn btn-outline-dark" type="submit">
+                        <a href="customer-cart.php" method="post" class=" btn btn-outline-dark <?= $location ==  "customer-cart.php" ? "active" : ""?>" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Carts
                             <span class="badge bg-dark text-white ms-1 rounded-pill">

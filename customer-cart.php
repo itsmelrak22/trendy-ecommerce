@@ -57,6 +57,10 @@
     $customizeItems = $customizeOrder->getCustomerCustomOrders($client_id);
     $customizeItemsCount = count($customizeItems);
 
+    
+    $customizeOrder = new CustomizeOrder;
+    $confirmedCustomizeItems = $customizeOrder->getCustomerCustomOrders($client_id, 'Confirmed');
+    $confirmedCustomizeItemsCount = count($confirmedCustomizeItems);
 
 ?>
 <style>
@@ -196,10 +200,23 @@
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link me-2 btn btn-outline-dark" id="customize-order-tab" data-bs-toggle="tab" data-bs-target="#customize-order-tab-pane" type="button" role="tab" aria-controls="customize-order-tab-pane" aria-selected="false" >
-                Custom Order
+                Custom Order (Pending)
                 <span class="badge bg-dark text-white ms-1 rounded-pill">
                     <?php if(isset($customizeItemsCount)) {
                         echo  $customizeItemsCount ;
+                        }else{
+                        echo "0";
+                        }
+                    ?>
+                </span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link me-2 btn btn-outline-dark" id="confirmed-customize-order-tab" data-bs-toggle="tab" data-bs-target="#confirmed-customize-order-tab-pane" type="button" role="tab" aria-controls="customize-order-tab-pane" aria-selected="false" >
+                Custom Order 
+                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                    <?php if(isset($confirmedCustomizeItemsCount)) {
+                        echo  $confirmedCustomizeItemsCount ;
                         }else{
                         echo "0";
                         }
@@ -229,6 +246,9 @@
         </div>
         <div class="tab-pane fade" id="customize-order-tab-pane" role="tabpanel" aria-labelledby="customize-order-tab" tabindex="0">
             <?php include_once("customer-custom-order-tab.php") ?>
+        </div>
+        <div class="tab-pane fade" id="confirmed-customize-order-tab-pane" role="tabpanel" aria-labelledby="confirmed-customize-order-tab" tabindex="0">
+            <?php include_once("customer-confirmed-custom-order-tab.php") ?>
         </div>
 
     </div>

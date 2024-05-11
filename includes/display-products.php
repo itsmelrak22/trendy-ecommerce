@@ -75,74 +75,73 @@
 
 ?>
 
+<style>
+    .product-item.hidden {
+        display: none;
+    }
+</style>
+
 <?php 
-
-    // <div class="accordion-item">
-    //     <h2 class="accordion-header">
-    //     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-    //         Accordion Item #1
-    //     </button>
-    //     </h2>
-    //     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-    //     <div class="accordion-body">
-    //         <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-    //     </div>
-    //     </div>
-    // </div>
-    // <div class="accordion-item">
-    //     <h2 class="accordion-header">
-    //     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-    //         Accordion Item #2
-    //     </button>
-    //     </h2>
-    //     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-    //     <div class="accordion-body">
-    //         <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-    //     </div>
-    //     </div>
-    // </div>
-    
     $count = 0;
-    foreach ($grouped as $key => $value) { $count++;?>
-    <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-            <button class="accordion-button <?= $count == 1 ? '' : 'collapsed' ?> " type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?=$count?>" aria-expanded="<?= $count == 1 ? 'true' : 'false' ?>" aria-controls="collapse<?=$count?>">
-               
-                <figure class="text-center">
-                    <blockquote class="blockquote">
-                        <p> <?= $key ?> </p>
-                    </blockquote>
-                </figure>
-            </button>
-            </h2>
-            <div id="collapse<?=$count?>" class="accordion-collapse collapse <?= $count == 1 ? 'show' : '' ?>" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-                <div class="row row-cols-2 row-cols-md-4">
-                    <?php 
-                        foreach ($value as $key => $product) {
-
-                            addItemInProductList(
-                                $product['name'],
-                                $product['price'],
-                                $product['id'],
-                                $product['color_name'],
-                                $product['image'],
-                                $product['color_id'] ? $product['color_id'] : 0,
-                                $product['category_id']
-                            );
-                        }
-                    ?>
+    foreach ($grouped as $key => $value) { 
+        $count++;
+        echo '<div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button '.($count == 1 ? '' : 'collapsed').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$count.'" aria-expanded="'.($count == 1 ? 'true' : 'false').'" aria-controls="collapse'.$count.'">
+                    <figure class="text-center">
+                        <blockquote class="blockquote">
+                            <p>'.$key.'</p>
+                        </blockquote>
+                    </figure>
+                </button>
+                </h2>
+                <div id="collapse'.$count.'" class="accordion-collapse collapse '.($count == 1 ? 'show' : '').'" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="row row-cols-2 row-cols-md-4 product-container">';
+        
+        $productCount = 0;
+        foreach ($value as $key => $product) {
+            $productCount++;
+            echo '<div class="product-item '.($productCount > 4 ? 'hidden' : '').'">';
+            addItemInProductList(
+                $product['name'],
+                $product['price'],
+                $product['id'],
+                $product['color_name'],
+                $product['image'],
+                $product['color_id'] ? $product['color_id'] : 0,
+                $product['category_id']
+            );
+            echo '</div>';
+        }
+        
+        echo '</div>
+                <button class="see-more btn btn-primary btn-sm">See More</button>
+                </div>
                 </div>
             </div>
-            </div>
-        </div>
-    </div>
-<?php } ?>
+        </div>';
+    }
+    
+?>   
 
 
 
 <script>
+
+document.querySelectorAll('.see-more').forEach(function(button) {
+    button.addEventListener('click', function() {
+        var hiddenItems = this.previousElementSibling.querySelectorAll('.hidden');
+        for (var i = 0; i < 4 && i < hiddenItems.length; i++) {
+            hiddenItems[i].classList.remove('hidden');
+        }
+        if (hiddenItems.length <= 4) {
+            this.style.display = 'none';
+        }
+    });
+});
+
 // JavaScript
 let products = <?php echo json_encode($products); ?>; // Assuming $products is your array of products
 let currentProductIndex = 0;

@@ -1,61 +1,66 @@
-<div class="row">
-  <div class="column">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter1.png">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter2.png">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter3.png">
-  </div>
-  <div class="column">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter4.png">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter5.png">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter6.png">
+<!-- Page Content -->
+<style>
+  .avatar-img-bg{
+    background-color: #c5cecf !important;
+  }
+</style>
+<div class="container">
+  <div class="row text-center text-sm-start column">
+    <?php
+
+      for ($i = 1; $i <= 21; $i++) {
+          $imgPath = "./designer/img/designs/$i.png";
+        echo '
+        <div class="col-lg-6 col-md-6 col-6">
+          <a href="#" class="d-block mb-2 h-100">
+            <img class="img-polaroid avatar-img-bg img-fluid img-thumbnail" src="'.$imgPath.'" alt="">
+          </a>
+        </div>
+        ';
+      }
+    ?>
+    <div class="col-lg-6 col-md-4 col-6">
+      <a href="#" class="d-block mb-2 h-100">
+        <img class="img-polaroid avatar-img-bg img-fluid img-thumbnail" src="./designer/img/letter1.png" alt="">
+      </a>
+    </div>
+    <div class="col-lg-6 col-md-4 col-6">
+      <a href="#" class="d-block mb-2 h-100">
+        <img class="img-polaroid avatar-img-bg img-fluid img-thumbnail" src="./designer/img/letter2.png" alt="">
+      </a>
+    </div>
+    <div class="col-lg-6 col-md-6 col-6">
+      <a href="#" class="d-block mb-2 h-100">
+        <img class="img-polaroid avatar-img-bg img-fluid img-thumbnail" src="./designer/img/letter3.png" alt="">
+      </a>
+    </div>
+    <div class="col-lg-6 col-md-6 col-6">
+      <a href="#" class="d-block mb-2 h-100">
+        <img class="img-polaroid avatar-img-bg img-fluid img-thumbnail" src="./designer/img/letter4.png" alt="">
+      </a>
+    </div>
+    <div class="col-lg-6 col-md-6 col-6">
+      <a href="#" class="d-block mb-2 h-100">
+        <img class="img-polaroid avatar-img-bg img-fluid img-thumbnail" src="./designer/img/letter5.png" alt="">
+      </a>
+    </div>
+    <div class="col-lg-6 col-md-6 col-6">
+      <a href="#" class="d-block mb-2 h-100">
+        <img class="img-polaroid avatar-img-bg img-fluid img-thumbnail" src="./designer/img/letter6.png" alt="">
+      </a>
+    </div>
+    <div class="col-lg-6 col-md-6 col-6">
+      <a href="#" class="d-block mb-2 h-100">
+        <img class="img-polaroid avatar-img-bg img-fluid img-thumbnail" src="./designer/img/letter7.png" alt="">
+      </a>
+    </div>
+    <div class="col-lg-6 col-md-6 col-6">
+      <a href="#" class="d-block mb-2 h-100">
+        <img class="img-polaroid avatar-img-bg img-fluid img-thumbnail" src="./designer/img/letter9.svg" alt="">
+      </a>
+    </div>
+
   </div>
 
-  <div class="column">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter7.png">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter7.png">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter9.svg">
-  </div>
-  
-  <div class="column">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter7.png">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter7.png">
-    <img style="cursor:pointer;" class="img-polaroid" src="./designer/img/letter9.svg">
-  </div>
-  
-  <?php
-    $html = '';
-    $columnCount = 0;
-    
-    for ($i = 1; $i <= 37; $i++) {
-        // Check if the image is a png or jpg
-        $imgPath = "./designer/img/designs/$i.png";
-        if (!file_exists($imgPath)) {
-            $imgPath = "./designer/img/designs/$i.jpg";
-        }
-        $fileExtension = pathinfo($imgPath, PATHINFO_EXTENSION);
-    
-        if ($fileExtension === 'png' || $fileExtension === 'jpg') {
-            // Every 3 loops, wrap with a div with class 'column'
-            if ($columnCount % 3 === 0) {
-                if ($columnCount > 0) {
-                    // Close the previous div if it exists
-                    $html .= '</div>';
-                }
-                $html .= '<div class="column">';
-            }
-    
-            $html .= "<img style='cursor:pointer;' class='img-polaroid' src='$imgPath'>";
-            $columnCount++;
-        }
-    }
-    
-    // Close the last div
-    if ($columnCount > 0) {
-        $html .= '</div>';
-    }
-    
-    echo $html;
-  
-?>
 
 </div>

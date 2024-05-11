@@ -55,48 +55,6 @@
 		.Plaster{font-family:"Plaster";}
 		.Engagement{font-family:"Engagement";}
 
-        #avatarlist img {
-            width: 50px;
-            height: 75px;
-            margin: 10px;
-        }
-
-        #avatarlist .row {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 0 4px;
-        }
-
-            /* Create four equal columns that sits next to each other */
-        #avatarlist .column {
-            flex: 25%;
-            max-width: 25%;
-            padding: 0 4px;
-            margin-left: 3px;
-            margin-right: 3px;
-        }
-
-        #avatarlist .column img {
-            margin-top: 8px;
-            vertical-align: middle;
-            width: 100%;
-        }
-
-        /* Responsive layout - makes a two column-layout instead of four columns */
-        #avatarlist @media screen and (max-width: 800px) {
-            .column {
-                flex: 50%;
-                max-width: 50%;
-            }
-        }
-
-        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-        #avatarlist @media screen and (max-width: 600px) {
-            .column {
-                flex: 100%;
-                max-width: 100%;
-            }
-        }
 
         .overlay {
             height: 100%;
@@ -109,11 +67,23 @@
             background-color: rgba(0,0,0, 0.5);
         }
 
+        .main-row{
+            --bs-gutter-y: 0;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: calc(-0.5 * var(--bs-gutter-y));
+            margin-right: calc(-0.5 * var(--bs-gutter-x));
+            margin-left: calc(-0.5 * var(--bs-gutter-x));
+            display: flex !important; 
+            justify-content: center !important; 
+        }
+        
+
 	 </style>
 
-        <section class="py-1">
-            <div class=" container row mt-2" >
-                <div class="col-4 col-lg-4 col-sm-12" style="width: 350px;">
+        <section class="">
+            <div class="main-row mt-2 " style="" >
+                <div class="col-4 col-lg-4 col-sm-12 mx-1" style="max-width: 400px;">
                     <div class="card">
                         <div class="card-body">
                             <nav>
@@ -129,7 +99,7 @@
                                             <h6 class="card-subtitle mb-2 text-muted">Shirt Styles</h6>
                                             <select id="tshirttype" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                                 <option value="./designer/img/crew_front.png" selected="selected">Short Sleeve Shirts</option>
-                                                <option value="./designer/img/polo_front.png">Polo Shirts</option>                                        
+                                                <option value="./designer/img/polo2_front.png">Polo Shirts</option>                                        
                                                 <option value="./designer/img/mens_longsleeve_front.png">Long Sleeve Shirts</option>                                        
                                                 <option value="./designer/img/mens_hoodie_front.png">Hoodies</option>                    
                                                 <option value="./designer/img/mens_tank_front.png">Tank tops</option>
@@ -239,15 +209,15 @@
                                                 <button id="add-text" class="btn btn-outline-secondary" title="Add text"><i class="bi bi-send"></i></button>	  
                                             </div>
 
+                                            <div>
+                                                <?php require_once("./designer/fileupload.php") ?>
+                                                <input type="file" id="imageInput" accept="image/*" multiple>
+                                            </div>
+                                            <hr>
                                             
-
                                             <div class="card" style=" height: 500px;  overflow: auto;  width: 100%;  box-sizing: border-box; overflow-x: hidden;">
                                                 <div class="card-body">
-                                                    <div>
-                                                        <?php require_once("./designer/fileupload.php") ?>
-                                                        <input type="file" id="imageInput" accept="image/*" multiple>
-                                                    </div>
-                                                    <hr>
+                                                    
                                                     <div id="avatarlist" >
                                                         <?php include_once("./designer/stock-avatar-list.php") ?>
                                                     </div>	
@@ -265,14 +235,14 @@
                     </div>
                 </div>
 
-                <div class="col-4 col-lg-4 col-sm-12" style="width: 570px; height: 700px; background-color: rgb(255, 255, 255);">
-                    <div class="card" >
+                <div class="col-4 col-lg-4 col-sm-12  mx-1" style="min-width: 550px; max-width: 600px; height: 700px; background-color: rgb(255, 255, 255);">
+                    <div class="card" style="width: 550px" >
                         <div class="card-body">
                             <button id="flipback" type="button" class="btn btn-primary" title="Rotate View">
                                 <i class="bi bi-arrow-left-right"></i>
                             </button>
 
-                            <div id="shirtDiv" class="page" style=" position: relative; background-color: rgb(255, 255, 255);">
+                            <div id="shirtDiv" class="page" style="width: 525px; position: relative; background-color: rgb(255, 255, 255);">
                                 <img name="tshirtview" id="tshirtFacing" src="./designer/img/crew_front.png" style="width: 525px; ">
                                 <!-- <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 300px;height: 400px;">					 -->
                                 <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 200px;height: 400px;">					
@@ -284,16 +254,16 @@
 
                 </div>
 
-                <div class="col-4 col-lg-4 col-sm-12" style="width: 300px;">
+                <div class="col-4 col-lg-4 col-sm-12  mx-1" style="max-width: 300px;">
                     <div class="card">
                         <div class="card-body">
-                        <h3>Select Sizes</h3>
+                        <h3> Custom Order Form </h3>
                         <p>
                             <form action="" id="customize_form">
                                 <div class="form-action mb-1">
                                     <label for="customize_by">Customize By:</label>
-                                    <select class="form-control" name="customize_by" id="customize_by">
-                                        <option value="embroide">Embroide</option>
+                                    <select class="form-select" name="customize_by" id="customize_by">
+                                        <option value="embroidery">Embroide</option>
                                         <option value="print">Print</option>
                                     </select>
                                 </div>
@@ -301,7 +271,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="prices_by_sizes">Prices By Sizes:</label>
-                                            <select class="form-control" name="sizing" id="prices_by_sizes">
+                                            <select class="form-select" name="sizing" id="prices_by_sizes">
                                                 <?php
                                                 $sizesAndPrices = array(
                                                     "1x1" => 265.00,
@@ -330,7 +300,19 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="selected_price"></label>
-                                            <input type="text" class="form-control" id="selected_price" name="price" readonly>
+                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="selected_price" name="price" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-action mb-1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="shirt_selected">Selected Shirt:</label>
+                                            <input style="background-color: lightgrey;" type="text" class="form-control" id="shirt_selected" name="shirt_selected" readonly value="Short Sleeve Shirts">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="shirt_price">Shirt Price:</label>
+                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="shirt_price" name="shirt_price" readonly value="200">
                                         </div>
                                     </div>
                                 </div>
@@ -339,7 +321,7 @@
                                         <td><input type="checkbox" name="s-checked">&emsp;S</td>
                                         <td align="right">
                                             <button class="btn btn-sm btn-outline-dark" onclick="decrement('s')">-</button>
-                                            <input id="s" min="0" style="width: 40px;" value="0" type="number" readonly>
+                                            <input id="s" name="s" min="0" style="width: 40px;" value="0" type="number" readonly>
                                             <button class="btn btn-sm btn-outline-dark" onclick="increment('s')">+</button>
                                         </td>
                                     </tr>
@@ -347,7 +329,7 @@
                                         <td><input type="checkbox" name="m-checked">&emsp;M</td>
                                         <td align="right">
                                             <button class="btn btn-sm btn-outline-dark" onclick="decrement('m')">-</button>
-                                            <input id="m" min="0" style="width: 40px;" value="0" type="number" readonly>
+                                            <input id="m" name="m" min="0" style="width: 40px;" value="0" type="number" readonly>
                                             <button class="btn btn-sm btn-outline-dark" onclick="increment('m')">+</button>
                                         </td>
                                     </tr>
@@ -355,7 +337,7 @@
                                         <td><input type="checkbox" name="l-checked">&emsp;L</td>
                                         <td align="right">
                                             <button class="btn btn-sm btn-outline-dark" onclick="decrement('l')">-</button>
-                                            <input id="l" min="0" style="width: 40px;" value="0" type="number" readonly>
+                                            <input id="l" name="l" min="0" style="width: 40px;" value="0" type="number" readonly>
                                             <button class="btn btn-sm btn-outline-dark" onclick="increment('l')">+</button>
                                         </td>
                                     </tr>
@@ -363,16 +345,16 @@
                                         <td><input type="checkbox" name="xl-checked">&emsp;XL</td>
                                         <td align="right">
                                             <button class="btn btn-sm btn-outline-dark" onclick="decrement('xl')">-</button>
-                                            <input id="xl" min="0" style="width: 40px;" value="0" type="number" readonly>
+                                            <input id="xl" name="xl" min="0" style="width: 40px;" value="0" type="number" readonly>
                                             <button class="btn btn-sm btn-outline-dark" onclick="increment('xl')">+</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" name="xxl-checked">&emsp;XXL</td>
                                         <td align="right">
-                                            <button class="btn btn-sm btn-outline-dark" onclick="decrement('xl')">-</button>
-                                            <input id="xl" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button class="btn btn-sm btn-outline-dark" onclick="increment('xl')">+</button>
+                                            <button class="btn btn-sm btn-outline-dark" onclick="decrement('xxl')">-</button>
+                                            <input id="xxl" name="xxl" min="0" style="width: 40px;" value="0" type="number" readonly>
+                                            <button class="btn btn-sm btn-outline-dark" onclick="increment('xxl')">+</button>
                                         </td>
                                     </tr>
                                 </table>	
@@ -388,7 +370,6 @@
             </div>
         </section>
 
-	<div id="myOverlay" class="overlay" style="display: block;">
 
         <?php include_once("./includes/scripts.php"); ?>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
@@ -407,6 +388,7 @@
             })();
         </script>
         <?php include_once("./includes/footer.php"); ?>
+        <div id="myOverlay" class="overlay" style="display: block;">
 
         <!-- Footer ================================================== -->
         <script>
@@ -423,6 +405,20 @@
             $(document).ready(function(){
                     $("#tshirttype").change(function(){
                         $("img[name=tshirtview]").attr("src",$(this).val());
+
+                        const shirtList =  {
+                            "./designer/img/crew_front.png" : {"shirt_selected" : "Short Sleeve Shirts", "shirt_price" : "200"},
+                            "./designer/img/polo2_front.png" : {"shirt_selected" : "Polo Shirts", "shirt_price" : "250"},
+                            "./designer/img/mens_longsleeve_front.png" : {"shirt_selected" : "Long Sleeve Shirts", "shirt_price" : "250"},
+                            "./designer/img/mens_hoodie_front.png" : {"shirt_selected" : "Hoodies", "shirt_price" : "200"},
+                            "./designer/img/mens_tank_front.png" : {"shirt_selected" : "Tank tops", "shirt_price" : "150"},
+                        }
+
+                        let shirt = shirtList[$(this).val()]
+
+                        $("#shirt_selected").val(shirt.shirt_selected);
+                        $("#shirt_price").val(shirt.shirt_price);
+
                     });
 
 
@@ -472,10 +468,10 @@
                             {}
                         }		
                 }
-                else if (valueSelect === "./designer/img/polo_front.png") {
+                else if (valueSelect === "./designer/img/polo2_front.png") {
                     if ($(this).attr("data-original-title") == "Show Back View") {
                             $(this).attr('data-original-title', 'Show Front View');			        		       
-                            $("#tshirtFacing").attr("src","./designer/img/polo_back.png");			        
+                            $("#tshirtFacing").attr("src","./designer/img/polo2_back.png");			        
                             a = JSON.stringify(canvas);
                             canvas.clear();
                             try
@@ -488,7 +484,7 @@
                             
                         } else {
                             $(this).attr('data-original-title', 'Show Back View');			    				    	
-                            $("#tshirtFacing").attr("src","./designer/img/polo_front.png");			    	
+                            $("#tshirtFacing").attr("src","./designer/img/polo2_front.png");			    	
                             b = JSON.stringify(canvas);
                             canvas.clear();
                             try
@@ -647,7 +643,7 @@
                 .then(data => {
                     if(data == 'DONE!'){
                         alert("Customization Required sucess, we have sent you an email regarding with your request.");
-                        window.location = "test.php";
+                        window.location = "designer.php";
                     }
                     toggleOverlay(false, overlay);
 
@@ -831,10 +827,11 @@
         let child = div.getElementsByClassName('column')
 
         for (let i = 0; i < files.length; i++) {
+
             let img = document.createElement('img');
+            img.className = 'img-fluid img-polariod img-thumbnail';
             img.src = URL.createObjectURL(files[i]);
-            img.className = 'img-polaroid';
-            img.style = 'cursor:pointer';
+            img.alt = '';
 
             img.addEventListener("click", function(e){
                 let el = e.target;
@@ -867,7 +864,19 @@
 
             })
 
-            child[0].appendChild(img);
+            let a = document.createElement('a');
+            a.href = '#';
+            a.className = 'd-block mb-2 h-100';
+            a.appendChild(img);
+
+            let div = document.createElement('div');
+            div.className = 'col-lg-6 col-md-4 col-6';
+            div.appendChild(a);
+
+
+            // child[0].appendChild(div);
+
+            child[0].insertBefore(div, child[0].firstChild);
 
 
         }

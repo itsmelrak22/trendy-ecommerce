@@ -85,8 +85,8 @@
 
       .carousel-item img {
         width: 100%;
-        height: 100%;
-        object-fit: cover; /* or 'contain' to see the whole image */
+        height: 110%;
+        object-fit: contain; /* or 'contain' to see the whole image */
       }
     </style>
     <!-- Custom styles for this template -->

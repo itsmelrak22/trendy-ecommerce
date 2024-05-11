@@ -285,7 +285,7 @@
                                 <div class="form-action mb-1">
                                     <label for="customize_by">Customize By:</label>
                                     <select class="form-control" name="customize_by" id="customize_by">
-                                        <option value="embroide">Embroide</option>
+                                        <option value="embroidery">Embroide</option>
                                         <option value="print">Print</option>
                                     </select>
                                 </div>

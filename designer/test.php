@@ -305,7 +305,7 @@
                             <form action="" id="customize_form">
                                 <div class="form-action">
                                     <select name="customize_by" id="customize_by">
-                                        <option value="embroide">Embroide</option>
+                                        <option value="embroidery">Embroide</option>
                                         <option value="print">Print</option>
                                     </select>
                                 </div>
