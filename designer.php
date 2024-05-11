@@ -843,24 +843,36 @@
                 let angle = fabric.util.getRandomInt(-20, 40);
                 let width = fabric.util.getRandomInt(30, 50);
                 let opacity = (function(min, max){ return Math.random() * (max - min) + min; })(0.5, 1);
-                
                 fabric.Image.fromURL(el.src, function(image) {
-                    image.set({
-                        left: left,
-                        top: top,
-                        // angle: 0,
-                        // padding: 10,
-                        // cornersize: 10,
-                        hasRotatingPoint: true
-                    });
+		          image.set({
+		            left: left,
+		            top: top,
+		            angle: 0,
+		            padding: 10,
+		            cornersize: 10,
+	      	  		hasRotatingPoint:true
+		          });
+		          image.scale(getRandomNum(0.1, 0.25)).setCoords();
+		          canvas.add(image);
+		        });
+                
+                // fabric.Image.fromURL(el.src, function(image) {
+                //     image.set({
+                //         left: left,
+                //         top: top,
+                //         // angle: 0,
+                //         // padding: 10,
+                //         // cornersize: 10,
+                //         hasRotatingPoint: true
+                //     });
 
-                    // Set custom scale
-                    // var minScale = 0.1; // Minimum scale value
-                    // image.scaleX = minScale;
-                    // image.scaleY = minScale;
-                    canvas.add(image);
-                    // canvas.renderAll();
-                });
+                //     // Set custom scale
+                //     // var minScale = 0.1; // Minimum scale value
+                //     // image.scaleX = minScale;
+                //     // image.scaleY = minScale;
+                //     canvas.add(image);
+                //     // canvas.renderAll();
+                // });
 
             })
 

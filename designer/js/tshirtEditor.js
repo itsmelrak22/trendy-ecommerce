@@ -98,7 +98,7 @@ let line4;
 		            cornersize: 10,
 	      	  		hasRotatingPoint:true
 		          });
-		        //   image.scale(getRandomNum(0.1, 0.25)).setCoords();
+		          image.scale(getRandomNum(0.1, 0.25)).setCoords();
 		          canvas.add(image);
 		        });
 	  	});	  		  
