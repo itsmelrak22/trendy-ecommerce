@@ -68,17 +68,18 @@
         </section> -->
         <?php include_once("./includes/scripts.php"); ?>
         <?php include_once("./includes/footer.php"); ?>
-
         <script>
-            // document.getElementById('loadMore').addEventListener('click', loadMoreProducts);
+        $(document).ready(function() {
+            $('#seeMoreButton').click(function() {
+                $('.product-item[style="display: none;"]').slice(0, 4).slideDown().removeAttr('style');
+                if ($('.product-item[style="display: none;"]').length == 0) {
+                    $('#seeMoreButton').fadeOut();
+                }
+            });
+        });
 
-            // document.getElementById('load-more').addEventListener('click', function() {
-            //     var items = Array.from(document.getElementsByClassName('product-item'));
-            //     var hiddenItems = items.filter(function(item) {
-            //         return item.style.display === 'none';
-            //     });
-            //     hiddenItems.slice(0, 5).forEach(function(item) {
-            //         item.style.display = 'block';
-            //     });
-            // });
-        </script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+    </script>
