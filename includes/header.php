@@ -114,11 +114,11 @@
             }
 
             .product-item-img {
-                width: 100%;          /* Width of the image will be 100% of its container */
-                max-width: 512px;     /* The maximum width of the image will be 512px */
-                height: auto;         /* Height will adjust automatically to maintain aspect ratio */
-                max-height: 292px;    /* Maximum height of the image will be 292px */
-                object-fit: cover;    /* Ensures the image covers the container, cropping if necessary */
+                width: 100%;
+                max-width: 292px;   /* Set the maximum width */
+                height: auto;
+                aspect-ratio: 1 / 1; /* Maintains a 1:1 aspect ratio */
+                object-fit: cover;  /* Ensures the image covers the container, cropping if necessary */
             }
         
         </style>
