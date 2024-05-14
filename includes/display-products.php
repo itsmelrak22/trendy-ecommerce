@@ -46,7 +46,7 @@
                 <div class="card h-100">
 
                     <!-- Product image-->
-                    <img class="card-img-top" style="max-width: 250px !important; max-height: 320px !important;" src="'. $img_link .'" alt="..." />
+                    <img class="card-img-top" style="width: 397px !important;" src="'. $img_link .'" alt="..." />
 
                     <!-- Product details-->
                     <div class="card-body p-3">
