@@ -322,7 +322,7 @@
                                         <td align="right">
                                             <button class="btn btn-sm btn-outline-dark" onclick="decrement('s')">-</button>
                                             <input id="s" name="s" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button class="btn btn-sm btn-outline-dark" onclick="increment('s')">+</button>
+                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('s')">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -330,7 +330,7 @@
                                         <td align="right">
                                             <button class="btn btn-sm btn-outline-dark" onclick="decrement('m')">-</button>
                                             <input id="m" name="m" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button class="btn btn-sm btn-outline-dark" onclick="increment('m')">+</button>
+                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('m')">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -338,7 +338,7 @@
                                         <td align="right">
                                             <button class="btn btn-sm btn-outline-dark" onclick="decrement('l')">-</button>
                                             <input id="l" name="l" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button class="btn btn-sm btn-outline-dark" onclick="increment('l')">+</button>
+                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('l')">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -346,7 +346,7 @@
                                         <td align="right">
                                             <button class="btn btn-sm btn-outline-dark" onclick="decrement('xl')">-</button>
                                             <input id="xl" name="xl" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button class="btn btn-sm btn-outline-dark" onclick="increment('xl')">+</button>
+                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('xl')">+</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -354,7 +354,7 @@
                                         <td align="right">
                                             <button class="btn btn-sm btn-outline-dark" onclick="decrement('xxl')">-</button>
                                             <input id="xxl" name="xxl" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button class="btn btn-sm btn-outline-dark" onclick="increment('xxl')">+</button>
+                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('xxl')">+</button>
                                         </td>
                                     </tr>
                                 </table>	
