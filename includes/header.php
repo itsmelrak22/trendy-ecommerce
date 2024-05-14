@@ -112,6 +112,15 @@
                 font-weight: bold;
                 color: white !important;
             }
+
+            .product-item-img {
+                width: 100%;          /* Width of the image will be 100% of its container */
+                max-width: 512px;     /* The maximum width of the image will be 512px */
+                height: auto;         /* Height will adjust automatically to maintain aspect ratio */
+                max-height: 292px;    /* Maximum height of the image will be 292px */
+                object-fit: cover;    /* Ensures the image covers the container, cropping if necessary */
+            }
+        
         </style>
 
     </head>
