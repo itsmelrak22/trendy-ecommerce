@@ -124,7 +124,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link <?= $location ==  "index.php" ? "active" : ""?>" aria-current="page" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link <?= $location ==  "index.php#product_list" ? "active" : ""?>" href="index.php#product_list">Products</a></li>
+                        <li class="nav-item"><a class="nav-link <?= strpos($_SERVER['REQUEST_URI'], "browse-products.php") !== false ? "active" : ""?>" href="browse-products.php">Products</a></li>
+
                         <li class="nav-item"><a class="nav-link <?= $location ==  "designer.php" ? "active" : ""?>" href="designer.php">Customize</a></li>
                     </ul>
                     <!-- <form class="d-flex">

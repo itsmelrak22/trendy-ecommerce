@@ -21,35 +21,79 @@ Class Product extends Model {
         return $products;
     }
 
-    public static function getProducts(){
+
+    public static function getRankedProducts(){
         $instance = new self;
-        $categories = $instance->setQuery("
+
+        $data = $instance->setQuery("
+            WITH RankedProducts AS (
+                SELECT 
+                    P.*,
+                    C.id AS categories_id,
+                    C.name AS category_name,
+                    PC.stock_qty,
+                    PC.name AS color_name,
+                    PC.image,
+                    PC.id AS color_id,
+                    ROW_NUMBER() OVER (PARTITION BY C.id ORDER BY P.name) AS rn
+                FROM products AS P
+                LEFT JOIN categories AS C 
+                    ON P.category_id = C.id
+                LEFT JOIN product_colors AS PC 
+                    ON P.id = PC.product_id
+                WHERE P.deleted_at IS NULL
+            )
             SELECT 
-                P.*, 
-                C.id as category_id,
-                C.name AS category_name,
-                PC.stock_qty,
-                PC.name as color_name,
-                PC.image,
-                PC.id as color_id
-            FROM products AS P
-            LEFT JOIN categories AS C 
-            ON P.category_id = C.id
-            LEFT JOIN product_colors AS PC 
-            ON P.id = PC.product_id
-            WHERE P.deleted_at IS NULL
-            ORDER BY P.name
+                RP.*
+            FROM RankedProducts AS RP
+            WHERE RP.rn = 1
+            ORDER BY RP.category_name
         ")->getAll();
-        // $categories = $instance->setQuery("
-        //     SELECT 
-        //         P.*, 
-        //         C.id as category_id,
-        //         C.name AS category_name
-        //     FROM products AS P
-        //     LEFT JOIN categories AS C ON P.category_id = C.id
-        //     WHERE P.deleted_at IS NULL
-        //     ORDER BY P.created_at DESC
-        // ")->getAll();
+
+        return $data;
+        
+    }
+
+    public static function getProducts($category_id = null){
+        $qry = '';
+        if($category_id){
+            $qry = "SELECT 
+                        P.*, 
+                        C.name AS category_name,
+                        PC.stock_qty,
+                        PC.name as color_name,
+                        PC.image,
+                        PC.id as color_id
+                    FROM products AS P
+                    LEFT JOIN categories AS C 
+                        ON P.category_id = C.id
+                    LEFT JOIN product_colors AS PC 
+                        ON P.id = PC.product_id
+                    WHERE P.deleted_at IS NULL
+                    AND C.id = $category_id
+                    ORDER BY P.name;
+                    ";
+        }else{
+            $qry = "SELECT 
+                    P.*, 
+                    C.name AS category_name,
+                    PC.stock_qty,
+                    PC.name as color_name,
+                    PC.image,
+                    PC.id as color_id
+                FROM products AS P
+                LEFT JOIN categories AS C 
+                ON P.category_id = C.id
+                LEFT JOIN product_colors AS PC 
+                ON P.id = PC.product_id
+                WHERE P.deleted_at IS NULL
+                ORDER BY P.name
+            ";
+        }
+
+        $instance = new self;
+        $categories = $instance->setQuery( $qry )->getAll();
+
     
         return $categories;
     }

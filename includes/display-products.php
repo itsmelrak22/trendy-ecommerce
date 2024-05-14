@@ -1,6 +1,6 @@
 <?php
     $product = new Product;
-    $products = $product->getProducts();
+    $products = $product->getRankedProducts();
  
     // print_r($grouped);
 
@@ -23,20 +23,22 @@
     $grouped = [];
 
     foreach ($products as $product) {
-        $category = $product['category_name'];
-
-        if (!isset($grouped[$category])) {
-            $grouped[$category] = [];
-        }
-
-        $grouped[$category][] = $product;
+        addItemInProductList(
+            $product['name'],
+            $product['price'],
+            $product['id'],
+            $product['color_name'],
+            $product['image'],
+            $product['color_id'] ? $product['color_id'] : 0,
+            $product['category_id'],
+            $product['category_name'],
+        );
     }
 
     // displayDataTest($grouped);
 
-    ksort($grouped);
 
-    function addItemInProductList($name, $price, $id, $color_name, $image, $color_id, $category_id ){
+    function addItemInProductList($name, $price, $id, $color_name, $image, $color_id, $category_id, $category_name ){
         $img_link = getImageLink($image);
         echo '
 
@@ -51,8 +53,7 @@
                         <div class="text-center">
 
                             <!-- Product name-->
-                            <h4 class="fw-bolder">'. $name .'</h4>
-                            <p class=""> ( '. $color_name .' ) </p>
+                            <h4 class="fw-bolder">'. $category_name .'</h4>
 
                             <!-- Product price-->
                             ₱'. $price .'.00
@@ -62,7 +63,7 @@
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="./view-products.php?id='.$id.'&color_id='.$color_id.'">View</a>
+                            <a class="btn btn-outline-dark mt-auto" href="./browse-products.php?category_id='.$category_id.'">Browse</a>
                         </div>
                     </div>
 
@@ -82,47 +83,37 @@
 </style>
 
 <?php 
-    $count = 0;
-    foreach ($grouped as $key => $value) { 
-        $count++;
-        echo '<div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                <button class="accordion-button '.($count == 1 ? '' : 'collapsed').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$count.'" aria-expanded="'.($count == 1 ? 'true' : 'false').'" aria-controls="collapse'.$count.'">
-                    <figure class="text-center">
-                        <blockquote class="blockquote">
-                            <p>'.$key.'</p>
-                        </blockquote>
-                    </figure>
-                </button>
-                </h2>
-                <div id="collapse'.$count.'" class="accordion-collapse collapse '.($count == 1 ? 'show' : '').'" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <div class="row row-cols-2 row-cols-md-4 product-container">';
+    // $count = 0;
+    // foreach ($grouped as $key => $value) { 
+    //     $count++;
+    //     echo '<div class="accordion" id="accordionExample">
+    //         <div class="accordion-item">
+    //             <h2 class="accordion-header">
+    //             <button class="accordion-button '.($count == 1 ? '' : 'collapsed').'" type="button" data-bs-toggle="collapse" data-bs-target="#collapse'.$count.'" aria-expanded="'.($count == 1 ? 'true' : 'false').'" aria-controls="collapse'.$count.'">
+    //                 <figure class="text-center">
+    //                     <blockquote class="blockquote">
+    //                         <p>'.$key.'</p>
+    //                     </blockquote>
+    //                 </figure>
+    //             </button>
+    //             </h2>
+    //             <div id="collapse'.$count.'" class="accordion-collapse collapse '.($count == 1 ? 'show' : '').'" data-bs-parent="#accordionExample">
+    //             <div class="accordion-body">
+    //                 <div class="row row-cols-2 row-cols-md-4 product-container">';
         
-        $productCount = 0;
-        foreach ($value as $key => $product) {
-            $productCount++;
-            echo '<div class="product-item '.($productCount > 4 ? 'hidden' : '').'">';
-            addItemInProductList(
-                $product['name'],
-                $product['price'],
-                $product['id'],
-                $product['color_name'],
-                $product['image'],
-                $product['color_id'] ? $product['color_id'] : 0,
-                $product['category_id']
-            );
-            echo '</div>';
-        }
+    //     $productCount = 0;
+    //     foreach ($value as $key => $product) {
+    //         $productCount++;
+           
+    //     }
         
-        echo '</div>
-                <button class="see-more btn btn-primary btn-sm">See More</button>
-                </div>
-                </div>
-            </div>
-        </div>';
-    }
+    //     echo '</div>
+    //             <button class="see-more btn btn-primary btn-sm">See More</button>
+    //             </div>
+    //             </div>
+    //         </div>
+    //     </div>';
+    // }
     
 ?>   
 
@@ -142,51 +133,7 @@ document.querySelectorAll('.see-more').forEach(function(button) {
     });
 });
 
-// JavaScript
-let products = <?php echo json_encode($products); ?>; // Assuming $products is your array of products
-let currentProductIndex = 0;
-const productsPerPage = 8;
 
-
-function addItemInProductList(product) {
-    let productHTML = `
-        <div class="col mb-5 product-item" data-category="${product.category_id}">
-            <div class="card h-100">
-                <img class="card-img-top" src="${product.image_link}" alt="..." />
-                <div class="card-body p-3">
-                    <div class="text-center">
-                        <h4 class="fw-bolder">${product.name}</h4>
-                        <p class=""> ( ${product.color_name} ) </p>
-                        ₱${product.price}.00
-                    </div>
-                </div>
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center">
-                        <a class="btn btn-outline-dark mt-auto" href="./view-products.php?id=${product.id}&color_id=${product.color_id}">View</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    let productContainer = document.getElementById('productContainer').innerHTML += productHTML;
-}
-
-function loadMoreProducts() {
-    for (let i = 0; i < products.length; i++) {
-        // if (currentProductIndex >= products.length) {
-        //     // If all products have been displayed, hide the "See More" button
-        //     document.getElementById('loadMore').style.display = 'none';
-        //     break;
-        // }
-
-        addItemInProductList(products[currentProductIndex]);
-        currentProductIndex++;
-    }
-}
-
-// Load the first set of products when the page loads
-// loadMoreProducts();
 
 </script>
 
