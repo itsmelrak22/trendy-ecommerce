@@ -46,26 +46,26 @@
                     </div>
 
                     <div class="small mb-1 lead"><?= 'Color Name'. ': '. $products->color_name  ?></div>
-                    <div class="color-container" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                    <div class="row">
                         <?php foreach ($product_colors as $color): ?>
-                            <!-- Add a black border to each color box -->
                             <?php 
                                 $product_color_id = $color['id'];
                                 $product_id = $color['product_id'];
                                 $product_color_name = $color['name'];
                             ?>
-                            <a href="view-products.php?id=<?=$product_id?>&color_id=<?=$product_color_id?>" data-toggle="tooltip" data-placement="top"  title="<?= $color['name'] ?>"  style="flex-basis: calc(20% - 10px); height: 20px; text-decoration: none;">
-                                <div <?php
-                                    if($product_color_id == $color_id || $products->color_name == $product_color_name ){
-                                        echo 'class="active-color-selected "';
-                                    }
-                                ?> style="flex-basis: calc(20% - 10px); height: 30px; max-width: 80px; background-color: <?= $color['code'] ?>; border: 2px solid black; cursor: pointer;">
-                                    <!-- Add some space to show the color -->
-                                    
-                                </div>
-                            </a>
+                            <div class="col-3 my-1">
+                                <a href="view-products.php?id=<?=$product_id?>&color_id=<?=$product_color_id?>" data-bs-toggle="tooltip" data-bs-placement="top" title="<?= $color['name'] ?>">
+                                    <div <?php
+                                        if($product_color_id == $color_id || $products->color_name == $product_color_name ){
+                                            echo 'class="active-color-selected"';
+                                        }
+                                    ?> style="height: 30px; background-color: <?= $color['code'] ?>; border: 2px solid black; cursor: pointer;">
+                                    </div>
+                                </a>
+                            </div>
                         <?php endforeach; ?>
                     </div>
+
                     <hr>
                     <p class="lead"><?= 'Description'. ': '. $products->description  ?> </p>
                     <form action="add-to-cart.php" method="POST" onsubmit="return checkUser();">
