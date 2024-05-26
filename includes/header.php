@@ -126,29 +126,17 @@
     </head>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
             <div class="container ">
                 <a class="navbar-brand" href="index.php">TRENDY THREADS APPAREL BY LOVE J'S STORE</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link <?= $location ==  "index.php" ? "active" : ""?>" aria-current="page" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link <?= strpos($_SERVER['REQUEST_URI'], "browse-products.php") !== false ? "active" : ""?>" href="browse-products.php">Products</a></li>
+                        <li class="nav-item"><a class="nav-link <?= strpos($_SERVER['REQUEST_URI'], "browse-products.php") !== false ? "active" : ( strpos($_SERVER['REQUEST_URI'], "view-products.php") ? "active" : "")?>" href="browse-products.php">Products</a></li>
 
                         <li class="nav-item"><a class="nav-link <?= $location ==  "designer.php" ? "active" : ""?>" href="designer.php">Customize</a></li>
                     </ul>
-                    <!-- <form class="d-flex">
-                        <button class="me-2 btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-
-                        <button class=" btn btn-outline-dark" type="button">
-                            <i class="bi bi-box-arrow-in-right"></i>
-                            Login
-                        </button>
-                    </form> -->
 
                     <form class="d-flex">
                         <?php if(isset($client_email)) { ?>

@@ -178,7 +178,7 @@
                                                     
                                                 </div>		
                                                 
-                                                <h6 class="card-subtitle mb-2  text-muted"> Font Color Options </h6>
+                                                <h6 class="card-subtitle my-3  text-muted"> Font Color Options </h6>
                                                 <div class="btn-group mb-2">
                                                     <a class="btn btn-outline-dark" href="#" rel="tooltip" data-placement="top" data-original-title="Font Color">
                                                         <input type="hidden" id="text-fontcolor" class="color-picker" size="7" value="#000000">
