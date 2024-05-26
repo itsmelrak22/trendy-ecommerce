@@ -632,8 +632,13 @@
 
                 let formData = new FormData(this); // Create FormData from the form
                 formData.append('objectDatas', JSON.stringify(objectDatas)); // Append the object
-                formData.append('frontImage_', objects.frontImage, frontImage_);
-                formData.append('backImage_', objects.backImage, backImage_);
+
+                if(objects.frontImage instanceof Blob){
+                    formData.append('frontImage_', objects.frontImage, frontImage_);
+                }
+                if(objects.backImage instanceof Blob){
+                    formData.append('backImage_', objects.backImage, backImage_);
+                }
 
                 fetch('./designer/submit-customize.php', { // Replace '/submit' with your actual submission URL
                     method: 'POST',
