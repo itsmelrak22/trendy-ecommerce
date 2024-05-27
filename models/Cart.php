@@ -176,7 +176,7 @@ Class Cart extends Model {
             WHERE  customer_id = $customer_id
             AND  product_id = $product_id
             AND  color_id = $color_id
-            AND C.deleted_at IS NULL
+            AND deleted_at IS NULL
             AND status = 0
         ")->getAll();
         
