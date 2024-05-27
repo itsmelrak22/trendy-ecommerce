@@ -24,6 +24,7 @@ Class Cart extends Model {
             LEFT JOIN products AS P ON P.id = C.product_id
             LEFT JOIN customers AS CM ON CM.id = C.customer_id
             ORDER BY P.created_at DESC
+            WHERE C.deleted_at IS NULL
         ")->getAll();
         return $dataCarts;
     }
@@ -45,6 +46,7 @@ Class Cart extends Model {
             INNER JOIN product_colors AS PC ON C.color_id = PC.id
             WHERE  C.customer_id = $customer_id
             AND C.status = 0
+            AND C.deleted_at IS NULL
             ORDER BY P.created_at DESC
         ")->getAll();
         return $dataCarts;
@@ -66,6 +68,7 @@ Class Cart extends Model {
             INNER JOIN products AS P ON P.id = C.product_id
             INNER JOIN product_colors AS PC ON C.color_id = PC.id
             WHERE  C.customer_id = $customer_id
+            AND C.deleted_at IS NULL
             AND C.status = 1
             ORDER BY P.created_at DESC
         ")->getAll();
@@ -88,6 +91,7 @@ Class Cart extends Model {
             INNER JOIN products AS P ON P.id = C.product_id
             INNER JOIN product_colors AS PC ON C.color_id = PC.id
             WHERE  C.customer_id = $customer_id
+            AND C.deleted_at IS NULL
             AND C.status = 2
             ORDER BY P.created_at DESC
         ")->getAll();
@@ -110,6 +114,7 @@ Class Cart extends Model {
             INNER JOIN products AS P ON P.id = C.product_id
             INNER JOIN product_colors AS PC ON C.color_id = PC.id
             WHERE  C.customer_id = $customer_id
+            AND C.deleted_at IS NULL
             AND C.status = 3
             ORDER BY P.created_at DESC
         ")->getAll();
@@ -132,6 +137,7 @@ Class Cart extends Model {
             INNER JOIN products AS P ON P.id = C.product_id
             INNER JOIN product_colors AS PC ON C.color_id = PC.id
             WHERE  C.customer_id = $customer_id
+            AND C.deleted_at IS NULL
             AND C.status = 4
             ORDER BY P.created_at DESC
         ")->getAll();
@@ -153,6 +159,7 @@ Class Cart extends Model {
             INNER JOIN products AS P ON P.id = C.product_id
             INNER JOIN product_colors AS PC ON C.color_id = PC.id
             WHERE  C.customer_id = $customer_id
+            AND C.deleted_at IS NULL
             AND C.status = 11
             ORDER BY P.created_at DESC
         ")->getAll();
@@ -169,6 +176,7 @@ Class Cart extends Model {
             WHERE  customer_id = $customer_id
             AND  product_id = $product_id
             AND  color_id = $color_id
+            AND C.deleted_at IS NULL
             AND status = 0
         ")->getAll();
         

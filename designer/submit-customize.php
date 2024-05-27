@@ -26,16 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
         $sizing = $_POST['sizing'];
         $price = $_POST['price'];
         $shirt_selected = $_POST['shirt_selected'];
-        $shirt_price = $_POST['shirt_price'];
-        $sizes = [];
-        foreach($_POST as $key => $value) {
-            if (strpos($key, '-checked') !== false && $value == 'on') {
-                $size = str_replace('-checked', '', $key);
-                $sizes[$size] = $_POST[$size];
-            }
-        }
+        $price = $_POST['price'];
+        $sizes = [$_POST['selected_size'] => $_POST['count']];
+
         $objectDatas = json_decode($_POST['objectDatas']);
-    
         $frontObjects = $objectDatas->front[0];
         $backObjects = $objectDatas->back[0];
         $timestamp = time();
@@ -44,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
             'customize_by' => $customize_by,
             'price' => $price,
             'shirt_selected' => $shirt_selected,
-            'shirt_price' => $shirt_price,
+            'price' => $price,
             'sizing' => $sizing,
             'sizes_ordered' => $sizes,
             'front_canvas_image' => '',

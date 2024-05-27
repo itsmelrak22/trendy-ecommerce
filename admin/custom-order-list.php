@@ -499,39 +499,18 @@
                 var div = document.createElement('div');
                 var input = document.createElement('input');
 
-                let sizeText = {
-                    "s": "SMALL",
-                    "m": "MEDIUM",
-                    "l": "LARGE",
-                    "xl": "EXTRA LARGE",
-                    "xxl": "2 EXTRA LARGE",
-                };
 
-                // Calculate adjusted price based on size
-                let adjustedPrice = Number(jsonData.shirt_price);
-                switch (key) {
-                    case "s":
-                        adjustedPrice += 20;
-                        break;
-                    case "m":
-                        adjustedPrice += 30;
-                        break;
-                    case "l":
-                        adjustedPrice += 40;
-                        break;
-                    case "xl":
-                        adjustedPrice += 50;
-                        break;
-                    case "xxl":
-                        adjustedPrice += 60;
-                        break;
-                    default:
-                        break;
+                let sizeText = {
+                    "s" : "SMALL",
+                    "m" : "MEDIUM",
+                    "l" : "LARGE",
+                    "xl" : "EXTRA LARGE",
+                    "xxl" : "2 EXTRA LARGE",
                 }
 
                 // Set cell1 text
                 cell1.className = '';
-                cell1.innerHTML = `<span><strong>${sizeText[key]}</strong>: ${jsonData.sizes_ordered[key]} x ₱${adjustedPrice} </span>`;
+                cell1.innerHTML = `<span><strong>${sizeText[key]}</strong>: ${jsonData.sizes_ordered[key]} x ₱${jsonData.shirt_price} </span>`;
 
                 // Set div attributes
                 div.className = 'input-group';
@@ -546,9 +525,9 @@
                 input.setAttribute('aria-describedby', 'basic-addon2');
                 input.required = true;
                 input.readOnly = true;
-                input.value = (jsonData.sizes_ordered[key] * adjustedPrice);
+                input.value = (jsonData.sizes_ordered[key] * jsonData.shirt_price);
 
-                row.className = 'addedSize';
+                row.className = 'addedSize'
 
                 // Append everything
                 div.appendChild(input);
@@ -558,7 +537,6 @@
                 table.appendChild(row);
             }
         }
-
         
         customerId.value = cart.customer_id;
         email.value = cart.email;

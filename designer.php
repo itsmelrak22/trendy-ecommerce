@@ -261,6 +261,14 @@
                         <p>
                             <form action="" id="customize_form">
                                 <div class="form-action mb-1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="shirt_selected">Selected Shirt:</label>
+                                            <input style="background-color: lightgrey;" type="text" class="form-control" id="shirt_selected" name="shirt_selected" readonly value="Short Sleeve Shirts">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-action mb-1">
                                     <label for="customize_by">Customize By:</label>
                                     <select class="form-select" name="customize_by" id="customize_by">
                                         <option value="embroidery">Embroidery</option>
@@ -268,95 +276,48 @@
                                     </select>
                                 </div>
                                 <div class="form-action mb-1">
+                                    <label for="selected_size">Size:</label>
+                                    <select class="form-select" name="selected_size" id="selected_size">
+                                        <option value="xs">Extra Small</option>
+                                        <option value="s">Small</option>
+                                        <option value="m">Medium</option>
+                                        <option value="l">Large</option>
+                                        <option value="xl">Extra Large</option>
+                                        <option value="2xl">2 Extra Large</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-action mb-1">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="prices_by_sizes">Prices By Sizes:</label>
                                             <select class="form-select" name="sizing" id="prices_by_sizes">
-                                                <?php
-                                                $sizesAndPrices = array(
-                                                    "1x1" => 265.00,
-                                                    "1x2" => 265.00,
-                                                    "1x3" => 265.00,
-                                                    "1x4" => 265.00,
-                                                    "2x1" => 285.00,
-                                                    "2x2" => 285.00,
-                                                    "2x3" => 285.00,
-                                                    "2x4" => 285.00,
-                                                    "3x1" => 300.00,
-                                                    "3x2" => 300.00,
-                                                    "3x3" => 300.00,
-                                                    "3x4" => 300.00,
-                                                    "4x1" => 350.00,
-                                                    "4x2" => 350.00,
-                                                    "4x3" => 350.00,
-                                                    "4x4" => 350.00
-                                                );
-
-                                                foreach ($sizesAndPrices as $size => $price) {
-                                                    echo '<option value="' . $size . '">' . $size . '</option>';
-                                                }
-                                                ?>
+                                              
                                             </select>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="selected_price"></label>
-                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="selected_price" name="price" readonly>
+                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="selected_price" name="price" readonly required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-action mb-1">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="shirt_selected">Selected Shirt:</label>
-                                            <input style="background-color: lightgrey;" type="text" class="form-control" id="shirt_selected" name="shirt_selected" readonly value="Short Sleeve Shirts">
+                                            <label for="count">Count:</label>
+                                            <button class="btn btn-sm btn-outline-dark" onclick="decrement()">-</button>
+                                            <input class="form-input" id="count" name="count" min="0" style="width: 40px;" value="0" type="number" readonly>
+                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment()">+</button>
                                         </div>
-                                        <div class="col-md-12">
-                                            <label for="shirt_price">Shirt Price:</label>
-                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="shirt_price" name="shirt_price" readonly value="200">
-                                        </div>
+                                     
                                     </div>
                                 </div>
+
                                 <table class="table">
                                     <tr>
-                                        <td><input type="checkbox" name="s-checked">&emsp;S</td>
-                                        <td align="right">
-                                            <button class="btn btn-sm btn-outline-dark" onclick="decrement('s')">-</button>
-                                            <input id="s" name="s" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('s')">+</button>
-                                        </td>
+
                                     </tr>
-                                    <tr>
-                                        <td><input type="checkbox" name="m-checked">&emsp;M</td>
-                                        <td align="right">
-                                            <button class="btn btn-sm btn-outline-dark" onclick="decrement('m')">-</button>
-                                            <input id="m" name="m" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('m')">+</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" name="l-checked">&emsp;L</td>
-                                        <td align="right">
-                                            <button class="btn btn-sm btn-outline-dark" onclick="decrement('l')">-</button>
-                                            <input id="l" name="l" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('l')">+</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" name="xl-checked">&emsp;XL</td>
-                                        <td align="right">
-                                            <button class="btn btn-sm btn-outline-dark" onclick="decrement('xl')">-</button>
-                                            <input id="xl" name="xl" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('xl')">+</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" name="xxl-checked">&emsp;XXL</td>
-                                        <td align="right">
-                                            <button class="btn btn-sm btn-outline-dark" onclick="decrement('xxl')">-</button>
-                                            <input id="xxl" name="xxl" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment('xxl')">+</button>
-                                        </td>
-                                    </tr>
+                                   
                                 </table>	
                                 <input type="hidden" name="customize-page-submit" value="true">
                                 <input type="hidden" name="customer_id" value="<?=$_SESSION['loggedInUser']['id']?>">
@@ -376,6 +337,7 @@
 
         <script type="text/javascript" src="./designer/js/tshirtEditor.js"></script>
 	    <script type="text/javascript" src="./designer/js/jquery.miniColors.min.js"></script>
+        <script src="./js/shirtOptions.js"></script>
         <script type="text/javascript">
             jQuery.browser = {};
             (function () {
@@ -404,6 +366,9 @@
 
             $(document).ready(function(){
                     $("#tshirttype").change(function(){
+                        let input = document.getElementById('selected_price');
+                         input.value = null;
+
                         $("img[name=tshirtview]").attr("src",$(this).val());
 
                         const shirtList =  {
@@ -629,7 +594,6 @@
                 let frontImage_ = 'frontImage_' + timestamp + '.png';
                 let backImage_ = 'backImage_' + timestamp + '.png';
 
-
                 let formData = new FormData(this); // Create FormData from the form
                 formData.append('objectDatas', JSON.stringify(objectDatas)); // Append the object
 
@@ -651,14 +615,13 @@
                         window.location = "designer.php";
                     }
                     toggleOverlay(false, overlay);
-
                 })
                 .catch((error) => {
                     toggleOverlay(false, overlay);
                     console.error('Error:', error);
                 });
-
             });
+
 
             const objects = {
                 frontImage: null,
@@ -698,6 +661,23 @@
 
                 // testConvert()
                 // return;
+
+                let selected_price = document.getElementById('selected_price');
+                let count = document.getElementById('count');
+
+                if(!selected_price.value){
+                    // If form validation fails, display an error message or handle it as needed
+                    alert("Please fill out all required fields correctly.");
+                    return;
+                }
+
+                if(count.value < 1){
+                    // If form validation fails, display an error message or handle it as needed
+                    alert("Please fill out all required fields correctly.");
+                    return;
+                }
+
+
                 let testOverlay = document.getElementById('myOverlay');
                 console.log('testOverlay', testOverlay)
 
@@ -812,16 +792,30 @@
         </script>
 
         <script>
-            function increment(id) {
-                var input = document.getElementById(id);
-                input.value = parseInt(input.value, 10) + 1;
+            function increment(id = false) {
+                if(id){
+                    var input = document.getElementById(id);
+                    input.value = parseInt(input.value, 10) + 1;
+                }else{
+                    var input = document.getElementById("count");
+                    input.value = parseInt(input.value, 10) + 1;
+                }
+
             }
 
-            function decrement(id) {
-                var input = document.getElementById(id);
-                if (input.value > 0) {
-                    input.value = parseInt(input.value, 10) - 1;
+            function decrement(id = false) {
+                if(id){
+                    var input = document.getElementById(id);
+                    if (input.value > 0) {
+                        input.value = parseInt(input.value, 10) - 1;
+                    }
+                }else{
+                    var input = document.getElementById("count");
+                    if (input.value > 0) {
+                        input.value = parseInt(input.value, 10) - 1;
+                    }
                 }
+
             }
         </script>
 
@@ -901,14 +895,71 @@
         });
         </script>
 
-        <script>
-            function updateSelectedPrice() {
-                var selectElement = document.getElementById('prices_by_sizes');
-                var selectedSize = selectElement.options[selectElement.selectedIndex].value;
-                var pricesAndSizes = <?php echo json_encode($sizesAndPrices); ?>;
-                document.getElementById('selected_price').value = pricesAndSizes[selectedSize];
-            }
-            document.getElementById('prices_by_sizes').addEventListener('change', updateSelectedPrice);
+    <script>
 
-            updateSelectedPrice();
-        </script>
+
+        document.getElementById('customize_by').addEventListener('change', function() {
+            var selectedValue = this.value;
+            console.log('Selected customization:', selectedValue);
+
+            // Perform actions based on the selected value
+            if (selectedValue === 'embroidery') {
+                // Code for embroidery option
+                console.log('Embroidery option selected.');
+            } else if (selectedValue === 'print') {
+                // Code for print option
+                console.log('Print option selected.');
+            }
+        });
+
+        document.getElementById('prices_by_sizes').addEventListener('change', function() {
+            let input = document.getElementById('selected_price');
+            var selectedValue = this.value;
+
+            let shirt_selected = document.getElementById('shirt_selected').value;
+            let selected_size = document.getElementById('selected_size').value;
+            let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
+            input.value = data.price
+            console.log('prices_by_sizes data:', data);
+
+        });
+
+        function updateDimensions(size) {
+            var shirtDimensionsSelect = document.getElementById('prices_by_sizes');
+            let shirt_selected = document.getElementById('shirt_selected').value;
+
+
+            // Clear all existing options in the dimensions select
+            shirtDimensionsSelect.innerHTML = '';
+
+            // Fetch the dimensions data for the selected size
+            var sizeData = shirtOptions[shirt_selected][size];
+
+            // Populate the dimensions select with new options
+            if (sizeData) {
+                sizeData.forEach(item => {
+                    var option = document.createElement('option');
+                    option.value = item.dimension;
+                    option.text = item.dimension;
+                    shirtDimensionsSelect.appendChild(option);
+                });
+            }
+        }
+
+        document.getElementById('selected_size').addEventListener('change', function() {
+            let input = document.getElementById('selected_price');
+            input.value = null;
+            var selectedSize = this.value;
+            updateDimensions(selectedSize);
+        });
+
+        // Set default selected value to "xs" and initialize dimensions
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('selected_size').value = 'xs';
+            updateDimensions('xs');
+        });
+
+        
+
+        console.log(shirtOptions);
+    </script>

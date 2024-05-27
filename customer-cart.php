@@ -200,7 +200,7 @@
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link me-2 btn btn-outline-dark" id="customize-order-tab" data-bs-toggle="tab" data-bs-target="#customize-order-tab-pane" type="button" role="tab" aria-controls="customize-order-tab-pane" aria-selected="false" >
-                Custom Order (Pending)
+                Custom Order (To Review)
                 <span class="badge bg-dark text-white ms-1 rounded-pill">
                     <?php if(isset($customizeItemsCount)) {
                         echo  $customizeItemsCount ;

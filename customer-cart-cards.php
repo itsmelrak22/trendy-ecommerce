@@ -38,6 +38,35 @@ function generateCartCards($cart, $key, $img_link){
     $quantity = $cart['quantity'];
     $created_at = $cart['created_at'];
     $total_price = $cart['total_price'];
+    $cartID = $cart['id'];
+
+    // Adjust the price based on size
+        switch ($size) {
+            case 'xs':
+                $price *= 1.1; // Increase price by 10%
+                break;
+            case 's':
+                $price *= 1.2; // Increase price by 20%
+                break;
+            case 'm':
+                $price *= 1.3; // Increase price by 30%
+                break;
+            case 'l':
+                $price *= 1.4; // Increase price by 40%
+                break;
+            case 'xl':
+                $price *= 1.5; // Increase price by 50%
+                break;
+            case 'xxl':
+                $price *= 1.6; // Increase price by 60%
+                break;
+            case 'one_size':
+                // Do nothing, price remains unchanged
+                break;
+            default:
+                // Handle any other cases here
+                break;
+        }
 
     echo '
     
@@ -62,7 +91,7 @@ function generateCartCards($cart, $key, $img_link){
                             <div class="flex-shrink-0 ms-2">
                                 <ul class="list-inline mb-0 font-size-16">
                                     <li class="list-inline-item">
-                                        <a href="#" class="text-muted px-1">
+                                        <a href="delete_cart_item.php?id='.$cartID.'" class="text-muted px-1">
                                             <i class="mdi mdi-trash-can-outline"></i>
                                         </a>
                                     </li>
