@@ -34,6 +34,7 @@ function generateCartCards($cart, $key, $img_link){
     $product_name = $cart['product_name'];
     $color = $cart['color'];
     $price = $cart['price'];
+    $size = $cart['size'];
     $quantity = $cart['quantity'];
     $created_at = $cart['created_at'];
     $total_price = $cart['total_price'];
@@ -55,6 +56,7 @@ function generateCartCards($cart, $key, $img_link){
                                 <div>
                                     <h5 class="text-truncate font-size-18"><a href="#" class="text-dark">'.$product_name.'</a></h5>
                                     <p class="mb-0 mt-1">Color : <span class="fw-medium">'.$color.'</span></p>
+                                    <p class="mb-0 mt-1">Size : <span class="fw-medium">'.$size.'</span></p>
                                 </div>
                             </div>
                             <div class="flex-shrink-0 ms-2">

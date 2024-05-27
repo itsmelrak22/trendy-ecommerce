@@ -66,15 +66,42 @@
                                     </div>
                                 </a>
                             </div>
+                          
                         <?php endforeach; ?>
                     </div>
+
 
                     <hr>
                     <p class="lead"><?= 'Description'. ': '. $products->description  ?> </p>
                     <form action="add-to-cart.php" method="POST" onsubmit="return checkUser();">
                         <div class="d-flex">
+                            <div class="my-2">
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs" checked>
+                                    <label class="btn btn-outline-secondary" for="size_xs">XS</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size_s" autocomplete="off" value="s">
+                                    <label class="btn btn-outline-secondary" for="size_s">S</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size_m" autocomplete="off" value="m">
+                                    <label class="btn btn-outline-secondary" for="size_m">M</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size_l" autocomplete="off" value="l">
+                                    <label class="btn btn-outline-secondary" for="size_l">L</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size_xl" autocomplete="off" value="xl">
+                                    <label class="btn btn-outline-secondary" for="size_xl">XL</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size_2xl" autocomplete="off" value="xxl">
+                                    <label class="btn btn-outline-secondary" for="size_2xl">2XL</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="d-flex">
                             <input type="hidden" name="product_id" value="<?=$id?>">
                             <input type="hidden" name="color_id" value="<?=$products->color_id?>">
+ 
                             <input name="quantity" required placeholder="0" value="1" class="form-control text-center me-3" id="inputQuantity" type="text" value="" style="width: 70px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
                             <?php if( isset($_SESSION["loggedInUser"]) ) { ?>
                                 <input type="hidden" name="customer_id" value="<?=$client_id?>">

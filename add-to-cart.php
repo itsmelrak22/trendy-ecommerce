@@ -1,12 +1,12 @@
 <?php
     require_once  './vendor/autoload.php';
 
-function displayDataTest($array){
+function displayaDtaTest($array){
     echo "<pre>";
     echo print_r($array);
     echo "</pre>";
 }
-
+// displayaDtaTest($_POST);
 // exit();
 $product_id = $_POST['product_id'];
 $color_id = $_POST['color_id'];
@@ -32,6 +32,7 @@ try {
                 'color_id' => $_POST['color_id'],
                 'customer_id' => $_POST['customer_id'],
                 'quantity' => (int) $existing_item[0]['quantity'] + (int) $_POST['quantity'],
+                'size' => $_POST['size'],
                 'updated_at' => new \DateTime,
             ];
             
@@ -44,6 +45,7 @@ try {
                 'color_id' => $_POST['color_id'],
                 'customer_id' => $_POST['customer_id'],
                 'quantity' => $_POST['quantity'],
+                'size' => $_POST['size'],
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             ];
