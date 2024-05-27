@@ -122,6 +122,7 @@
                                 break;
                             case 'NIKEE SWOOSH POLO SHIRT':
                             case 'NY POLO SHIRT':
+                            case 'ELITE OVERSIZED SHIRT':
                                 echo '
                                 <div class="my-2">
                                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
