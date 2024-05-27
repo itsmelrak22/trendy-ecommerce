@@ -30,7 +30,13 @@
                 <a href="browse-products.php">
                     <button type="button" class="mx-2 my-2 btn btn-outline-primary active" id="allCategory">All</button>
                 </a>
-                <?php foreach ($categories as $key => $category): ?>
+                <?php 
+                    function sortByName($a, $b) {
+                        return strcasecmp($a['name'], $b['name']);
+                    }
+                    
+                    usort($categories, 'sortByName');
+                    foreach ($categories as $key => $category): ?>
                     <a href="browse-products.php?category_id=<?=$category['id']?>">
                         <button type="button" class="mx-2 my-2 btn btn-outline-primary" id="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></button>
                     </a>
