@@ -105,29 +105,29 @@
                                 echo '
                                 <p class="lead">Size to price computation: <br> 
                                         <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>XS</th>
-                                                    <th>S</th>
-                                                    <th>M</th>
-                                                    <th>L</th>
-                                                    <th>XL</th>
-                                                    <th>2XL</th>
-                                                    <th>ONE SIZE</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td> +10 </td>
-                                                    <td> +20 </td>
-                                                    <td> +30 </td>
-                                                    <td> +40 </td>
-                                                    <td> +50 </td>
-                                                    <td> +60 </td>
-                                                    <td> 0 </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <thead>
+                                            <tr>
+                                                <th>XS</th>
+                                                <th>S</th>
+                                                <th>M</th>
+                                                <th>L</th>
+                                                <th>XL</th>
+                                                <th>2XL</th>
+                                                <th>ONE SIZE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td> 0 </td> 
+                                                <td> +10 </td>
+                                                <td> +20 </td>
+                                                <td> +30 </td>
+                                                <td> +40 </td>
+                                                <td> +50 </td>
+                                                <td> 0 </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </p>
                                 <div class="d-flex">
                                     <div class="my-2">
@@ -168,7 +168,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td> 0 </td>
+                                                    <td> 0 </td> 
                                                     <td> +10 </td>
                                                     <td> +20 </td>
                                                     <td> +30 </td>
