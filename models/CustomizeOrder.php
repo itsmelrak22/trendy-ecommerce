@@ -23,7 +23,7 @@ Class CustomizeOrder extends Model {
                 LEFT JOIN `customers` as B 
                 ON A.customer_id = B.id
                 WHERE A.customer_id = $customer_id
-                AND A.status = '$status'
+                AND A.status IS NOT NULL
             ";
         }else{
             $qry = "
