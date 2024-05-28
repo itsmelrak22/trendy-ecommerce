@@ -274,7 +274,7 @@
                                             <table class="table mb-0" id="updateTable">
                                                 <tbody id="updateTableBody" class="mt-3">
                                                     
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td>Shirt Price:&nbsp ₱ </td>
                                                         <td class="text-end">
                                                             <input type="text" 
@@ -288,7 +288,7 @@
                                                                         readonly
                                                                         >
                                                         </td>
-                                                    </tr>
+                                                    </tr> -->
                                                     <tr>
                                                         <td>Customize Size (<span id="cutomize_sizing"></span>):&nbsp ₱ </td>
                                                         <td class="text-end">
@@ -478,7 +478,7 @@
         let total_price = document.getElementById('total_price');
         let remarks = document.getElementById('remarks');
         let shirt_selected = document.getElementById('shirt_selected');
-        let shirt_price = document.getElementById('shirt_price');
+        // let shirt_price = document.getElementById('shirt_price');
         let customize_by = document.getElementById('customize_by');
         let sizing = document.getElementById('sizing');
         let cutomize_sizing = document.getElementById('cutomize_sizing');
@@ -510,7 +510,7 @@
 
                 // Set cell1 text
                 cell1.className = '';
-                cell1.innerHTML = `<span><strong>${sizeText[key]}</strong>: ${jsonData.sizes_ordered[key]} x ₱${jsonData.shirt_price} </span>`;
+                cell1.innerHTML = `<span><strong>${sizeText[key]}</strong>: ${jsonData.sizes_ordered[key]} x ₱${jsonData.price} </span>`;
 
                 // Set div attributes
                 div.className = 'input-group';
@@ -525,7 +525,7 @@
                 input.setAttribute('aria-describedby', 'basic-addon2');
                 input.required = true;
                 input.readOnly = true;
-                input.value = (jsonData.sizes_ordered[key] * jsonData.shirt_price);
+                input.value = (jsonData.sizes_ordered[key] * jsonData.price);
 
                 row.className = 'addedSize'
 
@@ -558,9 +558,9 @@
         if(jsonData.shirt_selected){
             shirt_selected.value = jsonData.shirt_selected
         }
-        if(jsonData.shirt_price){
-            shirt_price.value = jsonData.shirt_price
-        }
+        // if(jsonData.shirt_price){
+        //     shirt_price.value = jsonData.shirt_price
+        // }
         if(jsonData.customize_by){
             customize_by.value = jsonData.customize_by
         }
