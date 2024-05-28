@@ -168,12 +168,12 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                    <td> 0 </td>
                                                     <td> +10 </td>
                                                     <td> +20 </td>
                                                     <td> +30 </td>
                                                     <td> +40 </td>
                                                     <td> +50 </td>
-                                                    <td> +60 </td>
                                                     <td> 0 </td>
                                                 </tr>
                                             </tbody>

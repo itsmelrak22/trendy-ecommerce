@@ -43,22 +43,21 @@ function generateCartCards($cart, $key, $img_link){
     // Adjust the price based on size
         switch ($size) {
             case 'xs':
-                $price *= 1.1; // Increase price by 10%
                 break;
             case 's':
-                $price *= 1.2; // Increase price by 20%
+                $price += 10; // Increase price by 20%
                 break;
             case 'm':
-                $price *= 1.3; // Increase price by 30%
+                $price += 20; // Increase price by 30%
                 break;
             case 'l':
-                $price *= 1.4; // Increase price by 40%
+                $price += 30; // Increase price by 40%
                 break;
             case 'xl':
-                $price *= 1.5; // Increase price by 50%
+                $price += 40; // Increase price by 50%
                 break;
             case 'xxl':
-                $price *= 1.6; // Increase price by 60%
+                $price += 50; // Increase price by 60%
                 break;
             case 'one_size':
                 // Do nothing, price remains unchanged
