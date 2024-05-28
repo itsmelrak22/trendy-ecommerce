@@ -74,32 +74,7 @@
                     <hr>
                     <p class="lead"><?= 'Description'. ': '. $products->description  ?> </p>
                     <hr>
-                    <p class="lead">Size to price computation: <br> 
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>XS</th>
-                                        <th>S</th>
-                                        <th>M</th>
-                                        <th>L</th>
-                                        <th>XL</th>
-                                        <th>2XL</th>
-                                        <th>ONE SIZE</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td> +10 </td>
-                                        <td> +20 </td>
-                                        <td> +30 </td>
-                                        <td> +40 </td>
-                                        <td> +50 </td>
-                                        <td> +60 </td>
-                                        <td> 0 </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                    </p>
+
                     <form action="add-to-cart.php" method="POST" onsubmit="return checkUser();">
                         <div class="d-flex">
                            <?php switch ($products->category_name) {
@@ -124,6 +99,32 @@
                             case 'NY POLO SHIRT':
                             case 'ELITE OVERSIZE SHIRT':
                                 echo '
+                                <p class="lead">Size to price computation: <br> 
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>XS</th>
+                                                    <th>S</th>
+                                                    <th>M</th>
+                                                    <th>L</th>
+                                                    <th>XL</th>
+                                                    <th>2XL</th>
+                                                    <th>ONE SIZE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td> +10 </td>
+                                                    <td> +20 </td>
+                                                    <td> +30 </td>
+                                                    <td> +40 </td>
+                                                    <td> +50 </td>
+                                                    <td> +60 </td>
+                                                    <td> 0 </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                </p>
                                 <div class="my-2">
                                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                                         <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs" checked>

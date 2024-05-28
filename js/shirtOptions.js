@@ -330,7 +330,7 @@ let shirtOptions = {
             {"dimension": "4x4", "price": 390}
         ]
     },
-    "Tank Tops": {
+    "Tank tops": {
         "xs": [
             {"dimension": "1x1", "price": 100},
             {"dimension": "1x2", "price": 105},
