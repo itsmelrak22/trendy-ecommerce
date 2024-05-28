@@ -76,7 +76,6 @@
                     <hr>
 
                     <form action="add-to-cart.php" method="POST" onsubmit="return checkUser();">
-                        <div class="d-flex">
                            <?php switch ($products->category_name) {
                             case 'BOOTY SHORT':
                             case 'COORDINATE':
@@ -87,10 +86,12 @@
                             case 'SUBLIMATION':
                             case "WOMEN'S TOP":
                                 echo '
-                                <div class="my-2">
-                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                        <input type="radio" class="btn-check" name="size" id="one_size" autocomplete="off" value="one_size" checked>
-                                        <label class="btn btn-outline-secondary" for="one_size">ONE SIZE</label>
+                                <div class="d-flex">
+                                    <div class="my-2">
+                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                            <input type="radio" class="btn-check" name="size" id="one_size" autocomplete="off" value="one_size" checked>
+                                            <label class="btn btn-outline-secondary" for="one_size">ONE SIZE</label>
+                                        </div>
                                     </div>
                                 </div>
                                 ';
@@ -98,6 +99,9 @@
                             case 'NIKEE SWOOSH POLO SHIRT':
                             case 'NY POLO SHIRT':
                             case 'ELITE OVERSIZE SHIRT':
+                            case 'CLASSIC POLO SHIRT':
+                            case 'OPEN COLLAR POLO SHIRT':
+                            case 'CORDUROY SHIRT':
                                 echo '
                                 <p class="lead">Size to price computation: <br> 
                                         <table class="table table-bordered">
@@ -125,22 +129,77 @@
                                             </tbody>
                                         </table>
                                 </p>
-                                <div class="my-2">
-                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                        <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs" checked>
-                                        <label class="btn btn-outline-secondary" for="size_xs">XS</label>
+                                <div class="d-flex">
+                                    <div class="my-2">
+                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                            <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs" checked>
+                                            <label class="btn btn-outline-secondary" for="size_xs">XS</label>
 
-                                        <input type="radio" class="btn-check" name="size" id="size_s" autocomplete="off" value="s">
-                                        <label class="btn btn-outline-secondary" for="size_s">S</label>
+                                            <input type="radio" class="btn-check" name="size" id="size_s" autocomplete="off" value="s">
+                                            <label class="btn btn-outline-secondary" for="size_s">S</label>
 
-                                        <input type="radio" class="btn-check" name="size" id="size_m" autocomplete="off" value="m">
-                                        <label class="btn btn-outline-secondary" for="size_m">M</label>
+                                            <input type="radio" class="btn-check" name="size" id="size_m" autocomplete="off" value="m">
+                                            <label class="btn btn-outline-secondary" for="size_m">M</label>
 
-                                        <input type="radio" class="btn-check" name="size" id="size_l" autocomplete="off" value="l">
-                                        <label class="btn btn-outline-secondary" for="size_l">L</label>
+                                            <input type="radio" class="btn-check" name="size" id="size_l" autocomplete="off" value="l">
+                                            <label class="btn btn-outline-secondary" for="size_l">L</label>
 
-                                        <input type="radio" class="btn-check" name="size" id="size_xl" autocomplete="off" value="xl">
-                                        <label class="btn btn-outline-secondary" for="size_xl">XL</label>
+                                            <input type="radio" class="btn-check" name="size" id="size_xl" autocomplete="off" value="xl">
+                                            <label class="btn btn-outline-secondary" for="size_xl">XL</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                ';
+                                break;
+                            case 'POLO SHIRT':
+                                echo '
+                                <p class="lead">Size to price computation: <br> 
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>XS</th>
+                                                    <th>S</th>
+                                                    <th>M</th>
+                                                    <th>L</th>
+                                                    <th>XL</th>
+                                                    <th>2XL</th>
+                                                    <th>ONE SIZE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td> +10 </td>
+                                                    <td> +20 </td>
+                                                    <td> +30 </td>
+                                                    <td> +40 </td>
+                                                    <td> +50 </td>
+                                                    <td> +60 </td>
+                                                    <td> 0 </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                </p>
+                                <div class="d-flex">
+                                    <div class="my-2">
+                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                            <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs" checked>
+                                            <label class="btn btn-outline-secondary" for="size_xs">XS</label>
+
+                                            <input type="radio" class="btn-check" name="size" id="size_s" autocomplete="off" value="s">
+                                            <label class="btn btn-outline-secondary" for="size_s">S</label>
+
+                                            <input type="radio" class="btn-check" name="size" id="size_m" autocomplete="off" value="m">
+                                            <label class="btn btn-outline-secondary" for="size_m">M</label>
+
+                                            <input type="radio" class="btn-check" name="size" id="size_l" autocomplete="off" value="l">
+                                            <label class="btn btn-outline-secondary" for="size_l">L</label>
+
+                                            <input type="radio" class="btn-check" name="size" id="size_xl" autocomplete="off" value="xl">
+                                            <label class="btn btn-outline-secondary" for="size_xl">XL</label>
+
+                                            <input type="radio" class="btn-check" name="size" id="size_2xl" autocomplete="off" value="2xl">
+                                            <label class="btn btn-outline-secondary" for="size_2xl">2XL</label>
+                                        </div>
                                     </div>
                                 </div>
                                 ';
@@ -159,7 +218,6 @@
                             break;
                             }
                             ?>
-                        </div>
                         <hr>
                         <div class="d-flex">
                             <input type="hidden" name="product_id" value="<?=$id?>">
