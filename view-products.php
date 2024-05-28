@@ -13,7 +13,7 @@
     $product_color = new ProductColor;
     $product_colors = $product_color->getProductColors( $id );
 
-    // print_r($products);
+    print_r($products);
 
 
 ?>
@@ -227,16 +227,24 @@
                             <?php if( isset($_SESSION["loggedInUser"]) ) { ?>
                                 <input type="hidden" name="customer_id" value="<?=$client_id?>">
 
-                                <?php if( count($product_colors) > 0 ){ ?>
-                                    <button class="btn btn-outline-dark flex-shrink-0" name="add-cart" type="submit">
-                                        <i class="bi-cart-fill me-1"></i>
-                                        Add to cart
-                                    </button>
-                                <?php } else {?>
-                                    <button class="btn btn-outline-dark flex-shrink-0" disabled >
-                                        <i class="bi-cart-fill me-1"></i>
-                                        Add to cart (Out of Stock)
-                                    </button>
+                                <?php  if( $products->category_name == "EXAMPLE DESIGN TO BE REQUESTED" ){ ?>
+                                        <button class="btn btn-outline-dark flex-shrink-0" disabled >
+                                            <i class="bi-cart-fill me-1"></i>
+                                             (Sample Only, Please proceed to customize page)
+                                        </button>
+                                <?php }else{ ?>
+                                    <?php if( count($product_colors) > 0 ){ ?>
+                                        <button class="btn btn-outline-dark flex-shrink-0" name="add-cart" type="submit">
+                                            <i class="bi-cart-fill me-1"></i>
+                                            Add to cart
+                                        </button>
+                                    <?php } else {?>
+                                        <button class="btn btn-outline-dark flex-shrink-0" disabled >
+                                            <i class="bi-cart-fill me-1"></i>
+                                            Add to cart (Out of Stock)
+                                        </button>
+                                    <?php } ?>
+                                        
                                 <?php } ?>
                                 
 
