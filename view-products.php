@@ -13,7 +13,7 @@
     $product_color = new ProductColor;
     $product_colors = $product_color->getProductColors( $id );
 
-    print_r($products);
+    // print_r($products);
 
 
 ?>
