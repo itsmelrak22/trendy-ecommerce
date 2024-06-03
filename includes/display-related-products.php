@@ -1,6 +1,6 @@
 <?php
     $product = new Product;
-    $relatedProducts = $product->getRelatedProducts();
+    $relatedProducts = $product->getRelatedProducts($products->name);
 
     // displayDataTest($relatedProducts);
 

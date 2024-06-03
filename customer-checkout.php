@@ -14,13 +14,13 @@ function displayDataTest($array){
 }
 
 // displayDataTest($_POST);
+// exit();
 
 
     if( isset( $_POST['checkoutOrders'] ) ){
         $checkoutOrders = $_POST['checkoutOrders'];
         $clientId = $_POST['client_id'];
         $subTotal = $_POST['subtotal'];
-        $checkoutOrders = $_POST['checkoutOrders'];
         $mop = $_POST['mop'];
         
         if(isset($_POST['payment_id'])){
@@ -108,8 +108,8 @@ function displayDataTest($array){
                 $cart = new Cart;
                 $param = [
                     'status' => 1,
-                    'quantity' => $quantity,
-                    'total_price' => $price * $quantity,
+                    'quantity' => (int)$quantity,
+                    'total_price' => (int)$price * (int)$quantity,
                     'updated_at' => new \DateTime,
                 ];
                 

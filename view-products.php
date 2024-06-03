@@ -17,6 +17,34 @@
 
 
 ?>
+    <script>
+        const productPrice = <?= $products->price ?>;
+        document.addEventListener('DOMContentLoaded', function() {
+            const sizeIncrements = {
+                xs: 0,
+                s: 10,
+                m: 20,
+                l: 30,
+                xl: 40,
+                '2xl': 50,
+                'one_size': 0
+            };
+            
+            const radioButtons = document.querySelectorAll('input[name="size"]');
+            const priceDisplay = document.getElementById('display-final-price');
+            const priceFinal = document.getElementById('final_price');
+            let basePrice = productPrice;
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const increment = sizeIncrements[this.value];
+                    let price = (basePrice + increment).toFixed(2);
+                    priceDisplay.textContent = price
+                    priceFinal.value = price
+                });
+            });
+        });
+    </script>
 
 <style>
     .active-color-selected{
@@ -25,8 +53,8 @@
 </style>
 
     <!-- Product section-->
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 my-5">
+    <section class="pt-5">
+        <div class="container px-4 px-lg-5 mb-3">
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="col-md-6">
                     <?php 
@@ -44,7 +72,7 @@
                     <h3 class="display-4 fw-bolder"><?=  $products->name  ?></h3>
 
                     <div class="fs-5 mb-3">
-                        <div class="small mb-1 lead"><?= 'Price'. ': '. '₱'. $products->price  ?></div>
+                        <div class="small mb-1 lead"><?= 'Price'. ': '. '₱'?><span id="display-final-price"><?= $products->price ?></span></div>
                         <div class="small mb-1 lead"><?= 'Stock'. ': '. $products->stock_qty  ?></div>
                     </div>
 
@@ -88,8 +116,8 @@
                                 echo '
                                 <div class="d-flex">
                                     <div class="my-2">
-                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                            <input type="radio" class="btn-check" name="size" id="one_size" autocomplete="off" value="one_size" checked>
+                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
+                                            <input type="radio" class="btn-check" name="size" id="one_size" autocomplete="off" value="one_size">
                                             <label class="btn btn-outline-secondary" for="one_size">ONE SIZE</label>
                                         </div>
                                     </div>
@@ -103,36 +131,10 @@
                             case 'OPEN COLLAR POLO SHIRT':
                             case 'CORDUROY SHIRT':
                                 echo '
-                                <p class="lead">Size to price computation: <br> 
-                                        <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>XS</th>
-                                                <th>S</th>
-                                                <th>M</th>
-                                                <th>L</th>
-                                                <th>XL</th>
-                                                <th>2XL</th>
-                                                <th>ONE SIZE</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td> 0 </td> 
-                                                <td> +10 </td>
-                                                <td> +20 </td>
-                                                <td> +30 </td>
-                                                <td> +40 </td>
-                                                <td> +50 </td>
-                                                <td> 0 </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </p>
                                 <div class="d-flex">
                                     <div class="my-2">
-                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                            <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs" checked>
+                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
+                                            <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs">
                                             <label class="btn btn-outline-secondary" for="size_xs">XS</label>
 
                                             <input type="radio" class="btn-check" name="size" id="size_s" autocomplete="off" value="s">
@@ -153,36 +155,10 @@
                                 break;
                             case 'POLO SHIRT':
                                 echo '
-                                <p class="lead">Size to price computation: <br> 
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>XS</th>
-                                                    <th>S</th>
-                                                    <th>M</th>
-                                                    <th>L</th>
-                                                    <th>XL</th>
-                                                    <th>2XL</th>
-                                                    <th>ONE SIZE</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td> 0 </td> 
-                                                    <td> +10 </td>
-                                                    <td> +20 </td>
-                                                    <td> +30 </td>
-                                                    <td> +40 </td>
-                                                    <td> +50 </td>
-                                                    <td> 0 </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                </p>
                                 <div class="d-flex">
                                     <div class="my-2">
-                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                            <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs" checked>
+                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
+                                            <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs">
                                             <label class="btn btn-outline-secondary" for="size_xs">XS</label>
 
                                             <input type="radio" class="btn-check" name="size" id="size_s" autocomplete="off" value="s">
@@ -209,8 +185,8 @@
                             default:
                             echo '
                             <div class="my-2">
-                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="size" id="one_size" autocomplete="off" value="one_size" checked>
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
+                                    <input type="radio" class="btn-check" name="size" id="one_size" autocomplete="off" value="one_size" >
                                     <label class="btn btn-outline-secondary" for="one_size">ONE SIZE</label>
                                 </div>
                             </div>
@@ -219,13 +195,38 @@
                             }
                             ?>
                         <hr>
+                                                            
+
                         <div class="d-flex">
                             <input type="hidden" name="product_id" value="<?=$id?>">
                             <input type="hidden" name="color_id" value="<?=$products->color_id?>">
- 
-                            <input name="quantity" required placeholder="0" value="1" class="form-control text-center me-3" id="inputQuantity" type="text" value="" style="width: 70px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
+                            <input type="hidden" name="price" value="0" id="final_price">
+
+                            <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="decreaseQuantity()">-</button>
+                                <input name="quantity" readonly placeholder="0" value="1" class="form-control text-center mx-3" id="inputQuantity" type="text" value="" style="width: 40px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
+                            <button type="button" class="btn btn-outline-secondary flex-shrink-0 me-5" onclick="increaseQuantity()">+</button>
+
+                                <script>
+                                    function increaseQuantity() {
+                                        const input = document.getElementById('inputQuantity');
+                                        let currentValue = parseInt(input.value, 10);
+                                        if (!isNaN(currentValue)) {
+                                            input.value = currentValue + 1;
+                                        }
+                                    }
+
+                                    function decreaseQuantity() {
+                                        const input = document.getElementById('inputQuantity');
+                                        let currentValue = parseInt(input.value, 10);
+                                        if (!isNaN(currentValue) && currentValue > 1) {
+                                            input.value = currentValue - 1;
+                                        }
+                                    }
+                                </script>
+
                             <?php if( isset($_SESSION["loggedInUser"]) ) { ?>
                                 <input type="hidden" name="customer_id" value="<?=$client_id?>">
+                                <input type="hidden" name="shipping_fee" value="75">
 
                                 <?php  if( $products->category_name == "EXAMPLE DESIGN TO BE REQUESTED" ){ ?>
                                         <button class="btn btn-outline-dark flex-shrink-0" disabled >
@@ -234,10 +235,15 @@
                                         </button>
                                 <?php }else{ ?>
                                     <?php if( count($product_colors) > 0 ){ ?>
-                                        <button class="btn btn-outline-dark flex-shrink-0" name="add-cart" type="submit">
+                                        <button class="btn btn-outline-dark flex-shrink-0" name="add-cart" id="addCartButton" type="submit" disabled>
                                             <i class="bi-cart-fill me-1"></i>
                                             Add to cart
                                         </button>
+                                        <button class="btn btn-outline-dark flex-shrink-0" name="buy-now" id="buyNowButton" type="submit" disabled>
+                                            <i class="bi-cart-fill me-1"></i>
+                                            Buy Now
+                                        </button>
+
                                     <?php } else {?>
                                         <button class="btn btn-outline-dark flex-shrink-0" disabled >
                                             <i class="bi-cart-fill me-1"></i>
@@ -247,13 +253,12 @@
                                         
                                 <?php } ?>
                                 
-
                             <?php } else {?>
                                 <button class="btn btn-outline-dark flex-shrink-0" type="submit" disabled>
                                     <i class="bi-cart-fill me-1"></i>
                                     Add to cart
                                 </button>
-                                <div class="small mb-1 mx-2 lead">Login to continue your checkout.</div>
+                                <div class="small mb-1 mx-2">Login to continue your checkout.</div>
                             <?php } ?>
                         </div>
                     </form>
@@ -325,4 +330,23 @@
             $('#inputQuantity').val(0);
         });
     });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sizeGroup = document.getElementById('size-group');
+    const addCartButton = document.getElementById('addCartButton');
+    const buyNowButton = document.getElementById('buyNowButton');
+
+    sizeGroup.addEventListener('change', function() {
+        let sizeSelected = false;
+        const radios = sizeGroup.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            if (radio.checked) {
+                sizeSelected = true;
+            }
+        });
+        addCartButton.disabled = !sizeSelected;
+        buyNowButton.disabled = !sizeSelected;
+    });
+});
 </script>

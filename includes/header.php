@@ -54,8 +54,12 @@
 
         foreach ($cartItems as $key => $value) {
             $cartItemCount += (int) $value['quantity']; 
-
         }
+
+        // Sort the cart items by created_at in descending order
+        usort($cartItems, function($a, $b) {
+            return strtotime($b['created_at']) - strtotime($a['created_at']);
+        });
 
         $customers = new Customer;
         $customer = $customers->find($client_id);

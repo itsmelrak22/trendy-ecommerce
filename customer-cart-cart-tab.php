@@ -15,6 +15,16 @@
                     <?php 
                         $img_link = getImageLink($cart['image']);  
                         generateCartCards($cart, $key, $img_link);
+                        $shouldBeChecked = isset($_SESSION['buy_now_cart_id']) && $_SESSION['buy_now_cart_id'] == $cart['id'];
+                        $cartID = $cart['id'];
+                        echo "
+                            <script>
+                                $(document).ready(function() {
+                                    " . ($shouldBeChecked ? "document.getElementById('cart-$cartID').click();" : "") . "
+                                });
+                            </script>
+                        ";
+
                     ?>
                     <div>
                         <input type="hidden" name="product_id" value="<?= $cart['product_id'] ?>">
@@ -137,6 +147,8 @@
 
 
 <script>
+
+
     let transaction = {};
 
     paypal.Buttons({
@@ -209,6 +221,9 @@
 </script>
 
 <script>
+
+
+
     document.querySelector('#checkout-form').addEventListener('submit', function(e) {
         // Prevent the default form submission
         e.preventDefault();
@@ -308,10 +323,6 @@
                 form.appendChild(input)
             });
 
-
-
-   
-
             let event = new Event('submit');
             form.dispatchEvent(event);
         }
@@ -391,6 +402,7 @@
         if(mop.value == 'cod' || mop.value == 'online') return true;
         return false
     }
+
 </script>
 
 

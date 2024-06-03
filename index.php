@@ -3,6 +3,23 @@
 
 ?>
 
+<style>
+    .full-height {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Optional: Center content vertically */
+        align-items: center; /* Optional: Center content horizontally */
+    }
+
+    .product-item-img {
+        max-height: 40vh; /* Adjust this value to set the maximum height relative to the viewport height */
+        width: auto; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensure the image covers the area while maintaining aspect ratio */
+    }
+
+</style>
+
 
         <!-- Header-->
         <header class="bg-dark py-5">
@@ -29,33 +46,33 @@
 
         <hr>
 
-        <!-- Section-->
-        <section class="py-2">
-            <div class="container px-2 px-lg-5">
-                <h3 id="product_list" >PRODUCT LIST:</h3>
-                <div class="row gx-2 gx-lg-3 justify-content-center">
-                    <!-- <div class="col-md-2">
-                        <div class="list-group" style="padding-left: 10px;">
-                            <h3 class="my-4">Categories</h3>
-                            <?php 
-                            // $categoryFilter = '<span style="cursor: pointer;" class="list-group-item list-group-item-action" onclick="applyFilter(\'all\')">All</span>';
-                            // foreach ($categories as $category) {
-                            //     $categoryFilter .= '<span style="cursor: pointer;" class="list-group-item list-group-item-action" onclick="applyFilter(\'' . $category['id'] . '\')">' . $category['name'] . '</span>';
-                            // }
-                            // echo $categoryFilter;
-                            ?>
+            <!-- Section-->
+            <section class="py-2 full-height">
+                <div class="container px-2 px-lg-5">
+                    <h3 id="product_list" >PRODUCT LIST:</h3>
+                    <div class="row gx-2 gx-lg-3 justify-content-center">
+                        <!-- <div class="col-md-2">
+                            <div class="list-group" style="padding-left: 10px;">
+                                <h3 class="my-4">Categories</h3>
+                                <?php 
+                                // $categoryFilter = '<span style="cursor: pointer;" class="list-group-item list-group-item-action" onclick="applyFilter(\'all\')">All</span>';
+                                // foreach ($categories as $category) {
+                                //     $categoryFilter .= '<span style="cursor: pointer;" class="list-group-item list-group-item-action" onclick="applyFilter(\'' . $category['id'] . '\')">' . $category['name'] . '</span>';
+                                // }
+                                // echo $categoryFilter;
+                                ?>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12">
+                            <div class="row gx-2 gx-lg-3 row-cols-2 row-cols-md-4 justify-content-center" id="productContainer" >
+                                <?php include_once("./includes/display-products.php"); ?>
+                            </div>
+                            <!-- <button id="loadMore" class="btn btn-primary">See More</button> -->
                         </div>
-                    </div> -->
-                    <div class="col-md-12">
-                        <div class="row gx-2 gx-lg-3 row-cols-2 row-cols-md-4 justify-content-center" id="productContainer" >
-                            <?php include_once("./includes/display-products.php"); ?>
-                        </div>
-                        <!-- <button id="loadMore" class="btn btn-primary">See More</button> -->
-
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
 
 
         <!-- <section class="py-2">

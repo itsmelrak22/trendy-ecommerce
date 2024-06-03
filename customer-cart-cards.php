@@ -75,7 +75,7 @@ function generateCartCards($cart, $key, $img_link){
                     <div class="card-body">
                         <div class="d-flex align-items-start border-bottom pb-3">
                             <div class="mt-2 col-md-1">
-                                <input class="form-check-input" type="checkbox" name="cartCheckbox" onClick="calculateSubtotal()">
+                            <input id="cart-'.$cartID.'" class="form-check-input" type="checkbox" name="cartCheckbox" onClick="calculateSubtotal()">
                             </div>
                             <div class="me-4"  >
                                 <img src="'.$img_link.'" alt="'.$product_name.'"  class="avatar-lg rounded">
