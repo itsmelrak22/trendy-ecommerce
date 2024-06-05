@@ -184,12 +184,7 @@
                             
                             default:
                             echo '
-                            <div class="my-2">
-                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
-                                    <input type="radio" class="btn-check" name="size" id="one_size" autocomplete="off" value="one_size" >
-                                    <label class="btn btn-outline-secondary" for="one_size">ONE SIZE</label>
-                                </div>
-                            </div>
+                          
                             ';
                             break;
                             }
@@ -201,10 +196,12 @@
                             <input type="hidden" name="product_id" value="<?=$id?>">
                             <input type="hidden" name="color_id" value="<?=$products->color_id?>">
                             <input type="hidden" name="price" value="0" id="final_price">
+                            <?php  if( $products->category_name != "A SAMPLE OF POLOSHIRT UNIFORM TO BE CUSTOMIZE" ){ ?>
 
-                            <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="decreaseQuantity()">-</button>
-                                <input name="quantity" readonly placeholder="0" value="1" class="form-control text-center mx-3" id="inputQuantity" type="text" value="" style="width: 40px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
-                            <button type="button" class="btn btn-outline-secondary flex-shrink-0 me-5" onclick="increaseQuantity()">+</button>
+                                <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="decreaseQuantity()">-</button>
+                                    <input name="quantity" readonly placeholder="0" value="1" class="form-control text-center mx-3" id="inputQuantity" type="text" value="" style="width: 40px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
+                                <button type="button" class="btn btn-outline-secondary flex-shrink-0 me-5" onclick="increaseQuantity()">+</button>
+                            <?php  } ?>
 
                                 <script>
                                     function increaseQuantity() {
@@ -228,7 +225,10 @@
                                 <input type="hidden" name="customer_id" value="<?=$client_id?>">
                                 <input type="hidden" name="shipping_fee" value="75">
 
-                                <?php  if( $products->category_name == "EXAMPLE DESIGN TO BE REQUESTED" ){ ?>
+                                <?php  if( $products->category_name == "A SAMPLE OF POLOSHIRT UNIFORM TO BE CUSTOMIZE" ){ 
+                                    $_SESSION['viewed-design'] = $products->name;
+                                    ?>
+                                        
                                         <a href="./designer.php" class="btn btn-outline-dark flex-shrink-0" type="button">
                                             <i class="bi-cart-fill me-1"></i>
                                              (Sample Only, Please proceed to customize page)

@@ -1,6 +1,15 @@
 <?php 
     include_once("./includes/header.php");
 
+    if(isset($_SESSION['viewed-design'])){
+        $viewedDesign = toUpperSnakeCase($_SESSION['viewed-design']);
+    }
+
+    function toUpperSnakeCase($string) {
+        return strtoupper(str_replace(' ', '_', $string));
+    }
+
+
     if( !isset($_SESSION['loggedInUser']) ){
         echo "<script>
             alert('Please Login');
@@ -252,6 +261,17 @@
                                     <button class="nav-link" id="nav-avatar-logo-tab" data-bs-toggle="tab" data-bs-target="#nav-avatar-logo" type="button" role="tab" aria-controls="nav-avatar-logo" aria-selected="false" disabled>Avatar/Logo</button>
                                     <button class="nav-link" id="nav-text-tab" data-bs-toggle="tab" data-bs-target="#nav-text" type="button" role="tab" aria-controls="nav-text" aria-selected="false" disabled>Text</button>
                                 </div>
+                                <div class="text-center centered my-2" align="" id="imageeditor" style="display:none">
+                                    <div class="my-2">
+                                        <h6 class="card-subtitle mb-2 text-muted"> Object Options </h6>
+                                        <div class="btn-group">
+                                            <button class="btn btn-outline-dark" id="bring-to-front" title="Bring to Front"> <i class="bi bi-arrow-up-short"></i> </button>
+                                            <button class="btn btn-outline-dark" id="send-to-back" title="Send to Back"> <i class="bi bi-arrow-down-short"></i> </button>
+                                            <!-- <button id="flip" type="button" class="btn btn-outline-dark" title="Show Back View"> <i class="bi bi-arrow-left-right"></i> </button> -->
+                                            <button id="remove-selected" class="btn btn-outline-dark" title="Delete selected item"> <i class="bi bi-trash"></i> </button>
+                                        </div>
+                                    </div>
+                                </div>	
                             </nav>
 
                             <!-- Button trigger modal -->
@@ -306,7 +326,7 @@
                                         <div class="card-body">
                                             <h6 class="card-subtitle mb-2 text-muted">Shirt Styles</h6>
                                             <select id="tshirttype" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                                <option value="./designer/img/crew_front.png" selected="selected">Short Sleeve Shirts</option>
+                                                <option value="./designer/img/crew_front.png" >Short Sleeve Shirts</option>
                                                 <option value="./designer/img/polo2_front.png">Polo Shirts</option>                                        
                                                 <option value="./designer/img/mens_longsleeve_front.png">Long Sleeve Shirts</option>                                        
                                                 <option value="./designer/img/mens_hoodie_front.png">Hoodies</option>                    
@@ -352,17 +372,7 @@
                                 <div class="tab-pane fade" id="nav-avatar-logo" role="tabpanel" aria-labelledby="nav-avatar-logo-tab" tabindex="0">
                                     <div align="center" class="card" style="min-height: 32px;">
                                         <div class="card-body">
-                                            <div class="pull-right my-2" align="" id="imageeditor" style="display:none">
-                                                <div class="my-2">
-                                                    <h6 class="card-subtitle mb-2 text-muted"> Object Options </h6>
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-outline-dark" id="bring-to-front" title="Bring to Front"> <i class="bi bi-arrow-up-short"></i> </button>
-                                                        <button class="btn btn-outline-dark" id="send-to-back" title="Send to Back"> <i class="bi bi-arrow-down-short"></i> </button>
-                                                        <!-- <button id="flip" type="button" class="btn btn-outline-dark" title="Show Back View"> <i class="bi bi-arrow-left-right"></i> </button> -->
-                                                        <button id="remove-selected" class="btn btn-outline-dark" title="Delete selected item"> <i class="bi bi-trash"></i> </button>
-                                                    </div>
-                                                </div>
-                                            </div>		
+                                           	
                                             
                                             <div>
                                                 <?php require_once("./designer/fileupload.php") ?>
@@ -491,50 +501,59 @@
                 }
             }
 
+            function updateTshirtSelection() {
+                    let input = document.getElementById('selected_price');
+                    input.value = null;
+
+                    const selectedText = $("#tshirttype").find('option:selected').text();
+                    const colorPallete = $('#colorPallete');
+                    
+                    if (selectedText.includes('Predesigned')) {
+                        colorPallete.hide();
+                    } else {
+                        colorPallete.show();
+                    }
+
+                    $("img[name=tshirtview]").attr("src", $("#tshirttype").val());
+
+                    const shirtList = {
+                        "./designer/img/crew_front.png" : {"shirt_selected" : "Short Sleeve Shirts", "shirt_price" : "200"},
+                        "./designer/img/polo2_front.png" : {"shirt_selected" : "Polo Shirts", "shirt_price" : "250"},
+                        "./designer/img/mens_longsleeve_front.png" : {"shirt_selected" : "Long Sleeve Shirts", "shirt_price" : "250"},
+                        "./designer/img/mens_hoodie_front.png" : {"shirt_selected" : "Hoodies", "shirt_price" : "200"},
+                        "./designer/img/mens_tank_front.png" : {"shirt_selected" : "Tank tops", "shirt_price" : "150"},
+                        <?php foreach ($templateNames as $colorName){ 
+                            echo '"./designer/img/templated_polo_shirts/' . $colorName . '_FRONT.png": {"shirt_selected": "' . $colorName . ' (Predesigned)", "shirt_price": "250"},';
+                        }
+                        ?>
+                    };
+
+                    // Assuming PHP part is handled elsewhere and objects are added to shirtList
+
+                    let shirt = shirtList[$("#tshirttype").val()];
+
+                    $("#shirt_selected").val(shirt.shirt_selected);
+                    $("#shirt_price").val(shirt.shirt_price);
+                }
 
             $(document).ready(function(){
 
 
-                    $("#tshirttype").change(function(){
-                        let input = document.getElementById('selected_price');
-                         input.value = null;
-
-                        const selectedText = $(this).find('option:selected').text();
-                        const colorPallete = $('#colorPallete');
-                        
-                        if (selectedText.includes('Templated')) {
-                            colorPallete.hide();
-                        } else {
-                            colorPallete.show();
-                        }
-
-                        $("img[name=tshirtview]").attr("src",$(this).val());
-
-                        const shirtList =  {
-                            "./designer/img/crew_front.png" : {"shirt_selected" : "Short Sleeve Shirts", "shirt_price" : "200"},
-                            "./designer/img/polo2_front.png" : {"shirt_selected" : "Polo Shirts", "shirt_price" : "250"},
-                            "./designer/img/mens_longsleeve_front.png" : {"shirt_selected" : "Long Sleeve Shirts", "shirt_price" : "250"},
-                            "./designer/img/mens_hoodie_front.png" : {"shirt_selected" : "Hoodies", "shirt_price" : "200"},
-                            "./designer/img/mens_tank_front.png" : {"shirt_selected" : "Tank tops", "shirt_price" : "150"},
-                            <?php foreach ($templateNames as $colorName){ 
-                                echo '"./designer/img/templated_polo_shirts/' . $colorName . '_FRONT.png": {"shirt_selected": "' . $colorName . ' (Predesigned)", "shirt_price": "250"},';
-                            }
-                            ?>
-
-                        }
-
-                        let shirt = shirtList[$(this).val()]
-
-                        $("#shirt_selected").val(shirt.shirt_selected);
-                        $("#shirt_price").val(shirt.shirt_price);
-
-                    });
-
+                // Attach the function to the change event
+                $("#tshirttype").change(updateTshirtSelection);
 
                 setTimeout(() => {
                     $('#flipback').click()
                     toggleOverlay(false, overlay)
+
+                    <?php if(isset($viewedDesign)){ ?>
+                        console.log("<?=$viewedDesign?>")
+                        $("#tshirttype").val("./designer/img/templated_polo_shirts/<?=$viewedDesign?>_FRONT.png");
+                        updateTshirtSelection()
+                    <?php } ?>
+
                 }, 1000);
+
 
                 var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
                 myModal.show();
@@ -559,12 +578,18 @@
         </script>
 
         <script>
-            var valueSelect = $("#tshirttype").val();
+            <?php if(isset($viewedDesign)){ ?>
+                var valueSelect = "./designer/img/templated_polo_shirts/<?=$viewedDesign?>_FRONT.png";
+            <?php }else{ ?>
+                var valueSelect = $("#tshirttype").val();
+            <?php }?>
             $("#tshirttype").change(function(){
                 valueSelect = $(this).val();
             });
 
             $('#flipback').click(() => {	
+                
+                console.log("valueSelect", valueSelect)
                 console.log('clicked')
                 if (valueSelect === "./designer/img/crew_front.png") {
                     if ($(this).attr("data-original-title") == "Show Back View") {
