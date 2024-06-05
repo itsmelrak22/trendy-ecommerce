@@ -3,6 +3,7 @@
 
     if(isset($_SESSION['viewed-design'])){
         $viewedDesign = toUpperSnakeCase($_SESSION['viewed-design']);
+        unset($_SESSION['viewed-design']);
     }
 
     function toUpperSnakeCase($string) {

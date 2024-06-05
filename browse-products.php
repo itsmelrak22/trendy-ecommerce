@@ -36,11 +36,30 @@
                     }
                     
                     usort($categories, 'sortByName');
+
+                    function sortCategories($a, $b) {
+                        $specialCategory = "A SAMPLE OF POLOSHIRT UNIFORM TO BE CUSTOMIZE";
+                        
+                        if ($a['name'] == $specialCategory) {
+                            return 1;
+                        }
+                        if ($b['name'] == $specialCategory) {
+                            return -1;
+                        }
+                        return 0;
+                    }
+
+                    usort($categories, "sortCategories");
+
                     foreach ($categories as $key => $category): ?>
-                    <a href="browse-products.php?category_id=<?=$category['id']?>">
-                        <button type="button" class="mx-2 my-2 btn btn-outline-primary" id="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></button>
-                    </a>
-                <?php endforeach; ?>
+                        <a href="browse-products.php?category_id=<?=$category['id']?>">
+                            <button type="button" class="mx-2 my-2 btn btn-outline-primary" id="<?php echo $category['id']; ?>">
+                                <?php echo $category['name']; ?>
+                            </button>
+                        </a>
+                    <?php endforeach; ?>
+
+
             </div>
         </div>
     </section>
