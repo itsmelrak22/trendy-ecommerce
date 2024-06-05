@@ -7,6 +7,41 @@
             window.location = './';
         </script>";
     }
+
+    $templateNames = array(
+        "FOREST_NIGHT",
+        "MONOCHROME",
+        "NAVY_NOIR",
+        "SAPPHIRE_SHADOW",
+        "SUN_AND_SHADOW",
+        "FROSTY_AZURE",
+        "HEAVENLY_HAZE",
+        "LEMON_CHIFFON",
+        "MINT_FROST",
+        "SILVER_MIST",
+        "AMBER_AND_JET",
+        "BLUE_ECLIPSE",
+        "COBALT_SHADOW",
+        "EMERALD_SHADOW",
+        "GRAYSCALE",
+        "AZURE_NOIR",
+        "CHARCOAL_BLEND",
+        "GOLD_AND_ONYX",
+        "MIDNIGHT_MOSS",
+        "SAPPHIRE_MIDNIGHT",
+        "AZURE_ABYSS",
+        "CYAN_DUSK",
+        "HAZARD_STRIPE",
+        "JADE_ECLIPSE",
+        "SLATE_TONES",
+        "ASHEN_PALETTE",
+        "BUMBLEBEE",
+        "MIDNIGHT_BLUE",
+        "MIDNIGHT_SKY",
+        "ONYX_AND_OLIVE"
+      );
+      
+
 ?>
 
 
@@ -134,7 +169,7 @@
                                     </div>
                                 </div>
                                 <div class="form-action mb-1">
-                                    <label for="customize_by">Customize By:</label>
+                                    <label for="customize_by">Customization Method:</label>
                                     <select class="form-select" name="customize_by" id="customize_by">
                                         <option value="embroidery">Embroidery</option>
                                         <option value="print">Print</option>
@@ -276,8 +311,11 @@
                                                 <option value="./designer/img/mens_longsleeve_front.png">Long Sleeve Shirts</option>                                        
                                                 <option value="./designer/img/mens_hoodie_front.png">Hoodies</option>                    
                                                 <option value="./designer/img/mens_tank_front.png">Tank tops</option>
-                                                <option value="./designer/img/1-2-front.png">Templated Polo Shirt Design 1</option>
-                                                <option value="./designer/img/2-2-front.png">Templated Polo Shirt Design 2</option>
+                                                <hr>
+                                                <hr>
+                                                <?php foreach ($templateNames as $colorName): ?>
+                                                    <option value="./designer/img/templated_polo_shirts/<?=$colorName?>_FRONT.png"><?= $colorName ?> (Predesigned) </option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -478,8 +516,11 @@
                             "./designer/img/mens_longsleeve_front.png" : {"shirt_selected" : "Long Sleeve Shirts", "shirt_price" : "250"},
                             "./designer/img/mens_hoodie_front.png" : {"shirt_selected" : "Hoodies", "shirt_price" : "200"},
                             "./designer/img/mens_tank_front.png" : {"shirt_selected" : "Tank tops", "shirt_price" : "150"},
-                            "./designer/img/1-2-front.png" : {"shirt_selected" : "Templated Polo Shirt Design 1", "shirt_price" : "250"},
-                            "./designer/img/2-2-front.png" : {"shirt_selected" : "Templated Polo Shirt Design 2", "shirt_price" : "250"},
+                            <?php foreach ($templateNames as $colorName){ 
+                                echo '"./designer/img/templated_polo_shirts/' . $colorName . '_FRONT.png": {"shirt_selected": "' . $colorName . ' (Predesigned)", "shirt_price": "250"},';
+                            }
+                            ?>
+
                         }
 
                         let shirt = shirtList[$(this).val()]
@@ -583,62 +624,6 @@
                             {}
                         }	
                 }
-                else if (valueSelect === "./designer/img/1-2-front.png") {
-                    if ($(this).attr("data-original-title") == "Show Back View") {
-                            $(this).attr('data-original-title', 'Show Front View');			        		       
-                            $("#tshirtFacing").attr("src","./designer/img/1-2-back.png");			        
-                            a = JSON.stringify(canvas);
-                            canvas.clear();
-                            try
-                            {
-                            var json = JSON.parse(b);
-                            canvas.loadFromJSON(b);
-                            }
-                            catch(e)
-                            {}
-                            
-                        } else {
-                            $(this).attr('data-original-title', 'Show Back View');			    				    	
-                            $("#tshirtFacing").attr("src","./designer/img/1-2-front.png");			    	
-                            b = JSON.stringify(canvas);
-                            canvas.clear();
-                            try
-                            {
-                            var json = JSON.parse(a);
-                            canvas.loadFromJSON(a);			           
-                            }
-                            catch(e)
-                            {}
-                        }	
-                }
-                else if (valueSelect === "./designer/img/2-2-front.png") {
-                    if ($(this).attr("data-original-title") == "Show Back View") {
-                            $(this).attr('data-original-title', 'Show Front View');			        		       
-                            $("#tshirtFacing").attr("src","./designer/img/2-2-back.png");			        
-                            a = JSON.stringify(canvas);
-                            canvas.clear();
-                            try
-                            {
-                            var json = JSON.parse(b);
-                            canvas.loadFromJSON(b);
-                            }
-                            catch(e)
-                            {}
-                            
-                        } else {
-                            $(this).attr('data-original-title', 'Show Back View');			    				    	
-                            $("#tshirtFacing").attr("src","./designer/img/2-2-front.png");			    	
-                            b = JSON.stringify(canvas);
-                            canvas.clear();
-                            try
-                            {
-                            var json = JSON.parse(a);
-                            canvas.loadFromJSON(a);			           
-                            }
-                            catch(e)
-                            {}
-                        }	
-                }
                 
                 else if (valueSelect === "./designer/img/mens_longsleeve_front.png") {
                     if ($(this).attr("data-original-title") == "Show Back View") {
@@ -696,6 +681,38 @@
                         {}
                     }	
                 }
+                <?php foreach ($templateNames as $colorName): ?>
+                    
+                    else if (valueSelect === "./designer/img/templated_polo_shirts/<?=$colorName?>_FRONT.png") {
+                        if ($(this).attr("data-original-title") == "Show Back View") {
+                            $(this).attr('data-original-title', 'Show Front View');			        		       
+                            $("#tshirtFacing").attr("src","./designer/img/templated_polo_shirts/<?=$colorName?>_BACK.png");			        
+                            a = JSON.stringify(canvas);
+                            canvas.clear();
+                            try
+                            {
+                            var json = JSON.parse(b);
+                            canvas.loadFromJSON(b);
+                            }
+                            catch(e)
+                            {}
+                            
+                        } else {
+                            $(this).attr('data-original-title', 'Show Back View');			    				    	
+                            $("#tshirtFacing").attr("src","./designer/img/templated_polo_shirts/<?=$colorName?>_FRONT.png");			    	
+                            b = JSON.stringify(canvas);
+                            canvas.clear();
+                            try
+                            {
+                            var json = JSON.parse(a);
+                            canvas.loadFromJSON(a);			           
+                            }
+                            catch(e)
+                            {}
+                        }	
+                    }
+                <?php endforeach; ?>
+   
                 else if (valueSelect === "./designer/img/mens_hoodie_front.png") {
                     if ($(this).attr("data-original-title") == "Show Back View") {
                         $(this).attr('data-original-title', 'Show Front View');			        		       

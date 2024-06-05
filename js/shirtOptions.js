@@ -1,3 +1,37 @@
+const colorNames = [
+    'FOREST_NIGHT',
+    'MONOCHROME',
+    'NAVY_NOIR',
+    'SAPPHIRE_SHADOW',
+    'SUN_AND_SHADOW',
+    'FROSTY_AZURE',
+    'HEAVENLY_HAZE',
+    'LEMON_CHIFFON',
+    'MINT_FROST',
+    'SILVER_MIST',
+    'AMBER_AND_JET',
+    'BLUE_ECLIPSE',
+    'COBALT_SHADOW',
+    'EMERALD_SHADOW',
+    'GRAYSCALE',
+    'AZURE_NOIR',
+    'CHARCOAL_BLEND',
+    'GOLD_AND_ONYX',
+    'MIDNIGHT_MOSS',
+    'SAPPHIRE_MIDNIGHT',
+    'AZURE_ABYSS',
+    'CYAN_DUSK',
+    'HAZARD_STRIPE',
+    'JADE_ECLIPSE',
+    'SLATE_TONES',
+    'ASHEN_PALETTE',
+    'BUMBLEBEE',
+    'MIDNIGHT_BLUE',
+    'MIDNIGHT_SKY',
+    'ONYX_AND_OLIVE'
+  ];
+  
+
 
 let shirtOptions = {
     "Short Sleeve Shirts": {
@@ -330,226 +364,6 @@ let shirtOptions = {
             {"dimension": "4x4", "price": 390}
         ]
     },
-    "Templated Polo Shirt Design 1": {
-        "xs": [
-            {"dimension": "1x1", "price": 330},
-            {"dimension": "1x2", "price": 330},
-            {"dimension": "1x3", "price": 335},
-            {"dimension": "1x4", "price": 335},
-            {"dimension": "2x1", "price": 340},
-            {"dimension": "2x2", "price": 340},
-            {"dimension": "2x3", "price": 345},
-            {"dimension": "2x4", "price": 345},
-            {"dimension": "3x1", "price": 350},
-            {"dimension": "3x2", "price": 350},
-            {"dimension": "3x3", "price": 355},
-            {"dimension": "3x4", "price": 355},
-            {"dimension": "4x1", "price": 335},
-            {"dimension": "4x2", "price": 345},
-            {"dimension": "4x3", "price": 350},
-            {"dimension": "4x4", "price": 355}
-        ],
-        "s": [
-            {"dimension": "1x1", "price": 335},
-            {"dimension": "1x2", "price": 340},
-            {"dimension": "1x3", "price": 345},
-            {"dimension": "1x4", "price": 350},
-            {"dimension": "2x1", "price": 340},
-            {"dimension": "2x2", "price": 345},
-            {"dimension": "2x3", "price": 350},
-            {"dimension": "2x4", "price": 355},
-            {"dimension": "3x1", "price": 345},
-            {"dimension": "3x2", "price": 350},
-            {"dimension": "3x3", "price": 355},
-            {"dimension": "3x4", "price": 360},
-            {"dimension": "4x1", "price": 365},
-            {"dimension": "4x2", "price": 370},  // This seems like an error, likely it should be 370
-            {"dimension": "4x3", "price": 375},  // This seems like an error, likely it should be 375
-            {"dimension": "4x4", "price": 380}   // This seems like an error, likely it should be 380
-        ],
-        "m": [
-            {"dimension": "1x1", "price": 340},
-            {"dimension": "1x2", "price": 345},
-            {"dimension": "1x3", "price": 350},
-            {"dimension": "1x4", "price": 355},
-            {"dimension": "2x1", "price": 345},
-            {"dimension": "2x2", "price": 350},
-            {"dimension": "2x3", "price": 355},
-            {"dimension": "2x4", "price": 360},
-            {"dimension": "3x1", "price": 350},
-            {"dimension": "3x2", "price": 355},
-            {"dimension": "3x3", "price": 360},
-            {"dimension": "3x4", "price": 365},
-            {"dimension": "4x1", "price": 355},
-            {"dimension": "4x2", "price": 360},
-            {"dimension": "4x3", "price": 365},
-            {"dimension": "4x4", "price": 370}
-        ],
-        "l": [
-            {"dimension": "1x1", "price": 345},
-            {"dimension": "1x2", "price": 350},
-            {"dimension": "1x3", "price": 355},
-            {"dimension": "1x4", "price": 360},
-            {"dimension": "2x1", "price": 350},
-            {"dimension": "2x2", "price": 355},
-            {"dimension": "2x3", "price": 360},
-            {"dimension": "2x4", "price": 365},
-            {"dimension": "3x1", "price": 355},
-            {"dimension": "3x2", "price": 360},
-            {"dimension": "3x3", "price": 365},
-            {"dimension": "3x4", "price": 370},
-            {"dimension": "4x1", "price": 360},
-            {"dimension": "4x2", "price": 365},
-            {"dimension": "4x3", "price": 370},
-            {"dimension": "4x4", "price": 375}
-        ],
-        "xl": [
-            {"dimension": "1x1", "price": 350},
-            {"dimension": "1x2", "price": 355},
-            {"dimension": "1x3", "price": 360},
-            {"dimension": "1x4", "price": 365},
-            {"dimension": "2x1", "price": 355},
-            {"dimension": "2x2", "price": 360},
-            {"dimension": "2x3", "price": 365},
-            {"dimension": "2x4", "price": 370},
-            {"dimension": "3x1", "price": 360},
-            {"dimension": "3x2", "price": 365},
-            {"dimension": "3x3", "price": 370},
-            {"dimension": "3x4", "price": 375},
-            {"dimension": "4x1", "price": 365},
-            {"dimension": "4x2", "price": 370},
-            {"dimension": "4x3", "price": 375},
-            {"dimension": "4x4", "price": 380}
-        ],
-        "2xl": [
-            {"dimension": "1x1", "price": 355},
-            {"dimension": "1x2", "price": 360},
-            {"dimension": "1x3", "price": 365},
-            {"dimension": "1x4", "price": 370},
-            {"dimension": "2x1", "price": 360},
-            {"dimension": "2x2", "price": 365},
-            {"dimension": "2x3", "price": 370},
-            {"dimension": "2x4", "price": 375},
-            {"dimension": "3x1", "price": 365},
-            {"dimension": "3x2", "price": 370},
-            {"dimension": "3x3", "price": 375},
-            {"dimension": "3x4", "price": 380},
-            {"dimension": "4x1", "price": 370},
-            {"dimension": "4x2", "price": 375},
-            {"dimension": "4x3", "price": 380},
-            {"dimension": "4x4", "price": 390}
-        ]
-    },
-    "Templated Polo Shirt Design 2": {
-        "xs": [
-            {"dimension": "1x1", "price": 330},
-            {"dimension": "1x2", "price": 330},
-            {"dimension": "1x3", "price": 335},
-            {"dimension": "1x4", "price": 335},
-            {"dimension": "2x1", "price": 340},
-            {"dimension": "2x2", "price": 340},
-            {"dimension": "2x3", "price": 345},
-            {"dimension": "2x4", "price": 345},
-            {"dimension": "3x1", "price": 350},
-            {"dimension": "3x2", "price": 350},
-            {"dimension": "3x3", "price": 355},
-            {"dimension": "3x4", "price": 355},
-            {"dimension": "4x1", "price": 335},
-            {"dimension": "4x2", "price": 345},
-            {"dimension": "4x3", "price": 350},
-            {"dimension": "4x4", "price": 355}
-        ],
-        "s": [
-            {"dimension": "1x1", "price": 335},
-            {"dimension": "1x2", "price": 340},
-            {"dimension": "1x3", "price": 345},
-            {"dimension": "1x4", "price": 350},
-            {"dimension": "2x1", "price": 340},
-            {"dimension": "2x2", "price": 345},
-            {"dimension": "2x3", "price": 350},
-            {"dimension": "2x4", "price": 355},
-            {"dimension": "3x1", "price": 345},
-            {"dimension": "3x2", "price": 350},
-            {"dimension": "3x3", "price": 355},
-            {"dimension": "3x4", "price": 360},
-            {"dimension": "4x1", "price": 365},
-            {"dimension": "4x2", "price": 370},  // This seems like an error, likely it should be 370
-            {"dimension": "4x3", "price": 375},  // This seems like an error, likely it should be 375
-            {"dimension": "4x4", "price": 380}   // This seems like an error, likely it should be 380
-        ],
-        "m": [
-            {"dimension": "1x1", "price": 340},
-            {"dimension": "1x2", "price": 345},
-            {"dimension": "1x3", "price": 350},
-            {"dimension": "1x4", "price": 355},
-            {"dimension": "2x1", "price": 345},
-            {"dimension": "2x2", "price": 350},
-            {"dimension": "2x3", "price": 355},
-            {"dimension": "2x4", "price": 360},
-            {"dimension": "3x1", "price": 350},
-            {"dimension": "3x2", "price": 355},
-            {"dimension": "3x3", "price": 360},
-            {"dimension": "3x4", "price": 365},
-            {"dimension": "4x1", "price": 355},
-            {"dimension": "4x2", "price": 360},
-            {"dimension": "4x3", "price": 365},
-            {"dimension": "4x4", "price": 370}
-        ],
-        "l": [
-            {"dimension": "1x1", "price": 345},
-            {"dimension": "1x2", "price": 350},
-            {"dimension": "1x3", "price": 355},
-            {"dimension": "1x4", "price": 360},
-            {"dimension": "2x1", "price": 350},
-            {"dimension": "2x2", "price": 355},
-            {"dimension": "2x3", "price": 360},
-            {"dimension": "2x4", "price": 365},
-            {"dimension": "3x1", "price": 355},
-            {"dimension": "3x2", "price": 360},
-            {"dimension": "3x3", "price": 365},
-            {"dimension": "3x4", "price": 370},
-            {"dimension": "4x1", "price": 360},
-            {"dimension": "4x2", "price": 365},
-            {"dimension": "4x3", "price": 370},
-            {"dimension": "4x4", "price": 375}
-        ],
-        "xl": [
-            {"dimension": "1x1", "price": 350},
-            {"dimension": "1x2", "price": 355},
-            {"dimension": "1x3", "price": 360},
-            {"dimension": "1x4", "price": 365},
-            {"dimension": "2x1", "price": 355},
-            {"dimension": "2x2", "price": 360},
-            {"dimension": "2x3", "price": 365},
-            {"dimension": "2x4", "price": 370},
-            {"dimension": "3x1", "price": 360},
-            {"dimension": "3x2", "price": 365},
-            {"dimension": "3x3", "price": 370},
-            {"dimension": "3x4", "price": 375},
-            {"dimension": "4x1", "price": 365},
-            {"dimension": "4x2", "price": 370},
-            {"dimension": "4x3", "price": 375},
-            {"dimension": "4x4", "price": 380}
-        ],
-        "2xl": [
-            {"dimension": "1x1", "price": 355},
-            {"dimension": "1x2", "price": 360},
-            {"dimension": "1x3", "price": 365},
-            {"dimension": "1x4", "price": 370},
-            {"dimension": "2x1", "price": 360},
-            {"dimension": "2x2", "price": 365},
-            {"dimension": "2x3", "price": 370},
-            {"dimension": "2x4", "price": 375},
-            {"dimension": "3x1", "price": 365},
-            {"dimension": "3x2", "price": 370},
-            {"dimension": "3x3", "price": 375},
-            {"dimension": "3x4", "price": 380},
-            {"dimension": "4x1", "price": 370},
-            {"dimension": "4x2", "price": 375},
-            {"dimension": "4x3", "price": 380},
-            {"dimension": "4x4", "price": 390}
-        ]
-    },
     "Tank tops": {
         "xs": [
             {"dimension": "1x1", "price": 100},
@@ -771,4 +585,9 @@ let shirtOptions = {
         ]
     }
 }
-
+const poloShirtsTemplate = shirtOptions['Polo Shirts'];
+colorNames.forEach(colorName => {
+    let name = colorName + " (Predesigned)";
+    shirtOptions[name] = JSON.parse(JSON.stringify(poloShirtsTemplate));
+    
+});

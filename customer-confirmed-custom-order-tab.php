@@ -35,7 +35,7 @@
                                 <div class="card-body text-dark">
                                     <div class="card-text h6 lead">Status: <span class="h6"><?=$item['status'] ?></span></div>
                                     <div class="card-text h6 lead">Total Price: <span class="h6">₱<?=$item['total_price'] ?></span></div>
-                                    <p class="card-text h6 lead">Customize By: <span class="h6"><?= $json_data->customize_by ?></span></p>
+                                    <p class="card-text h6 lead">Customization Method: <span class="h6"><?= $json_data->customize_by ?></span></p>
                                     <p class="card-text h6 lead">Size: </p>
                                             <?php foreach($json_data->sizes_ordered as $size => $quantity): ?>
                                                 <?php $sizeList = [

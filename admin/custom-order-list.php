@@ -215,7 +215,7 @@
                                 >
                             </div>
                             <div class="col-4">
-                                <label for="shirt_selected">CUSTOMIZE BY:</label>
+                                <label for="shirt_selected">Customization Method:</label>
                                 <input type="text" 
                                 name="customize_by" 
                                 id="customize_by" 
