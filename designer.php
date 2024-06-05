@@ -82,7 +82,15 @@
 	 </style>
 
         <section class="">
+            <div class="container">
+                <div class="alert alert-info text-center" role="alert">
+                    You want your own multi-color design or you have your own design? Contact us and get a quotation thru our email <strong>A&Japparel25@gmail.com</strong>
+                </div>
+            </div>
+
+
             <div class="main-row mt-2 " style="" >
+ 
 
                 <div class="col-4 col-lg-4 col-sm-12  mx-1" style="min-width: 550px; max-width: 600px; height: 700px; background-color: rgb(255, 255, 255);">
                     <div class="card" style="width: 550px" >
