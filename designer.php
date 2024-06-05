@@ -1,23 +1,6 @@
 <?php 
     include_once("./includes/header.php");
 
-    if(isset($_SESSION['viewed-design'])){
-        $viewedDesign = toUpperSnakeCase($_SESSION['viewed-design']);
-        unset($_SESSION['viewed-design']);
-    }
-
-    function toUpperSnakeCase($string) {
-        return strtoupper(str_replace(' ', '_', $string));
-    }
-
-
-    if( !isset($_SESSION['loggedInUser']) ){
-        echo "<script>
-            alert('Please Login');
-            window.location = './';
-        </script>";
-    }
-
     $templateNames = array(
         "FOREST_NIGHT",
         "MONOCHROME",
@@ -50,6 +33,25 @@
         "MIDNIGHT_SKY",
         "ONYX_AND_OLIVE"
       );
+
+    if(isset($_SESSION['viewed-design']) && in_array(toUpperSnakeCase($_SESSION['viewed-design']), $templateNames) ){
+        $viewedDesign = toUpperSnakeCase($_SESSION['viewed-design']);
+        unset($_SESSION['viewed-design']);
+    }
+
+    function toUpperSnakeCase($string) {
+        return strtoupper(str_replace(' ', '_', $string));
+    }
+
+
+    if( !isset($_SESSION['loggedInUser']) ){
+        echo "<script>
+            alert('Please Login');
+            window.location = './';
+        </script>";
+    }
+
+
       
 
 ?>
