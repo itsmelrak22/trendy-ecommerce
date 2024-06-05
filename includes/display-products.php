@@ -41,8 +41,9 @@
         <div class="card h-100">
     
             <!-- Product image-->
-            <img class="card-img-top product-item-img" src="'. $img_link .'" alt="Product Image" />
-    
+            <a class="btn btn-outline-dark mt-auto" href="./browse-products.php?category_id='.$category_id.'">
+                <img class="card-img-top product-item-img" src="'. $img_link .'" alt="Product Image" />
+            </a>
             <!-- Product details-->
             <div class="card-body p-3">
                 <div class="text-center">

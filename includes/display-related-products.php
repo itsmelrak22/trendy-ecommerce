@@ -23,7 +23,9 @@
            <div class="col mb-5">
                <div class="card h-100">
                    <!-- Product image-->
-                   <img class="card-img-top" src="'. $img_link .'" alt="..." />
+                   <a class="btn btn-outline-dark mt-auto" href="./view-products.php?id='.$id.'&color_id='.$color_id.'">
+                    <img class="card-img-top" src="'. $img_link .'" alt="..." />
+                   </a>
                    <!-- Product details-->
                    <div class="card-body p-4">
                        <div class="text-center">

@@ -83,15 +83,180 @@
 
         <section class="">
             <div class="main-row mt-2 " style="" >
+
+                <div class="col-4 col-lg-4 col-sm-12  mx-1" style="min-width: 550px; max-width: 600px; height: 700px; background-color: rgb(255, 255, 255);">
+                    <div class="card" style="width: 550px" >
+                        <div class="card-body">
+                            <button id="flipback" type="button" class="btn btn-primary" title="Rotate View">
+                                <i class="bi bi-arrow-left-right"></i>
+                            </button>
+
+                            <div id="shirtDiv" class="page" style="width: 510px; position: relative; background-color: rgb(255, 255, 255);">
+                                <img name="tshirtview" id="tshirtFacing" src="./designer/img/crew_front.png" style="width: 510px; ">
+                                <!-- <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 300px;height: 400px;">					 -->
+                                <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 200px;height: 400px;">					
+                                    <canvas id="tcanvas" width=200 height="400" class="hover" style="-webkit-user-select: none;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-4 col-lg-4 col-sm-12  mx-1" style="max-width: 400px;">
+                    <div class="card">
+                        <div class="card-body">
+                        <h3> Custom Order Form </h3>
+                        <p>
+                            <form action="" id="customize_form">
+                                <div class="form-action mb-1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="selected_gender">Gender:</label>
+                                            <input style="background-color: lightgrey;" type="text" class="form-control" id="selected_gender" name="selected_gender" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-action mb-1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="shirt_selected">Selected Shirt:</label>
+                                            <input style="background-color: lightgrey;" type="text" class="form-control" id="shirt_selected" name="shirt_selected" readonly value="Short Sleeve Shirts">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-action mb-1">
+                                    <label for="customize_by">Customize By:</label>
+                                    <select class="form-select" name="customize_by" id="customize_by">
+                                        <option value="embroidery">Embroidery</option>
+                                        <option value="print">Print</option>
+                                    </select>
+                                </div>
+                                <div class="form-action mb-1">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="avatar_logo_checkbox">Avatar/Logo:</label>
+                                            <input class="form-check-input" type="checkbox" id="avatar_logo_checkbox" name="avatar_logo_checkbox">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="text_checkbox">Text:</label>
+                                            <input class="form-check-input"  type="checkbox" id="text_checkbox" name="text_checkbox">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-action mb-1">
+                                    <label for="selected_size">Size:</label>
+                                    <select class="form-select" name="selected_size" id="selected_size">
+                                        <option value="xs">Extra Small</option>
+                                        <option value="s">Small</option>
+                                        <option value="m">Medium</option>
+                                        <option value="l">Large</option>
+                                        <option value="xl">Extra Large</option>
+                                        <option value="2xl">2 Extra Large</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-action mb-1">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="prices_by_sizes">Prices By Sizes:</label>
+                                            <select class="form-select" name="sizing" id="prices_by_sizes">
+                                              
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="selected_price"></label>
+                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="selected_price" name="price" readonly required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-action mb-1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="count">Count:</label>
+                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="decrement()">-</button>
+                                            <input class="form-input" id="count" name="count" min="0" style="width: 40px;" value="0" type="number" readonly>
+                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment()">+</button>
+                                        </div>
+                                     
+                                    </div>
+                                </div>
+
+                               
+
+                                <table class="table">
+                                    <tr>
+
+                                    </tr>
+                                   
+                                </table>	
+                                <input type="hidden" name="customize-page-submit" value="true">
+                                <input type="hidden" name="customer_id" value="<?=$_SESSION['loggedInUser']['id']?>">
+                            </form>
+                        </p>
+                            <button type="button" class="btn btn-large btn-block btn-success" name="addToTheBag"  id="addToTheBag">Add to Cart <i class="icon-briefcase icon-white"></i></button>
+                        
+                        </div>
+                    </div>	
+                </div>
+
                 <div class="col-4 col-lg-4 col-sm-12 mx-1" style="max-width: 400px;">
                     <div class="card">
                         <div class="card-body">
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Shirt Options</button>
-                                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Avatar  </button>
+                                    <button class="nav-link" id="nav-avatar-logo-tab" data-bs-toggle="tab" data-bs-target="#nav-avatar-logo" type="button" role="tab" aria-controls="nav-avatar-logo" aria-selected="false" disabled>Avatar/Logo</button>
+                                    <button class="nav-link" id="nav-text-tab" data-bs-toggle="tab" data-bs-target="#nav-text" type="button" role="tab" aria-controls="nav-text" aria-selected="false" disabled>Text</button>
                                 </div>
                             </nav>
+
+                            <!-- Button trigger modal -->
+                                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                Open Modal
+                                </button> -->
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="imageModalLabel">Choose an Option</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-around">
+                                        <img src="./designer/img/men.png" alt="Option 1" class="img-fluid image-option" style="max-width: 45%; height: auto;">
+                                        <img src="./designer/img/women.png" alt="Option 2" class="img-fluid image-option" style="max-width: 45%; height: auto;">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <!-- Custom CSS -->
+                                <style>
+                                    .image-option {
+                                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                                    cursor: pointer;
+                                    }
+                                    .image-option:hover {
+                                    transform: scale(1.05);
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                                    }
+                                </style>
+
+                                <!-- JavaScript -->
+                                <script>
+                                    document.querySelectorAll('.image-option').forEach(image => {
+                                        image.addEventListener('click', function() {
+                                            console.log(this.alt + ' was clicked');
+                                            var myModal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
+                                            myModal.hide();
+                                        });
+                                    });
+                                </script>
+
+
                             <div class="tab-content my-3" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                                     <div class="card" >
@@ -103,12 +268,14 @@
                                                 <option value="./designer/img/mens_longsleeve_front.png">Long Sleeve Shirts</option>                                        
                                                 <option value="./designer/img/mens_hoodie_front.png">Hoodies</option>                    
                                                 <option value="./designer/img/mens_tank_front.png">Tank tops</option>
+                                                <option value="./designer/img/1-2-front.png">Templated Polo Shirt Design 1</option>
+                                                <option value="./designer/img/2-2-front.png">Templated Polo Shirt Design 2</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="card">
-                                        <div class="card-body">
+                                        <div class="card-body" id="colorPallete">
                                             <h6 class="card-subtitle mb-2 text-muted">Shirt Color</h6>
                                             <ul class="nav">
                                                 <li class="color-preview" title="White" style="background-color:#ffffff;"></li>
@@ -136,7 +303,43 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                                <div class="tab-pane fade" id="nav-avatar-logo" role="tabpanel" aria-labelledby="nav-avatar-logo-tab" tabindex="0">
+                                    <div align="center" class="card" style="min-height: 32px;">
+                                        <div class="card-body">
+                                            <div class="pull-right my-2" align="" id="imageeditor" style="display:none">
+                                                <div class="my-2">
+                                                    <h6 class="card-subtitle mb-2 text-muted"> Object Options </h6>
+                                                    <div class="btn-group">
+                                                        <button class="btn btn-outline-dark" id="bring-to-front" title="Bring to Front"> <i class="bi bi-arrow-up-short"></i> </button>
+                                                        <button class="btn btn-outline-dark" id="send-to-back" title="Send to Back"> <i class="bi bi-arrow-down-short"></i> </button>
+                                                        <!-- <button id="flip" type="button" class="btn btn-outline-dark" title="Show Back View"> <i class="bi bi-arrow-left-right"></i> </button> -->
+                                                        <button id="remove-selected" class="btn btn-outline-dark" title="Delete selected item"> <i class="bi bi-trash"></i> </button>
+                                                    </div>
+                                                </div>
+                                            </div>		
+                                            
+                                            <div>
+                                                <?php require_once("./designer/fileupload.php") ?>
+                                                <input type="file" id="imageInput" accept="image/*" multiple>
+                                            </div>
+                                            <hr>
+                                            
+                                            <div class="card" style=" height: 500px;  overflow: auto;  width: 100%;  box-sizing: border-box; overflow-x: hidden;">
+                                                <div class="card-body">
+                                                    
+                                                    <div id="avatarlist" >
+                                                        <?php include_once("./designer/stock-avatar-list.php") ?>
+                                                    </div>	
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <!-- <input class="span2 form-control" id="text-string" type="text" placeholder="Add text here...">
+                                            <button id="add-text" class="btn" title="Add text"><i class="bi bi-send"></i></i></button>	   -->
+                                        </div>												
+                                    </div>	
+                                </div>
+                                <div class="tab-pane fade" id="nav-text" role="tabpanel" aria-labelledby="nav-text-tab" tabindex="0">
                                     <div align="center" class="card" style="min-height: 32px;">
                                         <div class="card-body">
                                             <h6 class="card-subtitle mb-2 text-muted"> Font Options </h6>
@@ -187,21 +390,6 @@
                                                         <input type="hidden" id="text-strokecolor" class="color-picker" size="7" value="#000000">
                                                     </a>									      
                                                 </div>
-
-
-                                            </div>		
-
-                                            <div class="pull-right my-2" align="" id="imageeditor" style="display:none">
-                                            
-                                                <div class="my-2">
-                                                    <h6 class="card-subtitle mb-2 text-muted"> Object Options </h6>
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-outline-dark" id="bring-to-front" title="Bring to Front"> <i class="bi bi-arrow-up-short"></i> </button>
-                                                        <button class="btn btn-outline-dark" id="send-to-back" title="Send to Back"> <i class="bi bi-arrow-down-short"></i> </button>
-                                                        <!-- <button id="flip" type="button" class="btn btn-outline-dark" title="Show Back View"> <i class="bi bi-arrow-left-right"></i> </button> -->
-                                                        <button id="remove-selected" class="btn btn-outline-dark" title="Delete selected item"> <i class="bi bi-trash"></i> </button>
-                                                    </div>
-                                                </div>
                                             </div>		
                                             
                                             <div class="input-group mb-3">
@@ -209,21 +397,6 @@
                                                 <button id="add-text" class="btn btn-outline-secondary" title="Add text"><i class="bi bi-send"></i></button>	  
                                             </div>
 
-                                            <div>
-                                                <?php require_once("./designer/fileupload.php") ?>
-                                                <input type="file" id="imageInput" accept="image/*" multiple>
-                                            </div>
-                                            <hr>
-                                            
-                                            <div class="card" style=" height: 500px;  overflow: auto;  width: 100%;  box-sizing: border-box; overflow-x: hidden;">
-                                                <div class="card-body">
-                                                    
-                                                    <div id="avatarlist" >
-                                                        <?php include_once("./designer/stock-avatar-list.php") ?>
-                                                    </div>	
-                                                    
-                                                </div>
-                                            </div>
 
                                             <!-- <input class="span2 form-control" id="text-string" type="text" placeholder="Add text here...">
                                             <button id="add-text" class="btn" title="Add text"><i class="bi bi-send"></i></i></button>	   -->
@@ -235,99 +408,7 @@
                     </div>
                 </div>
 
-                <div class="col-4 col-lg-4 col-sm-12  mx-1" style="min-width: 550px; max-width: 600px; height: 700px; background-color: rgb(255, 255, 255);">
-                    <div class="card" style="width: 550px" >
-                        <div class="card-body">
-                            <button id="flipback" type="button" class="btn btn-primary" title="Rotate View">
-                                <i class="bi bi-arrow-left-right"></i>
-                            </button>
-
-                            <div id="shirtDiv" class="page" style="width: 525px; position: relative; background-color: rgb(255, 255, 255);">
-                                <img name="tshirtview" id="tshirtFacing" src="./designer/img/crew_front.png" style="width: 525px; ">
-                                <!-- <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 300px;height: 400px;">					 -->
-                                <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 200px;height: 400px;">					
-                                    <canvas id="tcanvas" width=200 height="400" class="hover" style="-webkit-user-select: none;"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-4 col-lg-4 col-sm-12  mx-1" style="max-width: 300px;">
-                    <div class="card">
-                        <div class="card-body">
-                        <h3> Custom Order Form </h3>
-                        <p>
-                            <form action="" id="customize_form">
-                                <div class="form-action mb-1">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="shirt_selected">Selected Shirt:</label>
-                                            <input style="background-color: lightgrey;" type="text" class="form-control" id="shirt_selected" name="shirt_selected" readonly value="Short Sleeve Shirts">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-action mb-1">
-                                    <label for="customize_by">Customize By:</label>
-                                    <select class="form-select" name="customize_by" id="customize_by">
-                                        <option value="embroidery">Embroidery</option>
-                                        <option value="print">Print</option>
-                                    </select>
-                                </div>
-                                <div class="form-action mb-1">
-                                    <label for="selected_size">Size:</label>
-                                    <select class="form-select" name="selected_size" id="selected_size">
-                                        <option value="xs">Extra Small</option>
-                                        <option value="s">Small</option>
-                                        <option value="m">Medium</option>
-                                        <option value="l">Large</option>
-                                        <option value="xl">Extra Large</option>
-                                        <option value="2xl">2 Extra Large</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-action mb-1">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="prices_by_sizes">Prices By Sizes:</label>
-                                            <select class="form-select" name="sizing" id="prices_by_sizes">
-                                              
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="selected_price"></label>
-                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="selected_price" name="price" readonly required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-action mb-1">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="count">Count:</label>
-                                            <button class="btn btn-sm btn-outline-dark" onclick="decrement()">-</button>
-                                            <input class="form-input" id="count" name="count" min="0" style="width: 40px;" value="0" type="number" readonly>
-                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment()">+</button>
-                                        </div>
-                                     
-                                    </div>
-                                </div>
-
-                                <table class="table">
-                                    <tr>
-
-                                    </tr>
-                                   
-                                </table>	
-                                <input type="hidden" name="customize-page-submit" value="true">
-                                <input type="hidden" name="customer_id" value="<?=$_SESSION['loggedInUser']['id']?>">
-                            </form>
-                        </p>
-                            <button type="button" class="btn btn-large btn-block btn-success" name="addToTheBag"  id="addToTheBag">Add to Cart <i class="icon-briefcase icon-white"></i></button>
-                        
-                        </div>
-                    </div>	
-                </div>
+                
             </div>
         </section>
 
@@ -364,10 +445,22 @@
                 }
             }
 
+
             $(document).ready(function(){
+
+
                     $("#tshirttype").change(function(){
                         let input = document.getElementById('selected_price');
                          input.value = null;
+
+                        const selectedText = $(this).find('option:selected').text();
+                        const colorPallete = $('#colorPallete');
+                        
+                        if (selectedText.includes('Templated')) {
+                            colorPallete.hide();
+                        } else {
+                            colorPallete.show();
+                        }
 
                         $("img[name=tshirtview]").attr("src",$(this).val());
 
@@ -377,6 +470,8 @@
                             "./designer/img/mens_longsleeve_front.png" : {"shirt_selected" : "Long Sleeve Shirts", "shirt_price" : "250"},
                             "./designer/img/mens_hoodie_front.png" : {"shirt_selected" : "Hoodies", "shirt_price" : "200"},
                             "./designer/img/mens_tank_front.png" : {"shirt_selected" : "Tank tops", "shirt_price" : "150"},
+                            "./designer/img/1-2-front.png" : {"shirt_selected" : "Templated Polo Shirt Design 1", "shirt_price" : "250"},
+                            "./designer/img/2-2-front.png" : {"shirt_selected" : "Templated Polo Shirt Design 2", "shirt_price" : "250"},
                         }
 
                         let shirt = shirtList[$(this).val()]
@@ -391,6 +486,25 @@
                     $('#flipback').click()
                     toggleOverlay(false, overlay)
                 }, 1000);
+
+                var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+                myModal.show();
+                });
+
+                document.querySelectorAll('.image-option').forEach(image => {
+                image.addEventListener('click', function() {
+                    console.log(this.alt + ' was clicked');
+                    var myModal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
+                    myModal.hide();
+
+                    // Set the value of the gender input based on the image clicked
+                    var genderInput = document.getElementById('selected_gender');
+                    if (this.alt === 'Option 1') {
+                    genderInput.value = 'Male';
+                    } else if (this.alt === 'Option 2') {
+                    genderInput.value = 'Female';
+                    }
+                });
 
             });
         </script>
@@ -450,6 +564,62 @@
                         } else {
                             $(this).attr('data-original-title', 'Show Back View');			    				    	
                             $("#tshirtFacing").attr("src","./designer/img/polo2_front.png");			    	
+                            b = JSON.stringify(canvas);
+                            canvas.clear();
+                            try
+                            {
+                            var json = JSON.parse(a);
+                            canvas.loadFromJSON(a);			           
+                            }
+                            catch(e)
+                            {}
+                        }	
+                }
+                else if (valueSelect === "./designer/img/1-2-front.png") {
+                    if ($(this).attr("data-original-title") == "Show Back View") {
+                            $(this).attr('data-original-title', 'Show Front View');			        		       
+                            $("#tshirtFacing").attr("src","./designer/img/1-2-back.png");			        
+                            a = JSON.stringify(canvas);
+                            canvas.clear();
+                            try
+                            {
+                            var json = JSON.parse(b);
+                            canvas.loadFromJSON(b);
+                            }
+                            catch(e)
+                            {}
+                            
+                        } else {
+                            $(this).attr('data-original-title', 'Show Back View');			    				    	
+                            $("#tshirtFacing").attr("src","./designer/img/1-2-front.png");			    	
+                            b = JSON.stringify(canvas);
+                            canvas.clear();
+                            try
+                            {
+                            var json = JSON.parse(a);
+                            canvas.loadFromJSON(a);			           
+                            }
+                            catch(e)
+                            {}
+                        }	
+                }
+                else if (valueSelect === "./designer/img/2-2-front.png") {
+                    if ($(this).attr("data-original-title") == "Show Back View") {
+                            $(this).attr('data-original-title', 'Show Front View');			        		       
+                            $("#tshirtFacing").attr("src","./designer/img/2-2-back.png");			        
+                            a = JSON.stringify(canvas);
+                            canvas.clear();
+                            try
+                            {
+                            var json = JSON.parse(b);
+                            canvas.loadFromJSON(b);
+                            }
+                            catch(e)
+                            {}
+                            
+                        } else {
+                            $(this).attr('data-original-title', 'Show Back View');			    				    	
+                            $("#tshirtFacing").attr("src","./designer/img/2-2-front.png");			    	
                             b = JSON.stringify(canvas);
                             canvas.clear();
                             try
@@ -963,3 +1133,24 @@
 
         console.log(shirtOptions);
     </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const avatarLogoCheckbox = document.getElementById('avatar_logo_checkbox');
+    const textCheckbox = document.getElementById('text_checkbox');
+    const avatarLogoTab = document.getElementById('nav-avatar-logo-tab');
+    const textTab = document.getElementById('nav-text-tab');
+    
+    // Function to toggle the disabled state of tabs
+    function toggleTabs() {
+        avatarLogoTab.disabled = !avatarLogoCheckbox.checked;
+        textTab.disabled = !textCheckbox.checked;
+    }
+
+    // Event listeners for checkboxes
+    avatarLogoCheckbox.addEventListener('change', toggleTabs);
+    textCheckbox.addEventListener('change', toggleTabs);
+
+    // Initial toggle based on the current state of checkboxes
+    toggleTabs();
+});
+</script>

@@ -229,10 +229,10 @@
                                 <input type="hidden" name="shipping_fee" value="75">
 
                                 <?php  if( $products->category_name == "EXAMPLE DESIGN TO BE REQUESTED" ){ ?>
-                                        <button class="btn btn-outline-dark flex-shrink-0" disabled >
+                                        <a href="./designer.php" class="btn btn-outline-dark flex-shrink-0" type="button">
                                             <i class="bi-cart-fill me-1"></i>
                                              (Sample Only, Please proceed to customize page)
-                                        </button>
+                                        </a>
                                 <?php }else{ ?>
                                     <?php if( count($product_colors) > 0 ){ ?>
                                         <button class="btn btn-outline-dark flex-shrink-0" name="add-cart" id="addCartButton" type="submit" disabled>

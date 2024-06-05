@@ -37,7 +37,9 @@
         echo '
             <div class="card h-100">
                 <!-- Product image-->
-                <img class="card-img-top product-item-img" src="'. $img_link .'" alt="..." />
+                <a class="btn btn-outline-dark mt-auto" href="./view-products.php?id='.$id.'&color_id='.$color_id.'">
+                    <img class="card-img-top product-item-img" src="'. $img_link .'" alt="..." />
+                </a>
                 <!-- Product details-->
                 <div class="card-body p-3">
                     <div class="text-center">
