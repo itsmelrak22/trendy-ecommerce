@@ -62,11 +62,7 @@ $location = basename($url);
 </li>
 
 <!-- Nav Item - Carts -->
-<li class="nav-item <?= $location ==  "cart-list.php" ? "active" : ""?>">
-    <a class="nav-link" href="cart-list.php">
-        <i class="fas fa-fw fa-table"></i>
-        <span>Carts</span></a>
-</li>
+
 
 <!-- Divider -->
 <hr class="sidebar-divider">
