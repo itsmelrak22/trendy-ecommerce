@@ -223,6 +223,10 @@
                                             <label for="selected_price"></label>
                                             <input style="background-color: lightgrey;"  type="text" class="form-control" id="selected_price" name="price" readonly required>
                                         </div>
+                                        <div class="col-md-6">
+                                            <label for="estimatedPrice">Estimated Minimum Price</label>
+                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="estimatedPrice" name="estimatedPrice" readonly required>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-action mb-1">
@@ -230,7 +234,7 @@
                                         <div class="col-md-12">
                                             <label for="count">Count:</label>
                                             <button type="button" class="btn btn-sm btn-outline-dark" onclick="decrement()">-</button>
-                                            <input class="form-input" id="count" name="count" min="0" style="width: 40px;" value="0" type="number" readonly>
+                                            <input class="form-input" id="count" name="count" min="1" style="width: 40px;" value="1" type="number" readonly>
                                             <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment()">+</button>
                                         </div>
                                      
@@ -539,10 +543,27 @@
                     $("#shirt_price").val(shirt.shirt_price);
                 }
 
+                function estimatePrice(){   
+                    let prices_by_sizes = document.getElementById('prices_by_sizes').value;
+                    let shirt_selected = document.getElementById('shirt_selected').value;
+                    let selected_size = document.getElementById('selected_size').value;
+                    let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == prices_by_sizes)};
+
+                    const selected_price = $("#selected_price").val();
+                    const count = $("#count").val();
+                    console.log(`data.price: ${data.price}` )
+                    console.log(`count: ${count}` )
+
+                    $("#estimatedPrice").val(eval(data.price * count))
+                }
+
+
+        document.getElementById('count').addEventListener('change', function() {
+            estimatePrice()
+        });
+
             $(document).ready(function(){
 
-
-                // Attach the function to the change event
                 $("#tshirttype").change(updateTshirtSelection);
 
                 setTimeout(() => {
@@ -1024,6 +1045,8 @@
                     input.value = parseInt(input.value, 10) + 1;
                 }
 
+                estimatePrice()
+
             }
 
             function decrement(id = false) {
@@ -1038,7 +1061,7 @@
                         input.value = parseInt(input.value, 10) - 1;
                     }
                 }
-
+                estimatePrice()
             }
         </script>
 
@@ -1144,6 +1167,7 @@
             let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
             input.value = data.price
             console.log('prices_by_sizes data:', data);
+            estimatePrice()
 
         });
 

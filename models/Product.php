@@ -91,6 +91,49 @@ Class Product extends Model {
     
         return $categories;
     }
+    public static function getDisplayProducts($category_id = null){
+        $qry = '';
+        if($category_id){
+            $qry = "SELECT 
+                        P.*, 
+                        C.name AS category_name,
+                        PC.stock_qty,
+                        PC.name as color_name,
+                        PC.image,
+                        PC.id as color_id
+                    FROM products AS P
+                    LEFT JOIN categories AS C 
+                        ON P.category_id = C.id
+                    LEFT JOIN product_colors AS PC 
+                        ON P.id = PC.product_id
+                    WHERE P.deleted_at IS NULL
+                    AND C.id = $category_id
+                    ORDER BY P.name;
+                    ";
+        }else{
+            $qry = "SELECT 
+            P.*, 
+            C.name AS category_name,
+            PC.stock_qty,
+            PC.name as color_name,
+            PC.image,
+            PC.id as color_id
+        FROM products AS P
+        LEFT JOIN categories AS C 
+            ON P.category_id = C.id
+        LEFT JOIN product_colors AS PC 
+            ON P.id = PC.product_id
+        WHERE P.deleted_at IS NULL
+        ORDER BY P.name;
+            ";
+        }
+
+        $instance = new self;
+        $categories = $instance->setQuery( $qry )->getAll();
+
+    
+        return $categories;
+    }
 
     public static function getRelatedProducts($currentProductName){
         $instance = new self;
