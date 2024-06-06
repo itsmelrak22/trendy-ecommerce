@@ -107,6 +107,7 @@ Class Product extends Model {
                     LEFT JOIN product_colors AS PC 
                         ON P.id = PC.product_id
                     WHERE P.deleted_at IS NULL
+                    AND PC.deleted_at IS NULL
                     AND C.id = $category_id
                     ORDER BY P.name;
                     ";
@@ -124,6 +125,7 @@ Class Product extends Model {
         LEFT JOIN product_colors AS PC 
             ON P.id = PC.product_id
         WHERE P.deleted_at IS NULL
+        AND PC.deleted_at IS NULL
         ORDER BY P.name;
             ";
         }
