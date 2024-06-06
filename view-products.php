@@ -113,6 +113,7 @@
                             case 'SOCKS':
                             case 'SUBLIMATION':
                             case "WOMEN'S TOP":
+                            case "MESH SHORT":
                                 echo '
                                 <div class="d-flex">
                                     <div class="my-2">

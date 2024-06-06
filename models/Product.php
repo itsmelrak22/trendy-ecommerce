@@ -76,16 +76,10 @@ Class Product extends Model {
         }else{
             $qry = "SELECT 
                     P.*, 
-                    C.name AS category_name,
-                    PC.stock_qty,
-                    PC.name as color_name,
-                    PC.image,
-                    PC.id as color_id
+                    C.name AS category_name
                 FROM products AS P
                 LEFT JOIN categories AS C 
                 ON P.category_id = C.id
-                LEFT JOIN product_colors AS PC 
-                ON P.id = PC.product_id
                 WHERE P.deleted_at IS NULL
                 ORDER BY P.name
             ";
