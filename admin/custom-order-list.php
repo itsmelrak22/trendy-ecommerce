@@ -201,7 +201,7 @@
                         </div>
                         <br>
                         <div class="input-group row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label for="shirt_selected">SHIRT SELECTED:</label>
                                 <input type="text" 
                                 name="shirt_selected" 
@@ -214,7 +214,7 @@
                                 readonly
                                 >
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label for="shirt_selected">Customization Method:</label>
                                 <input type="text" 
                                 name="customize_by" 
@@ -227,11 +227,27 @@
                                 readonly
                                 >
                             </div>
-                            <div class="col-4">
-                                <label for="shirt_selected">SIZE:</label>
+                        </div>
+                        <br>
+                        <div class="input-group row">
+                        <div class="col-6">
+                                <label for="shirt_selected">Avatar/Logo sizing:</label>
                                 <input type="text" 
-                                name="sizing" 
-                                id="sizing" 
+                                name="avatar_sizing" 
+                                id="avatar_sizing" 
+                                class="form-control bg-light border-0 small" 
+                                placeholder="Size" 
+                                aria-label="Size" 
+                                aria-describedby="basic-addon2" 
+                                required 
+                                readonly
+                                >
+                            </div>
+                            <div class="col-6">
+                                <label for="shirt_selected">Text sizing:</label>
+                                <input type="text" 
+                                name="text_sizing" 
+                                id="text_sizing" 
                                 class="form-control bg-light border-0 small" 
                                 placeholder="Size" 
                                 aria-label="Size" 
@@ -290,18 +306,19 @@
                                                         </td>
                                                     </tr> -->
                                                     <tr>
-                                                        <td>Customize Size (<span id="cutomize_sizing"></span>):&nbsp ₱ </td>
+                                                        <td>Addtional Fee:&nbsp ₱</td>
                                                         <td class="text-end">
-                                                            <input type="text" 
-                                                                        name="price" 
-                                                                        id="price" 
+                                                            <div class="input-group">
+                                                                <input type="text" 
+                                                                        name="additional_fee" 
+                                                                        id="additional_fee" 
                                                                         class="form-control bg-light border-0 small" 
-                                                                        placeholder="" 
-                                                                        aria-label="" 
+                                                                        placeholder="Input Addtional Fee Cost" 
+                                                                        aria-label="Addtional Fee" 
                                                                         aria-describedby="basic-addon2" 
-                                                                        required 
-                                                                        readonly
+                                                                         
                                                                         >
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -388,6 +405,8 @@
                 </div>
             </div>
         </div>
+
+        <input type="hidden" name="estimatedPrice" id="estimatedPrice">
     </form>
 
     <?php include_once("./includes/scripts.php"); ?>
@@ -414,7 +433,7 @@
 
 <script>
 
-    document.getElementById('shipping_fee').addEventListener('input', function (e) {
+    function computeTotal(e){
         let value = e.target.value;
         let numValue = Number(value);
         let shipping_fee = 0;
@@ -446,7 +465,13 @@
 
         total_price.value = total;
 
+    }
 
+    document.getElementById('shipping_fee').addEventListener('input', function (e) {
+        computeTotal(e)
+    });
+    document.getElementById('additional_fee').addEventListener('input', function (e) {
+        computeTotal(e)
     });
 
 
@@ -480,15 +505,20 @@
         let shirt_selected = document.getElementById('shirt_selected');
         // let shirt_price = document.getElementById('shirt_price');
         let customize_by = document.getElementById('customize_by');
-        let sizing = document.getElementById('sizing');
+        // let sizing = document.getElementById('sizing');
+        let avatar_sizing = document.getElementById('avatar_sizing');
+        let text_sizing = document.getElementById('text_sizing');
         let cutomize_sizing = document.getElementById('cutomize_sizing');
-        let price = document.getElementById('price');
+        let estimatedPrice = document.getElementById('estimatedPrice');
         let shipping_fee = document.getElementById('shipping_fee');
 
         for (const key in jsonData.sizes_ordered) {
             if (Object.hasOwnProperty.call(jsonData.sizes_ordered, key)) {
+                
                 const element = jsonData.sizes_ordered[key];
-
+                console.log(`jsonData: ${jsonData}`)
+                console.log(`element: ${element}`)
+                console.log(`key: ${key}`)
                 // Assuming you have a reference to the table or tbody
                 var table = document.getElementById('updateTableBody');
 
@@ -501,6 +531,7 @@
 
 
                 let sizeText = {
+                    "xs" : "EXTRA SMALL",
                     "s" : "SMALL",
                     "m" : "MEDIUM",
                     "l" : "LARGE",
@@ -510,7 +541,7 @@
 
                 // Set cell1 text
                 cell1.className = '';
-                cell1.innerHTML = `<span><strong>${sizeText[key]}</strong>: ${jsonData.sizes_ordered[key]} x ₱${jsonData.price} </span>`;
+                cell1.innerHTML = `<span><strong>${sizeText[key]}</strong>: ${jsonData.sizes_ordered[key]} x ₱${jsonData.estimatedPrice} </span>`;
 
                 // Set div attributes
                 div.className = 'input-group';
@@ -525,7 +556,7 @@
                 input.setAttribute('aria-describedby', 'basic-addon2');
                 input.required = true;
                 input.readOnly = true;
-                input.value = (jsonData.sizes_ordered[key] * jsonData.price);
+                input.value = (jsonData.sizes_ordered[key] * jsonData.estimatedPrice);
 
                 row.className = 'addedSize'
 
@@ -564,12 +595,18 @@
         if(jsonData.customize_by){
             customize_by.value = jsonData.customize_by
         }
-        if(jsonData.sizing){
-            sizing.value = jsonData.sizing
-            cutomize_sizing.textContent = jsonData.sizing
+        if(jsonData.text_sizing){
+            text_sizing.value = jsonData.text_sizing
         }
-        if(jsonData.price){
-            price.value = jsonData.price
+        if(jsonData.avatar_sizing){
+            avatar_sizing.value = jsonData.avatar_sizing
+        }
+        // if(jsonData.sizing){
+        //     sizing.value = jsonData.sizing
+        //     cutomize_sizing.textContent = jsonData.sizing
+        // }
+        if(jsonData.estimatedPrice){
+            estimatedPrice.value = jsonData.estimatedPrice
         }
         
 

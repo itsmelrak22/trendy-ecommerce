@@ -39,6 +39,7 @@
                                     <p class="card-text h6 lead">Size: </p>
                                             <?php foreach($json_data->sizes_ordered as $size => $quantity): ?>
                                                 <?php $sizeList = [
+                                                    "xs" => "EXTRA SMALL",
                                                     "s" => "SMALL",
                                                     "m" => "MEDIUM",
                                                     "l" => "LARGE",

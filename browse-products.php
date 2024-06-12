@@ -28,7 +28,7 @@
         <div class="container text-center">
             <div class="btn-group" role="group" aria-label="Category Buttons">
                 <a href="browse-products.php">
-                    <button type="button" class="mx-2 my-2 btn btn-outline-primary active" id="allCategory">All</button>
+                    <button style="width: 290px !important;" type="button" class="mx-2 my-2 btn btn-outline-primary active" id="allCategory">All</button>
                 </a>
                 <?php 
                     function sortByName($a, $b) {
@@ -38,7 +38,7 @@
                     usort($categories, 'sortByName');
 
                     function sortCategories($a, $b) {
-                        $specialCategory = "A SAMPLE OF POLOSHIRT UNIFORM TO BE CUSTOMIZE";
+                        $specialCategory = "CUSTOMIZED POLO SHIRT/UNIFORM";
                         
                         if ($a['name'] == $specialCategory) {
                             return 1;
@@ -53,7 +53,7 @@
 
                     foreach ($categories as $key => $category): ?>
                         <a href="browse-products.php?category_id=<?=$category['id']?>">
-                            <button type="button" class="mx-2 my-2 btn btn-outline-primary" id="<?php echo $category['id']; ?>">
+                            <button style="width: 290px !important;" type="button" class="mx-2 my-2 btn btn-outline-primary" id="<?php echo $category['id']; ?>">
                                 <?php echo $category['name']; ?>
                             </button>
                         </a>

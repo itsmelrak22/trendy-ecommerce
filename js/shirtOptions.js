@@ -125,7 +125,7 @@ let shirtOptions = {
             {"dimension": "4x3", "price": 320},
             {"dimension": "4x4", "price": 325}
         ],
-        "2xl": [
+        "xxl": [
             {"dimension": "1x1", "price": 300},
             {"dimension": "1x2", "price": 305},
             {"dimension": "1x3", "price": 310},
@@ -235,7 +235,7 @@ let shirtOptions = {
             {"dimension": "4x3", "price": 375},
             {"dimension": "4x4", "price": 380}
         ],
-        "2xl": [
+        "xxl": [
             {"dimension": "1x1", "price": 355},
             {"dimension": "1x2", "price": 360},
             {"dimension": "1x3", "price": 365},
@@ -345,7 +345,7 @@ let shirtOptions = {
             {"dimension": "4x3", "price": 375},
             {"dimension": "4x4", "price": 380}
         ],
-        "2xl": [
+        "xxl": [
             {"dimension": "1x1", "price": 355},
             {"dimension": "1x2", "price": 360},
             {"dimension": "1x3", "price": 365},
@@ -455,7 +455,7 @@ let shirtOptions = {
             {"dimension": "4x3", "price": 155},
             {"dimension": "4x4", "price": 160}
         ],
-        "2xl": [
+        "xxl": [
             {"dimension": "1x1", "price": 135},
             {"dimension": "1x2", "price": 140},
             {"dimension": "1x3", "price": 145},
@@ -565,7 +565,7 @@ let shirtOptions = {
             {"dimension": "4x3", "price": 375},
             {"dimension": "4x4", "price": 380}
         ],
-        "2xl": [
+        "xxl": [
             {"dimension": "1x1", "price": 355},
             {"dimension": "1x2", "price": 360},
             {"dimension": "1x3", "price": 365},

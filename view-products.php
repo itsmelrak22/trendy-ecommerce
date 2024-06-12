@@ -26,7 +26,7 @@
                 m: 20,
                 l: 30,
                 xl: 40,
-                '2xl': 50,
+                xxl: 50,
                 'one_size': 0
             };
             
@@ -100,7 +100,30 @@
 
 
                     <hr>
-                    <p class="lead"><?= 'Description'. ': '. $products->description  ?> </p>
+                        <p class="lead"><?= 'Description'. ': '. $products->description  ?> </p>
+                                                <!-- Button trigger modal -->
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">SIZE GUIDE</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="text-center card-body">
+                                        <img src="./assets/sizechart.jpg" class="img-fluid" alt="sizechart">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <!-- Additional buttons can be added here if needed -->
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
                     <hr>
 
                     <form action="add-to-cart.php" method="POST" onsubmit="return checkUser();">
@@ -135,6 +158,9 @@
                                 echo '
                                 <div class="d-flex">
                                     <div class="my-2">
+                                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <i class="bi bi-patch-question"> SIZE GUIDE</i>
+                                        </button>
                                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
                                             <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs">
                                             <label class="btn btn-outline-secondary" for="size_xs">XS</label>
@@ -159,6 +185,9 @@
                                 echo '
                                 <div class="d-flex">
                                     <div class="my-2">
+                                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <i class="bi bi-patch-question"> SIZE GUIDE</i>
+                                        </button>
                                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
                                             <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs">
                                             <label class="btn btn-outline-secondary" for="size_xs">XS</label>
@@ -175,8 +204,8 @@
                                             <input type="radio" class="btn-check" name="size" id="size_xl" autocomplete="off" value="xl">
                                             <label class="btn btn-outline-secondary" for="size_xl">XL</label>
 
-                                            <input type="radio" class="btn-check" name="size" id="size_2xl" autocomplete="off" value="2xl">
-                                            <label class="btn btn-outline-secondary" for="size_2xl">2XL</label>
+                                            <input type="radio" class="btn-check" name="size" id="size_xxl" autocomplete="off" value="xxl">
+                                            <label class="btn btn-outline-secondary" for="size_xxl">XXL</label>
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +227,7 @@
                             <input type="hidden" name="product_id" value="<?=$id?>">
                             <input type="hidden" name="color_id" value="<?=$products->color_id?>">
                             <input type="hidden" name="price" value="0" id="final_price">
-                            <?php  if( $products->category_name != "A SAMPLE OF POLOSHIRT UNIFORM TO BE CUSTOMIZE" ){ ?>
+                            <?php  if( $products->category_name != "CUSTOMIZED POLO SHIRT/UNIFORM" ){ ?>
 
                                 <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="decreaseQuantity()">-</button>
                                     <input name="quantity" readonly placeholder="0" value="1" class="form-control text-center mx-3" id="inputQuantity" type="text" value="" style="width: 40px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
@@ -227,7 +256,7 @@
                                 <input type="hidden" name="customer_id" value="<?=$client_id?>">
                                 <input type="hidden" name="shipping_fee" value="75">
 
-                                <?php  if( $products->category_name == "A SAMPLE OF POLOSHIRT UNIFORM TO BE CUSTOMIZE" ){ 
+                                <?php  if( $products->category_name == "CUSTOMIZED POLO SHIRT/UNIFORM" ){ 
                                     $_SESSION['viewed-design'] = $products->name;
                                     ?>
                                         

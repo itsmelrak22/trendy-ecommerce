@@ -62,6 +62,7 @@
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> -->
     <link type="text/css" rel="stylesheet" href="./designer/css/jquery.miniColors.css" />
 	<script type="text/javascript" src="./designer/js/fabric.js"></script>
+    <!-- <script src="https://unpkg.com/fabric@5.3.0/dist/fabric.min.js"></script> -->
 	 <style type="text/css">
 		 .footer {
 			padding: 70px 0;
@@ -124,12 +125,123 @@
             display: flex !important; 
             justify-content: center !important; 
         }
+
         
 
 	 </style>
+        <!-- Modal structure -->
+            <div class="modal fade" id="avatalLogoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Draggable Modal</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div align="center" class="card" style="min-height: 32px;">
+                                <div class="card-body">
+                                    <div>
+                                        <?php require_once("./designer/fileupload.php") ?>
+                                        <input type="file" id="imageInput" accept="image/*" multiple>
+                                    </div>
+                                    <hr>
+                                    
+                                    <div class="card" style=" height: 500px;  overflow: auto;  width: 100%;  box-sizing: border-box; overflow-x: hidden;">
+                                        <div class="card-body">
+                                            
+                                            <div id="avatarlist" >
+                                                <?php include_once("./designer/stock-avatar-list.php") ?>
+                                            </div>	
+                                            
+                                        </div>
+                                    </div>
+                                </div>												
+                            </div>	
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="textModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Draggable Modal</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div align="center" class="card" style="min-height: 32px;">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted"> Font Options </h6>
+
+                                    <div class="btn-group inline pull-left mb-2 " id="texteditor" style="display:none">	
+                                        <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> Font Style </button>
+                                                <ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X">
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Arial');" class="Arial">Arial</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Helvetica');" class="Helvetica">Helvetica</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Myriad Pro');" class="MyriadPro">Myriad Pro</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Delicious');" class="Delicious">Delicious</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Verdana');" class="Verdana">Verdana</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Georgia');" class="Georgia">Georgia</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Courier');" class="Courier">Courier</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Comic Sans MS');" class="ComicSansMS">Comic Sans MS</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Impact');" class="Impact">Impact</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Monaco');" class="Monaco">Monaco</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Optima');" class="Optima">Optima</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Hoefler Text');" class="Hoefler Text">Hoefler Text</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Plaster');" class="Plaster">Plaster</li>
+                                                    <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Engagement');" class="Engagement">Engagement</li>
+                                                </ul>
+                                            </div>
+                                            <button id="text-bold" type="button" class="btn btn-outline-dark">
+                                                <img src="./designer/img/font_bold.png" height="" width="">
+                                            </button>
+                                            <button id="text-italic" type="button" class="btn btn-outline-dark">
+                                                <img src="./designer/img/font_italic.png" height="" width="">
+                                            </button>
+                                            <button id="text-underline" type="button" class="btn btn-outline-dark">
+                                                <img src="./designer/img/font_underline.png">
+                                            </button>
+                                            <button id="text-strike" type="button" class="btn btn-outline-dark">
+                                                <img src="./designer/img/font_strikethrough.png" height="" width="">
+                                            </button>
+                                            
+                                            
+                                        </div>		
+                                        
+                                        <h6 class="card-subtitle my-3  text-muted"> Font Color Options </h6>
+                                        <div class="btn-group mb-2">
+                                            <a class="btn btn-outline-dark" href="#" rel="tooltip" data-placement="top" data-original-title="Font Color">
+                                                <input type="hidden" id="text-fontcolor" class="color-picker" size="7" value="#000000">
+                                            </a>
+                                            <a class="btn btn-outline-dark" href="#" rel="tooltip" data-placement="top" data-original-title="Font Border Color">
+                                                <input type="hidden" id="text-strokecolor" class="color-picker" size="7" value="#000000">
+                                            </a>									      
+                                        </div>
+                                    </div>		
+                                    
+                                    <div class="input-group mb-3">
+                                        <input id="text-string" type="text" class="form-control" placeholder="Add text here..." aria-label="Add text here..." aria-describedby="button-addon2">
+                                        <button id="add-text" class="btn btn-outline-secondary" title="Add text"><i class="bi bi-send"></i></button>	  
+                                    </div>
+
+
+                                    <!-- <input class="span2 form-control" id="text-string" type="text" placeholder="Add text here...">
+                                    <button id="add-text" class="btn" title="Add text"><i class="bi bi-send"></i></i></button>	   -->
+                                </div>												
+                            </div>	
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         <section class="">
-            <div class="container">
+            <div class="container mt-2">
                 <div class="alert alert-info text-center" role="alert">
                     You want your own multi-color design or you have your own design? Contact us and get a quotation thru our email <strong>A&Japparel25@gmail.com</strong>
                 </div>
@@ -137,28 +249,7 @@
 
 
             <div class="main-row mt-2 " style="" >
- 
-
-                <div class="col-4 col-lg-4 col-sm-12  mx-1" style="min-width: 550px; max-width: 600px; height: 700px; background-color: rgb(255, 255, 255);">
-                    <div class="card" style="width: 550px" >
-                        <div class="card-body">
-                            <button id="flipback" type="button" class="btn btn-primary" title="Rotate View">
-                                <i class="bi bi-arrow-left-right"></i>
-                            </button>
-
-                            <div id="shirtDiv" class="page" style="width: 510px; position: relative; background-color: rgb(255, 255, 255);">
-                                <img name="tshirtview" id="tshirtFacing" src="./designer/img/crew_front.png" style="width: 510px; ">
-                                <!-- <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 300px;height: 400px;">					 -->
-                                <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 200px;height: 400px;">					
-                                    <canvas id="tcanvas" width=200 height="400" class="hover" style="-webkit-user-select: none;"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-4 col-lg-4 col-sm-12  mx-1" style="max-width: 400px;">
+                <div class="col-6 col-lg-6 col-sm-12  mx-1" style="max-width: 700px;">
                     <div class="card">
                         <div class="card-body">
                         <h3> Custom Order Form </h3>
@@ -166,173 +257,29 @@
                             <form action="" id="customize_form">
                                 <div class="form-action mb-1">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="selected_gender">Gender:</label>
-                                            <input style="background-color: lightgrey;" type="text" class="form-control" id="selected_gender" name="selected_gender" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-action mb-1">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="shirt_selected">Selected Shirt:</label>
-                                            <input style="background-color: lightgrey;" type="text" class="form-control" id="shirt_selected" name="shirt_selected" readonly value="Short Sleeve Shirts">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-action mb-1">
-                                    <label for="customize_by">Customization Method:</label>
-                                    <select class="form-select" name="customize_by" id="customize_by">
-                                        <option value="embroidery">Embroidery</option>
-                                        <option value="print">Print</option>
-                                    </select>
-                                </div>
-                                <div class="form-action mb-1">
-                                    <div class="row">
                                         <div class="col-md-6">
-                                            <label for="avatar_logo_checkbox">Avatar/Logo:</label>
-                                            <input class="form-check-input" type="checkbox" id="avatar_logo_checkbox" name="avatar_logo_checkbox">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="text_checkbox">Text:</label>
-                                            <input class="form-check-input"  type="checkbox" id="text_checkbox" name="text_checkbox">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-action mb-1">
-                                    <label for="selected_size">Size:</label>
-                                    <select class="form-select" name="selected_size" id="selected_size">
-                                        <option value="xs">Extra Small</option>
-                                        <option value="s">Small</option>
-                                        <option value="m">Medium</option>
-                                        <option value="l">Large</option>
-                                        <option value="xl">Extra Large</option>
-                                        <option value="2xl">2 Extra Large</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-action mb-1">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="prices_by_sizes">Prices By Sizes:</label>
-                                            <select class="form-select" name="sizing" id="prices_by_sizes">
-                                              
+                                            <label for="selected_gender">Sex:</label>
+                                            <select class="form-select" name="selected_gender" id="selected_gender">
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="selected_price"></label>
-                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="selected_price" name="price" readonly required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="estimatedPrice">Estimated Minimum Price</label>
-                                            <input style="background-color: lightgrey;"  type="text" class="form-control" id="estimatedPrice" name="estimatedPrice" readonly required>
+                                            <label for="customize_by">Customization Method:</label>
+                                            <select class="form-select" name="customize_by" id="customize_by">
+                                                <option value="embroidery">Embroidery</option>
+                                                <option value="print">Print</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-action mb-1">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="count">Count:</label>
-                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="decrement()">-</button>
-                                            <input class="form-input" id="count" name="count" min="1" style="width: 40px;" value="1" type="number" readonly>
-                                            <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment()">+</button>
-                                        </div>
-                                     
-                                    </div>
-                                </div>
-
-                               
-
-                                <table class="table">
-                                    <tr>
-
-                                    </tr>
-                                   
-                                </table>	
-                                <input type="hidden" name="customize-page-submit" value="true">
-                                <input type="hidden" name="customer_id" value="<?=$_SESSION['loggedInUser']['id']?>">
-                            </form>
-                        </p>
-                            <button type="button" class="btn btn-large btn-block btn-success" name="addToTheBag"  id="addToTheBag">Add to Cart <i class="icon-briefcase icon-white"></i></button>
-                        
-                        </div>
-                    </div>	
-                </div>
-
-                <div class="col-4 col-lg-4 col-sm-12 mx-1" style="max-width: 400px;">
-                    <div class="card">
-                        <div class="card-body">
-                            <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Shirt Options</button>
-                                    <button class="nav-link" id="nav-avatar-logo-tab" data-bs-toggle="tab" data-bs-target="#nav-avatar-logo" type="button" role="tab" aria-controls="nav-avatar-logo" aria-selected="false" disabled>Avatar/Logo</button>
-                                    <button class="nav-link" id="nav-text-tab" data-bs-toggle="tab" data-bs-target="#nav-text" type="button" role="tab" aria-controls="nav-text" aria-selected="false" disabled>Text</button>
-                                </div>
-                                <div class="text-center centered my-2" align="" id="imageeditor" style="display:none">
-                                    <div class="my-2">
-                                        <h6 class="card-subtitle mb-2 text-muted"> Object Options </h6>
-                                        <div class="btn-group">
-                                            <button class="btn btn-outline-dark" id="bring-to-front" title="Bring to Front"> <i class="bi bi-arrow-up-short"></i> </button>
-                                            <button class="btn btn-outline-dark" id="send-to-back" title="Send to Back"> <i class="bi bi-arrow-down-short"></i> </button>
-                                            <!-- <button id="flip" type="button" class="btn btn-outline-dark" title="Show Back View"> <i class="bi bi-arrow-left-right"></i> </button> -->
-                                            <button id="remove-selected" class="btn btn-outline-dark" title="Delete selected item"> <i class="bi bi-trash"></i> </button>
-                                        </div>
-                                    </div>
-                                </div>	
-                            </nav>
-
-                            <!-- Button trigger modal -->
-                                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal">
-                                Open Modal
-                                </button> -->
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="imageModalLabel">Choose an Option</h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="d-flex justify-content-around">
-                                        <img src="./designer/img/men.png" alt="Option 1" class="img-fluid image-option" style="max-width: 45%; height: auto;">
-                                        <img src="./designer/img/women.png" alt="Option 2" class="img-fluid image-option" style="max-width: 45%; height: auto;">
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-
-                                <!-- Custom CSS -->
-                                <style>
-                                    .image-option {
-                                    transition: transform 0.3s ease, box-shadow 0.3s ease;
-                                    cursor: pointer;
-                                    }
-                                    .image-option:hover {
-                                    transform: scale(1.05);
-                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                                    }
-                                </style>
-
-                                <!-- JavaScript -->
-                                <script>
-                                    document.querySelectorAll('.image-option').forEach(image => {
-                                        image.addEventListener('click', function() {
-                                            console.log(this.alt + ' was clicked');
-                                            var myModal = bootstrap.Modal.getInstance(document.getElementById('imageModal'));
-                                            myModal.hide();
-                                        });
-                                    });
-                                </script>
-
-
-                            <div class="tab-content my-3" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                                    <div class="card" >
-                                        <div class="card-body">
-                                            <h6 class="card-subtitle mb-2 text-muted">Shirt Styles</h6>
-                                            <select id="tshirttype" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <div class="col-md-6">
+                                            <input style="background-color: lightgrey;" type="hidden" class="form-control" id="shirt_selected" name="shirt_selected" readonly value="Short Sleeve Shirts">
+                                            <label for="tshirttype">Shirt Styles:</label>
+                                            <select id="tshirttype" class="form-select form-select" aria-label=".form-select example">
                                                 <option value="./designer/img/crew_front.png" >Short Sleeve Shirts</option>
                                                 <option value="./designer/img/polo2_front.png">Polo Shirts</option>                                        
                                                 <option value="./designer/img/mens_longsleeve_front.png">Long Sleeve Shirts</option>                                        
@@ -345,133 +292,210 @@
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
-                                    </div>
 
-                                    <div class="card">
-                                        <div class="card-body" id="colorPallete">
-                                            <h6 class="card-subtitle mb-2 text-muted">Shirt Color</h6>
-                                            <ul class="nav">
-                                                <li class="color-preview" title="White" style="background-color:#ffffff;"></li>
-                                                <li class="color-preview" title="Dark Heather" style="background-color:#616161;"></li>
-                                                <li class="color-preview" title="Gray" style="background-color:#f0f0f0;"></li>
-                                                <li class="color-preview" title="Charcoal" style="background-color:#5b5b5b;"></li>
-                                                <li class="color-preview" title="Black" style="background-color:#222222;"></li>
-                                                <li class="color-preview" title="Heather Orange" style="background-color:#fc8d74;"></li>
-                                                <li class="color-preview" title="Heather Dark Chocolate" style="background-color:#432d26;"></li>
-                                                <li class="color-preview" title="Salmon" style="background-color:#eead91;"></li>
-                                                <li class="color-preview" title="Chesnut" style="background-color:#806355;"></li>
-                                                <li class="color-preview" title="Dark Chocolate" style="background-color:#382d21;"></li>
-                                                <li class="color-preview" title="Citrus Yellow" style="background-color:#faef93;"></li>
-                                                <li class="color-preview" title="Avocado" style="background-color:#aeba5e;"></li>
-                                                <li class="color-preview" title="Kiwi" style="background-color:#8aa140;"></li>
-                                                <li class="color-preview" title="Irish Green" style="background-color:#1f6522;"></li>
-                                                <li class="color-preview" title="Scrub Green" style="background-color:#13afa2;"></li>
-                                                <li class="color-preview" title="Teal Ice" style="background-color:#b8d5d7;"></li>
-                                                <li class="color-preview" title="Heather Sapphire" style="background-color:#15aeda;"></li>
-                                                <li class="color-preview" title="Sky" style="background-color:#a5def8;"></li>
-                                                <li class="color-preview" title="Antique Sapphire" style="background-color:#0f77c0;"></li>
-                                                <li class="color-preview" title="Heather Navy" style="background-color:#3469b7;"></li>							
-                                                <li class="color-preview" title="Cherry Red" style="background-color:#c50404;"></li>
-                                            </ul>
+                                        <div class="col-md-6">
+                                            <label for="selected_size">Size:</label>
+                                            <select class="form-select" name="selected_size" id="selected_size">
+                                                <option value="xs">Extra Small</option>
+                                                <option value="s">Small</option>
+                                                <option value="m">Medium</option>
+                                                <option value="l">Large</option>
+                                                <option value="xl">Extra Large</option>
+                                                <option value="xxl">2 Extra Large</option>
+                                            </select>
+                                            <!-- <input style="background-color: lightgrey;"  type="hidden" class="form-control" id="selected_price" name="price" readonly required> -->
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="my-2"  id="colorPallete">
+                                                <label for="">Shirt Color:</label>
+                                                <ul class="nav">
+                                                    <li class="color-preview" title="White" style="background-color:#ffffff;"></li>
+                                                    <li class="color-preview" title="Dark Heather" style="background-color:#616161;"></li>
+                                                    <li class="color-preview" title="Gray" style="background-color:#f0f0f0;"></li>
+                                                    <li class="color-preview" title="Charcoal" style="background-color:#5b5b5b;"></li>
+                                                    <li class="color-preview" title="Black" style="background-color:#222222;"></li>
+                                                    <li class="color-preview" title="Heather Orange" style="background-color:#fc8d74;"></li>
+                                                    <li class="color-preview" title="Heather Dark Chocolate" style="background-color:#432d26;"></li>
+                                                    <li class="color-preview" title="Salmon" style="background-color:#eead91;"></li>
+                                                    <li class="color-preview" title="Chesnut" style="background-color:#806355;"></li>
+                                                    <li class="color-preview" title="Dark Chocolate" style="background-color:#382d21;"></li>
+                                                    <li class="color-preview" title="Citrus Yellow" style="background-color:#faef93;"></li>
+                                                    <li class="color-preview" title="Avocado" style="background-color:#aeba5e;"></li>
+                                                    <li class="color-preview" title="Kiwi" style="background-color:#8aa140;"></li>
+                                                    <li class="color-preview" title="Irish Green" style="background-color:#1f6522;"></li>
+                                                    <li class="color-preview" title="Scrub Green" style="background-color:#13afa2;"></li>
+                                                    <li class="color-preview" title="Teal Ice" style="background-color:#b8d5d7;"></li>
+                                                    <li class="color-preview" title="Heather Sapphire" style="background-color:#15aeda;"></li>
+                                                    <li class="color-preview" title="Sky" style="background-color:#a5def8;"></li>
+                                                    <li class="color-preview" title="Antique Sapphire" style="background-color:#0f77c0;"></li>
+                                                    <li class="color-preview" title="Heather Navy" style="background-color:#3469b7;"></li>							
+                                                    <li class="color-preview" title="Cherry Red" style="background-color:#c50404;"></li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="nav-avatar-logo" role="tabpanel" aria-labelledby="nav-avatar-logo-tab" tabindex="0">
-                                    <div align="center" class="card" style="min-height: 32px;">
-                                        <div class="card-body">
-                                           	
-                                            
-                                            <div>
-                                                <?php require_once("./designer/fileupload.php") ?>
-                                                <input type="file" id="imageInput" accept="image/*" multiple>
-                                            </div>
-                                            <hr>
-                                            
-                                            <div class="card" style=" height: 500px;  overflow: auto;  width: 100%;  box-sizing: border-box; overflow-x: hidden;">
-                                                <div class="card-body">
-                                                    
-                                                    <div id="avatarlist" >
-                                                        <?php include_once("./designer/stock-avatar-list.php") ?>
-                                                    </div>	
-                                                    
-                                                </div>
-                                            </div>
+                               
+                                <div class="form-action mb-1">
+                                    <div class="container">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Option</th>
+                                                    <th scope="col">Checkbox</th>
+                                                    <th scope="col">Options</th>
+                                                    <th scope="col">Size</th>
+                                                    <th scope="col">Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Avatar/Logo:</td>
+                                                    <td>
+                                                        <input class="form-check-input" type="checkbox" id="avatar_logo_checkbox" name="avatar_logo_checkbox">
+                                                    </td>
+                                                    <td >
+                                                        <button type="button" class="btn btn-outline-dark" id="avatarLogoButton" data-bs-toggle="modal" data-bs-target="#avatalLogoModal" style="display: none;">
+                                                            <i class="bi bi-person-circle"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td >
+                                                        <div id="avatarSizeTD" style="display: none;">
+                                                            <label for="prices_by_sizes_avatar_logo">Prices By Sizes:</label>
+                                                            <select class="form-select" name="avatar_sizing" id="prices_by_sizes_avatar_logo"> </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="avatarLogoPrice">250</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Text:</td>
+                                                    <td>
+                                                        <input class="form-check-input" type="checkbox" id="text_checkbox" name="text_checkbox">
+                                                    </td>
+                                                    <td >
+                                                        <button type="button" class="btn btn-outline-dark" id="textButton" data-bs-toggle="modal" data-bs-target="#textModal" style="display: none;">
+                                                            <i class="bi bi-fonts"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <div id="textSizeTD" style="display: none;">
+                                                            <label for="prices_by_sizes_text">Prices By Sizes:</label>
+                                                            <select class="form-select" name="text_sizing" id="prices_by_sizes_text"> </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="textPrice">250</div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                                            <!-- <input class="span2 form-control" id="text-string" type="text" placeholder="Add text here...">
-                                            <button id="add-text" class="btn" title="Add text"><i class="bi bi-send"></i></i></button>	   -->
-                                        </div>												
-                                    </div>	
                                 </div>
-                                <div class="tab-pane fade" id="nav-text" role="tabpanel" aria-labelledby="nav-text-tab" tabindex="0">
-                                    <div align="center" class="card" style="min-height: 32px;">
-                                        <div class="card-body">
-                                            <h6 class="card-subtitle mb-2 text-muted"> Font Options </h6>
+                                
+                                <div class="form-action mb-1">
+                                    <div class="row">
+                                        
+                                      
 
-                                            <div class="btn-group inline pull-left mb-2 " id="texteditor" style="display:none">	
-                                                <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                                                    <div class="btn-group" role="group">
-                                                        <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> Font Style </button>
-                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X">
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Arial');" class="Arial">Arial</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Helvetica');" class="Helvetica">Helvetica</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Myriad Pro');" class="MyriadPro">Myriad Pro</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Delicious');" class="Delicious">Delicious</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Verdana');" class="Verdana">Verdana</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Georgia');" class="Georgia">Georgia</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Courier');" class="Courier">Courier</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Comic Sans MS');" class="ComicSansMS">Comic Sans MS</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Impact');" class="Impact">Impact</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Monaco');" class="Monaco">Monaco</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Optima');" class="Optima">Optima</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Hoefler Text');" class="Hoefler Text">Hoefler Text</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Plaster');" class="Plaster">Plaster</li>
-                                                            <li style="cursor:pointer" tabindex="-1" href="#" onclick="setFont('Engagement');" class="Engagement">Engagement</li>
-                                                        </ul>
-                                                    </div>
-                                                    <button id="text-bold" type="button" class="btn btn-outline-dark">
-                                                        <img src="./designer/img/font_bold.png" height="" width="">
-                                                    </button>
-                                                    <button id="text-italic" type="button" class="btn btn-outline-dark">
-                                                        <img src="./designer/img/font_italic.png" height="" width="">
-                                                    </button>
-                                                    <button id="text-underline" type="button" class="btn btn-outline-dark">
-                                                        <img src="./designer/img/font_underline.png">
-                                                    </button>
-                                                    <button id="text-strike" type="button" class="btn btn-outline-dark">
-                                                        <img src="./designer/img/font_strikethrough.png" height="" width="">
-                                                    </button>
+                                        <div class="col-md-6">
+                                            <label for="pricePerPiece">Price per piece</label>
+                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="pricePerPiece" name="pricePerPiece" value="500" readonly required>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="estimatedPrice">Min. Estimated Price</label>
+                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="estimatedPrice" name="estimatedPrice" value="500" readonly required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="count" class="mr-2">Status:</label>
+                                            <input style="background-color: lightgrey;" type="text"  class="form-control" value="Pending" disabled>
                                                     
-                                                    
-                                                </div>		
-                                                
-                                                <h6 class="card-subtitle my-3  text-muted"> Font Color Options </h6>
-                                                <div class="btn-group mb-2">
-                                                    <a class="btn btn-outline-dark" href="#" rel="tooltip" data-placement="top" data-original-title="Font Color">
-                                                        <input type="hidden" id="text-fontcolor" class="color-picker" size="7" value="#000000">
-                                                    </a>
-                                                    <a class="btn btn-outline-dark" href="#" rel="tooltip" data-placement="top" data-original-title="Font Border Color">
-                                                        <input type="hidden" id="text-strokecolor" class="color-picker" size="7" value="#000000">
-                                                    </a>									      
-                                                </div>
-                                            </div>		
-                                            
-                                            <div class="input-group mb-3">
-                                                <input id="text-string" type="text" class="form-control" placeholder="Add text here..." aria-label="Add text here..." aria-describedby="button-addon2">
-                                                <button id="add-text" class="btn btn-outline-secondary" title="Add text"><i class="bi bi-send"></i></button>	  
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="count" class="mr-2">Count:</label>
+                                            <div class="d-flex align-items-center">
+                                                <button type="button" class="btn btn-sm btn-outline-dark" onclick="decrement()">-</button>
+                                                <input class="form-control mx-2" id="count" name="count" min="1" style="width: 60px;" value="1" type="number" readonly>
+                                                <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment()">+</button>
                                             </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <table class="table">
+                                    <tr>
+
+                                    </tr>
+                                   
+                                </table>	
+                                <input type="hidden" name="customize-page-submit" value="true">
+                                <input type="hidden" name="customer_id" value="<?=$_SESSION['loggedInUser']['id']?>">
+                            </form>
+                        </p>
+
+                        <div class="row">
+                            <div class="col-12">
+                                 <p style="color: red;"><strong>NOTE:</strong> <em>After submitting your order, please wait for admin approval.</em></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-large btn-block btn-success" name="addToTheBag" id="addToTheBag">Add to Cart</button>
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                <button type="button" class="btn btn-large btn-block btn-danger" name="discard" id="discard">Discard</button>
+                            </div>
+                        </div>
 
 
-                                            <!-- <input class="span2 form-control" id="text-string" type="text" placeholder="Add text here...">
-                                            <button id="add-text" class="btn" title="Add text"><i class="bi bi-send"></i></i></button>	   -->
-                                        </div>												
-                                    </div>	
+                        
+                        </div>
+                    </div>	
+                </div>
+
+                <div class="col-6 col-lg-6 col-sm-12  mx-1" style="min-width: 550px; max-width: 600px; height: 700px; background-color: rgb(255, 255, 255);">
+                    <div class="card" style="width: 550px" >
+                        <div class="card-body">
+                            
+                            <div class="text-center centered my-2" align=""  >
+                                <div class="my-2">
+                                    <div class="btn-group">
+                                        <div>
+                                            <button id="flipback" type="button" class="btn btn-outline-dark me-1" title="Rotate View">
+                                                <i class="bi bi-arrow-left-right"></i>
+                                            </button>
+                                        </div>
+                                        <div id="imageeditor" style="display: none;">
+                                            <button class="btn btn-outline-dark" id="bring-to-front" title="Bring to Front"> <i class="bi bi-arrow-up-short"></i> </button>
+                                            <button class="btn btn-outline-dark" id="send-to-back" title="Send to Back"> <i class="bi bi-arrow-down-short"></i> </button>
+                                            <!-- <button id="flip" type="button" class="btn btn-outline-dark" title="Show Back View"> <i class="bi bi-arrow-left-right"></i> </button> -->
+                                            <button id="remove-selected" class="btn btn-outline-dark" title="Delete selected item"> <i class="bi bi-trash"></i> </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>	
+                            <!-- <button id="removeAllObjectsButton">Remove All Objects</button>
+                            <button id="removeAllImagesButton">Remove All Images</button>
+                            <button id="removeAllTextButton">Remove All Text</button> -->
+
+                            <div id="shirtDiv" class="page" style="width: 510px; position: relative; background-color: rgb(255, 255, 255);">
+                                <img name="tshirtview" id="tshirtFacing" src="./designer/img/crew_front.png" style="width: 510px; ">
+                                <!-- <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 300px;height: 400px;">					 -->
+                                <div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 200px;height: 400px;">					
+                                    <canvas id="tcanvas" width=200 height="400" class="hover" style="-webkit-user-select: none;"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                
+                </div>
             </div>
         </section>
 
@@ -509,8 +533,10 @@
             }
 
             function updateTshirtSelection() {
-                    let input = document.getElementById('selected_price');
-                    input.value = null;
+		            document.getElementById("shirtDiv").style.backgroundColor = "#ffffff";		   
+
+                    // let input = document.getElementById('selected_price');
+                    // input.value = null;
 
                     const selectedText = $("#tshirttype").find('option:selected').text();
                     const colorPallete = $('#colorPallete');
@@ -544,17 +570,21 @@
                 }
 
                 function estimatePrice(){   
-                    let prices_by_sizes = document.getElementById('prices_by_sizes').value;
+                    let avatarLogoPrice = document.getElementById('avatarLogoPrice').textContent;
+                    let textPrice = document.getElementById('textPrice').textContent;
                     let shirt_selected = document.getElementById('shirt_selected').value;
                     let selected_size = document.getElementById('selected_size').value;
-                    let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == prices_by_sizes)};
-
-                    const selected_price = $("#selected_price").val();
+                    let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
+                    // const selected_price = $("#selected_price").val();
                     const count = $("#count").val();
-                    console.log(`data.price: ${data.price}` )
-                    console.log(`count: ${count}` )
+                    let netPrice = 0;
 
-                    $("#estimatedPrice").val(eval(data.price * count))
+                    netPrice = eval(+avatarLogoPrice + +textPrice);
+
+
+                    $("#pricePerPiece").val(eval( (+netPrice )  ));
+                    $("#estimatedPrice").val(eval( (+netPrice * count )  ));
+
                 }
 
 
@@ -579,8 +609,8 @@
                 }, 1000);
 
 
-                var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
-                myModal.show();
+                // var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+                // myModal.show();
                 });
 
                 document.querySelectorAll('.image-option').forEach(image => {
@@ -906,14 +936,14 @@
                 // testConvert()
                 // return;
 
-                let selected_price = document.getElementById('selected_price');
+                // let selected_price = document.getElementById('selected_price');
                 let count = document.getElementById('count');
 
-                if(!selected_price.value){
-                    // If form validation fails, display an error message or handle it as needed
-                    alert("Please fill out all required fields correctly.");
-                    return;
-                }
+                // if(!selected_price.value){
+                //     // If form validation fails, display an error message or handle it as needed
+                //     alert("Please fill out all required fields correctly.");
+                //     return;
+                // }
 
                 if(count.value < 1){
                     // If form validation fails, display an error message or handle it as needed
@@ -1071,6 +1101,18 @@
         let div = document.getElementById('avatarlist');
         let child = div.getElementsByClassName('column')
 
+        removeAllImages()
+
+        function inchesToPixels(inches) {
+            const dpi = 20; // Change this based on your canvas DPI\
+            console.log( inches * dpi );
+            return inches * dpi;
+        }
+
+
+        let fixedWidth = inchesToPixels(2);
+        let fixedHeight = inchesToPixels(2); 
+
         for (let i = 0; i < files.length; i++) {
 
             let img = document.createElement('img');
@@ -1095,29 +1137,15 @@
 		            angle: 0,
 		            padding: 10,
 		            cornersize: 10,
-	      	  		hasRotatingPoint:true
+	      	  		hasRotatingPoint:true,
+					selectable: true, // make sure it's selectable
+					resizable: false,   // disable resizing
 		          });
-		          image.scale(getRandomNum(0.1, 0.25)).setCoords();
-		          canvas.add(image);
+                  image.scaleToWidth(fixedWidth);
+					image.scaleToHeight(fixedHeight);
+					// image.scale(getRandomNum(0.1, 0.25)).setCoords();
+					canvas.add(image);
 		        });
-                
-                // fabric.Image.fromURL(el.src, function(image) {
-                //     image.set({
-                //         left: left,
-                //         top: top,
-                //         // angle: 0,
-                //         // padding: 10,
-                //         // cornersize: 10,
-                //         hasRotatingPoint: true
-                //     });
-
-                //     // Set custom scale
-                //     // var minScale = 0.1; // Minimum scale value
-                //     // image.scaleX = minScale;
-                //     // image.scaleY = minScale;
-                //     canvas.add(image);
-                //     // canvas.renderAll();
-                // });
 
             })
 
@@ -1158,26 +1186,50 @@
             }
         });
 
-        document.getElementById('prices_by_sizes').addEventListener('change', function() {
-            let input = document.getElementById('selected_price');
+        document.getElementById('prices_by_sizes_avatar_logo').addEventListener('change', function() {
+            // let input = document.getElementById('selected_price');
+            // input.value = data.price
             var selectedValue = this.value;
 
             let shirt_selected = document.getElementById('shirt_selected').value;
             let selected_size = document.getElementById('selected_size').value;
             let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
-            input.value = data.price
-            console.log('prices_by_sizes data:', data);
+            console.log('prices_by_sizes_avatar_logo data:', data);
+            let avatarLogoPrice = document.getElementById('avatarLogoPrice')
+            avatarLogoPrice.textContent = data.price
+            estimatePrice()
+
+        });
+
+        document.getElementById('prices_by_sizes_text').addEventListener('change', function() {
+            // let input = document.getElementById('selected_price');
+            // input.value = data.price
+            var selectedValue = this.value;
+
+            let shirt_selected = document.getElementById('shirt_selected').value;
+            let selected_size = document.getElementById('selected_size').value;
+            let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
+            console.log('prices_by_sizes_text data:', data);
+            let textPrice = document.getElementById('textPrice')
+            textPrice.textContent = data.price
             estimatePrice()
 
         });
 
         function updateDimensions(size) {
-            var shirtDimensionsSelect = document.getElementById('prices_by_sizes');
+            var shirtDimensionsSelectAvatar = document.getElementById('prices_by_sizes_avatar_logo');
             let shirt_selected = document.getElementById('shirt_selected').value;
 
 
             // Clear all existing options in the dimensions select
-            shirtDimensionsSelect.innerHTML = '';
+            shirtDimensionsSelectAvatar.innerHTML = '';
+
+            var shirtDimensionsSelectText = document.getElementById('prices_by_sizes_text');
+
+
+            // Clear all existing options in the dimensions select
+            shirtDimensionsSelectText.innerHTML = '';
+
 
             // Fetch the dimensions data for the selected size
             var sizeData = shirtOptions[shirt_selected][size];
@@ -1188,14 +1240,21 @@
                     var option = document.createElement('option');
                     option.value = item.dimension;
                     option.text = item.dimension;
-                    shirtDimensionsSelect.appendChild(option);
+                    shirtDimensionsSelectText.appendChild(option);
+                });
+
+                sizeData.forEach(item => {
+                    var option = document.createElement('option');
+                    option.value = item.dimension;
+                    option.text = item.dimension;
+                    shirtDimensionsSelectAvatar.appendChild(option);
                 });
             }
         }
 
         document.getElementById('selected_size').addEventListener('change', function() {
-            let input = document.getElementById('selected_price');
-            input.value = null;
+            // let input = document.getElementById('selected_price');
+            // input.value = null;
             var selectedSize = this.value;
             updateDimensions(selectedSize);
         });
@@ -1210,24 +1269,60 @@
 
         console.log(shirtOptions);
     </script>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const avatarLogoCheckbox = document.getElementById('avatar_logo_checkbox');
-    const textCheckbox = document.getElementById('text_checkbox');
-    const avatarLogoTab = document.getElementById('nav-avatar-logo-tab');
-    const textTab = document.getElementById('nav-text-tab');
-    
-    // Function to toggle the disabled state of tabs
-    function toggleTabs() {
-        avatarLogoTab.disabled = !avatarLogoCheckbox.checked;
-        textTab.disabled = !textCheckbox.checked;
-    }
+  $(document).ready(function() {
+    $("#draggableModal").on('shown.bs.modal', function() {
+      $(".modal-dialog").draggable({
+        handle: ".modal-header",
+        // containment: "window"
+      });
+    });
 
-    // Event listeners for checkboxes
-    avatarLogoCheckbox.addEventListener('change', toggleTabs);
-    textCheckbox.addEventListener('change', toggleTabs);
+    $("#textModal").on('shown.bs.modal', function() {
+      $(".modal-dialog").draggable({
+        handle: ".modal-header",
+        // containment: "window"
+      });
+    });
+  });
 
-    // Initial toggle based on the current state of checkboxes
-    toggleTabs();
-});
+</script>
+
+<script>
+    document.getElementById('avatar_logo_checkbox').addEventListener('change', function() {
+        var avatarLogoButton = document.getElementById('avatarLogoButton');
+        var avatarSizeTD = document.getElementById('avatarSizeTD');
+
+
+        if (this.checked) {
+            avatarLogoButton.style.display = 'inline-block';
+            avatarSizeTD.style.display = 'inline-block';
+
+
+        } else {
+            avatarLogoButton.style.display = 'none';
+            avatarSizeTD.style.display = 'none';
+
+        }
+    });
+
+    document.getElementById('text_checkbox').addEventListener('change', function() {
+        var textButton = document.getElementById('textButton');
+        var textSizeTD = document.getElementById('textSizeTD');
+        if (this.checked) {
+            textButton.style.display = 'inline-block';
+            textSizeTD.style.display = 'inline-block';
+        } else {
+            textButton.style.display = 'none';
+            textSizeTD.style.display = 'none';
+        }
+    });
+    document.getElementById('discard').addEventListener('click', function() {
+        alert("Order form will reset.")
+        location.reload();
+    });
+
+
+
 </script>

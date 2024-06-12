@@ -32,12 +32,13 @@
                             <div class="card border-dark mt-3" style="">
                                 <div class="card-header">Custom Order #: <?=$item['id'] ?></div>
                                 <div class="card-body text-dark">
-                                    <div class="card-text h6 lead">Status: <span class="h6"><?=$item['status'] ? item['status'] : "To be review by admin" ?></span></div>
-                                    <div class="card-text h6 lead">Total Price: <span class="h6"><?=$item['total_price'] ? '₱ '. $item['total_price'] : "To be review by admin" ?></span></div>
+                                    <div class="card-text h6 lead">Status: <span class="h6"><?=$item['status'] ? item['status'] : "TO BE REVIEWED BY ADMIN" ?></span></div>
+                                    <div class="card-text h6 lead">Total Price: <span class="h6"><?=$item['total_price'] ? '₱ '. $item['total_price'] : "TO BE REVIEWED BY ADMIN" ?></span></div>
                                     <p class="card-text h6 lead">Customize By: <span class="h6"><?= $json_data->customize_by ?></span></p>
                                     <p class="card-text h6 lead">Size: </p>
                                             <?php foreach($json_data->sizes_ordered as $size => $quantity): ?>
                                                 <?php $sizeList = [
+                                                    "xs" => "EXTRA SMALL",
                                                     "s" => "SMALL",
                                                     "m" => "MEDIUM",
                                                     "l" => "LARGE",

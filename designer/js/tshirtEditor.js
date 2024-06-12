@@ -53,8 +53,54 @@ let line4;
 		  //e.target.setFill('green');
 		  //canvas.renderAll();
 		});
+
+		function removeAllObjects() {
+			console.log("Removed All ");
+			canvas.clear();
+		}
+		
+		function removeAllImages() {
+			console.log("Removed All Images");
+			canvas.getObjects().forEach(function(o) {
+				if (o.type === 'image') {
+					canvas.remove(o);
+				}
+			});
+		}
+		
+		function removeAllText() {
+			console.log("Removed All Text");
+			canvas.getObjects().forEach(function(o) {
+				if (o.type === 'text' || o.type === 'i-text' || o.type === 'textbox') { // Cover different text types
+					canvas.remove(o);
+				}
+			});
+		}
+
+		$("#removeAllObjectsButton").click(function(e){
+			removeAllObjects();
+		})
+		$("#removeAllImagesButton").click(function(e){
+			removeAllImages();
+		})
+		$("#removeAllTextButton").click(function(e){
+			removeAllText();
+		})
+		
 		 		 	 
 		document.getElementById('add-text').onclick = function() {
+
+			removeAllText();
+			function inchesToPixels(inches) {
+				const dpi = 20; // Change this based on your canvas DPI\
+				console.log( inches * dpi );
+				return inches * dpi;
+			}
+
+			let fixedWidth = inchesToPixels(3);
+			let fixedHeight = inchesToPixels(3); 
+
+
 			let text = $("#text-string").val();
 		    let textSample = new fabric.Text(text, {
 		      left: fabric.util.getRandomInt(0, 200),
@@ -65,8 +111,12 @@ let line4;
 		      scaleX: 0.5,
 		      scaleY: 0.5,
 		      fontWeight: '',
-	  		  hasRotatingPoint:true
+	  		  hasRotatingPoint:true,
+				lockScalingX: true,
+				lockScalingY: true,
 		    });		    
+			textSample.scaleToWidth(fixedWidth);
+			textSample.scaleToHeight(fixedHeight);
             canvas.add(textSample);	
             canvas.item(canvas.item.length-1).hasRotatingPoint = true;    
             $("#texteditor").css('display', 'block');
@@ -80,27 +130,43 @@ let line4;
 		      }
 	  	});
 	  	$(".img-polaroid").click(function(e){
+
+			removeAllImages()
+
+			function inchesToPixels(inches) {
+				const dpi = 20; // Change this based on your canvas DPI\
+				console.log( inches * dpi );
+				return inches * dpi;
+			}
+
+			let fixedWidth = inchesToPixels(3);
+			let fixedHeight = inchesToPixels(3); 
+
 	  		let el = e.target;
-	  		/*temp code*/
 	  		let offset = 50;
 	        let left = fabric.util.getRandomInt(0 + offset, 200 - offset);
 	        let top = fabric.util.getRandomInt(0 + offset, 400 - offset);
 	        let angle = fabric.util.getRandomInt(-20, 40);
 	        let width = fabric.util.getRandomInt(30, 50);
 	        let opacity = (function(min, max){ return Math.random() * (max - min) + min; })(0.5, 1);
+			const imgProperties = {
+				left: left,
+				top: top,
+				angle: 0,
+					// hasRotatingPoint:true,
+				selectable: true, // make sure it's selectable
+				lockScalingX: true,
+				lockScalingY: true,
+			  }
 	        
 	  		fabric.Image.fromURL(el.src, function(image) {
-		          image.set({
-		            left: left,
-		            top: top,
-		            angle: 0,
-		            padding: 10,
-		            cornersize: 10,
-	      	  		hasRotatingPoint:true
-		          });
-		          image.scale(getRandomNum(0.1, 0.25)).setCoords();
-		          canvas.add(image);
-		        });
+				image.set(imgProperties);
+				image.scaleToWidth(fixedWidth);
+				image.scaleToHeight(fixedHeight);
+				// image.scale(getRandomNum(0.1, 0.25)).setCoords();
+				// canvas.item(0).lockScalingX = canvas.item(0).lockScalingY = true;
+				canvas.add(image);
+			});
 	  	});	  		  
 	  document.getElementById('remove-selected').onclick = function() {		  
 		    let activeObject = canvas.getActiveObject(),

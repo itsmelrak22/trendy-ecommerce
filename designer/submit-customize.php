@@ -23,10 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
 
     try {
         $customize_by = $_POST['customize_by'];
-        $sizing = $_POST['sizing'];
-        $price = $_POST['price'];
+        // $sizing = $_POST['sizing'];
+        $avatar_sizing = $_POST['avatar_sizing'];
+        $text_sizing = $_POST['text_sizing'];
+        $estimatedPrice = $_POST['estimatedPrice'];
         $shirt_selected = $_POST['shirt_selected'];
-        $price = $_POST['price'];
         $sizes = [$_POST['selected_size'] => $_POST['count']];
 
         $objectDatas = json_decode($_POST['objectDatas']);
@@ -36,10 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
     
         $data = array(
             'customize_by' => $customize_by,
-            'price' => $price,
+            'estimatedPrice' => $estimatedPrice,
             'shirt_selected' => $shirt_selected,
-            'price' => $price,
-            'sizing' => $sizing,
+            // 'sizing' => $sizing,
+            'avatar_sizing' => $avatar_sizing,
+            'text_sizing' => $text_sizing,
             'sizes_ordered' => $sizes,
             'front_canvas_image' => '',
             'front_canvas_image_objects' => [],

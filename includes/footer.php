@@ -9,9 +9,9 @@
         </style>
         
         <!-- Footer-->
-        <footer class="py-5 bg-dark footer">
+        <!-- <footer class="py-5 bg-dark footer">
             <div class="container"><p class="m-0 text-center text-white">TRENDY THREADS APPAREL BY LOVE J'S STORE</p></div>
-        </footer>
+        </footer> -->
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
