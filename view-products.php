@@ -257,7 +257,9 @@
                                 <input type="hidden" name="shipping_fee" value="75">
 
                                 <?php  if( $products->category_name == "CUSTOMIZED POLO SHIRT/UNIFORM" ){ 
-                                    $_SESSION['viewed-design'] = $products->name;
+                                    $_SESSION['viewed-design'] = $products->color_name;
+                                    $_SESSION['viewed-design-product-id'] = $id;
+                                    $_SESSION['viewed-design-color-id'] = $color_id;
                                     ?>
                                         
                                         <a href="./designer.php" class="btn btn-outline-dark flex-shrink-0" type="button">

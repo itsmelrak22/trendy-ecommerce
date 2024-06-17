@@ -112,6 +112,10 @@
         <script src="https://www.paypal.com/sdk/js?client-id=<?=$paypal_client_id?>&components=<?=$paypal_components?>&currency=<?=$paypal_currency?>&debug=<?=$paypal_debug?>&disable-funding=<?=$paypal_disable_function?>"></script>
 
         <style>
+            body{
+                /* font-family: Verdana, sans-serif; */
+                font-family: Helvetica, sans-serif;
+            }
             .navbar-nav > .nav-item > .active {
                 background-color: #454e57;
                 border-radius: 13%;

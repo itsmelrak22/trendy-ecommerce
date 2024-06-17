@@ -143,7 +143,7 @@ Class Product extends Model {
         $words = explode(' ', $currentProductName);
 
             // Construct the WHERE clause dynamically
-            $whereClause = "P.deleted_at IS NULL AND P.name != '" . $currentProductName . "' AND (";
+            $whereClause = "P.deleted_at IS NULL AND PC.deleted_at IS NULL AND P.name != '" . $currentProductName . "' AND (";
             foreach ($words as $index => $word) {
                 if ($index > 0) {
                     $whereClause .= " OR ";
@@ -164,7 +164,7 @@ Class Product extends Model {
                     PC.id as color_id
                 FROM products AS P
                 LEFT JOIN categories AS C ON P.category_id = C.id
-                LEFT JOIN product_colors AS PC ON P.id = PC.product_id
+                JOIN product_colors AS PC ON P.id = PC.product_id
                 WHERE $whereClause
                 ORDER BY P.created_at DESC
                 LIMIT 8
@@ -199,6 +199,7 @@ Class Product extends Model {
             LEFT JOIN product_colors AS PC ON P.id = PC.product_id
             WHERE P.id = $id
             AND P.deleted_at IS NULL
+            AND PC.deleted_at IS NULL
             ORDER BY P.created_at DESC
         ";
 
@@ -218,6 +219,7 @@ Class Product extends Model {
                 WHERE P.id = $id
                 AND PC.id = $color_id
                 AND P.deleted_at IS NULL
+                AND PC.deleted_at IS NULL
                 ORDER BY P.created_at DESC
             ";
         }
@@ -226,6 +228,53 @@ Class Product extends Model {
         $prodduct = $instance->setQuery($qry)->getFirst();
     
         return $prodduct;
+    }
+    public static function findProductByCategory($category_name, $color_id = 0){
+        $qry = "
+            SELECT 
+                P.*, 
+                C.id as category_id,
+                C.name AS category_name,
+                PC.stock_qty,
+                PC.name as color_name,
+                PC.image,
+                PC.id as color_id,
+                PC.code
+            FROM products AS P
+            LEFT JOIN categories AS C ON P.category_id = C.id
+            JOIN product_colors AS PC ON P.id = PC.product_id
+            WHERE C.name = '$category_name'
+            AND P.deleted_at IS NULL
+            AND PC.deleted_at IS NULL
+            ORDER BY P.created_at DESC
+        ";
+
+        if($color_id){
+            $qry = "
+                SELECT 
+                    P.*, 
+                    C.id as category_id,
+                    C.name AS category_name,
+                    PC.stock_qty,
+                    PC.name as color_name,
+                    PC.image,
+                    PC.id as color_id,
+                    PC.code
+                FROM products AS P
+                LEFT JOIN categories AS C ON P.category_id = C.id
+                JOIN product_colors AS PC ON P.id = PC.product_id
+                WHERE C.name = '$category_name'
+                AND PC.id = $color_id
+                AND P.deleted_at IS NULL
+                AND PC.deleted_at IS NULL
+                ORDER BY P.created_at DESC
+            ";
+        }
+
+        $instance = new self;
+        $product = $instance->setQuery($qry)->getAll();
+    
+        return $product;
     }
     
 

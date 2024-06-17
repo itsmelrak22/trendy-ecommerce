@@ -14,7 +14,7 @@ spl_autoload_register(function ($class) {
 });
 
 // displayDataTest($_POST);
-// displayDataTest($_SESSION);
+// exit();
 
 $customize_order = new CustomizeOrder;
 
@@ -31,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
         $sizes = [$_POST['selected_size'] => $_POST['count']];
 
         $objectDatas = json_decode($_POST['objectDatas']);
+        $checkPersonalizedItems = json_decode($_POST['checkPersonalizedItems']);
+        $checkPersonalizedItemsTotal = $_POST['checkPersonalizedItemsTotal'] ?? 0;
         $frontObjects = $objectDatas->front[0];
         $backObjects = $objectDatas->back[0];
         $timestamp = time();
@@ -128,7 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
     
         // Your data
         // displayDataTest($data);
-
+        $data['checkPersonalizedItems'] = $checkPersonalizedItems;
+        $data['checkPersonalizedItemsTotal'] = $checkPersonalizedItemsTotal;
         $param = [
             "customer_id" => $_SESSION['loggedInUser']['id'],
             "json_data" => json_encode($data),

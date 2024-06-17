@@ -601,7 +601,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if(data == 'DONE!'){
-                        alert("Customization Required sucess, we have sent you an email regarding with your request.");
+                        alert("Your customization request was successful; please wait for admin approval before receiving an email with further details.");
                         window.location = "test.php";
                     }
                     toggleOverlay(false, overlay);

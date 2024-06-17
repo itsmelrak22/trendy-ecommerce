@@ -10,6 +10,8 @@
     $orders = $order->getCustomerCustomOrders();
 
     // displayDataTest($orders[ count($orders) - 1 ]);
+
+
 ?>
 
 <body id="page-top">
@@ -274,94 +276,137 @@
                         </div>
                         
                         <hr>
-                        <div class="input-group" style="
-                                display: flex !important;
-                                justify-content: center !important;
-                            ">
-                            <div class="my-2" style="width: 500px;">
-                                <div class="card border shadow-none">
-                                    <div class="card-header bg-transparent border-bottom">
-                                        <h5 class="font-size-16 mb-0">Order Summary 
-                                        <!-- <span class="float-end">#MN0124</span> -->
-                                        </h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table mb-0" id="updateTable">
-                                                <tbody id="updateTableBody" class="mt-3">
-                                                    
-                                                    <!-- <tr>
-                                                        <td>Shirt Price:&nbsp ₱ </td>
-                                                        <td class="text-end">
-                                                            <input type="text" 
-                                                                        name="shirt_price" 
-                                                                        id="shirt_price" 
-                                                                        class="form-control bg-light border-0 small" 
-                                                                        placeholder="" 
-                                                                        aria-label="" 
-                                                                        aria-describedby="basic-addon2" 
-                                                                        required 
-                                                                        readonly
-                                                                        >
-                                                        </td>
-                                                    </tr> -->
-                                                    <tr>
-                                                        <td>Addtional Fee:&nbsp ₱</td>
-                                                        <td class="text-end">
-                                                            <div class="input-group">
+                        <div class="input-group row" >
+                            <div class="col-6">
+                                <div class="my-2" style="width: 500px;">
+                                    <div class="card border shadow-none">
+                                        <div class="card-header bg-transparent border-bottom">
+                                            <h5 class="font-size-16 mb-0">Order Summary 
+                                            <!-- <span class="float-end">#MN0124</span> -->
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0" id="updateTable">
+                                                    <tbody id="updateTableBody" class="mt-3">
+                                                        
+                                                        <!-- <tr>
+                                                            <td>Shirt Price:&nbsp ₱ </td>
+                                                            <td class="text-end">
                                                                 <input type="text" 
-                                                                        name="additional_fee" 
-                                                                        id="additional_fee" 
-                                                                        class="form-control bg-light border-0 small" 
-                                                                        placeholder="Input Addtional Fee Cost" 
-                                                                        aria-label="Addtional Fee" 
-                                                                        aria-describedby="basic-addon2" 
-                                                                         
-                                                                        >
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Shipping Fee:&nbsp ₱</td>
-                                                        <td class="text-end">
-                                                            <div class="input-group">
-                                                                <input type="text" 
-                                                                        name="shipping_fee" 
-                                                                        id="shipping_fee" 
-                                                                        class="form-control bg-light border-0 small" 
-                                                                        placeholder="Input Shipping Fee Cost" 
-                                                                        aria-label="Shipping Fee" 
-                                                                        aria-describedby="basic-addon2" 
-                                                                        required 
-                                                                        >
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                <tr class="bg-light">
-                                                        <th>Total:&nbsp ₱</th>
-                                                        <td class="text-end">
-                                                            <span class="fw-bold">
-                                                                <div class="input-group">
-                                                                    <input type="number" 
-                                                                            name="total_price" 
-                                                                            id="total_price" 
+                                                                            name="shirt_price" 
+                                                                            id="shirt_price" 
                                                                             class="form-control bg-light border-0 small" 
-                                                                            placeholder="Total Price" 
-                                                                            aria-label="Total Price" 
+                                                                            placeholder="" 
+                                                                            aria-label="" 
                                                                             aria-describedby="basic-addon2" 
                                                                             required 
                                                                             readonly
-                                                                    >
+                                                                            >
+                                                            </td>
+                                                        </tr> -->
+                                                        <tr>
+                                                            <td>Addtional Fee:&nbsp ₱</td>
+                                                            <td class="text-end">
+                                                                <div class="input-group">
+                                                                    <input type="text" 
+                                                                            name="additional_fee" 
+                                                                            id="additional_fee" 
+                                                                            class="form-control bg-light border-0 small" 
+                                                                            placeholder="Input Addtional Fee Cost" 
+                                                                            aria-label="Addtional Fee" 
+                                                                            aria-describedby="basic-addon2" 
+                                                                            
+                                                                            >
                                                                 </div>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Shipping Fee:&nbsp ₱</td>
+                                                            <td class="text-end">
+                                                                <div class="input-group">
+                                                                    <input type="text" 
+                                                                            name="shipping_fee" 
+                                                                            id="shipping_fee" 
+                                                                            class="form-control bg-light border-0 small" 
+                                                                            placeholder="Input Shipping Fee Cost" 
+                                                                            aria-label="Shipping Fee" 
+                                                                            aria-describedby="basic-addon2" 
+                                                                            required 
+                                                                            >
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Personalized Items Total:&nbsp ₱</td>
+                                                            <td class="text-end">
+                                                                <div class="input-group">
+                                                                    <input type="number" 
+                                                                            name="personalized_items_total" 
+                                                                            id="personalized_items_total" 
+                                                                            class="form-control bg-light border-0 small" 
+                                                                            placeholder="0" 
+                                                                            aria-label="Personalized Items Total" 
+                                                                            aria-describedby="basic-addon2" 
+                                                                            required 
+                                                                            readonly
+                                                                            >
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr class="bg-light">
+                                                            <th>Total:&nbsp ₱</th>
+                                                            <td class="text-end">
+                                                                <span class="fw-bold">
+                                                                    <div class="input-group">
+                                                                        <input type="number" 
+                                                                                name="total_price" 
+                                                                                id="total_price" 
+                                                                                class="form-control bg-light border-0 small" 
+                                                                                placeholder="Total Price" 
+                                                                                aria-label="Total Price" 
+                                                                                aria-describedby="basic-addon2" 
+                                                                                required 
+                                                                                readonly
+                                                                        >
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="container mt-4">
+                                    <div class="card border shadow-none">
+                                        <div class="card-header bg-transparent border-bottom">
+                                            <h5 class="font-size-16 mb-0">Personalized Items</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="personalized-items-table" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Item</th>
+                                                            <th>Code</th>
+                                                            <th>Color</th>
+                                                            <th>Price</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- Table rows will be dynamically added here -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -433,12 +478,15 @@
 
 <script>
 
-    function computeTotal(e){
+    function computeTotal(e, input){
         let value = e.target.value;
         let numValue = Number(value);
         let shipping_fee = 0;
         let total = 0;
         let total_price = document.getElementById('total_price'); 
+        let personalized_items_total = document.getElementById('personalized_items_total'); 
+
+        const previous_value = total_price.value;
         total_price.value = total;
 
         // Check if the value is a number and greater than 1
@@ -447,7 +495,7 @@
             e.target.value = '';
             shipping_fee = 0;
             total_price.value = total;
-
+     
             return
         }
 
@@ -463,15 +511,16 @@
             console.log('total', total)
         }
 
-        total_price.value = total;
+        
+        total_price.value = eval(total + +personalized_items_total.value);
 
     }
 
     document.getElementById('shipping_fee').addEventListener('input', function (e) {
-        computeTotal(e)
+        computeTotal(e, 'shipping_fee')
     });
     document.getElementById('additional_fee').addEventListener('input', function (e) {
-        computeTotal(e)
+        computeTotal(e, 'additional_fee')
     });
 
 
@@ -490,10 +539,76 @@
         $('tr.addedSize').remove();
     });
 
+    // Function to create and populate the table
+    function createTable(personalizedItems) {
+        // Get the table body element
+        let tableBody = document.querySelector('#personalized-items-table tbody');
+
+        // Clear existing table rows if any
+        tableBody.innerHTML = '';
+
+        // Loop through the personalizedItems object
+        for (let key in personalizedItems) {
+            if (personalizedItems.hasOwnProperty(key)) {
+                let item = personalizedItems[key];
+
+                // Extract the item name from the key (e.g., "collar", "sleeve right", etc.)
+                let itemName = key.substring(2, key.indexOf('_value')).replace(/_/g, ' ');
+                itemName = itemName.charAt(0).toUpperCase() + itemName.slice(1); // Convert to sentence case
+
+                // Create a new row
+                let row = document.createElement('tr');
+
+                // Create cell for item name
+                let itemCell = document.createElement('td');
+                itemCell.textContent = itemName;
+                row.appendChild(itemCell);
+
+                // Create cell for color code
+                let colorCodeCell = document.createElement('td');
+                colorCodeCell.textContent = item.color;
+                row.appendChild(colorCodeCell);
+
+                // Create cell for color
+                let colorCell = document.createElement('td');
+                colorCell.style.backgroundColor = item.color;
+                row.appendChild(colorCell);
+
+                // Create cell for price
+                let priceCell = document.createElement('td');
+                priceCell.textContent = '₱' + item.price;
+                row.appendChild(priceCell);
+
+                // Append row to the table body
+                tableBody.appendChild(row);
+            }
+        }
+    }
+
+    // Function to remove the table
+    function removeTable() {
+        // Get the table body element
+        let tableBody = document.querySelector('#personalized-items-table tbody');
+
+        // Clear the table body
+        tableBody.innerHTML = '';
+    }
+
     function viewData(cart){
+        removeTable()
+        
         console.log('cart', cart)
         jsonData = JSON.parse(cart.json_data);
         console.log('jsonData', jsonData)
+
+        if(jsonData.checkPersonalizedItems){
+            const checkPersonalizedItems = jsonData.checkPersonalizedItems;
+            console.log('checkPersonalizedItems', checkPersonalizedItems)
+            createTable(checkPersonalizedItems)
+        }
+
+
+
         $('#viewCustomOrder').modal('show');
 
         let id = document.getElementById('id');
@@ -501,6 +616,7 @@
         let email = document.getElementById('email');
         let status = document.getElementById('status');
         let total_price = document.getElementById('total_price');
+        let personalized_items_total = document.getElementById('personalized_items_total');
         let remarks = document.getElementById('remarks');
         let shirt_selected = document.getElementById('shirt_selected');
         // let shirt_price = document.getElementById('shirt_price');
@@ -582,6 +698,9 @@
         }
         if(cart.total_price){
             total_price.value = cart.total_price
+        }
+        if(jsonData.checkPersonalizedItemsTotal){
+            personalized_items_total.value = Number(jsonData.checkPersonalizedItemsTotal)
         }
         if(cart.remarks){
             remarks.value = cart.remarks

@@ -1,46 +1,72 @@
 <?php 
     include_once("./includes/header.php");
 
-    $templateNames = array(
-        "FOREST_NIGHT",
-        "MONOCHROME",
-        "NAVY_NOIR",
-        "SAPPHIRE_SHADOW",
-        "SUN_AND_SHADOW",
-        "FROSTY_AZURE",
-        "HEAVENLY_HAZE",
-        "LEMON_CHIFFON",
-        "MINT_FROST",
-        "SILVER_MIST",
-        "AMBER_AND_JET",
-        "BLUE_ECLIPSE",
-        "COBALT_SHADOW",
-        "EMERALD_SHADOW",
-        "GRAYSCALE",
-        "AZURE_NOIR",
-        "CHARCOAL_BLEND",
-        "GOLD_AND_ONYX",
-        "MIDNIGHT_MOSS",
-        "SAPPHIRE_MIDNIGHT",
-        "AZURE_ABYSS",
-        "CYAN_DUSK",
-        "HAZARD_STRIPE",
-        "JADE_ECLIPSE",
-        "SLATE_TONES",
-        "ASHEN_PALETTE",
-        "BUMBLEBEE",
-        "MIDNIGHT_BLUE",
-        "MIDNIGHT_SKY",
-        "ONYX_AND_OLIVE"
-      );
+    $product = new Product;
+    $product_color = new ProductColor;
+    if( isset($_SESSION['viewed-design-product-id']) || isset($_GET['id'])){
+        
+        if(isset($_GET['id'])){
+            $_SESSION['viewed-design-product-id'] = $_GET['id'];
+            $_SESSION['viewed-design-color-id'] = $_GET['color_id'];
+        }
 
-    if(isset($_SESSION['viewed-design']) && in_array(toUpperSnakeCase($_SESSION['viewed-design']), $templateNames) ){
-        $viewedDesign = toUpperSnakeCase($_SESSION['viewed-design']);
-        unset($_SESSION['viewed-design']);
+        $temp_prod_id = $_SESSION['viewed-design-product-id'];
+        $temp_color_id = $_SESSION['viewed-design-color-id'];
+        $products = $product->findProduct( $temp_prod_id, $temp_color_id );
+        // echo "<pre>";
+        // print_r($products);
+        // echo "</pre>";
+
+        $_SESSION['viewed-design'] = $products->color_name;
+        // echo $_SESSION['viewed-design'];
+        $product_colors = $product_color->getProductColors( $_SESSION['viewed-design-product-id'] );
+
+        unset($_SESSION['viewed-design-product-id']);
     }
 
-    function toUpperSnakeCase($string) {
-        return strtoupper(str_replace(' ', '_', $string));
+    $AllTemplateproducts = $product->findProductByCategory("CUSTOMIZED POLO SHIRT/UNIFORM");
+    // echo "<pre>";
+    //     print_r($AllTemplateproducts);
+    // echo "</pre>";
+    function getProductName($item){
+        return $item['name'];
+    }
+
+    $templateNames = [];
+
+    foreach ($AllTemplateproducts as $item) {
+        $name = $item['name'];
+        if (!isset($templateNames[$name])) {
+            $templateNames[$name] = [];
+        }
+
+        $templateNames[$name][] = [
+            'color_name' => $item['color_name'],
+            'code' => $item['code'],
+            'id' => $item['id'],
+            'color_id' => $item['color_id'],
+        ];
+    }
+    // echo "<pre>";
+    //     print_r($templateNames);
+    // echo "</pre>";
+
+
+    if (isset($_SESSION['viewed-design'])) {
+    $viewedDesign = toUpperCaseString($_SESSION['viewed-design']);
+    foreach ($templateNames as $value) {
+        foreach ($value as $template) {
+            if (toUpperCaseString($template['color_name']) == $viewedDesign) {
+                $viewedDesign = toUpperCaseString($template['color_name']);
+                unset($_SESSION['viewed-design']);
+                break;
+            }
+        }
+    }
+}
+
+    function toUpperCaseString($string) {
+        return strtoupper($string);
     }
 
 
@@ -50,9 +76,6 @@
             window.location = './';
         </script>";
     }
-
-
-      
 
 ?>
 
@@ -64,6 +87,9 @@
 	<script type="text/javascript" src="./designer/js/fabric.js"></script>
     <!-- <script src="https://unpkg.com/fabric@5.3.0/dist/fabric.min.js"></script> -->
 	 <style type="text/css">
+            .active-color-selected{
+                border: 3px solid red !important;
+            }
 		 .footer {
 			padding: 70px 0;
 			margin-top: 70px;
@@ -267,8 +293,8 @@
                                         <div class="col-md-6">
                                             <label for="customize_by">Customization Method:</label>
                                             <select class="form-select" name="customize_by" id="customize_by">
-                                                <option value="embroidery">Embroidery</option>
-                                                <option value="print">Print</option>
+                                                <option value="embroidered">Embroidered</option>
+                                                <option value="printed">Printed</option>
                                             </select>
                                         </div>
                                     </div>
@@ -287,10 +313,50 @@
                                                 <option value="./designer/img/mens_tank_front.png">Tank tops</option>
                                                 <hr>
                                                 <hr>
-                                                <?php foreach ($templateNames as $colorName): ?>
-                                                    <option value="./designer/img/templated_polo_shirts/<?=$colorName?>_FRONT.png"><?= $colorName ?> (Predesigned) </option>
+                                                <?php foreach ($templateNames as $key => $item): 
+                                                ?>
+                                                    <?php foreach ($item as $value): 
+                                                        if(!$value['color_name']) continue;
+                                                    ?>
+                                                    <option value="./designer/img/templated_polo_shirts/<?=toUpperCaseString($value['color_name'])?>_FRONT.png"><?= toUpperCaseString($value['color_name']) ?> (<?=toUpperCaseString($key)?>) </option>
+                                                    <?php endforeach; ?>
                                                 <?php endforeach; ?>
                                             </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">SIZE GUIDE</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="text-center card-body">
+                                                            <img id="sizeChartImage" src="./assets/sizechart.jpg" class="img-fluid" alt="sizechart">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <!-- Additional buttons can be added here if needed -->
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <label for="size_guide" class="mr-2">Size Guide:</label>
+                                            <div class="d-flex align-items-center">
+                                                <button type="button" id="showSizeGuideButton" class="form-btn btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <i class="bi bi-patch-question"> View size guide</i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="row" id="designColors" style="display: none;">
+                                                <!-- Dynamic content will be injected here -->
+                                            </div>
                                         </div>
 
                                         <div class="col-md-6">
@@ -339,59 +405,256 @@
                                
                                 <div class="form-action mb-1">
                                     <div class="container">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Option</th>
-                                                    <th scope="col">Checkbox</th>
-                                                    <th scope="col">Options</th>
-                                                    <th scope="col">Size</th>
-                                                    <th scope="col">Price</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Avatar/Logo:</td>
-                                                    <td>
-                                                        <input class="form-check-input" type="checkbox" id="avatar_logo_checkbox" name="avatar_logo_checkbox">
-                                                    </td>
-                                                    <td >
-                                                        <button type="button" class="btn btn-outline-dark" id="avatarLogoButton" data-bs-toggle="modal" data-bs-target="#avatalLogoModal" style="display: none;">
-                                                            <i class="bi bi-person-circle"></i>
-                                                        </button>
-                                                    </td>
-                                                    <td >
-                                                        <div id="avatarSizeTD" style="display: none;">
-                                                            <label for="prices_by_sizes_avatar_logo">Prices By Sizes:</label>
-                                                            <select class="form-select" name="avatar_sizing" id="prices_by_sizes_avatar_logo"> </select>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div id="avatarLogoPrice">250</div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Text:</td>
-                                                    <td>
-                                                        <input class="form-check-input" type="checkbox" id="text_checkbox" name="text_checkbox">
-                                                    </td>
-                                                    <td >
-                                                        <button type="button" class="btn btn-outline-dark" id="textButton" data-bs-toggle="modal" data-bs-target="#textModal" style="display: none;">
-                                                            <i class="bi bi-fonts"></i>
-                                                        </button>
-                                                    </td>
-                                                    <td>
-                                                        <div id="textSizeTD" style="display: none;">
-                                                            <label for="prices_by_sizes_text">Prices By Sizes:</label>
-                                                            <select class="form-select" name="text_sizing" id="prices_by_sizes_text"> </select>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div id="textPrice">250</div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+
+                                        <div class="accordion" id="accordionExample">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    Avatar/Logo/Text Options
+                                                </button>
+                                                </h2>
+                                                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Option</th>
+                                                                <th scope="col">Checkbox</th>
+                                                                <th scope="col">Options</th>
+                                                                <th scope="col">Size</th>
+                                                                <th scope="col">Price</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Avatar/Logo:</td>
+                                                                <td>
+                                                                    <input class="form-check-input" type="checkbox" id="avatar_logo_checkbox" name="avatar_logo_checkbox">
+                                                                </td>
+                                                                <td >
+                                                                    <button type="button" class="btn btn-outline-dark" id="avatarLogoButton" data-bs-toggle="modal" data-bs-target="#avatalLogoModal" style="display: none;">
+                                                                        <i class="bi bi-person-circle"></i>
+                                                                    </button>
+                                                                </td>
+                                                                <td >
+                                                                    <div id="avatarSizeTD" style="display: none;">
+                                                                        <label for="prices_by_sizes_avatar_logo">Prices By Sizes:</label>
+                                                                        <select class="form-select" name="avatar_sizing" id="prices_by_sizes_avatar_logo"> </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div id="avatarLogoPrice">250</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Text:</td>
+                                                                <td>
+                                                                    <input class="form-check-input" type="checkbox" id="text_checkbox" name="text_checkbox">
+                                                                </td>
+                                                                <td >
+                                                                    <button type="button" class="btn btn-outline-dark" id="textButton" data-bs-toggle="modal" data-bs-target="#textModal" style="display: none;">
+                                                                        <i class="bi bi-fonts"></i>
+                                                                    </button>
+                                                                </td>
+                                                                <td>
+                                                                    <div id="textSizeTD" style="display: none;">
+                                                                        <label for="prices_by_sizes_text">Prices By Sizes:</label>
+                                                                        <select class="form-select" name="text_sizing" id="prices_by_sizes_text"> </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div id="textPrice">250</div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        
+                                                    </table>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    Personalize Your Shirt
+                                                </button>
+                                                </h2>
+                                                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                                <tr>
+                                                                    <th colspan="4"> Personalize Your Shirt </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="col">Option</th>
+                                                                    <th scope="col">Checkbox</th>
+                                                                    <th scope="col">Color</th>
+                                                                    <th scope="col">Price</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Collar:</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_collar_checkbox" name="p_collar_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pCollarDiv" >
+                                                                            <input type="color" class="form-select" name="p_collar_value" id="p_collar_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pCollarPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Sleeve (Right):</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_sleeve_right_checkbox" name="p_sleeve_right_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pSleeveRightDiv" >
+                                                                            <input type="color" class="form-select" name="p_sleeve_right_value" id="p_sleeve_right_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pSleeveRightPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Sleeve (Left):</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_sleeve_left_checkbox" name="p_sleeve_left_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pSleeveLeftDiv" >
+                                                                            <input type="color" class="form-select" name="p_sleeve_left_value" id="p_sleeve_left_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pSleeveLeftPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Sleeve (Hem):</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_sleeve_hem_checkbox" name="p_sleeve_hem_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pSleeveHemDiv" >
+                                                                            <input type="color" class="form-select" name="p_sleeve_hem_value" id="p_sleeve_hem_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pSleeveHemPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Plaket:</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_plaket_checkbox" name="p_plaket_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pPlaketDiv" >
+                                                                            <input type="color" class="form-select" name="p_plaket_value" id="p_plaket_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pPlaketPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Button:</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_button_checkbox" name="p_button_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pButtonDiv" >
+                                                                            <input type="color" class="form-select" name="p_button_value" id="p_button_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pButtonPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Body Color (Whole):</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_whole_checkbox" name="p_body_color_whole_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pBodyColorWholeDiv" >
+                                                                            <input type="color" class="form-select" name="p_body_color_whole_value" id="p_body_color_whole_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pBodyColorWholePrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Body Color (UpperPart):</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_upper_part_checkbox" name="p_body_color_upper_part_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pBodyColorUpperPartDiv" >
+                                                                            <input type="color" class="form-select" name="p_body_color_upper_part_value" id="p_body_color_upper_part_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pBodyColorUpperPartPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Body Color (LowerPart):</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_lower_part_checkbox" name="p_body_color_lower_part_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pBodyColorLowerPartDiv" >
+                                                                            <input type="color" class="form-select" name="p_body_color_lower_part_value" id="p_body_color_lower_part_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pBodyColorLowerPartPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Body Color (RightPart):</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_right_part_checkbox" name="p_body_color_right_part_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pBodyColorRightPartDiv" >
+                                                                            <input type="color" class="form-select" name="p_body_color_right_part_value" id="p_body_color_right_part_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pBodyColorRightPartPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Body Color (LeftPart):</td>
+                                                                    <td>
+                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_left_part_checkbox" name="p_body_color_left_part_checkbox">
+                                                                    </td>
+                                                                    <td >
+                                                                        <div id="pBodyColorLeftPartDiv" >
+                                                                            <input type="color" class="form-select" name="p_body_color_left_part_value" id="p_body_color_left_part_value"> </input>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div id="pBodyColorLeftPartPrice">50</div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                    </table>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+
+                                        
                                     </div>
 
                                 </div>
@@ -532,7 +795,41 @@
                 }
             }
 
+            function updateDesignColors(selectedDesign) {
+                var designColorsDiv = $('#designColors');
+                designColorsDiv.empty(); // Clear previous content
+                let availableDesigns = <?php echo json_encode($templateNames); ?>;
+
+                if (availableDesigns[selectedDesign] && availableDesigns[selectedDesign].length > 0) {
+                    availableDesigns[selectedDesign].forEach(function(color) {
+                        var colorDiv = `
+                            <div class="col-3 my-1">
+                                <a href="designer.php?id=${color.id}&color_id=${color.color_id}" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="${color.color_name}" data-bs-original-title="${color.color_name}">
+                                    <div style="height: 30px; background-color: ${color.code}; border: 2px solid black; cursor: pointer;">
+                                    </div>
+                                </a>
+                            </div>`;
+                        designColorsDiv.append(colorDiv);
+                    });
+                    designColorsDiv.show();
+                } else {
+                    designColorsDiv.hide();
+                }
+            }
+
             function updateTshirtSelection() {
+                let availableDesigns = <?php echo json_encode($templateNames); ?>;
+
+                var selectedOptionText = $("#tshirttype").find('option:selected').text();
+                // Extract the design name in parenthesis
+                var designMatch = selectedOptionText.match(/\((.*?)\)/);
+                if (designMatch && designMatch[1]) {
+                    var selectedDesign = designMatch[1];
+                    updateDesignColors(selectedDesign);
+                } else {
+                    $('#designColors').hide();
+                }
+
 		            document.getElementById("shirtDiv").style.backgroundColor = "#ffffff";		   
 
                     // let input = document.getElementById('selected_price');
@@ -541,7 +838,7 @@
                     const selectedText = $("#tshirttype").find('option:selected').text();
                     const colorPallete = $('#colorPallete');
                     
-                    if (selectedText.includes('Predesigned')) {
+                    if (selectedText.includes('DESIGN')) {
                         colorPallete.hide();
                     } else {
                         colorPallete.show();
@@ -555,10 +852,14 @@
                         "./designer/img/mens_longsleeve_front.png" : {"shirt_selected" : "Long Sleeve Shirts", "shirt_price" : "250"},
                         "./designer/img/mens_hoodie_front.png" : {"shirt_selected" : "Hoodies", "shirt_price" : "200"},
                         "./designer/img/mens_tank_front.png" : {"shirt_selected" : "Tank tops", "shirt_price" : "150"},
-                        <?php foreach ($templateNames as $colorName){ 
-                            echo '"./designer/img/templated_polo_shirts/' . $colorName . '_FRONT.png": {"shirt_selected": "' . $colorName . ' (Predesigned)", "shirt_price": "250"},';
+                        <?php foreach ($templateNames as $key => $item){ 
+                            foreach ($item as $value): 
+                                if(!$value['color_name']) continue;
+                                echo '"./designer/img/templated_polo_shirts/' . toUpperCaseString($value['color_name']) . '_FRONT.png": {"shirt_selected": "' . toUpperCaseString($value['color_name']) . ' (' . toUpperCaseString($key) . ')", "shirt_price": "250"},';
+                            endforeach;
                         }
                         ?>
+
                     };
 
                     // Assuming PHP part is handled elsewhere and objects are added to shirtList
@@ -588,9 +889,9 @@
                 }
 
 
-        document.getElementById('count').addEventListener('change', function() {
-            estimatePrice()
-        });
+            document.getElementById('count').addEventListener('change', function() {
+                estimatePrice()
+            });
 
             $(document).ready(function(){
 
@@ -611,6 +912,14 @@
 
                 // var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
                 // myModal.show();
+
+                $('#showSizeGuideButton').click(function() {
+                    let newSrc = './assets/' + $('#tshirttype').find('option:selected').text();
+                    if (newSrc.includes('DESIGN')) {
+                        newSrc = "./assets/Polo Shirts"
+                    }
+                    $('#sizeChartImage').attr('src', `${newSrc}.png`);
+                });
                 });
 
                 document.querySelectorAll('.image-option').forEach(image => {
@@ -643,8 +952,6 @@
 
             $('#flipback').click(() => {	
                 
-                console.log("valueSelect", valueSelect)
-                console.log('clicked')
                 if (valueSelect === "./designer/img/crew_front.png") {
                     if ($(this).attr("data-original-title") == "Show Back View") {
                             $(this).attr('data-original-title', 'Show Front View');			        		       
@@ -760,7 +1067,11 @@
                         {}
                     }	
                 }
-                <?php foreach ($templateNames as $colorName): ?>
+                <?php foreach ($templateNames as $key => $item):  ?>
+                    <?php foreach ($item as $value):  
+                    $colorName = toUpperCaseString($value['color_name']) ;   
+                    ?>
+                
                     
                     else if (valueSelect === "./designer/img/templated_polo_shirts/<?=$colorName?>_FRONT.png") {
                         if ($(this).attr("data-original-title") == "Show Back View") {
@@ -790,6 +1101,7 @@
                             {}
                         }	
                     }
+                    <?php endforeach; ?>
                 <?php endforeach; ?>
    
                 else if (valueSelect === "./designer/img/mens_hoodie_front.png") {
@@ -856,6 +1168,10 @@
         <script>
             document.getElementById('customize_form').addEventListener('submit', function(event) {
                 event.preventDefault(); // Prevent default form submission
+
+                let checkPersonalizedItemsData =  getCheckedItems();
+                let checkPersonalizedItems =  checkPersonalizedItemsData.result;
+                let checkPersonalizedItemsTotal =  checkPersonalizedItemsData.totalValue;
                 let objectDatas = {
                     front : objects.front,
                     back : objects.back,
@@ -869,7 +1185,10 @@
                 let backImage_ = 'backImage_' + timestamp + '.png';
 
                 let formData = new FormData(this); // Create FormData from the form
+
                 formData.append('objectDatas', JSON.stringify(objectDatas)); // Append the object
+                formData.append('checkPersonalizedItems', JSON.stringify(checkPersonalizedItems)); // Append the object
+                formData.append('checkPersonalizedItemsTotal', checkPersonalizedItemsTotal); // Append the object
 
                 if(objects.frontImage instanceof Blob){
                     formData.append('frontImage_', objects.frontImage, frontImage_);
@@ -878,14 +1197,14 @@
                     formData.append('backImage_', objects.backImage, backImage_);
                 }
 
-                fetch('./designer/submit-customize.php', { // Replace '/submit' with your actual submission URL
+                fetch('./designer/submit-customize.php', { 
                     method: 'POST',
                     body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                     if(data == 'DONE!'){
-                        alert("Customization Required sucess, we have sent you an email regarding with your request.");
+                        alert("Your customization request was successful; please wait for admin approval before receiving an email with further details.");
                         window.location = "designer.php";
                     }
                     toggleOverlay(false, overlay);
@@ -930,11 +1249,56 @@
             }
 
 
+            function getCheckedItems() {
+                const options = [
+                    'collar', 'sleeve_right', 'sleeve_left', 'sleeve_hem', 'plaket',
+                    'button', 'body_color_whole', 'body_color_upper_part', 
+                    'body_color_lower_part', 'body_color_right_part', 'body_color_left_part'
+                ];
+                
+                const result = {};
+                let totalValue = 0;
+                options.forEach(option => {
+                    // console.log(`p_${option}_checkbox`)
+                    // console.log(`p_${option}_value`)
+                    // console.log(`p${capitalizeFirstLetter(option)}Price`)
+                    const checkbox = document.getElementById(`p_${option}_checkbox`);
+                    if (checkbox.checked) {
+                        
+                        const colorValue = document.getElementById(`p_${option}_value`).value;
+                        const price = document.getElementById(`p${capitalizeFirstLetter(option)}Price`).innerText;
+
+                        totalValue += parseInt(price, 10);
+
+                        result[`p_${option}_value`] = {
+                            color: colorValue,
+                            price: parseInt(price, 10)
+                        };
+                    }
+                });
+
+                console.log({
+                    "result": result,
+                    "totalValue" : totalValue
+                });
+                return {
+                    "result": result,
+                    "totalValue" : totalValue
+                };
+            }
+
+            function capitalizeFirstLetter(string) {
+                // Convert snake_case to Upper Pascal Case
+                const words = string.split('_');
+                const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+                return capitalizedWords.join('');
+            }
+
+
 
             $('#addToTheBag').click( async () => {
 
-                // testConvert()
-                // return;
+
 
                 // let selected_price = document.getElementById('selected_price');
                 let count = document.getElementById('count');
@@ -1177,11 +1541,11 @@
             console.log('Selected customization:', selectedValue);
 
             // Perform actions based on the selected value
-            if (selectedValue === 'embroidery') {
-                // Code for embroidery option
+            if (selectedValue === 'embroidered') {
+                // Code for embroidered option
                 console.log('Embroidery option selected.');
-            } else if (selectedValue === 'print') {
-                // Code for print option
+            } else if (selectedValue === 'printed') {
+                // Code for printed option
                 console.log('Print option selected.');
             }
         });
@@ -1194,7 +1558,6 @@
             let shirt_selected = document.getElementById('shirt_selected').value;
             let selected_size = document.getElementById('selected_size').value;
             let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
-            console.log('prices_by_sizes_avatar_logo data:', data);
             let avatarLogoPrice = document.getElementById('avatarLogoPrice')
             avatarLogoPrice.textContent = data.price
             estimatePrice()
