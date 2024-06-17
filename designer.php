@@ -1327,9 +1327,9 @@
                 console.log($("#tshirtFacing").attr("src"));
                 let bgImage = $("#tshirtFacing").attr("src");
                 let position = null;
-                if(bgImage.includes("front")){
+                if(bgImage.includes("front") || bgImage.includes("FRONT") ){
                     position = 'front';
-                }else if(bgImage.includes("back")){
+                }else if(bgImage.includes("back") || bgImage.includes("BACK")){
                     position = 'back';
                 }
 
@@ -1344,9 +1344,9 @@
                     console.log($("#tshirtFacing").attr("src"));
                     bgImage = $("#tshirtFacing").attr("src");
                     position = null;
-                    if(bgImage.includes("front")){
+                    if(bgImage.includes("front")  || bgImage.includes("FRONT") ){
                         position = 'front';
-                    }else if(bgImage.includes("back")){
+                    }else if(bgImage.includes("back")  || bgImage.includes("BACK")){
                         position = 'back';
                     }
                 
@@ -1557,7 +1557,13 @@
 
             let shirt_selected = document.getElementById('shirt_selected').value;
             let selected_size = document.getElementById('selected_size').value;
-            let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
+
+            if(shirt_selected.includes("DESIGN")){
+                let data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == selectedValue)};
+            }else{
+                let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
+            }
+            
             let avatarLogoPrice = document.getElementById('avatarLogoPrice')
             avatarLogoPrice.textContent = data.price
             estimatePrice()
@@ -1571,7 +1577,11 @@
 
             let shirt_selected = document.getElementById('shirt_selected').value;
             let selected_size = document.getElementById('selected_size').value;
-            let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
+            if(shirt_selected.includes("DESIGN")){
+                let data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == selectedValue)};
+            }else{
+                let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
+            }
             console.log('prices_by_sizes_text data:', data);
             let textPrice = document.getElementById('textPrice')
             textPrice.textContent = data.price
