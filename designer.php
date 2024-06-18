@@ -875,7 +875,13 @@
                     let textPrice = document.getElementById('textPrice').textContent;
                     let shirt_selected = document.getElementById('shirt_selected').value;
                     let selected_size = document.getElementById('selected_size').value;
-                    let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
+
+                    if(shirt_selected.includes("DESIGN")){
+                        let data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
+                    }else{
+                        let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
+                    }
+
                     // const selected_price = $("#selected_price").val();
                     const count = $("#count").val();
                     let netPrice = 0;
@@ -1465,7 +1471,7 @@
         let div = document.getElementById('avatarlist');
         let child = div.getElementsByClassName('column')
 
-        removeAllImages()
+        // removeAllImages()
 
         function inchesToPixels(inches) {
             const dpi = 20; // Change this based on your canvas DPI\
@@ -1605,7 +1611,11 @@
 
 
             // Fetch the dimensions data for the selected size
-            var sizeData = shirtOptions[shirt_selected][size];
+            if(shirt_selected.includes("DESIGN")){
+                var sizeData = shirtOptions["Polo Shirts"][size];
+            }else{
+                var sizeData = shirtOptions[shirt_selected][size];
+            }
 
             // Populate the dimensions select with new options
             if (sizeData) {
