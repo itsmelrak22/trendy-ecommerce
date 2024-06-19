@@ -24,10 +24,12 @@ $location = basename($url);
 
 <!-- Sidebar - Brand -->
 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-    <div class="sidebar-brand-icon rotate-n-15">
+    <div class="sidebar-brand-icon">
         <!-- <i class="fas fa-laugh-wink"></i> -->
+        <img class="img-fluid rounded" loading="lazy" src="../assets/carousel/Logo2.jpeg" alt="About 1">
+
     </div>
-    <div class="sidebar-brand-text mx-3 my-2">TRENDY THREADS APPAREL BY LOVE J'S STORE</div>
+    <div class="sidebar-brand-text mx-3 my-2">TRENDY THREADS APPAREL</div>
 </a>
 
 <!-- Divider -->
