@@ -1,6 +1,7 @@
 <?php 
     require_once  './vendor/autoload.php';
-
+    date_default_timezone_set('Asia/Manila');
+    
     session_start(); 
     function displayDataTest($array){
         echo "<pre>";
