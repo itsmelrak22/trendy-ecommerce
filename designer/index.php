@@ -85,7 +85,7 @@ if( !isset($_SESSION['loggedInUser']) ){
     <div class="container">
 		<section id="typography">
 		  <div class="page-header">
-		    <h1>Trendy Dress Shop Customize Page</h1>
+		    <h1>TRENDY THREADS APPAREL BY LOVE J'S STORE Customize Page</h1>
 
 			<a href="../index.php?#product_list" class="btn">Back to main website</a>
 

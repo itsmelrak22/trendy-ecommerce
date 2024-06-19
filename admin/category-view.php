@@ -95,7 +95,7 @@ spl_autoload_register(function ($class) {
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Trendy Dress Shop</span>
+                        <span>TRENDY THREADS APPAREL BY LOVE J'S STORE</span>
                     </div>
                 </div>
             </footer>
