@@ -79,17 +79,49 @@ let line4;
 
 		$("#removeAllObjectsButton").click(function(e){
 			removeAllObjects();
+
 		})
 		$("#removeAllImagesButton").click(function(e){
 			removeAllImages();
+
 		})
 		$("#removeAllTextButton").click(function(e){
 			removeAllText();
 		})
+
+		
+		function checkCanvasImages(){
+			let positionObject = [...canvas.getObjects()];
+
+			const prices_by_sizes_avatar_logo = document.querySelector("#prices_by_sizes_avatar_logo");
+
+			positionObject.forEach(function(object) {
+				console.log("object.type", object.type)
+				 if (object.type === 'image') {
+					prices_by_sizes_avatar_logo.disabled = false
+					return;
+				}
+
+			});
+
+		}
+		function checkCanvasTexts(){
+			let positionObject = [...canvas.getObjects()];
+
+			const prices_by_sizes_text = document.querySelector("#prices_by_sizes_text");
+
+			positionObject.forEach(function(object) {
+				if (object.type === 'text' || object.type === 'i-text' || object.type === 'textbox') {
+					prices_by_sizes_text.disabled = false
+					return;
+				}
+
+			});
+
+		}
 		
 		 		 	 
 		document.getElementById('add-text').onclick = function() {
-
 			removeAllText();
 			function inchesToPixels(inches) {
 				const dpi = 20; // Change this based on your canvas DPI\
@@ -121,6 +153,8 @@ let line4;
             canvas.item(canvas.item.length-1).hasRotatingPoint = true;    
             $("#texteditor").css('display', 'block');
             $("#imageeditor").css('display', 'block');
+
+			checkCanvasTexts();
 	  	};
 	  	$("#text-string").keyup(function(){	  		
 	  		let activeObject = canvas.getActiveObject();
@@ -130,7 +164,6 @@ let line4;
 		      }
 	  	});
 	  	$(".img-polaroid").click(function(e){
-
 			removeAllImages()
 
 			function inchesToPixels(inches) {
@@ -166,7 +199,12 @@ let line4;
 				// image.scale(getRandomNum(0.1, 0.25)).setCoords();
 				// canvas.item(0).lockScalingX = canvas.item(0).lockScalingY = true;
 				canvas.add(image);
+
+				checkCanvasImages();
+
 			});
+
+
 	  	});	  		  
 	  document.getElementById('remove-selected').onclick = function() {		  
 		    let activeObject = canvas.getActiveObject(),

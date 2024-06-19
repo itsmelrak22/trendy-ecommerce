@@ -208,7 +208,9 @@
 
                 .btn.active,
                 .btn:active {
-                    background-color: #212529 !important;
+                    background-color: #454e57 !important;
+                    font-weight: bold;
+                    color: white !important;
                     /* Add other styles as needed */
                 }
                 </style>

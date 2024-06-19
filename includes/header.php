@@ -118,7 +118,6 @@
             }
             .navbar-nav > .nav-item > .active {
                 background-color: #454e57;
-                border-radius: 13%;
                 font-weight: bold;
                 color: white !important;
             }
@@ -137,54 +136,53 @@
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-            <div class="container ">
-                <?php   if(strpos($_SERVER['REQUEST_URI'], "browse-products.php") == false){ ?>
-                    <a class="navbar-brand" href="index.php">TRENDY THREADS APPAREL BY LOVE J'S STORE</a>
-                <?php }?>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link <?= $location ==  "index.php" ? "active" : ""?>" aria-current="page" href="index.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link <?= strpos($_SERVER['REQUEST_URI'], "browse-products.php") !== false ? "active" : ( strpos($_SERVER['REQUEST_URI'], "view-products.php") ? "active" : "")?>" href="browse-products.php">Products</a></li>
+    <div class="container">
+        <?php if (strpos($_SERVER['REQUEST_URI'], "browse-products.php") === false) { ?>
+            <a class="navbar-brand" href="index.php">TRENDY THREADS APPAREL</a>
+        <?php } ?>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item mx-2">
+                    <a class="nav-link <?= $location == "index.php" ? "active" : "" ?>" href="index.php">Home</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link <?= strpos($_SERVER['REQUEST_URI'], "browse-products.php") !== false || strpos($_SERVER['REQUEST_URI'], "view-products.php") !== false ? "active" : "" ?>" href="browse-products.php">Products</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link <?= $location == "designer.php" ? "active" : "" ?>" href="designer.php">Customize</a>
+                </li>
+            </ul>
+            <form class="d-flex align-items-center">
+                <?php if (isset($client_username)) { ?>
+                    <a href="customer-cart.php" class="btn btn-outline-dark btn-sm me-2 <?= $location == "customer-cart.php" ? "active" : "" ?>">
+                        <i class="bi-cart me-1"></i>
+                        <span class="d-none d-sm-inline">Cart</span>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">
+                            <?php echo isset($cartItemCount) ? $cartItemCount : "0"; ?>
+                        </span>
+                    </a>
+                    <button type="button" class="btn btn-outline-dark btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="bi-person me-1"></i>
+                        <span class="d-none d-sm-inline"><?php echo $client_username; ?></span>
+                    </button>
+                    <a href="./client/logout-customer.php" class="btn btn-outline-dark btn-sm">
+                        <i class="bi-box-arrow-right me-1"></i>
+                        <span class="d-none d-sm-inline">Logout</span>
+                    </a>
+                <?php } else { ?>
+                    <button class="btn btn-outline-dark btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>
+                        <span class="d-none d-sm-inline">Login</span>
+                    </button>
+                <?php } ?>
+            </form>
 
-                        <li class="nav-item"><a class="nav-link <?= $location ==  "designer.php" ? "active" : ""?>" href="designer.php">Customize</a></li>
-                    </ul>
-
-                    <form class="d-flex">
-                        <?php if(isset($client_email)) { ?>
-                            <ul class="me-2 navbar-nav">
-                                <li class="nav-link"> <span class="">Welcome, <?php echo $client_email; ?>!</span></li>
-                            </ul>
-
-                        <a href="customer-cart.php" method="post" class=" btn btn-outline-dark <?= $location ==  "customer-cart.php" ? "active" : ""?>" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Carts
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">
-                                <?php if(isset($cartItemCount)) {
-                                    echo  $cartItemCount ;
-                                 }else{
-                                    echo "0";
-                                 }
-                                    
-                                ?>
-                            </span>
-                        </a>
-                            <!-- Button to trigger the modal -->
-                            <button type="button" class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                Profile
-                            </button>
-                            <a href="./client/logout-customer.php" class="btn btn-outline-dark">Logout</a>
-                        <?php } else { ?>
-                            <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                <i class="bi bi-box-arrow-in-right"></i>
-                                Login
-                            </button>
-                        <?php } ?>
-                    </form>
-                    
-                </div>
-            </div>
-        </nav>
+        </div>
+    </div>
+</nav>
 
         
 

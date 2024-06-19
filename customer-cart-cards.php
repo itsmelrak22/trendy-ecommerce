@@ -112,7 +112,7 @@ function generateCartCards($cart, $key, $img_link){
                                         <p class="text-muted mb-2">Quantity</p>
                                         <div class="d-inline-flex">
                                         <button class="btn btn-md btn-outline-dark"  type="button" onClick="updateCartQuantity(`quantity-id-'.$key.'`, '.$price.', `total-id-'.$key.'`, '.$key.', `minus`)">-</button>
-                                        <input style=" width: 70px; " readonly class="mx-2 form-control form-control-sm" id="quantity-id-'.$key.'" type="number" min="1" value="'.$quantity.'" name="quantity" >
+                                        <input style=" width: 70px; " readonly class="mx-2 form-control form-control-sm text-center" id="quantity-id-'.$key.'" type="number" min="1" value="'.$quantity.'" name="quantity" >
                                         <button class="btn btn-md btn-outline-dark" type="button" onClick="updateCartQuantity(`quantity-id-'.$key.'`, '.$price.', `total-id-'.$key.'`, '.$key.', `add`)">+</button>
                                         
                                         </div>

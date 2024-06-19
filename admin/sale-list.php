@@ -13,6 +13,8 @@
 
 ?>
 
+
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -121,6 +123,51 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div class="card-body">
+                           
+                            <h5 class="card-title">Daily Reports</h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control datepicker" id="reportDate" placeholder="Select date" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary btn-sm" id="generateReport">Generate Report</button>
+                                </div>
+                                <div class="col-md-4 my-2">
+                                    <button class="btn btn-secondary btn-sm" id="previewPDF" disabled>Preview PDF</button>
+                                    <button class="btn btn-primary btn-sm" id="downloadPDF" disabled>Download PDF</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive mt-4">
+                                
+
+                                <table class="table table-bordered" id="reportTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer</th>
+                                            <th>MOP</th>
+                                            <th>Order Date</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Report data will be populated here by JavaScript -->
+                                        <tr>
+                                            <td colspan="4"> <p class="text-center">No Data</p> </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="3">Total Revenue</th>
+                                            <th id="totalRevenue">0.00</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>
@@ -218,7 +265,14 @@
 
     <?php include_once("./includes/scripts.php"); ?>
 <?php include_once("./includes/footer.php"); ?>
+ 
+   <!-- Include jsPDF -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
 
+    <!-- Include Bootstrap Datepicker -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
@@ -232,4 +286,98 @@
     $(document).ready(function() {
         $('#productTable').DataTable();
     });
+</script>
+
+
+<script>
+    $(document).ready(function() {
+    // Initialize datepicker
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        endDate: "today"
+    });
+
+    $('#reportDate').change( function (e){
+        let reportDate = $('#reportDate').val();
+        if(reportDate){
+            let previewPDF = document.getElementById('previewPDF');
+            let downloadPDF = document.getElementById('downloadPDF');
+            
+            previewPDF.disabled = false
+            downloadPDF.disabled = false
+        }else{
+            previewPDF.disabled = true
+            downloadPDF.disabled = true
+        }
+    })
+
+    // Handle generate report button click
+    $('#generateReport').click(function() {
+        let reportDate = $('#reportDate').val();
+        if (reportDate) {
+            // Fetch report data for the selected date
+            $.ajax({
+                url: 'fetch-report.php', // Create this endpoint to fetch report data
+                type: 'GET',
+                data: { reportDate: reportDate },
+                success: function(response) {
+                    console.log(response);
+                    let data = response;
+                    let reportTableBody = $('#reportTable tbody');
+                    reportTableBody.empty();
+
+                    let totalRevenue = 0;
+                    data.forEach(function(item) {
+                        reportTableBody.append(
+                            '<tr>' +
+                                '<td>' + item.email + '</td>' +
+                                '<td>' + item.mop + '</td>' +
+                                '<td>' + item.created_at + '</td>' +
+                                '<td>' + item.total + '</td>' +
+                            '</tr>'
+                        );
+                        totalRevenue += parseFloat(item.total);
+                    });
+
+                    $('#totalRevenue').text(totalRevenue.toFixed(2));
+                }
+            });
+        } else {
+            alert('Please select a date.');
+        }
+    });
+
+    // Function to generate PDF from report table
+    function generatePDF() {
+        let { jsPDF } = window.jspdf;
+        let doc = new jsPDF();
+        doc.text('Daily Report', 14, 16);
+        doc.autoTable({
+            html: '#reportTable',
+            startY: 20,
+            theme: 'grid',
+            footStyles: { fillColor: [0, 0, 0] }
+        });
+        return doc;
+    }
+
+    // Attach click event to download PDF button
+    $('#downloadPDF').click(function() {
+        let doc = generatePDF();
+        let date = new Date();
+        doc.save(`report-${date.toISOString().split('T')[0]}.pdf`);
+    });
+
+    // Attach click event to preview PDF button
+    $('#previewPDF').click(function() {
+        let doc = generatePDF();
+        let string = doc.output('datauristring');
+        let iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>";
+        let x = window.open();
+        x.document.open();
+        x.document.write(iframe);
+        x.document.close();
+    });
+});
+
 </script>

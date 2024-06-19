@@ -160,10 +160,12 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Draggable Modal</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Avatar/Logo Selection</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <p style="color: red;"><strong>Disclaimer:</strong> <em>We are not affiliated with any of the brands featured in our avatars.</em></p>
+
                             <div align="center" class="card" style="min-height: 32px;">
                                 <div class="card-body">
                                     <div>
@@ -193,7 +195,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Draggable Modal</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Text Options</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -285,9 +287,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="selected_gender">Sex:</label>
-                                            <select class="form-select" name="selected_gender" id="selected_gender">
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
+                                            <select class="form-select" name="selected_gender" id="selected_gender" readonly>
+                                                <option value="UNISEX " selected>UNISEX </option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -407,71 +408,6 @@
                                     <div class="container">
 
                                         <div class="accordion" id="accordionExample">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                    Avatar/Logo/Text Options
-                                                </button>
-                                                </h2>
-                                                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Option</th>
-                                                                <th scope="col">Checkbox</th>
-                                                                <th scope="col">Options</th>
-                                                                <th scope="col">Size</th>
-                                                                <th scope="col">Price</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Avatar/Logo:</td>
-                                                                <td>
-                                                                    <input class="form-check-input" type="checkbox" id="avatar_logo_checkbox" name="avatar_logo_checkbox">
-                                                                </td>
-                                                                <td >
-                                                                    <button type="button" class="btn btn-outline-dark" id="avatarLogoButton" data-bs-toggle="modal" data-bs-target="#avatalLogoModal" style="display: none;">
-                                                                        <i class="bi bi-person-circle"></i>
-                                                                    </button>
-                                                                </td>
-                                                                <td >
-                                                                    <div id="avatarSizeTD" style="display: none;">
-                                                                        <label for="prices_by_sizes_avatar_logo">Prices By Sizes:</label>
-                                                                        <select class="form-select" name="avatar_sizing" id="prices_by_sizes_avatar_logo"> </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div id="avatarLogoPrice">250</div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Text:</td>
-                                                                <td>
-                                                                    <input class="form-check-input" type="checkbox" id="text_checkbox" name="text_checkbox">
-                                                                </td>
-                                                                <td >
-                                                                    <button type="button" class="btn btn-outline-dark" id="textButton" data-bs-toggle="modal" data-bs-target="#textModal" style="display: none;">
-                                                                        <i class="bi bi-fonts"></i>
-                                                                    </button>
-                                                                </td>
-                                                                <td>
-                                                                    <div id="textSizeTD" style="display: none;">
-                                                                        <label for="prices_by_sizes_text">Prices By Sizes:</label>
-                                                                        <select class="form-select" name="text_sizing" id="prices_by_sizes_text"> </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div id="textPrice">250</div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                        
-                                                    </table>
-                                                </div>
-                                                </div>
-                                            </div>
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -652,7 +588,71 @@
                                                 </div>
                                                 </div>
                                             </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    Avatar/Logo/Text Options
+                                                </button>
+                                                </h2>
+                                                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Option</th>
+                                                                <th scope="col">Checkbox</th>
+                                                                <th scope="col">Options</th>
+                                                                <th scope="col">Size</th>
+                                                                <th scope="col">Price</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Avatar/Logo:</td>
+                                                                <td>
+                                                                    <input class="form-check-input" type="checkbox" id="avatar_logo_checkbox" name="avatar_logo_checkbox">
+                                                                </td>
+                                                                <td >
+                                                                    <button type="button" class="btn btn-outline-dark" id="avatarLogoButton" data-bs-toggle="modal" data-bs-target="#avatalLogoModal" style="display: none;">
+                                                                        <i class="bi bi-person-circle"></i>
+                                                                    </button>
+                                                                </td>
+                                                                <td >
+                                                                    <div id="avatarSizeTD" style="display: none;">
+                                                                        <select class="form-select" name="avatar_sizing" id="prices_by_sizes_avatar_logo" disabled> </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div id="avatarLogoPrice">0</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Text:</td>
+                                                                <td>
+                                                                    <input class="form-check-input" type="checkbox" id="text_checkbox" name="text_checkbox">
+                                                                </td>
+                                                                <td >
+                                                                    <button type="button" class="btn btn-outline-dark" id="textButton" data-bs-toggle="modal" data-bs-target="#textModal" style="display: none;">
+                                                                        <i class="bi bi-fonts"></i>
+                                                                    </button>
+                                                                </td>
+                                                                <td>
+                                                                    <div id="textSizeTD" style="display: none;">
+                                                                        <select class="form-select" name="text_sizing" id="prices_by_sizes_text" disabled> </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div id="textPrice">0</div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        
+                                                    </table>
+                                                </div>
+                                                </div>
                                             </div>
+                                            
+                                        </div>
 
                                         
                                     </div>
@@ -666,12 +666,12 @@
 
                                         <div class="col-md-6">
                                             <label for="pricePerPiece">Price per piece</label>
-                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="pricePerPiece" name="pricePerPiece" value="500" readonly required>
+                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="pricePerPiece" name="pricePerPiece" value="0" readonly required>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="estimatedPrice">Min. Estimated Price</label>
-                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="estimatedPrice" name="estimatedPrice" value="500" readonly required>
+                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="estimatedPrice" name="estimatedPrice" value="0" readonly required>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="count" class="mr-2">Status:</label>
@@ -875,11 +875,11 @@
                     let textPrice = document.getElementById('textPrice').textContent;
                     let shirt_selected = document.getElementById('shirt_selected').value;
                     let selected_size = document.getElementById('selected_size').value;
-
+                    let data
                     if(shirt_selected.includes("DESIGN")){
-                        let data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
+                        data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
                     }else{
-                        let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
+                        data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
                     }
 
                     // const selected_price = $("#selected_price").val();
@@ -942,6 +942,8 @@
                     genderInput.value = 'Female';
                     }
                 });
+
+            estimatePrice()
 
             });
         </script>
@@ -1169,6 +1171,9 @@
                         canvas.calcOffset();
                     },200);	   	
             });	
+
+
+
         </script>
 
         <script>
@@ -1486,11 +1491,13 @@
         for (let i = 0; i < files.length; i++) {
 
             let img = document.createElement('img');
-            img.className = 'img-fluid img-polariod img-thumbnail';
+            img.className = 'img-fluid img-polaroid img-thumbnail';
             img.src = URL.createObjectURL(files[i]);
             img.alt = '';
 
             img.addEventListener("click", function(e){
+                checkCanvasObjects()
+                removeAllImages()
                 let el = e.target;
                 console.log('tshirtEditor - el', el)
                 /*temp code*/
@@ -1563,11 +1570,11 @@
 
             let shirt_selected = document.getElementById('shirt_selected').value;
             let selected_size = document.getElementById('selected_size').value;
-
+            let data 
             if(shirt_selected.includes("DESIGN")){
-                let data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == selectedValue)};
+                data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == selectedValue)};
             }else{
-                let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
+                data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
             }
             
             let avatarLogoPrice = document.getElementById('avatarLogoPrice')
@@ -1583,10 +1590,11 @@
 
             let shirt_selected = document.getElementById('shirt_selected').value;
             let selected_size = document.getElementById('selected_size').value;
+            let data
             if(shirt_selected.includes("DESIGN")){
-                let data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == selectedValue)};
+                data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == selectedValue)};
             }else{
-                let data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
+                data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
             }
             console.log('prices_by_sizes_text data:', data);
             let textPrice = document.getElementById('textPrice')
@@ -1619,6 +1627,16 @@
 
             // Populate the dimensions select with new options
             if (sizeData) {
+                var option = document.createElement('option');
+                option.value = '';
+                option.text = '';
+                shirtDimensionsSelectText.appendChild(option);
+
+                var option = document.createElement('option');
+                option.value = '';
+                option.text = '';
+                shirtDimensionsSelectAvatar.appendChild(option);
+
                 sizeData.forEach(item => {
                     var option = document.createElement('option');
                     option.value = item.dimension;
@@ -1633,6 +1651,11 @@
                     shirtDimensionsSelectAvatar.appendChild(option);
                 });
             }
+            document.getElementById('textPrice').innerText = 0
+            document.getElementById('avatarLogoPrice').innerText = 0
+            
+            estimatePrice()
+
         }
 
         document.getElementById('selected_size').addEventListener('change', function() {
