@@ -105,7 +105,7 @@
 
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">SIZE GUIDE</h5>
@@ -119,23 +119,31 @@
                                         //     </div>';
                                     ?>
 
-                                        <nav>
-                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Polo Shirts</button>
-                                            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">T Shirts</button>
-                                        </div>
-                                        </nav>
-                                        <div class="tab-content" id="nav-tabContent">
-                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                                            <div class="text-center card-body">
-                                                     <img src="./assets/Polo Shirts.png" class="img-fluid" alt="sizechart">
-                                             </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                                            <div class="text-center card-body">
-                                                     <img src="./assets/Elite Oversize.png" class="img-fluid" alt="sizechart">
-                                             </div>
-                                        </div>
+                                        <div class="container-fluid" >
+                                            <?php switch ($products->category_name) { 
+                                                case 'NIKEE SWOOSH POLO SHIRT':
+                                                case 'NY POLO SHIRT':
+                                                case 'CLASSIC POLO SHIRT':
+                                                case 'OPEN COLLAR POLO SHIRT':
+                                                case 'POLO SHIRT':
+                                                    echo '
+                                                    <div class="text-center card-body">
+                                                        <img src="./assets/Polo Shirts.png" class="img-fluid" alt="sizechart">
+                                                    </div>
+                                                    ';
+
+                                                    break;
+
+                                                case 'CORDUROY SHIRT':
+                                                case 'ELITE OVERSIZE SHIRT':
+                                                    echo '
+                                                    <div class="text-center card-body">
+                                                            <img src="./assets/Elite Oversize.png" class="img-fluid" alt="sizechart">
+                                                    </div>
+                                                    ';
+                                                    break;
+
+                                            } ?>
                                         </div>
                                 </div>
                                 <div class="modal-footer">
