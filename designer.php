@@ -164,7 +164,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p style="color: red;"><strong>Disclaimer:</strong> <em>We are not affiliated with any of the brands featured in our avatars.</em></p>
+                            <p style="color: red;"><strong>Disclaimer:</strong> <em>We are not affiliated with any of the brands featured in our logos.</em></p>
 
                             <div align="center" class="card" style="min-height: 32px;">
                                 <div class="card-body">
@@ -416,7 +416,7 @@
                                                 </h2>
                                                 <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                                                 <div class="accordion-body">
-                                                    <table class="table table-bordered">
+                                                    <table class="table table-bordered" >
                                                         <thead>
                                                                 <tr>
                                                                     <th colspan="4"> Personalize Your Shirt </th>
@@ -428,11 +428,11 @@
                                                                     <th scope="col">Price</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody id="table-body-personalize">
                                                                 <tr>
                                                                     <td>Collar:</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_collar_checkbox" name="p_collar_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_collar_checkbox" name="p_collar_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pCollarDiv" >
@@ -446,7 +446,7 @@
                                                                 <tr>
                                                                     <td>Sleeve (Right):</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_sleeve_right_checkbox" name="p_sleeve_right_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_sleeve_right_checkbox" name="p_sleeve_right_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pSleeveRightDiv" >
@@ -460,7 +460,7 @@
                                                                 <tr>
                                                                     <td>Sleeve (Left):</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_sleeve_left_checkbox" name="p_sleeve_left_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_sleeve_left_checkbox" name="p_sleeve_left_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pSleeveLeftDiv" >
@@ -474,7 +474,7 @@
                                                                 <tr>
                                                                     <td>Sleeve (Hem):</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_sleeve_hem_checkbox" name="p_sleeve_hem_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_sleeve_hem_checkbox" name="p_sleeve_hem_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pSleeveHemDiv" >
@@ -488,7 +488,7 @@
                                                                 <tr>
                                                                     <td>Plaket:</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_plaket_checkbox" name="p_plaket_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_plaket_checkbox" name="p_plaket_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pPlaketDiv" >
@@ -502,7 +502,7 @@
                                                                 <tr>
                                                                     <td>Button:</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_button_checkbox" name="p_button_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_button_checkbox" name="p_button_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pButtonDiv" >
@@ -516,7 +516,7 @@
                                                                 <tr>
                                                                     <td>Body Color (Whole):</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_whole_checkbox" name="p_body_color_whole_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_body_color_whole_checkbox" name="p_body_color_whole_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pBodyColorWholeDiv" >
@@ -530,7 +530,7 @@
                                                                 <tr>
                                                                     <td>Body Color (UpperPart):</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_upper_part_checkbox" name="p_body_color_upper_part_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_body_color_upper_part_checkbox" name="p_body_color_upper_part_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pBodyColorUpperPartDiv" >
@@ -544,7 +544,7 @@
                                                                 <tr>
                                                                     <td>Body Color (LowerPart):</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_lower_part_checkbox" name="p_body_color_lower_part_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_body_color_lower_part_checkbox" name="p_body_color_lower_part_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pBodyColorLowerPartDiv" >
@@ -558,7 +558,7 @@
                                                                 <tr>
                                                                     <td>Body Color (RightPart):</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_right_part_checkbox" name="p_body_color_right_part_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_body_color_right_part_checkbox" name="p_body_color_right_part_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pBodyColorRightPartDiv" >
@@ -572,7 +572,7 @@
                                                                 <tr>
                                                                     <td>Body Color (LeftPart):</td>
                                                                     <td>
-                                                                        <input class="form-check-input" type="checkbox" id="p_body_color_left_part_checkbox" name="p_body_color_left_part_checkbox">
+                                                                        <input class="form-check-input" onchange="estimatePrice()" type="checkbox" id="p_body_color_left_part_checkbox" name="p_body_color_left_part_checkbox">
                                                                     </td>
                                                                     <td >
                                                                         <div id="pBodyColorLeftPartDiv" >
@@ -871,6 +871,10 @@
                 }
 
                 function estimatePrice(){   
+                    let personalizedCount = countCheckedCheckboxes();
+                    let personalizedCountPrice = personalizedCount * 50
+                    let finalPrice = 0;
+
                     let avatarLogoPrice = document.getElementById('avatarLogoPrice').textContent;
                     let textPrice = document.getElementById('textPrice').textContent;
                     let shirt_selected = document.getElementById('shirt_selected').value;
@@ -886,11 +890,17 @@
                     const count = $("#count").val();
                     let netPrice = 0;
 
-                    netPrice = eval(+avatarLogoPrice + +textPrice);
+                    netPrice = eval(+avatarLogoPrice + +textPrice  + personalizedCountPrice);
+
+                    if(netPrice){
+                        finalPrice = eval( (+netPrice * count ) + personalizedCountPrice );
+                    }else{
+                        finalPrice = eval(+netPrice * count )
+                    }
 
 
                     $("#pricePerPiece").val(eval( (+netPrice )  ));
-                    $("#estimatedPrice").val(eval( (+netPrice * count )  ));
+                    $("#estimatedPrice").val(finalPrice);
 
                 }
 
@@ -1729,6 +1739,29 @@
         location.reload();
     });
 
+    function checkCheckbox(event) {
+        var checkbox = event.target;
+        var checkboxId = checkbox.id;
+        if (checkbox.checked) {
+            console.log('Checkbox with ID ' + checkboxId + ' is checked');
+        } else {
+            console.log('Checkbox with ID ' + checkboxId + ' is not checked');
+        }
+    }
+
+    function countCheckedCheckboxes() {
+        let tbody = document.querySelector('#table-body-personalize');
+        let checkboxes = tbody.querySelectorAll('.form-check-input');
+        let count = 0;
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                count++;
+            }
+        });
+        
+        console.log('count', count)
+        return count;
+    }
 
 
 </script>
