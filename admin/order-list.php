@@ -79,7 +79,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="cartTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="orderTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Order ID </th>
@@ -230,6 +230,6 @@
     })
 
     $(document).ready(function() {
-        $('#productTable').DataTable();
+        $('#orderTable').DataTable();
     });
 </script>

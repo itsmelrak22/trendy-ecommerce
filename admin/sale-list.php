@@ -240,7 +240,7 @@
     })
 
     $(document).ready(function() {
-        $('#productTable').DataTable();
+        $('#saleTable').DataTable();
     });
 </script>
 

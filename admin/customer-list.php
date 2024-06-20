@@ -229,6 +229,6 @@
     })
 
     $(document).ready(function() {
-        $('#productTable').DataTable();
+        $('#customerTable').DataTable();
     });
 </script>
