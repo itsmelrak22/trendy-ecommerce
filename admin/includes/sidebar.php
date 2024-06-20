@@ -103,11 +103,11 @@ $location = basename($url);
 </li>
 
 <!-- Nav Item - Gender / Age Category Master-->
-<li class="nav-item <?= $location ==  "gender-age-category-list.php" ? "active" : ""?>">
+<!-- <li class="nav-item <?php //echo $location ==  "gender-age-category-list.php" ? "active" : ""?>">
     <a class="nav-link" href="gender-age-category-list.php">
         <i class="fas fa-fw fa-table"></i>
         <span>Age Category Master</span></a>
-</li>
+</li> -->
 
 
 

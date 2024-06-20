@@ -160,7 +160,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Avatar/Logo Selection</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Logo Selection</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -591,7 +591,7 @@
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                    Avatar/Logo/Text Options
+                                                    Logo/Text Options
                                                 </button>
                                                 </h2>
                                                 <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -608,7 +608,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td>Avatar/Logo:</td>
+                                                                <td>Logo:</td>
                                                                 <td>
                                                                     <input class="form-check-input" type="checkbox" id="avatar_logo_checkbox" name="avatar_logo_checkbox">
                                                                 </td>
