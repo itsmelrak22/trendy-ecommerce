@@ -8,8 +8,75 @@
 
     $order = new Order;
     $orders = $order->getOrderAndOrderDetails();
+    $ungrouped_data = [];
 
+
+    foreach ($orders as $key => &$value) {
+        $value['cart_status'] = getStatusText($value['order_details'][0]['status']);
+    }
+    foreach ($orders as $order) {
+        $cart_status = $order['cart_status'];
+        if (!isset($ungrouped_data[$cart_status])) {
+            $ungrouped_data[$cart_status] = [];
+        }
+        $ungrouped_data[$cart_status][] = $order;
+    }
+
+
+        // Define the desired order of statuses
+    $status_order = ['Checked out', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
+
+    // Create a new array to hold the grouped data in the desired order
+    $grouped_data = [];
+
+    // Populate the grouped_data with the groups in the desired order
+    foreach ($status_order as $status) {
+        if (isset($ungrouped_data[$status])) {
+            $grouped_data[$status] = $ungrouped_data[$status];
+        } else {
+            $grouped_data[$status] = [];
+        }
+    }
+
+    // echo '<pre>';
+    // print_r($grouped_data);
+    // echo '</pre>';
+
+    
     // displayDataTest($orders);
+    // displayDataTest($grouped_data);
+    function getStatusText($status){
+
+        switch ($status) {
+            case 0:
+                return "Added to cart";
+                break;
+            case 1:
+                return "Checked out";
+                break;
+            case 2:
+                return "Processing";
+                break;
+            case 3:
+                return "Shipped";
+                break;
+            case 4:
+                return "Delivered";
+                break;
+            case 10:
+                return "Declined";
+                break;
+            case 11:
+                return "Canceled";
+                break;
+            default:
+                return "Unknown status";
+                break;
+        }
+        
+
+    }
+
 ?>
 
 <body id="page-top">
@@ -77,58 +144,81 @@
                             <h6 class="m-0 font-weight-bold text-primary">Order List</h6>
                             
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="orderTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID </th>
-                                            <th>Order Details </th>
-                                            <th>Customer </th>
-                                            <th>Date Ordered</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Order ID </th>
-                                            <th>Order Details</th>
-                                            <th>Customer Name </th>
-                                            <th>Date Ordered</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php foreach ($orders as $key => $cart) { ?>
-                                            <tr>
-                                                <td> <?= $cart['id'] ?> </td>
-                                                <td>  
-                                                    <a href="order-view.php?id=<?=$cart['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View Order Details">
-                                                        <i class="bi bi-list-ul"></i>
-                                                    </a>
-                                                </td>
-                                                <td> <?= $cart['email'] ?> </td>
-                                                <td> <?= $cart['created_at'] ?> </td>
-                                                <td>
-                                                    <form action="order-delete.php" method="POST">
-                                                        <a href="order-edit.php?id=<?=$cart['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="bi bi-box-arrow-right"></i>
-                                                        </a>
-                                                      
-                                                        <input type="hidden" name="id" value="<?=$cart['id']?>">
-                                                        <!-- <button type="submit" name="delete-cart" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button> -->
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+
+                        <div class="container card-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" id="orderTabs" role="tablist">
+                                <?php foreach ($grouped_data as $status => $orders) { ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link <?php echo $status === array_key_first($grouped_data) ? 'active' : '' ?>" id="tab-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" data-toggle="tab" href="#content-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" role="tab" aria-controls="content-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" aria-selected="true">
+                                            <?php echo $status ?>
+                                        </a>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <?php foreach ($grouped_data as $status => $orders) { 
+                                    $generateId = camelize($status);
+                                    ?>
+                                    <div class="tab-pane fade <?php echo $status === array_key_first($grouped_data) ? 'show active' : '' ?>" id="content-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" role="tabpanel" aria-labelledby="tab-<?php echo strtolower(str_replace(' ', '-', $status)) ?>">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" width="100%" cellspacing="0" id="<?="orderTable$generateId" ?>">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order ID</th>
+                                                            <th>Order Details</th>
+                                                            <th>Customer</th>
+                                                            <th>Date Ordered</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>Order ID</th>
+                                                            <th>Order Details</th>
+                                                            <th>Customer</th>
+                                                            <th>Date Ordered</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
+                                                        <?php foreach ($orders as $order) { ?>
+                                                            <tr>
+                                                                <td><?= $order['id'] ?></td>
+                                                                <td>
+                                                                    <a href="order-view.php?id=<?= $order['id'] ?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View Order Details">
+                                                                        <i class="bi bi-list-ul"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td><?= $order['email'] ?></td>
+                                                                <td><?= $order['created_at'] ?></td>
+                                                                <td>
+                                                                    <form action="order-delete.php" method="POST">
+                                                                        <a href="order-edit.php?id=<?= $order['id'] ?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                            <i class="bi bi-box-arrow-right"></i>
+                                                                        </a>
+                                                                        <input type="hidden" name="id" value="<?= $order['id'] ?>">
+                                                                        <!-- <button type="submit" name="delete-cart" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </button> -->
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
 
+                       
                 </div>
                 <!-- /.container-fluid -->
 
@@ -230,6 +320,10 @@
     })
 
     $(document).ready(function() {
-        $('#orderTable').DataTable();
+        <?php foreach ($grouped_data as $status => $orders) { 
+            $generateId = camelize($status);
+            echo "$('#orderTable$generateId').DataTable(); \n\t";
+        }?>
+
     });
 </script>

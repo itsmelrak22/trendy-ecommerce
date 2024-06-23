@@ -92,12 +92,14 @@ let line4;
 		
 		function checkCanvasImages(){
 			let positionObject = [...canvas.getObjects()];
-
+			const avatarSizeTD = document.querySelector("#avatarSizeTD");
 			const prices_by_sizes_avatar_logo = document.querySelector("#prices_by_sizes_avatar_logo");
-
+			const avatarLogoPrice = document.querySelector("#avatarLogoPrice");
 			positionObject.forEach(function(object) {
-				console.log("object.type", object.type)
 				 if (object.type === 'image') {
+            		avatarSizeTD.style.display = 'inline-block';
+					prices_by_sizes_avatar_logo.value = null;
+					avatarLogoPrice.textContent = 0;
 					prices_by_sizes_avatar_logo.disabled = false
 					return;
 				}
@@ -109,10 +111,16 @@ let line4;
 			let positionObject = [...canvas.getObjects()];
 
 			const prices_by_sizes_text = document.querySelector("#prices_by_sizes_text");
+			const textSizeTD = document.querySelector("#textSizeTD");
+			const textPrice = document.querySelector("#textPrice");
 
 			positionObject.forEach(function(object) {
 				if (object.type === 'text' || object.type === 'i-text' || object.type === 'textbox') {
-					prices_by_sizes_text.disabled = false
+
+					textPrice.innerText = 0;
+					textSizeTD.style.display = 'inline-block';
+					prices_by_sizes_text.value = null;
+					prices_by_sizes_text.disabled = false;
 					return;
 				}
 
@@ -125,7 +133,6 @@ let line4;
 			removeAllText();
 			function inchesToPixels(inches) {
 				const dpi = 20; // Change this based on your canvas DPI\
-				console.log( inches * dpi );
 				return inches * dpi;
 			}
 
@@ -168,7 +175,6 @@ let line4;
 
 			function inchesToPixels(inches) {
 				const dpi = 20; // Change this based on your canvas DPI\
-				console.log( inches * dpi );
 				return inches * dpi;
 			}
 
@@ -210,16 +216,54 @@ let line4;
 		    let activeObject = canvas.getActiveObject(),
 		        activeGroup = canvas.getActiveGroup();
 		    if (activeObject) {
-		      canvas.remove(activeObject);
+				if (activeObject.type === 'image') {
+					const avatarSizeTD = document.querySelector("#avatarSizeTD");
+					const prices_by_sizes_avatar_logo = document.querySelector("#prices_by_sizes_avatar_logo");
+					const avatarLogoPrice = document.querySelector("#avatarLogoPrice");
+
+					avatarSizeTD.style.display = 'none';
+					prices_by_sizes_avatar_logo.value = null;
+					avatarLogoPrice.textContent = 0;
+					prices_by_sizes_avatar_logo.disabled = true;
+				}else if (activeObject.type === 'text' || activeObject.type === 'i-text' || activeObject.type === 'textbox') { // Cover different text types
+					const textSizeTD = document.querySelector("#textSizeTD");
+					const prices_by_sizes_text = document.querySelector("#prices_by_sizes_text");
+					const textPrice = document.querySelector("#textPrice");
+					textPrice.innerText = 0;
+					textSizeTD.style.display = 'none';
+					prices_by_sizes_text.value = null;
+					prices_by_sizes_text.disabled = true;
+				}
+				canvas.remove(activeObject);
 		      $("#text-string").val("");
 		    }
 		    else if (activeGroup) {
 		      let objectsInGroup = activeGroup.getObjects();
 		      canvas.discardActiveGroup();
 		      objectsInGroup.forEach(function(object) {
+				if (activeObject.type === 'image') {
+					const avatarSizeTD = document.querySelector("#avatarSizeTD");
+					const prices_by_sizes_avatar_logo = document.querySelector("#prices_by_sizes_avatar_logo");
+					const avatarLogoPrice = document.querySelector("#avatarLogoPrice");
+
+					avatarSizeTD.style.display = 'none';
+					prices_by_sizes_avatar_logo.value = null;
+					avatarLogoPrice.textContent = 0;
+					prices_by_sizes_avatar_logo.disabled = true;
+				}else if (activeObject.type === 'text' || activeObject.type === 'i-text' || activeObject.type === 'textbox') { // Cover different text types
+					const textSizeTD = document.querySelector("#textSizeTD");
+					const prices_by_sizes_text = document.querySelector("#prices_by_sizes_text");
+					const textPrice = document.querySelector("#textPrice");
+					textPrice.innerText = 0;
+					textSizeTD.style.display = 'none';
+					prices_by_sizes_text.value = null;
+					prices_by_sizes_text.disabled = true;
+				}
 		        canvas.remove(object);
 		      });
 		    }
+
+			estimatePrice();
 	  };
 	  document.getElementById('bring-to-front').onclick = function() {		  
 		    let activeObject = canvas.getActiveObject(),

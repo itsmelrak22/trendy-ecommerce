@@ -602,7 +602,7 @@
                                                                 <th scope="col">Option</th>
                                                                 <th scope="col">Checkbox</th>
                                                                 <th scope="col">Options</th>
-                                                                <th scope="col">Size</th>
+                                                                <th scope="col">Dimension</th>
                                                                 <th scope="col">Price</th>
                                                             </tr>
                                                         </thead>
@@ -619,7 +619,10 @@
                                                                 </td>
                                                                 <td >
                                                                     <div id="avatarSizeTD" style="display: none;">
-                                                                        <select class="form-select" name="avatar_sizing" id="prices_by_sizes_avatar_logo" disabled> </select>
+                                                                        <select class="form-select" name="avatar_sizing" id="prices_by_sizes_avatar_logo" disabled>
+                                                                            <option value="3x3">3x3</option>
+                                                                            <option value="4x4">4x4</option>
+                                                                        </select>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -769,6 +772,7 @@
         <script type="text/javascript" src="./designer/js/tshirtEditor.js"></script>
 	    <script type="text/javascript" src="./designer/js/jquery.miniColors.min.js"></script>
         <script src="./js/shirtOptions.js"></script>
+        <script src="./js/newShirtOptions.js"></script>
         <script type="text/javascript">
             jQuery.browser = {};
             (function () {
@@ -879,12 +883,9 @@
                     let textPrice = document.getElementById('textPrice').textContent;
                     let shirt_selected = document.getElementById('shirt_selected').value;
                     let selected_size = document.getElementById('selected_size').value;
-                    let data
-                    if(shirt_selected.includes("DESIGN")){
-                        data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
-                    }else{
-                        data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == prices_by_sizes_avatar_logo)};
-                    }
+                    let customize_by = document.getElementById('customize_by').value;
+                    let prices_by_sizes_avatar_logo = document.getElementById('prices_by_sizes_avatar_logo').value;
+                   
 
                     // const selected_price = $("#selected_price").val();
                     const count = $("#count").val();
@@ -1319,16 +1320,8 @@
 
             $('#addToTheBag').click( async () => {
 
-
-
                 // let selected_price = document.getElementById('selected_price');
                 let count = document.getElementById('count');
-
-                // if(!selected_price.value){
-                //     // If form validation fails, display an error message or handle it as needed
-                //     alert("Please fill out all required fields correctly.");
-                //     return;
-                // }
 
                 if(count.value < 1){
                     // If form validation fails, display an error message or handle it as needed
@@ -1405,47 +1398,6 @@
                     });
                 });
             }
-
-            // function dataURLToBlob(dataURL) {
-            // 	var parts = dataURL.split(';base64,');
-            // 	var contentType = parts[0].split(":")[1];
-            // 	var raw = window.atob(parts[1]);
-            // 	var rawLength = raw.length;
-            // 	var uInt8Array = new Uint8Array(rawLength);
-
-            // 	for (var i = 0; i < rawLength; ++i) {
-            // 		uInt8Array[i] = raw.charCodeAt(i);
-            // 	}
-
-            // 	return new Blob([uInt8Array], {type: contentType});
-            // }
-
-
-            // function testConvert(){
-            // 				// Then in your JavaScript code
-            // 	html2canvas(document.getElementById('shirtDiv')).then(function(canvas) {
-            // 		// canvas is the resulting HTML canvas element
-            // 		// you can insert it into the DOM or save it as an image
-            // 		var img = canvas.toDataURL("image/png");
-            // 		// Now you can download the image
-            // 		var link = document.createElement('a');
-            // 		link.href = img;
-            // 		link.download = 'image.png';
-            // 		link.click();
-            // 	});
-            // }
-
-            // function testConvert() {
-            // 	return html2canvas(document.getElementById('shirtDiv')).then(function(canvas) {
-            // 		return new Promise(function(resolve, reject) {
-            // 			canvas.toBlob(function(blob) {
-            // 				resolve(blob);
-            // 			}, 'image/png');
-            // 		});
-            // 	});
-            // }
-
-
 
 
         </script>
@@ -1580,15 +1532,16 @@
 
             let shirt_selected = document.getElementById('shirt_selected').value;
             let selected_size = document.getElementById('selected_size').value;
+            let customize_by = document.getElementById('customize_by').value;
             let data 
             if(shirt_selected.includes("DESIGN")){
-                data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == selectedValue)};
+                data = newShirtOptions["Polo Shirts"][customize_by][selectedValue][selected_size];
             }else{
-                data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
+                data = newShirtOptions[shirt_selected][customize_by][selectedValue][selected_size];
             }
             
             let avatarLogoPrice = document.getElementById('avatarLogoPrice')
-            avatarLogoPrice.textContent = data.price
+            avatarLogoPrice.textContent = data
             estimatePrice()
 
         });
@@ -1614,19 +1567,8 @@
         });
 
         function updateDimensions(size) {
-            var shirtDimensionsSelectAvatar = document.getElementById('prices_by_sizes_avatar_logo');
             let shirt_selected = document.getElementById('shirt_selected').value;
-
-
-            // Clear all existing options in the dimensions select
-            shirtDimensionsSelectAvatar.innerHTML = '';
-
             var shirtDimensionsSelectText = document.getElementById('prices_by_sizes_text');
-
-
-            // Clear all existing options in the dimensions select
-            shirtDimensionsSelectText.innerHTML = '';
-
 
             // Fetch the dimensions data for the selected size
             if(shirt_selected.includes("DESIGN")){
@@ -1637,15 +1579,6 @@
 
             // Populate the dimensions select with new options
             if (sizeData) {
-                var option = document.createElement('option');
-                option.value = '';
-                option.text = '';
-                shirtDimensionsSelectText.appendChild(option);
-
-                var option = document.createElement('option');
-                option.value = '';
-                option.text = '';
-                shirtDimensionsSelectAvatar.appendChild(option);
 
                 sizeData.forEach(item => {
                     var option = document.createElement('option');
@@ -1654,13 +1587,9 @@
                     shirtDimensionsSelectText.appendChild(option);
                 });
 
-                sizeData.forEach(item => {
-                    var option = document.createElement('option');
-                    option.value = item.dimension;
-                    option.text = item.dimension;
-                    shirtDimensionsSelectAvatar.appendChild(option);
-                });
+        
             }
+            shirtDimensionsSelectText.value = null
             document.getElementById('textPrice').innerText = 0
             document.getElementById('avatarLogoPrice').innerText = 0
             
@@ -1682,8 +1611,6 @@
         });
 
         
-
-        console.log(shirtOptions);
     </script>
 
 <script>
@@ -1713,7 +1640,7 @@
 
         if (this.checked) {
             avatarLogoButton.style.display = 'inline-block';
-            avatarSizeTD.style.display = 'inline-block';
+            // avatarSizeTD.style.display = 'inline-block';
 
 
         } else {

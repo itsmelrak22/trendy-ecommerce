@@ -8,7 +8,7 @@
   <div class="row text-center text-sm-start column">
     <?php
 
-      for ($i = 1; $i <= 70; $i++) {
+      for ($i = 1; $i <= 78; $i++) {
           $imgPath = "./designer/img/designs/$i.png";
         echo '
         <div class="col-lg-6 col-md-6 col-6">

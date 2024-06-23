@@ -28,6 +28,10 @@ function getImageLink($image){
     return $img_link;
 }
 
+function camelize($input, $separator = ' '){
+    return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
+}
+
 ?>
 
 

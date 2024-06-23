@@ -10,7 +10,8 @@ spl_autoload_register(function ($class) {
 
   $instace = new Order;
   $data = $instace->getOrderAndOrderDetails($id);
-
+//   displayDataTest($data);
+ 
     function getStatusText($status){
 
         switch ($status) {
@@ -43,7 +44,6 @@ spl_autoload_register(function ($class) {
 
     }
 
-//   displayDataTest($data);
 
 ?>
 

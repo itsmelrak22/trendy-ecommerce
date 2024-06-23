@@ -69,17 +69,6 @@ $location = basename($url);
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-<!-- Heading -->
-<div class="sidebar-heading">
-    Product Master
-</div>
-
-<!-- Nav Item - Admin Users -->
-<li class="nav-item <?= $location ==  "user-list.php" ? "active" : ""?>">
-    <a class="nav-link" href="user-list.php">
-        <i class="fas fa-fw fa-table"></i>
-        <span>Users</span></a>
-</li>
 <!-- Nav Item - Customers -->
 <li class="nav-item <?= $location ==  "customer-list.php" ? "active" : ""?>">
     <a class="nav-link" href="customer-list.php">

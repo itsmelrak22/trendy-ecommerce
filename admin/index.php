@@ -54,7 +54,6 @@
 
     <!-- Daterangepicker CSS -->
     <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet">
-
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -109,20 +108,22 @@
                         <!-- Earnings (Monthly) Card Example -->
 
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (<?php echo $currentMonth; ?>)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">₱<?= $sales_total_in_current_month_count ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <a href="index.php">
+                                <div class="card border-left-primary shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                    Earnings (<?php echo $currentMonth; ?>)</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">₱<?= $sales_total_in_current_month_count ?></div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
 
@@ -145,214 +146,72 @@
 
                         <!-- Tasks Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Customers
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $customers_count ?></div>
+                            <a href="customer-list.php">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Customers
+                                                </div>
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $customers_count ?></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                                            <div class="col-auto">
+                                                <i class="fas fa-users fa-2x text-gray-300"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                         <!-- Pending Requests Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Orders</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $orders_count ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <a href="order-list.php">
+                                <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                    Orders</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $orders_count ?></div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <!-- Pending Requests Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Custom Orders</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <a href="custom-order-list.php">
+                                <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                    Custom Orders</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
                     <hr>
                         <!-- DataTales Example -->
 
-                         <!-- Collapsable Card Example -->
-                         <div class="card shadow mb-4">
-                            <!-- Card Header - Accordion -->
-                            <a href="#yearyReport" class="d-block card-header py-3" data-toggle="collapse"
-                                role="button" aria-expanded="true" aria-controls="yearyReport">
-                                <h6 class="m-0 font-weight-bold text-primary">Custom Date Reports</h6>
-                            </a>
-                            <!-- Card Content - Collapse -->
-                            <div class="collapse show" id="yearyReport">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="text" id="daterange" class="form-control">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <button class="btn btn-primary btn-sm" id="generateCustomReport">Generate Report</button>
-                                        </div>
-                                        <div class="col-md-4 my-2">
-                                            <button class="btn btn-secondary btn-sm" id="previewCustomPDF" disabled>Preview PDF</button>
-                                            <button class="btn btn-primary btn-sm" id="downloadCustomPDF"  disabled>Download PDF</button>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive mt-4">
-                                        <table class="table table-bordered" id="customDateTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>MOP</th>
-                                                    <th>Order Date</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- Report data will be populated here by JavaScript -->
-                                                <tr>
-                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="3">Total Revenue</th>
-                                                    <th id="customTotalRevenue">0.00</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         <!-- Collapsable Card Example -->
-                         <div class="card shadow mb-4">
-                            <!-- Card Header - Accordion -->
-                            <a href="#yearyReport" class="d-block card-header py-3" data-toggle="collapse"
-                                role="button" aria-expanded="true" aria-controls="yearyReport">
-                                <h6 class="m-0 font-weight-bold text-primary">Yearly Reports</h6>
-                            </a>
-                            <!-- Card Content - Collapse -->
-                            <div class="collapse show" id="yearyReport">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control" name="reportYear" id="reportYear">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <button class="btn btn-primary btn-sm" id="generateYearReport">Generate Report</button>
-                                        </div>
-                                        <div class="col-md-4 my-2">
-                                            <button class="btn btn-secondary btn-sm" id="previewYearPDF" disabled>Preview PDF</button>
-                                            <button class="btn btn-primary btn-sm" id="downloadYeadPDF" disabled>Download PDF</button>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive mt-4">
-                                        <table class="table table-bordered" id="yearTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>MOP</th>
-                                                    <th>Order Date</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- Report data will be populated here by JavaScript -->
-                                                <tr>
-                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="3">Total Revenue</th>
-                                                    <th id="yearTotalRevenue">0.00</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                         <!-- Collapsable Card Example -->
-                         <div class="card shadow mb-4">
-                            <!-- Card Header - Accordion -->
-                            <a href="#monthlyReports" class="d-block card-header py-3" data-toggle="collapse"
-                                role="button" aria-expanded="true" aria-controls="monthlyReports">
-                                <h6 class="m-0 font-weight-bold text-primary">Monthly Reports</h6>
-                            </a>
-                            <!-- Card Content - Collapse -->
-                            <div class="collapse show" id="monthlyReports">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control datemonthpicker" id="reportMonth" placeholder="Select month and year">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <button class="btn btn-primary btn-sm" id="generateMonthReport">Generate Report</button>
-                                        </div>
-                                        <div class="col-md-4 my-2">
-                                            <button class="btn btn-secondary btn-sm" id="previewMonthPDF" disabled>Preview PDF</button>
-                                            <button class="btn btn-primary btn-sm" id="downloaMonthdPDF" disabled>Download PDF</button>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive mt-4">
-                                        <table class="table table-bordered" id="monthTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>MOP</th>
-                                                    <th>Order Date</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- Report data will be populated here by JavaScript -->
-                                                <tr>
-                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="3">Total Revenue</th>
-                                                    <th id="monthTotalRevenue">0.00</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         <!-- Collapsable Card Example -->
+                         <!-- Daily Reports -->
                          <div class="card shadow mb-4">
                             <!-- Card Header - Accordion -->
                             <a href="#dailyReports" class="d-block card-header py-3" data-toggle="collapse"
@@ -403,6 +262,212 @@
                                 </div>
                             </div>
                         </div>
+
+                         <!-- Weekly Reports -->
+                         <div class="card shadow mb-4">
+                            <!-- Card Header - Accordion -->
+                            <a href="#dailyReports" class="d-block card-header py-3" data-toggle="collapse"
+                                role="button" aria-expanded="true" aria-controls="dailyReports">
+                                <h6 class="m-0 font-weight-bold text-primary">Weekly Reports</h6>
+                            </a>
+                            <!-- Card Content - Collapse -->
+                            <div class="collapse show" id="dailyReports">
+                                <div class="card-body">
+                                    <div class="row mt-4">
+                                        <div class="col-md-4">
+                                            <input type="text" id="weekrange" class="form-control">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button class="btn btn-primary btn-sm" id="generateWeekReport">Generate Weekly Report</button>
+                                        </div>
+                                        <div class="col-md-4 my-2">
+                                            <button class="btn btn-secondary btn-sm" id="previewWeekPDF" disabled>Preview PDF</button>
+                                            <button class="btn btn-primary btn-sm" id="downloadWeekPDF" disabled>Download PDF</button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-bordered" id="weekTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer</th>
+                                                    <th>MOP</th>
+                                                    <th>Order Date</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Report data will be populated here by JavaScript -->
+                                                <tr>
+                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3">Total Revenue</th>
+                                                    <th id="weekTotalRevenue">0.00</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monthly Reports -->
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Accordion -->
+                            <a href="#monthlyReports" class="d-block card-header py-3" data-toggle="collapse"
+                                role="button" aria-expanded="true" aria-controls="monthlyReports">
+                                <h6 class="m-0 font-weight-bold text-primary">Monthly Reports</h6>
+                            </a>
+                            <!-- Card Content - Collapse -->
+                            <div class="collapse show" id="monthlyReports">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control datemonthpicker" id="reportMonth" placeholder="Select month and year">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button class="btn btn-primary btn-sm" id="generateMonthReport">Generate Report</button>
+                                        </div>
+                                        <div class="col-md-4 my-2">
+                                            <button class="btn btn-secondary btn-sm" id="previewMonthPDF" disabled>Preview PDF</button>
+                                            <button class="btn btn-primary btn-sm" id="downloaMonthdPDF" disabled>Download PDF</button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-bordered" id="monthTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer</th>
+                                                    <th>MOP</th>
+                                                    <th>Order Date</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Report data will be populated here by JavaScript -->
+                                                <tr>
+                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3">Total Revenue</th>
+                                                    <th id="monthTotalRevenue">0.00</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- Yearly Reports -->
+                         <div class="card shadow mb-4">
+                            <!-- Card Header - Accordion -->
+                            <a href="#yearyReport" class="d-block card-header py-3" data-toggle="collapse"
+                                role="button" aria-expanded="true" aria-controls="yearyReport">
+                                <h6 class="m-0 font-weight-bold text-primary">Yearly Reports</h6>
+                            </a>
+                            <!-- Card Content - Collapse -->
+                            <div class="collapse show" id="yearyReport">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="reportYear" id="reportYear">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button class="btn btn-primary btn-sm" id="generateYearReport">Generate Report</button>
+                                        </div>
+                                        <div class="col-md-4 my-2">
+                                            <button class="btn btn-secondary btn-sm" id="previewYearPDF" disabled>Preview PDF</button>
+                                            <button class="btn btn-primary btn-sm" id="downloadYeadPDF" disabled>Download PDF</button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-bordered" id="yearTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer</th>
+                                                    <th>MOP</th>
+                                                    <th>Order Date</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Report data will be populated here by JavaScript -->
+                                                <tr>
+                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3">Total Revenue</th>
+                                                    <th id="yearTotalRevenue">0.00</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <!-- Custom Date Reports -->
+                         <div class="card shadow mb-4">
+                            <!-- Card Header - Accordion -->
+                            <a href="#yearyReport" class="d-block card-header py-3" data-toggle="collapse"
+                                role="button" aria-expanded="true" aria-controls="yearyReport">
+                                <h6 class="m-0 font-weight-bold text-primary">Custom Date Reports</h6>
+                            </a>
+                            <!-- Card Content - Collapse -->
+                            <div class="collapse show" id="yearyReport">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" id="daterange" class="form-control">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button class="btn btn-primary btn-sm" id="generateCustomReport">Generate Report</button>
+                                        </div>
+                                        <div class="col-md-4 my-2">
+                                            <button class="btn btn-secondary btn-sm" id="previewCustomPDF" disabled>Preview PDF</button>
+                                            <button class="btn btn-primary btn-sm" id="downloadCustomPDF"  disabled>Download PDF</button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-bordered" id="customDateTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Customer</th>
+                                                    <th>MOP</th>
+                                                    <th>Order Date</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Report data will be populated here by JavaScript -->
+                                                <tr>
+                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3">Total Revenue</th>
+                                                    <th id="customTotalRevenue">0.00</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                         
+                        
 
                 </div>
                 <!-- /.container-fluid -->
@@ -530,123 +595,340 @@
 <script>
     $(document).ready(function() {
 
-    $('.datemonthpicker').datepicker({
-        format: 'yyyy-mm',
-        startView: "months", 
-        minViewMode: "months",
-        autoclose: true
-    });
-    // Initialize datepicker
-    $('#daterange').daterangepicker({
-        opens: 'right',
-        locale: {
-            format: 'YYYY-MM-DD',
-        },
-        maxDate: moment().format('YYYY-MM-DD') // Disable future dates
-    }, function(start, end, label) {
-        // console.log("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-    });
-    
-    $('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
-        endDate: "today"
-    });
-
-    $('#reportDate').change( function (e){
-        let reportDate = $('#reportDate').val();
-        if(reportDate){
-            let previewPDF = document.getElementById('previewPDF');
-            let downloadPDF = document.getElementById('downloadPDF');
+            $('.datemonthpicker').datepicker({
+                format: 'yyyy-mm',
+                startView: "months", 
+                minViewMode: "months",
+                autoclose: true
+            });
+            // Initialize datepicker
+            $('#daterange').daterangepicker({
+                opens: 'right',
+                locale: {
+                    format: 'YYYY-MM-DD',
+                },
+                maxDate: moment().format('YYYY-MM-DD') // Disable future dates
+            }, function(start, end, label) {
+                // console.log("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
             
-            previewPDF.disabled = false
-            downloadPDF.disabled = false
-        }else{
-            previewPDF.disabled = true
-            downloadPDF.disabled = true
-        }
-    })
-    $('#reportYear').change( function (e){
-        let reportYear = $('#reportYear').val();
-        if(reportYear){
-            let previewYearPDF = document.getElementById('previewYearPDF');
-            let downloadYeadPDF = document.getElementById('downloadYeadPDF');
-            
-            previewYearPDF.disabled = false
-            downloadYeadPDF.disabled = false
-        }else{
-            previewYearPDF.disabled = true
-            downloadYeadPDF.disabled = true
-        }
-    })
-    $('#reportMonth').change( function (e){
-        let reportMonth = $('#reportMonth').val();
-        if(reportMonth){
-            let previewMonthPDF = document.getElementById('previewMonthPDF');
-            let downloaMonthdPDF = document.getElementById('downloaMonthdPDF');
-            
-            previewMonthPDF.disabled = false
-            downloaMonthdPDF.disabled = false
-        }else{
-            previewMonthPDF.disabled = true
-            downloaMonthdPDF.disabled = true
-        }
-    })
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                endDate: "today"
+            });
 
-    // Handle generate report button click
-    $('#generateReport').click(function() {
-        let reportDate = $('#reportDate').val();
-        if (reportDate) {
-            // Fetch report data for the selected date
-            $.ajax({
-                url: 'fetch-report.php', // Create this endpoint to fetch report data
-                type: 'GET',
-                data: { reportDate: reportDate },
-                success: function(response) {
-                    console.log(response);
-                    let data = response;
-                    let reportTableBody = $('#reportTable tbody');
-                    reportTableBody.empty();
+            $('#reportDate').change( function (e){
+                let reportDate = $('#reportDate').val();
+                if(reportDate){
+                    let previewPDF = document.getElementById('previewPDF');
+                    let downloadPDF = document.getElementById('downloadPDF');
+                    
+                    previewPDF.disabled = false
+                    downloadPDF.disabled = false
+                }else{
+                    previewPDF.disabled = true
+                    downloadPDF.disabled = true
+                }
+            })
+            $('#reportYear').change( function (e){
+                let reportYear = $('#reportYear').val();
+                if(reportYear){
+                    let previewYearPDF = document.getElementById('previewYearPDF');
+                    let downloadYeadPDF = document.getElementById('downloadYeadPDF');
+                    
+                    previewYearPDF.disabled = false
+                    downloadYeadPDF.disabled = false
+                }else{
+                    previewYearPDF.disabled = true
+                    downloadYeadPDF.disabled = true
+                }
+            })
+            $('#reportMonth').change( function (e){
+                let reportMonth = $('#reportMonth').val();
+                if(reportMonth){
+                    let previewMonthPDF = document.getElementById('previewMonthPDF');
+                    let downloaMonthdPDF = document.getElementById('downloaMonthdPDF');
+                    
+                    previewMonthPDF.disabled = false
+                    downloaMonthdPDF.disabled = false
+                }else{
+                    previewMonthPDF.disabled = true
+                    downloaMonthdPDF.disabled = true
+                }
+            })
 
-                    let totalRevenue = 0;
-                    data.forEach(function(item) {
-                        reportTableBody.append(
-                            '<tr>' +
-                                '<td>' + item.email + '</td>' +
-                                '<td>' + item.mop + '</td>' +
-                                '<td>' + item.created_at + '</td>' +
-                                '<td>' + item.total + '</td>' +
-                            '</tr>'
-                        );
-                        totalRevenue += parseFloat(item.total);
+            // Handle generate report button click
+            $('#generateReport').click(function() {
+                let reportDate = $('#reportDate').val();
+                if (reportDate) {
+                    // Fetch report data for the selected date
+                    $.ajax({
+                        url: 'fetch-report.php', // Create this endpoint to fetch report data
+                        type: 'GET',
+                        data: { reportDate: reportDate },
+                        success: function(response) {
+                            console.log(response);
+                            let data = response;
+                            let reportTableBody = $('#reportTable tbody');
+                            reportTableBody.empty();
+
+                            let totalRevenue = 0;
+                            data.forEach(function(item) {
+                                reportTableBody.append(
+                                    '<tr>' +
+                                        '<td>' + item.email + '</td>' +
+                                        '<td>' + item.mop + '</td>' +
+                                        '<td>' + item.created_at + '</td>' +
+                                        '<td>' + item.total + '</td>' +
+                                    '</tr>'
+                                );
+                                totalRevenue += parseFloat(item.total);
+                            });
+
+                            $('#totalRevenue').text(totalRevenue.toFixed(2));
+                        }
                     });
-
-                    $('#totalRevenue').text(totalRevenue.toFixed(2));
+                } else {
+                    alert('Please select a date.');
                 }
             });
-        } else {
-            alert('Please select a date.');
-        }
-    });
 
-    $('#daterange').change( function (e){
-        let daterange = $('#daterange').val();
-        console.log('daterange', daterange)
-        if(daterange){
-            let previewCustomPDF = document.getElementById('previewCustomPDF');
-            let downloadCustomPDF = document.getElementById('downloadCustomPDF');
-            
-            previewCustomPDF.disabled = false
-            downloadCustomPDF.disabled = false
-        }else{
-            previewCustomPDF.disabled = true
-            downloadCustomPDF.disabled = true
-        }
-    })
-    $('#generateCustomReport').click(function() {
-        let daterange = $('#daterange').val();
-        let [startDate, endDate] = daterange.split(" - ");
+            $('#daterange').change( function (e){
+                let daterange = $('#daterange').val();
+                console.log('daterange', daterange)
+                if(daterange){
+                    let previewCustomPDF = document.getElementById('previewCustomPDF');
+                    let downloadCustomPDF = document.getElementById('downloadCustomPDF');
+                    
+                    previewCustomPDF.disabled = false
+                    downloadCustomPDF.disabled = false
+                }else{
+                    previewCustomPDF.disabled = true
+                    downloadCustomPDF.disabled = true
+                }
+            })
+            $('#generateCustomReport').click(function() {
+                let daterange = $('#daterange').val();
+                let [startDate, endDate] = daterange.split(" - ");
+                if (startDate || endDate) {
+                    // Fetch report data for the selected date
+                    $.ajax({
+                        url: 'fetch-report.php', // Create this endpoint to fetch report data
+                        type: 'GET',
+                        data: { startDate: startDate, endDate: endDate },
+                        success: function(response) {
+                            console.log(response);
+                            let data = response;
+                            let tableBody = $('#customDateTable tbody');
+                            tableBody.empty();
+
+                            let totalRevenue = 0;
+                            data.forEach(function(item) {
+                                tableBody.append(
+                                    '<tr>' +
+                                        '<td>' + item.email + '</td>' +
+                                        '<td>' + item.mop + '</td>' +
+                                        '<td>' + item.created_at + '</td>' +
+                                        '<td>' + item.total + '</td>' +
+                                    '</tr>'
+                                );
+                                totalRevenue += parseFloat(item.total);
+                            });
+
+                            $('#customTotalRevenue').text(totalRevenue.toFixed(2));
+                        }
+                    });
+                } else {
+                    alert('Please select a date.');
+                }
+            });
+            $('#generateYearReport').click(function() {
+                let reportYear = $('#reportYear').val();
+                if (reportYear) {
+                    // Fetch report data for the selected date
+                    $.ajax({
+                        url: 'fetch-report.php', // Create this endpoint to fetch report data
+                        type: 'GET',
+                        data: { reportYear: reportYear },
+                        success: function(response) {
+                            console.log(response);
+                            let data = response;
+                            let tableBody = $('#yearTable tbody');
+                            tableBody.empty();
+
+                            let totalRevenue = 0;
+                            data.forEach(function(item) {
+                                tableBody.append(
+                                    '<tr>' +
+                                        '<td>' + item.email + '</td>' +
+                                        '<td>' + item.mop + '</td>' +
+                                        '<td>' + item.created_at + '</td>' +
+                                        '<td>' + item.total + '</td>' +
+                                    '</tr>'
+                                );
+                                totalRevenue += parseFloat(item.total);
+                            });
+
+                            $('#yearTotalRevenue').text(totalRevenue.toFixed(2));
+                        }
+                    });
+                } else {
+                    alert('Please select a date.');
+                }
+            });
+            $('#generateMonthReport').click(function() {
+                let reportMonth = $('#reportMonth').val();
+                if (reportMonth) {
+                    // Fetch report data for the selected date
+                    $.ajax({
+                        url: 'fetch-report.php', // Create this endpoint to fetch report data
+                        type: 'GET',
+                        data: { reportMonth: reportMonth },
+                        success: function(response) {
+                            console.log(response);
+                            let data = response;
+                            let tableBody = $('#monthTable tbody');
+                            tableBody.empty();
+
+                            let totalRevenue = 0;
+                            data.forEach(function(item) {
+                                tableBody.append(
+                                    '<tr>' +
+                                        '<td>' + item.email + '</td>' +
+                                        '<td>' + item.mop + '</td>' +
+                                        '<td>' + item.created_at + '</td>' +
+                                        '<td>' + item.total + '</td>' +
+                                    '</tr>'
+                                );
+                                totalRevenue += parseFloat(item.total);
+                            });
+
+                            $('#monthTotalRevenue').text(totalRevenue.toFixed(2));
+                        }
+                    });
+                } else {
+                    alert('Please select a date.');
+                }
+            });
+
+
+
+            // Attach click event to download PDF button
+            $('#downloadPDF').click(function() {
+                downloadPdf()
+            });
+
+            // Attach click event to preview PDF button
+            $('#previewPDF').click(function() {
+                previewPdf()
+            });
+
+            $('#downloadCustomPDF').click(function() {
+                downloadPdf('customDateTable')
+            });
+            $('#previewCustomPDF').click(function() {
+                previewPdf('customDateTable')
+            });
+
+            $('#downloadYearPDF').click(function() {
+                downloadPdf('yearTable')
+            });
+            $('#previewYearPDF').click(function() {
+                previewPdf('yearTable')
+            });
+
+            $('#downloadMonthPDF').click(function() {
+                downloadPdf('monthTable')
+            });
+            $('#previewMonthPDF').click(function() {
+                previewPdf('monthTable')
+            });
+
+
+
+
+            // Function to generate PDF from report table
+                function generatePDF(table = "reportTable") {
+                let { jsPDF } = window.jspdf;
+                let doc = new jsPDF();
+                doc.text('Daily Report', 14, 16);
+                doc.autoTable({
+                    html: `#${table}`,
+                    startY: 20,
+                    theme: 'grid',
+                    footStyles: { fillColor: [0, 0, 0] }
+                });
+                return doc;
+            }
+
+
+            function downloadPdf(table){
+                let doc = generatePDF(`${table}`);
+                let date = new Date();
+                doc.save(`report-${date.toISOString().split('T')[0]}.pdf`);
+            }
+
+            function previewPdf(table){
+                let doc = generatePDF(`${table}`);
+                let string = doc.output('datauristring');
+                let iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>";
+                let x = window.open();
+                x.document.open();
+                x.document.write(iframe);
+                x.document.close();
+            }
+
+            $('#weekrange').daterangepicker({
+                locale: {
+                    format: 'YYYY-MM-DD',
+                    separator: ' to ',
+                    cancelLabel: 'Clear'
+                },
+                isInvalidDate: function(date) {
+                    var day = date.day();
+                    return (day != 0 && day != 6);
+                },
+                showWeekNumbers: true,
+                showCustomRangeLabel: false,
+                autoApply: false,
+                // ranges: {
+                //     'This Week': [moment().startOf('isoWeek'), moment().endOf('isoWeek')],
+                //     'Last Week': [moment().subtract(1, 'weeks').startOf('isoWeek'), moment().subtract(1, 'weeks').endOf('isoWeek')],
+                //     'Next Week': [moment().add(1, 'weeks').startOf('isoWeek'), moment().add(1, 'weeks').endOf('isoWeek')]
+                // }
+            }, function(start, end, label) {
+                // Date range selected callback
+                console.log("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+
+        // Enable the clear button to clear the input field and reset the buttons
+            $('#weekrange').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                document.getElementById('previewWeekPDF').disabled = true;
+                document.getElementById('downloadWeekPDF').disabled = true;
+            });
+
+            $('#weekrange').change(function(e) {
+                let weekrange = $('#weekrange').val();
+                console.log('weekrange', weekrange)
+                if(weekrange){
+                    let previewWeekPDF = document.getElementById('previewWeekPDF');
+                    let downloadWeekPDF = document.getElementById('downloadWeekPDF');
+                    
+                    previewWeekPDF.disabled = false
+                    downloadWeekPDF.disabled = false
+                }else{
+                    previewWeekPDF.disabled = true
+                    downloadWeekPDF.disabled = true
+                }
+            });
+
+    // Handle generate weekly report button click
+    $('#generateWeekReport').click(function() {
+        let weekrange = $('#weekrange').val();
+        let [startDate, endDate] = weekrange.split(" to ");
         if (startDate || endDate) {
-            // Fetch report data for the selected date
+            // Fetch report data for the selected week
             $.ajax({
                 url: 'fetch-report.php', // Create this endpoint to fetch report data
                 type: 'GET',
@@ -654,7 +936,7 @@
                 success: function(response) {
                     console.log(response);
                     let data = response;
-                    let tableBody = $('#customDateTable tbody');
+                    let tableBody = $('#weekTable tbody');
                     tableBody.empty();
 
                     let totalRevenue = 0;
@@ -670,75 +952,7 @@
                         totalRevenue += parseFloat(item.total);
                     });
 
-                    $('#customTotalRevenue').text(totalRevenue.toFixed(2));
-                }
-            });
-        } else {
-            alert('Please select a date.');
-        }
-    });
-    $('#generateYearReport').click(function() {
-        let reportYear = $('#reportYear').val();
-        if (reportYear) {
-            // Fetch report data for the selected date
-            $.ajax({
-                url: 'fetch-report.php', // Create this endpoint to fetch report data
-                type: 'GET',
-                data: { reportYear: reportYear },
-                success: function(response) {
-                    console.log(response);
-                    let data = response;
-                    let tableBody = $('#yearTable tbody');
-                    tableBody.empty();
-
-                    let totalRevenue = 0;
-                    data.forEach(function(item) {
-                        tableBody.append(
-                            '<tr>' +
-                                '<td>' + item.email + '</td>' +
-                                '<td>' + item.mop + '</td>' +
-                                '<td>' + item.created_at + '</td>' +
-                                '<td>' + item.total + '</td>' +
-                            '</tr>'
-                        );
-                        totalRevenue += parseFloat(item.total);
-                    });
-
-                    $('#yearTotalRevenue').text(totalRevenue.toFixed(2));
-                }
-            });
-        } else {
-            alert('Please select a date.');
-        }
-    });
-    $('#generateMonthReport').click(function() {
-        let reportMonth = $('#reportMonth').val();
-        if (reportMonth) {
-            // Fetch report data for the selected date
-            $.ajax({
-                url: 'fetch-report.php', // Create this endpoint to fetch report data
-                type: 'GET',
-                data: { reportMonth: reportMonth },
-                success: function(response) {
-                    console.log(response);
-                    let data = response;
-                    let tableBody = $('#monthTable tbody');
-                    tableBody.empty();
-
-                    let totalRevenue = 0;
-                    data.forEach(function(item) {
-                        tableBody.append(
-                            '<tr>' +
-                                '<td>' + item.email + '</td>' +
-                                '<td>' + item.mop + '</td>' +
-                                '<td>' + item.created_at + '</td>' +
-                                '<td>' + item.total + '</td>' +
-                            '</tr>'
-                        );
-                        totalRevenue += parseFloat(item.total);
-                    });
-
-                    $('#monthTotalRevenue').text(totalRevenue.toFixed(2));
+                    $('#weekTotalRevenue').text(totalRevenue.toFixed(2));
                 }
             });
         } else {
@@ -746,72 +960,13 @@
         }
     });
 
-
-
-    // Attach click event to download PDF button
-    $('#downloadPDF').click(function() {
-        downloadPdf()
+    $('#downloadWeekPDF').click(function() {
+        downloadPdf('weekTable');
     });
 
-    // Attach click event to preview PDF button
-    $('#previewPDF').click(function() {
-        previewPdf()
+    $('#previewWeekPDF').click(function() {
+        previewPdf('weekTable');
     });
-
-    $('#downloadCustomPDF').click(function() {
-        downloadPdf('customDateTable')
     });
-    $('#previewCustomPDF').click(function() {
-        previewPdf('customDateTable')
-    });
-
-    $('#downloadYearPDF').click(function() {
-        downloadPdf('yearTable')
-    });
-    $('#previewYearPDF').click(function() {
-        previewPdf('yearTable')
-    });
-
-    $('#downloadMonthPDF').click(function() {
-        downloadPdf('monthTable')
-    });
-    $('#previewMonthPDF').click(function() {
-        previewPdf('monthTable')
-    });
-
-
-
-
-    // Function to generate PDF from report table
-        function generatePDF(table = "reportTable") {
-        let { jsPDF } = window.jspdf;
-        let doc = new jsPDF();
-        doc.text('Daily Report', 14, 16);
-        doc.autoTable({
-            html: `#${table}`,
-            startY: 20,
-            theme: 'grid',
-            footStyles: { fillColor: [0, 0, 0] }
-        });
-        return doc;
-    }
-
-
-    function downloadPdf(table){
-        let doc = generatePDF(`${table}`);
-        let date = new Date();
-        doc.save(`report-${date.toISOString().split('T')[0]}.pdf`);
-    }
-
-    function previewPdf(table){
-        let doc = generatePDF(`${table}`);
-        let string = doc.output('datauristring');
-        let iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>";
-        let x = window.open();
-        x.document.open();
-        x.document.write(iframe);
-        x.document.close();
-    }
-});
 
 </script>
