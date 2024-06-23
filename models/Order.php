@@ -22,7 +22,14 @@ Class Order extends Model {
             foreach ($orders as $key => &$value) { // Note the & before $value
                 $order_id =  $value['id'];
                 $value['order_details'] = $instance->setQuery("
-                    SELECT OD.*, PC.name as color_name, P.name as product_name, C.total_price
+                        SELECT 
+                        OD.*, 
+                        PC.name as color_name, 
+                        PC.code as color_code, 
+                        PC.image, 
+                        P.name as product_name,
+                        C.status,
+                        C.total_price    
                     FROM `order_details` as OD
                     LEFT JOIN `product_colors` as PC
                     ON PC.id = OD.color_id
