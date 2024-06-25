@@ -69,39 +69,13 @@
             <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    <!-- <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form> -->
-
                     <?php include_once("./includes/topbar-nav.php"); ?>
 
-
-                </nav>
-                <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
 
                     <div class="row">
 
@@ -815,12 +789,12 @@
 
             // Attach click event to download PDF button
             $('#downloadPDF').click(function() {
-                downloadPdf()
+                downloadPdf('reportTable')
             });
 
             // Attach click event to preview PDF button
             $('#previewPDF').click(function() {
-                previewPdf()
+                previewPdf('reportTable')
             });
 
             $('#downloadCustomPDF').click(function() {
@@ -848,19 +822,42 @@
 
 
             // Function to generate PDF from report table
-                function generatePDF(table = "reportTable") {
+            function generatePDF(table = "reportTable") {
                 let { jsPDF } = window.jspdf;
                 let doc = new jsPDF();
-                doc.text('Daily Report', 14, 16);
+                
+                // Center alignment function
+                function centerText(text, yPosition) {
+                    const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    const textOffset = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(text, textOffset, yPosition);
+                }
+                
+                // Store name
+                doc.setFontSize(16);
+                centerText('TRENDY THREADS APPAREL BY LOVE J\'S STORE', 20);
+                
+                // Address
+                doc.setFontSize(12);
+                centerText('9070 DR. SOLIS STREET JULUGAN 8, TANZA, CAVITE', 30);
+                
+                // Contact number (if needed)
+                // doc.text('CONTACT NO: +639636099067', 14, 48);
+                
+                // Title of the report
+                doc.setFontSize(14);
+                centerText('Sales Report', 50);
+                
+                // Adding the table from HTML
                 doc.autoTable({
                     html: `#${table}`,
-                    startY: 20,
+                    startY: 60,
                     theme: 'grid',
                     footStyles: { fillColor: [0, 0, 0] }
                 });
+                
                 return doc;
             }
-
 
             function downloadPdf(table){
                 let doc = generatePDF(`${table}`);

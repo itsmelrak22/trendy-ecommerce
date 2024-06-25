@@ -1,10 +1,35 @@
 
 <?php 
+
     include_once("./includes/header.php"); 
 
     spl_autoload_register(function ($class) {
         include '../models/' . $class . '.php';
     });
+
+    // Read and decode JSON files
+    $barangaysJson = file_get_contents('barangays.json');
+    $citiesMunicipalitiesJson = file_get_contents('citiesMunicipalities.json');
+    $provincesJson = file_get_contents('provinces.json');
+
+    $barangaysArray = json_decode($barangaysJson, true);
+    $citiesMunicipalitiesArray = json_decode($citiesMunicipalitiesJson, true);
+    $provincesArray = json_decode($provincesJson, true);
+
+    // Check if the decoding was successful
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        die('Error decoding JSON data: ' . json_last_error_msg());
+    }
+
+    function findNameByCode($array, $code) {
+        foreach ($array as $item) {
+            if ($item['code'] === $code) {
+                return $item['name'];
+            }
+        }
+        return null; // Return null if code is not found
+    }
+
 
     $order = new Order;
     $orders = $order->getOrderAndOrderDetails();
@@ -14,37 +39,8 @@
     foreach ($orders as $key => &$value) {
         $value['cart_status'] = getStatusText($value['order_details'][0]['status']);
     }
-    foreach ($orders as $order) {
-        $cart_status = $order['cart_status'];
-        if (!isset($ungrouped_data[$cart_status])) {
-            $ungrouped_data[$cart_status] = [];
-        }
-        $ungrouped_data[$cart_status][] = $order;
-    }
-
-
-        // Define the desired order of statuses
-    $status_order = ['Checked out', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
-
-    // Create a new array to hold the grouped data in the desired order
-    $grouped_data = [];
-
-    // Populate the grouped_data with the groups in the desired order
-    foreach ($status_order as $status) {
-        if (isset($ungrouped_data[$status])) {
-            $grouped_data[$status] = $ungrouped_data[$status];
-        } else {
-            $grouped_data[$status] = [];
-        }
-    }
-
-    // echo '<pre>';
-    // print_r($grouped_data);
-    // echo '</pre>';
-
     
     // displayDataTest($orders);
-    // displayDataTest($grouped_data);
     function getStatusText($status){
 
         switch ($status) {
@@ -77,7 +73,9 @@
 
     }
 
+
 ?>
+
 
 <body id="page-top">
 
@@ -93,41 +91,14 @@
 
             <!-- Main Content -->
             <div id="content">
+            <?php include_once("./includes/topbar-nav.php"); ?>
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    <!-- <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form> -->
-
-                    <?php include_once("./includes/topbar-nav.php"); ?>
-
-
-                </nav>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Order Page</h1>
-
                     <div>
                         <!-- <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addModal">
                             <span class="icon text-white-50">
@@ -141,79 +112,104 @@
                         <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Order List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Order Page</h6>
                             
                         </div>
 
-                        <div class="container card-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" id="orderTabs" role="tablist">
-                                <?php foreach ($grouped_data as $status => $orders) { ?>
-                                    <li class="nav-item">
-                                        <a class="nav-link <?php echo $status === array_key_first($grouped_data) ? 'active' : '' ?>" id="tab-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" data-toggle="tab" href="#content-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" role="tab" aria-controls="content-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" aria-selected="true">
-                                            <?php echo $status ?>
-                                        </a>
-                                    </li>
-                                <?php } ?>
-                            </ul>
+                        <div class=" card-body">
+                            <style>
+                                .legend-container {
+                                    display: flex;
+                                    flex-direction: row;
+                                    align-items: center; /* Align items vertically centered */
+                                }
 
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <?php foreach ($grouped_data as $status => $orders) { 
-                                    $generateId = camelize($status);
-                                    ?>
-                                    <div class="tab-pane fade <?php echo $status === array_key_first($grouped_data) ? 'show active' : '' ?>" id="content-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" role="tabpanel" aria-labelledby="tab-<?php echo strtolower(str_replace(' ', '-', $status)) ?>">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" width="100%" cellspacing="0" id="<?="orderTable$generateId" ?>">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Order ID</th>
-                                                            <th>Order Details</th>
-                                                            <th>Customer</th>
-                                                            <th>Date Ordered</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th>Order ID</th>
-                                                            <th>Order Details</th>
-                                                            <th>Customer</th>
-                                                            <th>Date Ordered</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                    <tbody>
-                                                        <?php foreach ($orders as $order) { ?>
-                                                            <tr>
-                                                                <td><?= $order['id'] ?></td>
-                                                                <td>
-                                                                    <a href="order-view.php?id=<?= $order['id'] ?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View Order Details">
-                                                                        <i class="bi bi-list-ul"></i>
-                                                                    </a>
-                                                                </td>
-                                                                <td><?= $order['email'] ?></td>
-                                                                <td><?= $order['created_at'] ?></td>
-                                                                <td>
-                                                                    <form action="order-delete.php" method="POST">
-                                                                        <a href="order-edit.php?id=<?= $order['id'] ?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                                            <i class="bi bi-box-arrow-right"></i>
-                                                                        </a>
-                                                                        <input type="hidden" name="id" value="<?= $order['id'] ?>">
-                                                                        <!-- <button type="submit" name="delete-cart" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button> -->
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
-                                                        <?php } ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } ?>
+                                .legend-container .lead {
+                                    margin-right: 10px; /* Add some spacing between the text and the badges */
+                                }
+
+                                .legend-container .badge {
+                                    margin-left: 5px; /* Add some spacing between the badges */
+                                }
+
+                            </style>
+                            <span class="legend-container" >
+                                <p class="lead">Legends: </p>
+                                <span class="badge badge-primary">Checked out</span>
+                                <span class="badge badge-info">Processing</span>
+                                <span class="badge badge-warning">Shipped</span>
+                                <span class="badge badge-success">Delivered</span>
+                                <span class="badge badge-danger">Cancelled</span>
+                            </span>
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" width="100%" cellspacing="0" id="orderTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Customer</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Additional Address</th>
+                                                <th>Barangay</th>
+                                                <th>City / Municipality</th>
+                                                <th>Provice</th>
+                                                <th>Date Ordered</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Customer</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Additional Address</th>
+                                                <th>Barangay</th>
+                                                <th>City / Municipality</th>
+                                                <th>Provice</th>
+                                                <th>Date Ordered</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <?php foreach ($orders as $order) { ?>
+                                                <tr>
+                                                    <td><?= $order['id'] ?></td>
+                                                    <td>
+                                                        <?= $order['first_name']. " " . $order['last_name'] ?>
+                                                    </td>
+                                                    <td><?= $order['email'] ?></td>
+                                                    <td><?= $order['phone_no'] ?></td>
+                                                    <td><?= $order['complete_address'] ?></td>
+                                                    <td><?= findNameByCode($barangaysArray, $order['barangay']) ?></td>
+                                                    <td><?= findNameByCode($citiesMunicipalitiesArray, $order['city_municipality']) ?></td>
+                                                    <td><?= findNameByCode($provincesArray, $order['province']) ?></td>
+                                                    <td><?= $order['created_at'] ?></td>
+                                                    <td>
+                                                        <span class="badge <?= getBadgeClass($order['cart_status']) ?>">
+                                                            <?= htmlspecialchars($order['cart_status']) ?>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <form action="order-delete.php" method="POST">
+                                                            <a href="order-edit.php?id=<?= $order['id'] ?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                <i class="bi bi-box-arrow-right"></i>
+                                                            </a>
+                                                            <input type="hidden" name="id" value="<?= $order['id'] ?>">
+                                                            <!-- <button type="submit" name="delete-cart" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button> -->
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -310,6 +306,8 @@
 <?php include_once("./includes/footer.php"); ?>
 
 <script>
+
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
@@ -320,10 +318,100 @@
     })
 
     $(document).ready(function() {
-        <?php foreach ($grouped_data as $status => $orders) { 
-            $generateId = camelize($status);
-            echo "$('#orderTable$generateId').DataTable(); \n\t";
-        }?>
+        $('#orderTable').DataTable();
+        
 
     });
+
+    async function getProvinces(){
+        await $.ajax({
+            url: 'https://psgc.gitlab.io/api/provinces.json',
+            type: 'GET',
+            success: function(data) {
+                proviceArray = data;
+                var provinces = data;
+
+                // Sort the provinces array by the "name" property
+                provinces.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
+
+                console.log("provinces", provinces)
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching provinces: ' + error);
+            }
+        });
+    }
+
+    async function getCitiesMunicipalities(){
+        await $.ajax({
+            url: 'https://psgc.gitlab.io/api/cities-municipalities.json',
+            type: 'GET',
+            success: function(data) {
+                citiesMunicipalitiesArray = data;
+                var citiesMunicipalities = data;
+
+                // Sort the citiesMunicipalities array by the "name" property
+                citiesMunicipalities.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
+
+                console.log("citiesMunicipalities", citiesMunicipalities)
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching citiesMunicipalities: ' + error);
+            }
+        });
+    }
+
+    async function getBarangays(){
+        await $.ajax({
+            url: 'https://psgc.gitlab.io/api/barangays.json',
+            type: 'GET',
+            success: function(data) {
+                barangaysArray = data;
+                var barangays = data;
+
+                // Sort the barangays array by the "name" property
+                barangays.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
+
+                console.log("barangays", barangays)
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching barangays: ' + error);
+            }
+        });
+    }
+
+
 </script>

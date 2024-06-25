@@ -11,7 +11,7 @@ Class Order extends Model {
 
         if(!$id){
             $orders = $instance->setQuery("
-                SELECT O.*, C.username, C.email
+                SELECT O.*, C.username, C.email, C.first_name, C.last_name, C.phone_no, C.province, C.city_municipality, C.barangay, C.complete_address
                 FROM `orders` as O
                 LEFT JOIN `customers` as C
                 ON C.id = O.customer_id
@@ -42,7 +42,7 @@ Class Order extends Model {
             }
         }else{
             $orders = $instance->setQuery("
-                SELECT O.*, C.username, C.email
+                SELECT O.*, C.username, C.email,  C.email, C.first_name, C.last_name, C.phone_no, C.province, C.city_municipality, C.barangay, C.complete_address
                 FROM `orders` as O
                 LEFT JOIN `customers` as C
                 ON C.id = O.customer_id

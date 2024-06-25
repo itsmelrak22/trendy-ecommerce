@@ -54,13 +54,13 @@ $location = basename($url);
 <li class="nav-item <?= $location ==  "order-list.php" ? "active" : ""?>">
     <a class="nav-link" href="order-list.php">
         <i class="fas fa-fw fa-table"></i>
-        <span>Orders</span></a>
+        <span>Product Orders</span></a>
 </li>
 <!-- Nav Item - Product List Menu -->
 <li class="nav-item <?= $location ==  "custom-order-list.php" ? "active" : ""?>">
     <a class="nav-link" href="custom-order-list.php">
         <i class="fas fa-fw fa-table"></i>
-        <span>Custom Orders</span></a>
+        <span>Customization Orders</span></a>
 </li>
 
 <!-- Nav Item - Carts -->
@@ -73,7 +73,7 @@ $location = basename($url);
 <li class="nav-item <?= $location ==  "customer-list.php" ? "active" : ""?>">
     <a class="nav-link" href="customer-list.php">
         <i class="fas fa-fw fa-table"></i>
-        <span>Customers</span></a>
+        <span>Customer List</span></a>
 </li>
 
 
@@ -88,7 +88,7 @@ $location = basename($url);
 <li class="nav-item <?= $location ==  "category-list.php" ? "active" : ""?>">
     <a class="nav-link" href="category-list.php">
         <i class="fas fa-fw fa-table"></i>
-        <span>Catergory Master</span></a>
+        <span>Product Catergory List</span></a>
 </li>
 
 <!-- Nav Item - Gender / Age Category Master-->

@@ -9,7 +9,7 @@ Class CustomizeOrder extends Model {
 
         if($customer_id && !$status){
             $qry = "
-                SELECT A.*, B.first_name, B.last_name, B.email 
+                SELECT A.*, B.first_name, B.last_name, B.email, B.first_name, B.last_name, B.phone_no, B.province, B.city_municipality, B.barangay, B.complete_address
                 FROM `customize_orders` as A 
                 LEFT JOIN `customers` as B 
                 ON A.customer_id = B.id
@@ -18,7 +18,7 @@ Class CustomizeOrder extends Model {
             ";
         }else if($customer_id && $status){
             $qry = "
-                SELECT A.*, B.first_name, B.last_name, B.email 
+                SELECT A.*, B.first_name, B.email, B.last_name, B.first_name, B.last_name, B.phone_no, B.province, B.city_municipality, B.barangay, B.complete_address 
                 FROM `customize_orders` as A 
                 LEFT JOIN `customers` as B 
                 ON A.customer_id = B.id
@@ -27,7 +27,7 @@ Class CustomizeOrder extends Model {
             ";
         }else{
             $qry = "
-            SELECT A.*, B.first_name, B.last_name, B.email 
+            SELECT A.*, B.first_name, B.email, B.last_name, B.first_name, B.last_name, B.phone_no, B.province, B.city_municipality, B.barangay, B.complete_address 
             FROM `customize_orders` as A 
             LEFT JOIN `customers` as B 
             ON A.customer_id = B.id
@@ -41,7 +41,7 @@ Class CustomizeOrder extends Model {
         $self = new self;
 
             $qry = "
-                SELECT A.*, B.first_name, B.last_name, B.email 
+                SELECT A.*, B.first_name, B.last_name, B.email  , B.first_name, B.last_name, B.phone_no, B.province, B.city_municipality, B.barangay, B.complete_address
                 FROM `customize_orders` as A 
                 LEFT JOIN `customers` as B 
                 ON A.customer_id = B.id

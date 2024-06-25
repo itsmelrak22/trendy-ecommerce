@@ -1,5 +1,28 @@
 
 <?php 
+    // Read and decode JSON files
+    $barangaysJson = file_get_contents('barangays.json');
+    $citiesMunicipalitiesJson = file_get_contents('citiesMunicipalities.json');
+    $provincesJson = file_get_contents('provinces.json');
+
+    $barangaysArray = json_decode($barangaysJson, true);
+    $citiesMunicipalitiesArray = json_decode($citiesMunicipalitiesJson, true);
+    $provincesArray = json_decode($provincesJson, true);
+
+    // Check if the decoding was successful
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        die('Error decoding JSON data: ' . json_last_error_msg());
+    }
+
+    function findNameByCode($array, $code) {
+        foreach ($array as $item) {
+            if ($item['code'] === $code) {
+                return $item['name'];
+            }
+        }
+        return null; // Return null if code is not found
+    }
+
     include_once("./includes/header.php"); 
 
     spl_autoload_register(function ($class) {
@@ -55,116 +78,96 @@
             <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    <!-- <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form> -->
-
                     <?php include_once("./includes/topbar-nav.php"); ?>
 
-
-                </nav>
-                <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Custom Order Page</h1>
                     <hr>
                         <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Order List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Customization Service Order List</h6>
                             
                         </div>
-                        <div class="container card-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" id="orderTabs" role="tablist">
-                                <?php foreach ($grouped_data as $status => $orders) { ?>
-                                    <li class="nav-item">
-                                        <a class="nav-link <?php echo $status === array_key_first($grouped_data) ? 'active' : '' ?>" id="tab-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" data-toggle="tab" href="#content-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" role="tab" aria-controls="content-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" aria-selected="true">
-                                            <?php echo $status ?>
-                                        </a>
-                                    </li>
-                                <?php } ?>
-                            </ul>
-
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <?php foreach ($grouped_data as $status => $orders) { 
-                                    $generateId = camelize($status);
-                                    ?>
-                                    <div class="tab-pane fade <?php echo $status === array_key_first($grouped_data) ? 'show active' : '' ?>" id="content-<?php echo strtolower(str_replace(' ', '-', $status)) ?>" role="tabpanel" aria-labelledby="tab-<?php echo strtolower(str_replace(' ', '-', $status)) ?>">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" id="<?="cartTable$generateId"?>" width="100%" cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Order ID </th>
-                                                            <th>Customer Email </th>
-                                                            <th>Status </th>
-                                                            <th>Date Ordered</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th>Order ID </th>
-                                                            <th>Customer Email </th>
-                                                            <th>Status </th>
-                                                            <th>Date Ordered</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                    <tbody>
-                                                        <?php foreach ($orders as $key => $cart) { 
-                                                            $jsonData = json_encode($cart);
-                                                        ?>
-                                                            
-                                                            <tr>
-                                                                <td> <?= $cart['id'] ?> </td>
-                                                                <td> <?= $cart['email'] ?> </td>
-                                                                <td> <?= $cart['status'] ? $cart['status'] : 'For Checking' ?> </td>
-                                                                <td> <?= $cart['created_at'] ?> </td>
-                                                                <td>
-                                                                    <form action="order-delete.php" method="POST">
-                                                                        <button type="button" class="btn btn-primary btn-circle btn-icon-split btn-sm" onclick='viewData(<?= $jsonData ?>)'>
-                                                                            <span class="icon text-white-50" data-toggle="tooltip" data-placement="top" title="View Order">
-                                                                                <i class="bi bi-stack"></i>
-                                                                            </span>
-                                                                        </button>
-                                                                        <input type="hidden" name="id" value="<?=$cart['id']?>">
-                                                                        <!-- <button type="submit" name="delete-cart" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button> -->
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
-                                                        <?php } ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } ?>
+                        <div class=" card-body">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="cartTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID </th>
+                                                <th>Customer</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Additional Address</th>
+                                                <th>Barangay</th>
+                                                <th>City / Municipality</th>
+                                                <th>Provice</th>
+                                                <th>Status </th>
+                                                <th>Date Ordered</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Order ID </th>
+                                                <th>Customer</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Additional Address</th>
+                                                <th>Barangay</th>
+                                                <th>City / Municipality</th>
+                                                <th>Provice</th>
+                                                <th>Status </th>
+                                                <th>Date Ordered</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <?php foreach ($orders as $key => &$cart) { 
+                                                $jsonData = json_encode($cart);
+                                                $cart['status'] ? $cart['status'] : $cart['status'] = 'Pending' 
+                                            ?>
+                                                
+                                                <tr>
+                                                    <td> <?= $cart['id'] ?> </td>
+                                                    <td>
+                                                        <?= $order['first_name']. " " . $order['last_name'] ?>
+                                                    </td>
+                                                    <td><?= $order['email'] ?></td>
+                                                    <td><?= $order['phone_no'] ?></td>
+                                                    <td><?= $order['complete_address'] ?></td>
+                                                    <td><?= findNameByCode($barangaysArray, $order['barangay']) ?></td>
+                                                    <td><?= findNameByCode($citiesMunicipalitiesArray, $order['city_municipality']) ?></td>
+                                                    <td><?= findNameByCode($provincesArray, $order['province']) ?></td>
+                                                    <td>
+                                                        
+                                                        <span class="badge <?= getBadgeClass($cart['status']) ?>">
+                                                            <?= $cart['status']?>
+                                                        </span>
+                                                    </td>
+                                                    <td> <?= $cart['created_at'] ?> </td>
+                                                    <td>
+                                                        <form action="order-delete.php" method="POST">
+                                                            <button type="button" class="btn btn-primary btn-circle btn-icon-split btn-sm" onclick='viewData(<?= $jsonData ?>)'>
+                                                                <span class="icon text-white-50" data-toggle="tooltip" data-placement="top" title="View Order">
+                                                                    <i class="bi bi-stack"></i>
+                                                                </span>
+                                                            </button>
+                                                            <input type="hidden" name="id" value="<?=$cart['id']?>">
+                                                            <!-- <button type="submit" name="delete-cart" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button> -->
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -520,10 +523,8 @@
     });
 
     $(document).ready(function() {
-        <?php foreach ($grouped_data as $status => $orders) { 
-            $generateId = camelize($status);
-            echo "$('#cartTable$generateId').DataTable(); \n\t";
-        }?>
+        $('#cartTable').DataTable();
+
     });
 </script>
 

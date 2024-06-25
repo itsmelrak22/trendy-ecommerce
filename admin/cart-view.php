@@ -27,24 +27,13 @@ spl_autoload_register(function ($class) {
             <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
                     <?php include_once("./includes/topbar-nav.php"); ?>
 
-
-                </nav>
-                <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Cart View</h1>
                     <div>
                         <a href="cart-list.php" type="button" class="btn btn-primary btn-icon-split">
                             <span class="icon text-white-50">

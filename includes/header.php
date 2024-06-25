@@ -325,49 +325,157 @@
             var userDetails = <?php echo isset($customer) ? json_encode($customer) : json_encode(([])); ?>;
             // Fetch provinces and populate the province dropdown
             $.ajax({
-            url: 'https://psgc.gitlab.io/api/provinces.json',
-            type: 'GET',
-            success: function(data) {
-                var provinces = data;
-                var provinceDropdown = $('#edit_provinceDropdown');
+                url: 'https://psgc.gitlab.io/api/provinces.json',
+                type: 'GET',
+                success: function(data) {
+                    var provinces = data;
+                    var provinceDropdown = $('#edit_provinceDropdown');
 
-                // Sort the provinces array by the "name" property
-                provinces.sort(function(a, b) {
-                    var nameA = a.name.toUpperCase(); // Ignore case
-                    var nameB = b.name.toUpperCase(); // Ignore case
-                    if (nameA < nameB) {
-                        return -1;
+                    // Sort the provinces array by the "name" property
+                    provinces.sort(function(a, b) {
+                        var nameA = a.name.toUpperCase(); // Ignore case
+                        var nameB = b.name.toUpperCase(); // Ignore case
+                        if (nameA < nameB) {
+                            return -1;
+                        }
+                        if (nameA > nameB) {
+                            return 1;
+                        }
+                        return 0; // Names must be equal
+                    });
+
+
+                    $.each(provinces, function(index, province) {
+                        provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
+                    });
+
+
+                    if( typeof userDetails.province != 'undefined' && userDetails.province ){
+                        $('#edit_provinceDropdown').val(userDetails.province);
+                        editPopulateCitiesMunicipalities(userDetails.province);
                     }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                    return 0; // Names must be equal
-                });
-
-
-                $.each(provinces, function(index, province) {
-                    provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
-                });
-
-
-                if( typeof userDetails.province != 'undefined' && userDetails.province ){
-                    $('#edit_provinceDropdown').val(userDetails.province);
-                    editPopulateCitiesMunicipalities(userDetails.province);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching provinces: ' + error);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching provinces: ' + error);
+            });
+
+        // Function to fetch and populate cities/municipalities based on the selected province
+            function editPopulateCitiesMunicipalities(provinceCode) {
+                $.ajax({
+                    url: `https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities.json`,
+                    type: 'GET',
+                    success: function(data) {
+                        var citiesMunicipalities = data;
+                        var cityDropdown = $('#edit_cityDropdown');
+
+                        // Sort the provinces array by the "name" property
+                        citiesMunicipalities.sort(function(a, b) {
+                            var nameA = a.name.toUpperCase(); // Ignore case
+                            var nameB = b.name.toUpperCase(); // Ignore case
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0; // Names must be equal
+                        });
+
+
+                        cityDropdown.empty(); // Clear existing options
+                        cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
+                        $.each(citiesMunicipalities, function(index, cityMunicipality) {
+                            cityDropdown.append($('<option></option>').val(cityMunicipality.code).text(cityMunicipality.name));
+                        });
+
+                        if( typeof userDetails.city_municipality != 'undefined' && userDetails.city_municipality ){
+                            $('#edit_cityDropdown').val(userDetails.city_municipality);
+                            editPopulateBarangays(userDetails.city_municipality)
+                        }
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching cities/municipalities: ' + error);
+                    }
+                });
             }
+
+            function editPopulateBarangays(cityCode){
+                $.ajax({
+                    url: `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}/barangays.json`,
+                    type: 'GET',
+                    success: function(data) {
+                        var barangays = data;
+                        var barangayDropdown = $('#edit_barangayDropdown');
+
+                        // Sort the provinces array by the "name" property
+                        barangays.sort(function(a, b) {
+                            var nameA = a.name.toUpperCase(); // Ignore case
+                            var nameB = b.name.toUpperCase(); // Ignore case
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0; // Names must be equal
+                        });
+
+
+                        barangayDropdown.empty(); // Clear existing options
+                        barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
+                        $.each(barangays, function(index, barangay) {
+                            barangayDropdown.append($('<option></option>').val(barangay.code).text(barangay.name));
+                        });
+
+                        if( typeof userDetails.barangay != 'undefined' && userDetails.barangay ){
+                            $('#edit_barangayDropdown').val(userDetails.barangay);
+                        }
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching cities/municipalities: ' + error);
+                    }
+                });
+            }   
+
+            // Event listener for province dropdown change
+            $('#edit_provinceDropdown').change(function() {
+                let selectedCode = $(this).val();
+                if (selectedCode) {
+                    editPopulateCitiesMunicipalities(selectedCode);
+                } else {
+                    // Clear cities/municipalities dropdown if no province is selected
+                    $('#edit_cityDropdown').empty();
+                }
+            });
+            // Event listener for province dropdown change
+            $('#edit_cityDropdown').change(function() {
+                let selectedCode = $(this).val();
+                if (selectedCode) {
+                    editPopulateBarangays(selectedCode);
+                } else {
+                    // Clear cities/municipalities dropdown if no province is selected
+                    $('#edit_cityDropdown').empty();
+                }
+            });
         });
 
-    // Function to fetch and populate cities/municipalities based on the selected province
-        function editPopulateCitiesMunicipalities(provinceCode) {
+
+
+
+
+
+        function populateCitiesMunicipalities(provinceCode) {
+            
             $.ajax({
                 url: `https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities.json`,
                 type: 'GET',
                 success: function(data) {
+                    
                     var citiesMunicipalities = data;
-                    var cityDropdown = $('#edit_cityDropdown');
+                    var cityDropdown = $('#cityDropdown');
 
                     // Sort the provinces array by the "name" property
                     citiesMunicipalities.sort(function(a, b) {
@@ -382,17 +490,12 @@
                         return 0; // Names must be equal
                     });
 
-
                     cityDropdown.empty(); // Clear existing options
                     cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
                     $.each(citiesMunicipalities, function(index, cityMunicipality) {
                         cityDropdown.append($('<option></option>').val(cityMunicipality.code).text(cityMunicipality.name));
                     });
 
-                    if( typeof userDetails.city_municipality != 'undefined' && userDetails.city_municipality ){
-                        $('#edit_cityDropdown').val(userDetails.city_municipality);
-                        editPopulateBarangays(userDetails.city_municipality)
-                    }
 
                 },
                 error: function(xhr, status, error) {
@@ -401,13 +504,13 @@
             });
         }
 
-        function editPopulateBarangays(cityCode){
+        function populateBarangays(cityCode){
             $.ajax({
                 url: `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}/barangays.json`,
                 type: 'GET',
                 success: function(data) {
                     var barangays = data;
-                    var barangayDropdown = $('#edit_barangayDropdown');
+                    var barangayDropdown = $('#barangayDropdown');
 
                     // Sort the provinces array by the "name" property
                     barangays.sort(function(a, b) {
@@ -422,157 +525,54 @@
                         return 0; // Names must be equal
                     });
 
-
                     barangayDropdown.empty(); // Clear existing options
                     barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
                     $.each(barangays, function(index, barangay) {
                         barangayDropdown.append($('<option></option>').val(barangay.code).text(barangay.name));
                     });
 
-                    if( typeof userDetails.barangay != 'undefined' && userDetails.barangay ){
-                        $('#edit_barangayDropdown').val(userDetails.barangay);
-                    }
-
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching cities/municipalities: ' + error);
                 }
             });
-        }   
+        }
+            $(document).ready(function() {
+            // Fetch provinces and populate the province dropdown
+            $.ajax({
+                url: 'https://psgc.gitlab.io/api/provinces.json',
+                type: 'GET',
+                success: function(data) {
+                    var provinces = data;
+                    var provinceDropdown = $('#provinceDropdown');
 
-        // Event listener for province dropdown change
-        $('#edit_provinceDropdown').change(function() {
-            let selectedCode = $(this).val();
-            if (selectedCode) {
-                editPopulateCitiesMunicipalities(selectedCode);
-            } else {
-                // Clear cities/municipalities dropdown if no province is selected
-                $('#edit_cityDropdown').empty();
-            }
-        });
-        // Event listener for province dropdown change
-        $('#edit_cityDropdown').change(function() {
-            let selectedCode = $(this).val();
-            if (selectedCode) {
-                editPopulateBarangays(selectedCode);
-            } else {
-                // Clear cities/municipalities dropdown if no province is selected
-                $('#edit_cityDropdown').empty();
-            }
-        });
-    });
+                    // Sort the provinces array by the "name" property
+                    provinces.sort(function(a, b) {
+                        var nameA = a.name.toUpperCase(); // Ignore case
+                        var nameB = b.name.toUpperCase(); // Ignore case
+                        if (nameA < nameB) {
+                            return -1;
+                        }
+                        if (nameA > nameB) {
+                            return 1;
+                        }
+                        return 0; // Names must be equal
+                    });
 
-
-
-
-
-
-    function populateCitiesMunicipalities(provinceCode) {
-        
-        $.ajax({
-            url: `https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities.json`,
-            type: 'GET',
-            success: function(data) {
-                
-                var citiesMunicipalities = data;
-                var cityDropdown = $('#cityDropdown');
-
-                // Sort the provinces array by the "name" property
-                citiesMunicipalities.sort(function(a, b) {
-                    var nameA = a.name.toUpperCase(); // Ignore case
-                    var nameB = b.name.toUpperCase(); // Ignore case
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                    return 0; // Names must be equal
-                });
-
-                cityDropdown.empty(); // Clear existing options
-                cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
-                $.each(citiesMunicipalities, function(index, cityMunicipality) {
-                    cityDropdown.append($('<option></option>').val(cityMunicipality.code).text(cityMunicipality.name));
-                });
+                    provinceDropdown.empty(); // Clear existing options
+                    provinceDropdown.append($('<option></option>').val('').text('Select Province')); // Add default option
+                    $.each(provinces, function(index, province) {
+                        provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching provinces: ' + error);
+                }
+            });
+            // Function to fetch and populate cities/municipalities based on the selected province
 
 
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching cities/municipalities: ' + error);
-            }
-        });
-    }
-
-    function populateBarangays(cityCode){
-        $.ajax({
-            url: `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}/barangays.json`,
-            type: 'GET',
-            success: function(data) {
-                var barangays = data;
-                var barangayDropdown = $('#barangayDropdown');
-
-                // Sort the provinces array by the "name" property
-                barangays.sort(function(a, b) {
-                    var nameA = a.name.toUpperCase(); // Ignore case
-                    var nameB = b.name.toUpperCase(); // Ignore case
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                    return 0; // Names must be equal
-                });
-
-                barangayDropdown.empty(); // Clear existing options
-                barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
-                $.each(barangays, function(index, barangay) {
-                    barangayDropdown.append($('<option></option>').val(barangay.code).text(barangay.name));
-                });
-
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching cities/municipalities: ' + error);
-            }
-        });
-    }
-        $(document).ready(function() {
-        // Fetch provinces and populate the province dropdown
-        $.ajax({
-            url: 'https://psgc.gitlab.io/api/provinces.json',
-            type: 'GET',
-            success: function(data) {
-                var provinces = data;
-                var provinceDropdown = $('#provinceDropdown');
-
-                // Sort the provinces array by the "name" property
-                provinces.sort(function(a, b) {
-                    var nameA = a.name.toUpperCase(); // Ignore case
-                    var nameB = b.name.toUpperCase(); // Ignore case
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-                    return 0; // Names must be equal
-                });
-
-                provinceDropdown.empty(); // Clear existing options
-                provinceDropdown.append($('<option></option>').val('').text('Select Province')); // Add default option
-                $.each(provinces, function(index, province) {
-                    provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching provinces: ' + error);
-            }
-        });
-        // Function to fetch and populate cities/municipalities based on the selected province
-
-
-        // Event listener for province dropdown change
+            // Event listener for province dropdown change
         $('#provinceDropdown').change(function() {
             var selectedProvinceCode = $(this).val();
             if (selectedProvinceCode) {

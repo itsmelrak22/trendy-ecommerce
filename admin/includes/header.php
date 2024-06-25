@@ -32,6 +32,25 @@ function camelize($input, $separator = ' '){
     return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
 }
 
+function getBadgeClass($status) {
+    switch ($status) {
+        case 'Checked out':
+        case 'Confirmed':
+            return 'badge-primary';
+        case 'Processing':
+            return 'badge-info';
+        case 'Shipped':
+            return 'badge-warning';
+        case 'Delivered':
+            return 'badge-success';
+        case 'Cancelled':
+            return 'badge-danger';
+        default:
+            return 'badge-secondary'; // default class for any unexpected status
+    }
+}
+
+
 ?>
 
 
@@ -75,4 +94,38 @@ function camelize($input, $separator = ' '){
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #wrapper {
+            display: flex;
+            height: 100%;
+        }
+
+        #content-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        #adminNav .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* Ensures the navbar stays on top of other content */
+            background-color: white; /* Ensure the navbar has a background */
+        }
+
+        #adminNav .topbar-divider {
+            height: 100%;
+        }
+
+        #adminNav .dropdown-menu {
+            z-index: 1050; /* Ensures dropdowns display above other content */
+        }
+    </style>
 </head>
