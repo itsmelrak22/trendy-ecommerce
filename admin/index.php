@@ -50,6 +50,16 @@
             $orders_count += 1;
         }
     }
+
+    $customOrder = CustomizeOrder::getCustomerCustomOrders();
+    $customOrder_count = 0;
+
+    if(count($customOrder) > 0){
+        foreach ($customOrder as $key => $value) {
+            $customOrder_count += 1;
+        }
+    }
+
 ?>
 
     <!-- Daterangepicker CSS -->
@@ -170,7 +180,7 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                     Custom Orders</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$customOrder_count?></div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-comments fa-2x text-gray-300"></i>

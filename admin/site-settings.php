@@ -179,6 +179,7 @@ spl_autoload_register(function ($class) {
                                         
                                         <input type="hidden" name="productImage" id="productImage" value="">
                                         <input type="hidden" name="Banner" id="Banner" value="">
+                                        <input type="hidden" name="Banner2" id="Banner2" value="">
                                         <input type="hidden" name="color_id" id="color_id" value="">
                                         <label class="font-weight-bold my-2" >Image: </label>
                                         <div id="productPreview" class="my-2"></div>
