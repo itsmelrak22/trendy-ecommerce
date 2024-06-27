@@ -24,7 +24,9 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
         "uploadedBanner2" => "",
     ];
 
-    echo ($data);
+    displayDataTest($_POST);
+    displayDataTest($data);
+    displayDataTest($_FILES);
 
     try {
         echo "a";
