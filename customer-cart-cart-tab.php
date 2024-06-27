@@ -381,7 +381,7 @@
             shippingfee = 75;
             togglePaypalDiv(false, 0)
         }else if (mop.value == "online"){
-            shippingfee = 0;
+            shippingfee = 75;
             togglePaypalDiv(true, itemTotal)
         }
 

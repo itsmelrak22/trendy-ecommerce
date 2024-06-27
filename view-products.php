@@ -13,37 +13,48 @@
     $product_color = new ProductColor;
     $product_colors = $product_color->getProductColors( $id );
 
-    // print_r($products);
+    $product_sizes = ProductSize::getProductSizes($id);
 
+    // print_r($id);
+    // displayDataTest($product_sizes);
+    if($site_setting->productSelect == $id){
+        $promoID = $site_setting->productSelect;
+        $promoColorID = $site_setting->color_id;
+        $discountPercentage = $site_setting->discountPercentage;
+        $discountedPrice = $site_setting->discountedPrice;
+    }else{
+        unset($discountPercentage);
+        unset($discountedPrice);
+    }
 
 ?>
     <script>
         const productPrice = <?= $products->price ?>;
-        document.addEventListener('DOMContentLoaded', function() {
-            const sizeIncrements = {
-                xs: 0,
-                s: 10,
-                m: 20,
-                l: 30,
-                xl: 40,
-                xxl: 50,
-                'one_size': 0
-            };
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const sizeIncrements = {
+        //         xs: 0,
+        //         s: 10,
+        //         m: 20,
+        //         l: 30,
+        //         xl: 40,
+        //         xxl: 50,
+        //         'one_size': 0
+        //     };
             
-            const radioButtons = document.querySelectorAll('input[name="size"]');
-            const priceDisplay = document.getElementById('display-final-price');
-            const priceFinal = document.getElementById('final_price');
-            let basePrice = productPrice;
+        //     const radioButtons = document.querySelectorAll('input[name="size"]');
+        //     const priceDisplay = document.getElementById('display-final-price');
+        //     const priceFinal = document.getElementById('final_price');
+        //     let basePrice = productPrice;
 
-            radioButtons.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const increment = sizeIncrements[this.value];
-                    let price = (basePrice + increment).toFixed(2);
-                    priceDisplay.textContent = price
-                    priceFinal.value = price
-                });
-            });
-        });
+        //     radioButtons.forEach(radio => {
+        //         radio.addEventListener('change', function() {
+        //             const increment = sizeIncrements[this.value];
+        //             let price = (basePrice + increment).toFixed(2);
+        //             priceDisplay.textContent = price
+        //             priceFinal.value = price
+        //         });
+        //     });
+        // });
     </script>
 
 <style>
@@ -72,7 +83,17 @@
                     <h3 class="display-4 fw-bolder"><?=  $products->name  ?></h3>
 
                     <div class="fs-5 mb-3">
-                        <div class="small mb-1 lead"><?= 'Price'. ': '. '₱'?><span id="display-final-price"><?= $products->price ?></span></div>
+                        <div class="small mb-1 lead"><?= 'Price'. ': '. ''?>
+                            <?php 
+                            if(isset($discountPercentage)){
+                                echo '<span id="display-final-price" class="text-decoration-line-through"> ₱'.$products->price.' </span>';
+                                echo '<span id="display-discounted-price" class="fw-bolder mx-4"> ₱'.$discountedPrice.' </span>';
+                                echo '<span class="fw-bold  text-success">(-'.$discountPercentage.' Promo)</span>';
+                            }else{
+                                echo '<span id="display-final-price" class=""> ₱'.$products->price.' </span>';
+                            }
+                            ?>
+                        </div>
                         <div class="small mb-1 lead"><?= 'Stock'. ': '. $products->stock_qty  ?></div>
                     </div>
 
@@ -105,7 +126,7 @@
 
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-xl">
+                            <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">SIZE GUIDE</h5>
@@ -128,7 +149,10 @@
                                                 case 'POLO SHIRT':
                                                     echo '
                                                     <div class="text-center card-body">
-                                                        <img src="./assets/Polo Shirts.png" class="img-fluid" alt="sizechart">
+                                                        <img src="./assets/Polo Shirts.png" class="img-fluid" style="
+                                                        margin: auto;
+                                                        margin-top: 70px;
+                                                        width: 500px;" alt="sizechart">
                                                     </div>
                                                     ';
 
@@ -138,7 +162,11 @@
                                                 case 'ELITE OVERSIZE SHIRT':
                                                     echo '
                                                     <div class="text-center card-body">
-                                                            <img src="./assets/Elite Oversize.png" class="img-fluid" alt="sizechart">
+                                                            <img src="./assets/Elite Oversize.png" class="img-fluid" alt="sizechart" style="
+                                                            margin: auto;
+                                                            margin-top: 185px;
+                                                            width: 800px;
+                                                            ">
                                                     </div>
                                                     ';
                                                     break;
@@ -157,99 +185,104 @@
                     <hr>
 
                     <form action="add-to-cart.php" method="POST" onsubmit="return checkUser();">
-                           <?php switch ($products->category_name) {
-                            case 'BOOTY SHORT':
-                            case 'COORDINATE':
-                            case 'CORDUROY SHORT':
-                            case 'DRESS':
-                            case 'JACKET':
-                            case 'SOCKS':
-                            case 'SUBLIMATION':
-                            case "WOMEN'S TOP":
-                            case "MESH SHORT":
-                            case "SUBLIMATION SHORT":
-                                echo '
-                                <div class="d-flex">
-                                    <div class="my-2">
-                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
-                                            <input type="radio" class="btn-check" name="size" id="one_size" autocomplete="off" value="one_size">
-                                            <label class="btn btn-outline-secondary" for="one_size">ONE SIZE</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                ';
-                                break;
-                            case 'NIKEE SWOOSH POLO SHIRT':
-                            case 'NY POLO SHIRT':
-                            case 'ELITE OVERSIZE SHIRT':
-                            case 'CLASSIC POLO SHIRT':
-                            case 'OPEN COLLAR POLO SHIRT':
-                            case 'CORDUROY SHIRT':
-                                echo '
-                                <div class="d-flex">
-                                    <div class="my-2">
+                            <?php 
+                             switch ($products->category_name) { 
+                                case 'NIKEE SWOOSH POLO SHIRT':
+                                case 'NY POLO SHIRT':
+                                case 'CLASSIC POLO SHIRT':
+                                case 'OPEN COLLAR POLO SHIRT':
+                                case 'POLO SHIRT':
+                                case 'CORDUROY SHIRT':
+                                case 'ELITE OVERSIZE SHIRT':
+                                    echo '
                                         <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             <i class="bi bi-patch-question"> SIZE GUIDE</i>
                                         </button>
-                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
-                                            <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs">
-                                            <label class="btn btn-outline-secondary" for="size_xs">XS</label>
-
-                                            <input type="radio" class="btn-check" name="size" id="size_s" autocomplete="off" value="s">
-                                            <label class="btn btn-outline-secondary" for="size_s">S</label>
-
-                                            <input type="radio" class="btn-check" name="size" id="size_m" autocomplete="off" value="m">
-                                            <label class="btn btn-outline-secondary" for="size_m">M</label>
-
-                                            <input type="radio" class="btn-check" name="size" id="size_l" autocomplete="off" value="l">
-                                            <label class="btn btn-outline-secondary" for="size_l">L</label>
-
-                                            <input type="radio" class="btn-check" name="size" id="size_xl" autocomplete="off" value="xl">
-                                            <label class="btn btn-outline-secondary" for="size_xl">XL</label>
-                                        </div>
+                                    ';
+                                    break;
+                                }
+                            if(count($product_sizes) == 0){
+                                echo '
+                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
+                                        <input type="radio" class="btn-check" name="size" id="one_size" autocomplete="off" value="one_size">
+                                        <label class="btn btn-outline-secondary" for="one_size">ONE SIZE</label>
                                     </div>
-                                </div>
                                 ';
-                                break;
-                            case 'POLO SHIRT':
+                            }else{
                                 echo '
                                 <div class="d-flex">
-                                    <div class="my-2">
-                                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <i class="bi bi-patch-question"> SIZE GUIDE</i>
-                                        </button>
-                                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">
-                                            <input type="radio" class="btn-check" name="size" id="size_xs" autocomplete="off" value="xs">
-                                            <label class="btn btn-outline-secondary" for="size_xs">XS</label>
+                                    <div class="my-2">';
+                                    switch ($products->category_name) { 
+                                        case 'NIKEE SWOOSH POLO SHIRT':
+                                        case 'NY POLO SHIRT':
+                                        case 'CLASSIC POLO SHIRT':
+                                        case 'OPEN COLLAR POLO SHIRT':
+                                        case 'POLO SHIRT':
+                                        case 'CORDUROY SHIRT':
+                                        case 'ELITE OVERSIZE SHIRT':
+                                            echo '
+                                                <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <i class="bi bi-patch-question"> SIZE GUIDE</i>
+                                                </button>
+                                            ';
+                                            break;
+                                        }
+                                        
+                                    echo '<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">';
+                                        foreach ($product_sizes as $key => $item) {
+                                            if($item['product_id'] == $id){
+                                                $size = $item['size_display'];
+                                                $size_price = $item['size_price'];
+                                                echo '
+                                                    <input type="radio" class="btn-check" name="size" autocomplete="off" value="'.$size.'" id="size_'.$size.'">
+                                                    <label class="btn btn-outline-secondary" for="size_'.$size.'">'.$size.'</label>
+                                                    ';
+                                            }
+                                        }
 
-                                            <input type="radio" class="btn-check" name="size" id="size_s" autocomplete="off" value="s">
-                                            <label class="btn btn-outline-secondary" for="size_s">S</label>
-
-                                            <input type="radio" class="btn-check" name="size" id="size_m" autocomplete="off" value="m">
-                                            <label class="btn btn-outline-secondary" for="size_m">M</label>
-
-                                            <input type="radio" class="btn-check" name="size" id="size_l" autocomplete="off" value="l">
-                                            <label class="btn btn-outline-secondary" for="size_l">L</label>
-
-                                            <input type="radio" class="btn-check" name="size" id="size_xl" autocomplete="off" value="xl">
-                                            <label class="btn btn-outline-secondary" for="size_xl">XL</label>
-
-                                            <input type="radio" class="btn-check" name="size" id="size_xxl" autocomplete="off" value="xxl">
-                                            <label class="btn btn-outline-secondary" for="size_xxl">XXL</label>
+                                echo'       
                                         </div>
                                     </div>
                                 </div>
                                 ';
-                                break;
+
+                                foreach ($product_sizes as $key => $item) {
+                                    $size = $item['size_display'];
+                                    $size_price = $item['size_price'];
+                                    $discount_price = isset($discountedPrice) ? $discountedPrice : 0;
+                                    echo '
+                                        <script>
+                                            document.addEventListener(`DOMContentLoaded`, function() {
+                                                const radioButtons = document.querySelectorAll(`input[name="size"]`);
+                                                const priceDisplay = document.getElementById(`display-final-price`);
+                                                const priceDisplayDiscounter = document.getElementById(`display-discounted-price`);
+                                                const priceFinal = document.getElementById(`final_price`);
+                                                let basePrice = '.$products->price.';
+                                                console.log(`priceDisplayDiscounter: `, priceDisplayDiscounter)
+                                                radioButtons['.$key.'].addEventListener(`change`, function() {
+                                                    let price = 0
+                                                    if(priceDisplayDiscounter){
+                                                        price = ('.$discount_price.' + '.$size_price.').toFixed(2);
+                                                        priceDisplayDiscounter.textContent = price
+                                                        priceFinal.value = price
+                                                    }else{
+                                                        price = (basePrice + '.$size_price.').toFixed(2);
+                                                        priceDisplay.textContent = price
+                                                        priceFinal.value = price
+                                                    }
+                                                });
+                                             });
+
+                                        </script>
+                                    ';
+                                }
+                               
+                            }
+
 
                             
-                            default:
-                            echo '
-                          
-                            ';
-                            break;
-                            }
                             ?>
+                            
                         <hr>
                                                             
 
@@ -267,8 +300,13 @@
                                 <script>
                                     function increaseQuantity() {
                                         const input = document.getElementById('inputQuantity');
+                                        
                                         let currentValue = parseInt(input.value, 10);
                                         if (!isNaN(currentValue)) {
+                                            if((currentValue + 1) > <?= $products->stock_qty ?>){
+                                                alert("Sorry, insufficient stocks for this item.")
+                                                return;
+                                            }
                                             input.value = currentValue + 1;
                                         }
                                     }

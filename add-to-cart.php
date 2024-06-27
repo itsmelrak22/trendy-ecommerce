@@ -27,13 +27,14 @@ date_default_timezone_set("Asia/Manila");
 
     try {
         if ( isset( $_POST['add-cart'] ) || isset( $_POST['buy-now'] ) ){
-    
+            $site_setting = SiteSetting::getSiteSettingsLatest();
+            $site_setting = json_decode($site_setting->json_data);
+                
             $cart = new Cart;
             $existing_item = $cart->checkIfExists($customer_id , $product_id, $color_id);
             
             if( count($existing_item) > 0 ){
                 $param = [
-                
                     'product_id' => $_POST['product_id'],
                     'color_id' => $_POST['color_id'],
                     'customer_id' => $_POST['customer_id'],

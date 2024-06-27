@@ -115,6 +115,12 @@ class Model
         $data =  $this->getAll();
         return $data;
     }
+    public function allWithTrashed(){
+        $this->qry = "SELECT * FROM $this->table";
+        $this->stmt = $this->pdo->query($this->qry);
+        $data =  $this->getAll();
+        return $data;
+    }
 
     public function find($primaryKey){
         $data = $this->setQuery("SELECT * FROM $this->table WHERE id = $primaryKey")->getFirst();
@@ -211,12 +217,6 @@ class Model
 
     public function update($param, $id){
         try {
-            // $param = [
-            //     "name" => "Male",
-            //     "updated_at" => new \DateTime,
-            //     "updated_by" => 1,
-            // ];
-    
             // Get the keys from the $param array
             $keys = array_keys($param);
     
@@ -230,7 +230,6 @@ class Model
             // SQL query
             $sql = "UPDATE $this->table SET $set WHERE id = :id";
     
-            
             // Prepare statement
             $this->stmt = $this->pdo->prepare($sql);
     

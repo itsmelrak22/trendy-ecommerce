@@ -91,17 +91,16 @@ $location = basename($url);
         <span>Product Catergory List</span></a>
 </li>
 
-<!-- Nav Item - Gender / Age Category Master-->
-<!-- <li class="nav-item <?php //echo $location ==  "gender-age-category-list.php" ? "active" : ""?>">
-    <a class="nav-link" href="gender-age-category-list.php">
-        <i class="fas fa-fw fa-table"></i>
-        <span>Age Category Master</span></a>
-</li> -->
 
 
 
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
+<li class="nav-item <?php echo $location ==  "site-settings.php" ? "active" : ""?>">
+    <a class="nav-link" href="site-settings.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Site Settings</span></a>
+</li>
 
 <!-- Sidebar Toggler (Sidebar) -->
 <div class="text-center d-none d-md-inline">

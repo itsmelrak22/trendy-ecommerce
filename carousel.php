@@ -1,3 +1,9 @@
+<?php
+  $Banner = $site_setting->Banner;
+  $Banner2 = $site_setting->Banner2;
+?>
+    
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -162,7 +168,54 @@
         </div>
       </div>
       <div class="carousel-item">
-        <img src="./assets/carousel/2.jpg" alt="">
+        <?php
+          switch ($site_setting->customRadio) {
+            case 'setDefaultImage':
+              if($site_setting->productSelect){
+                  $id = $site_setting->productSelect;
+                  $color_id = $site_setting->color_id;
+                  echo '<a href="view-products.php?id='.$id.'&color_id='.$color_id.'">';
+                  echo '<img src="./assets/carousel/2.jpg" alt="">';
+                  echo      '</a>';
+                }else{
+                echo '<img src="./assets/carousel/2.jpg" alt="">';
+              }
+
+              break;
+            case 'uploadSelectedBanner':
+              # code...
+              if($site_setting->productSelect){
+                  $id = $site_setting->productSelect;
+                  $color_id = $site_setting->color_id;
+                  echo '<a href="view-products.php?id='.$id.'&color_id='.$color_id.'">';
+                  echo '<img src="./admin/'.$Banner.'" alt="">';
+                  echo      '</a>';
+                }else{
+              }
+
+              break;
+            case 'setSelectedProductBanner':
+              // Remove '%' from the string
+              $Banner = str_replace('./uploads', 'uploads', $Banner);
+              if($site_setting->productSelect){
+                $id = $site_setting->productSelect;
+                $color_id = $site_setting->color_id;
+                echo '<a href="view-products.php?id='.$id.'&color_id='.$color_id.'">
+                        <img src="./admin/'.$Banner.'" alt="">
+                      </a>';
+              }else{
+                echo '<img src="./admin/'.$Banner.'" alt="">';
+              }
+
+              # code...
+              break;
+            
+            default:
+              echo '<img src="./assets/carousel/2.jpg" alt="">';
+              break;
+          }
+        ?>
+        
         <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg> -->
         <div class="container">
           <div class="carousel-caption text-start">
@@ -173,7 +226,26 @@
         </div>
       </div>
       <div class="carousel-item">
-        <img src="./assets/carousel/3.jpg" alt="">
+      <?php
+          switch ($site_setting->customRadio2) {
+            case 'setDefaultImage2':
+              echo '<a href="browse-products.php">';
+              echo '<img src="./assets/carousel/3.jpg" alt="">';
+              echo '</a>';
+              break;
+            case 'uploadSelectedBanner2':
+              # code...
+              echo '<a href="browse-products.php">';
+              echo '<img src="./admin/'.$Banner2.'" alt="">';
+              echo '</a>';
+
+              break;
+            
+            default:
+              echo '<img src="./assets/carousel/3.jpg" alt="">';
+              break;
+          }
+        ?>
         <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg> -->
         <div class="container">
           <div class="carousel-caption text-start">

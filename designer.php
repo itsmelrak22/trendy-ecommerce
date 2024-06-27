@@ -269,11 +269,7 @@
             </div>
 
         <section class="">
-            <div class="container mt-2">
-                <div class="alert alert-info text-center" role="alert">
-                    You want your own multi-color design or you have your own design? Contact us and get a quotation thru our email <strong>A&Japparel25@gmail.com</strong>
-                </div>
-            </div>
+ 
 
 
             <div class="main-row mt-2 " style="" >
@@ -287,9 +283,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="selected_gender">Sex:</label>
-                                            <select class="form-select" name="selected_gender" id="selected_gender" readonly>
-                                                <option value="UNISEX " selected>UNISEX </option>
-                                            </select>
+                                            <input type="text" class="form-control" name="selected_gender" id="selected_gender" value="UNISEX " readonly>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="customize_by">Customization Method:</label>
@@ -761,6 +755,12 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <div class="container mt-2">
+                <div class="alert alert-info text-center" role="alert">
+                    You want your own multi-color design or you have your own design? Contact us and get a quotation thru our email <strong>A&Japparel25@gmail.com</strong>
                 </div>
             </div>
         </section>

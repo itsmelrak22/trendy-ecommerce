@@ -108,5 +108,29 @@ function sendCustomerEmailCustomOrder($MAIL_TO, $RECEIVER_NAME, $STATUS, $SUBJEC
     }
 }
 
+function sendVerificationCode($MAIL_TO, $RECEIVER_NAME, $SUBJECT = "Verification Code", $code){
+    $mailTo = $MAIL_TO;
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+    $mail->isSMTP();
+    $mail->Host = "mail.smtp2go.com";
+    $mail->SMTPAuth = true;
+    $mail->Username = "trendydressshop.online";
+    $mail->Password = "password";
+    $mail->SMTPSecure = "tls";
+    $mail->Port = "2525";
+    $mail->From = "admin@trendydressshop.online";
+    $mail->FromName = "TRENDY THREADS APPAREL";
+    $mail->addAddress($mailTo, $RECEIVER_NAME);
+    $mail->isHTML(true);
+    $mail->Subject = $SUBJECT;
+    $mail->Body =  "Your verification code is: $code";
+    $mail->AltBody = "Your verification code is: $code";
+
+    if(!$mail->send()){
+        return 500;
+    } else {
+        return 200;
+    }
+}
 
 ?>

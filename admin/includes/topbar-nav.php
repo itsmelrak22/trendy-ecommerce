@@ -25,6 +25,9 @@
             case 'category-list.php':
                 return "PRODUCT CATEGORY INFORMATION PAGE";
                 break;
+            case 'site-settings.php':
+                return "SITE SETTINGS";
+                break;
    
             default:
                 # code...

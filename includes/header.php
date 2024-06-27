@@ -2,6 +2,7 @@
     require_once  './vendor/autoload.php';
     date_default_timezone_set('Asia/Manila');
     
+
     session_start(); 
     function displayDataTest($array){
         echo "<pre>";
@@ -90,6 +91,10 @@
     $url = getCurrentUrl();
     $location = basename($url);
 
+    $site_setting_ = new SiteSetting;
+    $site_setting = $site_setting_->getSiteSettingsLatest();
+    $site_setting = json_decode($site_setting->json_data);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,11 +135,23 @@
                 aspect-ratio: 1 / 1; /* Maintains a 1:1 aspect ratio */
                 object-fit: cover;  /* Ensures the image covers the container, cropping if necessary */
             }
+
+            .overlay {
+                height: 100%;
+                width: 100%;
+                display: none;
+                position: fixed;
+                z-index: 99999 !important;
+                top: 0;
+                left: 0;
+                background-color: rgba(0,0,0, 0.5);
+            }
         
         </style>
 
     </head>
     <body>
+
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container">
@@ -211,6 +228,8 @@
                         </div>
                     </div>
                     <div class="modal-body" id="registerForm" style="display: none;">
+                        <div id="myOverlay2" class="overlay" style="display: none;"></div>
+
                         <form method="POST" action="./client/register-customer.php">
                             <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Basic Information </h6>
                             <hr>
@@ -231,13 +250,13 @@
                                         <span class="input-group-text">+63</span>
                                         <input type="tel" class="form-control" id="phone_number" name="phone_number" required maxlength="10">
                                     </div>
-                                    <!-- <input type="tel" class="form-control" id="phone_number" name="phone_number" required> -->
                                 </div>
                                 <div class="mb-3 col-sm-6">
                                     <label for="reg_email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="reg_email" name="reg_email" required>
                                 </div>
                             </div>
+                         
                             <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Login Credentials </h6>
                             <hr>
                             <div class="row">
@@ -250,7 +269,7 @@
                                     <input type="password" class="form-control" id="reg_password" name="reg_password" required>
                                 </div>
                             </div>
-                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address information </h6>
+                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
                             <hr>
                             <div class="row">
                                 <div class="mb-3 col-sm-6">
@@ -280,8 +299,29 @@
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-sm-12">
-                                    <!-- <button type="submit" class="btn btn-primary" name="add-customer">Submit</button> -->
-                                    <input type="submit" class="btn btn-primary" name="add-customer" value="Submit">
+                                        <label for="verification_code" class="form-label">Verification Code</label>
+                                    <div class="input-group mb-3">
+                                        <input id="verification_code" type="text" class="form-control" placeholder="Enter Verification Code Here" aria-label="Enter Verification Code Here" aria-describedby="button-addon2">
+                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendVerificationCode()">Send Verification Code</button> 
+                                    </div>
+                                    <button type="button" class="btn btn-secondary mt-2" onclick="verifyCode()">Verify Code</button>
+                                </div>
+                                <div class="mb-3 col-sm-6">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-sm-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="userAgreement" onclick="toggleSubmitButton()">
+                                        <label class="form-check-label" for="userAgreement">
+                                            I hereby declare that the information provided is true and correct.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-sm-12">
+                                    <input type="submit" class="btn btn-primary" name="add-customer" value="Submit" disabled id="submitBtn">
                                 </div>
                             </div>
                         </form>
@@ -614,5 +654,74 @@
         }else if(registerForm.style.display === "block"){
             modalDialog.style.maxWidth = "600px";
         }
+    }
+</script>
+<script>
+    function toggleSubmitButton() {
+        const submitBtn = document.getElementById('submitBtn');
+        const userAgreement = document.getElementById('userAgreement');
+        submitBtn.disabled = !userAgreement.checked;
+    }
+</script>
+
+<script>
+
+    function toggleOverlay2(value){
+        let overlay = document.getElementById('myOverlay2');
+
+        if(value){
+            overlay.style.display = "block";
+        }else{
+            overlay.style.display = "none";
+        }
+    }
+
+    let verificationCode = "";
+
+    function sendVerificationCode() {
+        toggleOverlay2(true)
+
+        const email = document.getElementById('reg_email').value;
+        if (email) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "./client/send-verification.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        verificationCode = response.verificationCode;
+                        alert('Verification code sent to ' + email);
+                        toggleOverlay2(false)
+                    } else {
+                        alert('Failed to send verification code. Please try again.');
+                        toggleOverlay2(false)
+                    }
+                }
+            };
+            xhr.send("email=" + encodeURIComponent(email));
+        } else {
+            alert('Please enter a valid email address.');
+            toggleOverlay2(false)
+        }
+    }
+
+    function verifyCode() {
+        const userCode = document.getElementById('verification_code').value;
+        console.log(`userCode: ${userCode}`)
+        console.log(`verificationCode: ${verificationCode}`)
+        if (userCode == verificationCode) {
+            alert('Email verified successfully!');
+            document.getElementById('submitBtn').disabled = false;
+        } else {
+            alert('Invalid verification code. Please try again.');
+        }
+    }
+
+    function toggleSubmitButton() {
+        const submitBtn = document.getElementById('submitBtn');
+        const userAgreement = document.getElementById('userAgreement');
+        const emailVerified = !document.getElementById('submitBtn').disabled; // Check if email is verified
+        submitBtn.disabled = !(userAgreement.checked && emailVerified);
     }
 </script>
