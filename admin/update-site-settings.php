@@ -39,16 +39,19 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
             echo "c";
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             if($check !== false) {
+                echo "c1";
     
                 $target_dir = "uploads/banners/";
                 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
                 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     
                 if (!file_exists( "$target_dir" )) {
+                    echo "c2";
                     mkdir("$target_dir", 0777, true);
                 }
     
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    echo "c3";
                     echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
                     $data["productImage"] = "";
                     $data["uploadedBanner"] = $target_file;
@@ -73,16 +76,19 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
             
             $check = getimagesize($_FILES["fileToUpload2"]["tmp_name"]);
             if($check !== false) {
+                echo "c4";
     
                 $target_dir = "uploads/banners/";
                 $target_file = $target_dir . basename($_FILES["fileToUpload2"]["name"]);
                 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     
                 if (!file_exists( "$target_dir" )) {
+                    echo "c5";
                     mkdir("$target_dir", 0777, true);
                 }
     
                 if (move_uploaded_file($_FILES["fileToUpload2"]["tmp_name"], $target_file)) {
+                    echo "c6";
                     echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload2"]["name"])). " has been uploaded.";
                     $data["uploadedBanner2"] = $target_file;
                     $data["Banner2"] = $target_file;
