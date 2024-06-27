@@ -87,13 +87,17 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
         throw $e->getMessage();
     }
 
+    echo "1";
     $instance = new SiteSetting;
     $param = [
         "json_data" => json_encode($data),
         'created_at' => new \DateTime,
     ];
+    echo "2";
 
     $result = $instance->save($param);
+    echo "3";
+
     header("Location: site-settings.php");
 
 
