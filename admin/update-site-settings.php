@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include_once("./includes/header.php"); 
 spl_autoload_register(function ($class) {
     include '../models/' . $class . '.php';
@@ -24,63 +24,67 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
         "uploadedBanner2" => "",
     ];
 
-    if( $_POST["customRadio"] === "setDefaultImage"){
-        $data["productImage"] = "";
-        $data["uploadedBanner"] = "";
-        $data["Banner"] = "assets/carousel/2.jpg";
-    
-    }else if($_POST["customRadio"] === "uploadSelectedBanner"){
+    try {
+        if( $_POST["customRadio"] === "setDefaultImage"){
+            $data["productImage"] = "";
+            $data["uploadedBanner"] = "";
+            $data["Banner"] = "assets/carousel/2.jpg";
         
-        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if($check !== false) {
-
-            $target_dir = "uploads/banners/";
-            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-            if (!file_exists( "$target_dir" )) {
-                mkdir("$target_dir", 0777, true);
-            }
-
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-                $data["productImage"] = "";
-                $data["uploadedBanner"] = $target_file;
-                $data["Banner"] = $target_file;
-
-            }
-        }
-
-    }else if($_POST["customRadio"] === "setSelectedProductBanner"){
-        $data["Banner"] = $_POST["productImage"];
-        $data["uploadedBanner"] = "";
-    }
-
-    if( $_POST["customRadio2"] === "setDefaultImage2"){
-        $data["uploadedBanner2"] = "";
-        $data["Banner2"] = "assets/carousel/3.jpg";
+        }else if($_POST["customRadio"] === "uploadSelectedBanner"){
+            
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if($check !== false) {
     
-    }else if($_POST["customRadio2"] === "uploadSelectedBanner2"){
-        
-        $check = getimagesize($_FILES["fileToUpload2"]["tmp_name"]);
-        if($check !== false) {
-
-            $target_dir = "uploads/banners/";
-            $target_file = $target_dir . basename($_FILES["fileToUpload2"]["name"]);
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-            if (!file_exists( "$target_dir" )) {
-                mkdir("$target_dir", 0777, true);
+                $target_dir = "uploads/banners/";
+                $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    
+                if (!file_exists( "$target_dir" )) {
+                    mkdir("$target_dir", 0777, true);
+                }
+    
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+                    $data["productImage"] = "";
+                    $data["uploadedBanner"] = $target_file;
+                    $data["Banner"] = $target_file;
+    
+                }
             }
-
-            if (move_uploaded_file($_FILES["fileToUpload2"]["tmp_name"], $target_file)) {
-                echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload2"]["name"])). " has been uploaded.";
-                $data["uploadedBanner2"] = $target_file;
-                $data["Banner2"] = $target_file;
-
-            }
+    
+        }else if($_POST["customRadio"] === "setSelectedProductBanner"){
+            $data["Banner"] = $_POST["productImage"];
+            $data["uploadedBanner"] = "";
         }
-
+    
+        if( $_POST["customRadio2"] === "setDefaultImage2"){
+            $data["uploadedBanner2"] = "";
+            $data["Banner2"] = "assets/carousel/3.jpg";
+        
+        }else if($_POST["customRadio2"] === "uploadSelectedBanner2"){
+            
+            $check = getimagesize($_FILES["fileToUpload2"]["tmp_name"]);
+            if($check !== false) {
+    
+                $target_dir = "uploads/banners/";
+                $target_file = $target_dir . basename($_FILES["fileToUpload2"]["name"]);
+                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    
+                if (!file_exists( "$target_dir" )) {
+                    mkdir("$target_dir", 0777, true);
+                }
+    
+                if (move_uploaded_file($_FILES["fileToUpload2"]["tmp_name"], $target_file)) {
+                    echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload2"]["name"])). " has been uploaded.";
+                    $data["uploadedBanner2"] = $target_file;
+                    $data["Banner2"] = $target_file;
+    
+                }
+            }
+    
+        }
+    } catch (\Exception $e) {
+        throw $e->getMessage();
     }
 
     $instance = new SiteSetting;
