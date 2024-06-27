@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 include_once("./includes/header.php"); 
 spl_autoload_register(function ($class) {
     include '../models/' . $class . '.php';
@@ -23,6 +23,8 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
         "defaultImage2" => "assets/carousel/2.jpg",
         "uploadedBanner2" => "",
     ];
+
+    print_r($data);
 
     try {
         if( $_POST["customRadio"] === "setDefaultImage"){
