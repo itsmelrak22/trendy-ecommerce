@@ -86,6 +86,7 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
     
         }
     } catch (\Exception $e) {
+        echo $e->getMessage();
         throw $e->getMessage();
     }
 
