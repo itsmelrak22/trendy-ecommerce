@@ -24,16 +24,19 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
         "uploadedBanner2" => "",
     ];
 
-    print_r($data);
+    echo ($data);
 
     try {
+        echo "a";
+
         if( $_POST["customRadio"] === "setDefaultImage"){
+            echo "b";
             $data["productImage"] = "";
             $data["uploadedBanner"] = "";
             $data["Banner"] = "assets/carousel/2.jpg";
         
         }else if($_POST["customRadio"] === "uploadSelectedBanner"){
-            
+            echo "c";
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             if($check !== false) {
     
@@ -55,15 +58,18 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
             }
     
         }else if($_POST["customRadio"] === "setSelectedProductBanner"){
+            echo "d";
             $data["Banner"] = $_POST["productImage"];
             $data["uploadedBanner"] = "";
         }
     
         if( $_POST["customRadio2"] === "setDefaultImage2"){
+            echo "e";
             $data["uploadedBanner2"] = "";
             $data["Banner2"] = "assets/carousel/3.jpg";
         
         }else if($_POST["customRadio2"] === "uploadSelectedBanner2"){
+            echo "f";
             
             $check = getimagesize($_FILES["fileToUpload2"]["tmp_name"]);
             if($check !== false) {
