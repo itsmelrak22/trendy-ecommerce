@@ -397,14 +397,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                          <div class="card shadow mb-4">
-                            <a href="#yearyReport" class="d-block card-header py-3" data-toggle="collapse"
-                                role="button" aria-expanded="true" aria-controls="yearyReport">
+                            <a href="#customReport" class="d-block card-header py-3" data-toggle="collapse"
+                                role="button" aria-expanded="true" aria-controls="customReport">
                                 <h6 class="m-0 font-weight-bold text-primary">Custom Date Reports</h6>
                             </a>
-                            <div class="collapse show" id="yearyReport">
+                            <div class="collapse show" id="customReport">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -443,7 +443,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
 
                         
 
