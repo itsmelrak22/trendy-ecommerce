@@ -9,7 +9,7 @@ date_default_timezone_set("Asia/Manila");
 
 try {
 
-    if ( isset( $_POST['produce-size-add'] ) ){
+    if ( isset( $_POST['product-size-add'] ) ){
         $param = [
             'size_price' => $_POST['size_price'],
             'size_display' => $_POST['size_display'],

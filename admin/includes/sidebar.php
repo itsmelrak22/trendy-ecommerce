@@ -96,11 +96,17 @@ $location = basename($url);
 
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
+<li class="nav-item <?php echo $location ==  "courier-list.php" ? "active" : ""?>">
+    <a class="nav-link" href="courier-list.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Couriers</span></a>
+</li>
 <li class="nav-item <?php echo $location ==  "site-settings.php" ? "active" : ""?>">
     <a class="nav-link" href="site-settings.php">
         <i class="fas fa-fw fa-table"></i>
         <span>Site Settings</span></a>
 </li>
+
 
 <!-- Sidebar Toggler (Sidebar) -->
 <div class="text-center d-none d-md-inline">

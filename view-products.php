@@ -186,21 +186,6 @@
 
                     <form action="add-to-cart.php" method="POST" onsubmit="return checkUser();">
                             <?php 
-                             switch ($products->category_name) { 
-                                case 'NIKEE SWOOSH POLO SHIRT':
-                                case 'NY POLO SHIRT':
-                                case 'CLASSIC POLO SHIRT':
-                                case 'OPEN COLLAR POLO SHIRT':
-                                case 'POLO SHIRT':
-                                case 'CORDUROY SHIRT':
-                                case 'ELITE OVERSIZE SHIRT':
-                                    echo '
-                                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <i class="bi bi-patch-question"> SIZE GUIDE</i>
-                                        </button>
-                                    ';
-                                    break;
-                                }
                             if(count($product_sizes) == 0){
                                 echo '
                                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="size-group">

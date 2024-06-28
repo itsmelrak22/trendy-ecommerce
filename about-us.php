@@ -10,7 +10,7 @@
                 <div class="col-12 col-xl-11">
                     <h2 class="mb-3">Who Are We?</h2>
                     <p class="lead fs-4 text-secondary mb-3">At Trendy Threads Apparel by Love J’s store, we believe in the power of personal expression through fashion. Welcome to a world where your style is not just worn but woven into the fabric of every garment. Our mission at Love J's Store is to bring your unique vision to life through the art of embroidery. We take pride in offering a platform where you can seamlessly turn your imagination into a tangible, wearable reality.</p>
-                    <p class="mb-5 text-secondary">Trendy Threads Apparel by Love J's Store was created in 2021 and began selling a range of things before deciding to specialize in one category, which is apparel. We didn't expect it to expand that much, but we're so grateful for how it is now.</p>
+                    <p class="mb-5 text-secondary">TRENDY THREADS APPARELtore was created in 2021 and began selling a range of things before deciding to specialize in one category, which is apparel. We didn't expect it to expand that much, but we're so grateful for how it is now.</p>
                     <div class="row gy-4 gy-md-0 gx-xxl-5X">
                     <div class="col-12 col-md-6">
                         <div class="d-flex">

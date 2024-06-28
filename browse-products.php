@@ -168,7 +168,7 @@
     <header class="bg-dark py-5" >
         <div class="container px-2 px-lg-3 my-3">
             <div class="text-center text-white" style="border: white">
-                <h1 class="display-5 fw-bolder" style="font-family: Courier New, sans-serif;">TRENDY THREADS APPAREL BY LOVE J'S STORE</h1>
+                <h1 class="display-5 fw-bolder" style="font-family: Courier New, sans-serif;">TRENDY THREADS APPARELTORE</h1>
                 <p class="lead fw-normal text-white-50 mb-0" style="font-family: Courier New, sans-serif;">Shop in style we will deliver it to you.</p>
             </div>
             <div class="loop-wrapper">

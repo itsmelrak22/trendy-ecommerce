@@ -120,7 +120,7 @@ spl_autoload_register(function ($class) {
                                             </div>
                                         </div>
                                         <input type="hidden" name="product_id" value="<?= $products->id ?>">
-                                        <button type="submit" class="btn btn-primary" name="produce-size-add">Add Size</button>
+                                        <button type="submit" class="btn btn-primary" name="product-size-add">Add Size</button>
                                     </div>
                                 </form>
                             </div>
@@ -234,7 +234,7 @@ spl_autoload_register(function ($class) {
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>TRENDY THREADS APPAREL BY LOVE J'S STORE</span>
+                        <span>TRENDY THREADS APPARELTORE</span>
                     </div>
                 </div>
             </footer>

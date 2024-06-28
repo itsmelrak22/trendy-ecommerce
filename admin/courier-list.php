@@ -33,7 +33,6 @@ spl_autoload_register(function ($class) {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Gender/Age Category Master Page</h1>
                     <div>
                         <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addModal">
                             <span class="icon text-white-50">
@@ -46,7 +45,7 @@ spl_autoload_register(function ($class) {
                         <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Gender/Age Category List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Courier List</h6>
                             
                         </div>
                         <div class="card-body">
@@ -55,6 +54,7 @@ spl_autoload_register(function ($class) {
                                     <thead>
                                         <tr>
                                             <th>Name </th>
+                                            <th>External Link </th>
                                             <th>Date Created</th>
                                             <th>Action</th>
                                         </tr>
@@ -62,6 +62,7 @@ spl_autoload_register(function ($class) {
                                     <tfoot>
                                         <tr>
                                             <th>Name </th>
+                                            <th>External Link </th>
                                             <th>Date Created</th>
                                             <th>Action</th>
                                         </tr>
@@ -72,15 +73,15 @@ spl_autoload_register(function ($class) {
                                                 <td> <?=$value['name'] ?> </td>
                                                 <td> <?=$value['created_at'] ?> </td>
                                                 <td>
-                                                    <form action="gender-age-category-delete.php" method="POST">
-                                                        <a href="gender-age-category-edit.php?id=<?=$value['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <form action="courier-delete.php" method="POST">
+                                                        <a href="courier-edit.php?id=<?=$value['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </a>
-                                                        <a href="gender-age-category-view.php?id=<?=$value['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
+                                                        <a href="courier-view.php?id=<?=$value['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
                                                             <i class="fas fa-arrow-right"></i>
                                                         </a>
                                                         <input type="hidden" name="id" value="<?=$value['id']?>">
-                                                        <button type="submit" name="delete-gender-age-category" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
+                                                        <button type="submit" name="delete-courier" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
@@ -102,7 +103,7 @@ spl_autoload_register(function ($class) {
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>TRENDY THREADS APPARELTORE</span>
+                        <span>TRENDY THREADS APPAREL</span>
                     </div>
                 </div>
             </footer>
@@ -140,12 +141,12 @@ spl_autoload_register(function ($class) {
     </div>
 
     <!-- MODALS -->
-    <form method="POST" action="gender-age-category-insert.php">
+    <form method="POST" action="courier-insert.php">
         <div class="modal" tabindex="-1" id="addModal">
             <div class="modal-dialog modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold text-primary">Add Gender / Age Category</h5>
+                    <h5 class="modal-title font-weight-bold text-primary">Add Courier Information</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -155,11 +156,15 @@ spl_autoload_register(function ($class) {
                         <div class="input-group">
                             <input type="text" name="name" id="name" class="form-control bg-light border-0 small" placeholder="Name" aria-label="Name" aria-describedby="basic-addon2" required>
                         </div>
+                        <br>
+                        <div class="input-group">
+                            <input type="text" name="link" id="link" class="form-control bg-light border-0 small" placeholder="External Link" aria-label="External Link" aria-describedby="basic-addon2" required>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" name="add-gender-age-category" value="Submit">
+                    <input type="submit" class="btn btn-primary" name="add-courier" value="Submit">
                 </div>
                 </div>
             </div>

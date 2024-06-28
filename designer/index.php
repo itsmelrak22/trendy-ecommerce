@@ -11,7 +11,7 @@ if( !isset($_SESSION['loggedInUser']) ){
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>TRENDY THREADS APPAREL BY LOVE J'S STORE -  CUSTOMIZE PAGE</title>
+    <title>TRENDY THREADS APPARELTORE -  CUSTOMIZE PAGE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -85,7 +85,7 @@ if( !isset($_SESSION['loggedInUser']) ){
     <div class="container">
 		<section id="typography">
 		  <div class="page-header">
-		    <h1>TRENDY THREADS APPAREL BY LOVE J'S STORE Customize Page</h1>
+		    <h1>TRENDY THREADS APPARELTORE Customize Page</h1>
 
 			<a href="../index.php?#product_list" class="btn">Back to main website</a>
 

@@ -10,7 +10,7 @@ Class ProductSize extends Model {
         $product_sizes = $instance->setQuery("
             SELECT *  FROM `product_sizes`
             WHERE `deleted_at` IS NULL
-            AND `id` = $product_id 
+            AND `product_id` = $product_id 
             ORDER BY `created_at` DESC
         ")->getAll();
     

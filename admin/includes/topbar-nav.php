@@ -28,6 +28,9 @@
             case 'site-settings.php':
                 return "SITE SETTINGS";
                 break;
+            case 'courier-list.php':
+                return "COURIER LIST";
+                break;
    
             default:
                 # code...
