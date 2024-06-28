@@ -622,7 +622,7 @@
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                                    <div id="avatarLogoPrice">0</div>
+                                                                    +<span id="avatarLogoPrice">0</span>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -641,7 +641,7 @@
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                                    <div id="textPrice">0</div>
+                                                                    +<span id="textPrice">0</span>
                                                                 </td>
                                                             </tr>
                                                         </tbody>

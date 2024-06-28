@@ -86,11 +86,11 @@
                         <div class="small mb-1 lead"><?= 'Price'. ': '. ''?>
                             <?php 
                             if(isset($discountPercentage)){
-                                echo '<span id="display-final-price" class="text-decoration-line-through"> ₱'.$products->price.' </span>';
+                                echo '<span id="display-final-price" class="text-decoration-line-through"> ₱'.number_format($products->price, 2).' </span>';
                                 echo '<span id="display-discounted-price" class="fw-bolder mx-4"> ₱'.$discountedPrice.' </span>';
                                 echo '<span class="fw-bold  text-success">(-'.$discountPercentage.' Promo)</span>';
                             }else{
-                                echo '<span id="display-final-price" class=""> ₱'.$products->price.' </span>';
+                                echo '<span id="display-final-price" class=""> ₱'.number_format($products->price, 2).' </span>';
                             }
                             ?>
                         </div>
