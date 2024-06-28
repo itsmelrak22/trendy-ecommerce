@@ -44,22 +44,39 @@
     $order = new Order;
     $orders_ = $order->getOrderAndOrderDetails();
     $orders_count = 0;
-
+    $checked_out_orders = array(); // Initialize an array to hold the checked out orders
+    
+    foreach ($orders_ as $key => &$value) {
+        $value['cart_status'] = getStatusText($value['order_details'][0]['status']);
+        if ($value['cart_status'] == 'Checked out') {
+            $checked_out_orders[] = $value; // Add the order to the checked out orders array
+        }
+    }
+    
+    
     if(count($orders_) > 0){
-        foreach ($orders_ as $key => $value) {
+        foreach ($checked_out_orders as $key => $value) {
             $orders_count += 1;
         }
     }
 
     $customOrder = CustomizeOrder::getCustomerCustomOrders();
     $customOrder_count = 0;
+    $null_orders = array(); // Initialize an array to hold the checked out orders
+    
+    foreach ($customOrder as $key => &$value) {
+        if (!$value['status']) {
+            $null_orders[] = $value; // Add the order to the checked out orders array
+        }
+    }
 
     if(count($customOrder) > 0){
-        foreach ($customOrder as $key => $value) {
+        foreach ($null_orders as $key => $value) {
             $customOrder_count += 1;
         }
     }
 
+    // displayDataTest($null_orders);
 ?>
 
     <!-- Daterangepicker CSS -->
@@ -160,7 +177,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    Orders</div>
+                                                Pending Orders</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $orders_count ?></div>
                                             </div>
                                             <div class="col-auto">
@@ -179,7 +196,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    Custom Orders</div>
+                                                    Pending Custom Orders</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$customOrder_count?></div>
                                             </div>
                                             <div class="col-auto">

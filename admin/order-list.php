@@ -40,38 +40,7 @@
         $value['cart_status'] = getStatusText($value['order_details'][0]['status']);
     }
     
-    // displayDataTest($orders);
-    function getStatusText($status){
 
-        switch ($status) {
-            case 0:
-                return "Added to cart";
-                break;
-            case 1:
-                return "Checked out";
-                break;
-            case 2:
-                return "Processing";
-                break;
-            case 3:
-                return "Shipped";
-                break;
-            case 4:
-                return "Delivered";
-                break;
-            case 10:
-                return "Declined";
-                break;
-            case 11:
-                return "Canceled";
-                break;
-            default:
-                return "Unknown status";
-                break;
-        }
-        
-
-    }
 
 
 ?>
