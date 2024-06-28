@@ -40,7 +40,8 @@ if ( isset( $_POST['edit-order-detail'] ) && $_POST['edit-order-detail'] ){
                 break;
         }
         // displayDataTest($_POST);
-        displayDataTest($orders);
+        // displayDataTest($orders);
+        // exit();
      
         foreach ($orders->order_details as $key => $value) {
             $order_total += $value['total_price'];
@@ -54,6 +55,9 @@ if ( isset( $_POST['edit-order-detail'] ) && $_POST['edit-order-detail'] ){
 
         $param = [
             "total" => $order_total,
+            "courier_id" => $_POST['courier_id'] ? $_POST['courier_id'] : 0,
+            "tracking_number" => $_POST['tracking_number'] ? $_POST['tracking_number'] : null,
+            "estimated_days_of_delivery" => $_POST['estimated_days_of_delivery'] ? $_POST['estimated_days_of_delivery'] : 0,
             'updated_at' => new \DateTime,
         ];
 

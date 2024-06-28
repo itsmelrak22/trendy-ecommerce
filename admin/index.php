@@ -195,14 +195,11 @@
                     <hr>
                         <!-- DataTales Example -->
 
-                         <!-- Daily Reports -->
-                         <div class="card shadow mb-4">
-                            <!-- Card Header - Accordion -->
+                         <!-- <div class="card shadow mb-4">
                             <a href="#dailyReports" class="d-block card-header py-3" data-toggle="collapse"
                                 role="button" aria-expanded="true" aria-controls="dailyReports">
                                 <h6 class="m-0 font-weight-bold text-primary">Daily Reports</h6>
                             </a>
-                            <!-- Card Content - Collapse -->
                             <div class="collapse show" id="dailyReports">
                                 <div class="card-body">
                                     <div class="row">
@@ -230,7 +227,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Report data will be populated here by JavaScript -->
                                                 <tr>
                                                     <td colspan="4"> <p class="text-center">No Data</p> </td>
                                                 </tr>
@@ -247,14 +243,11 @@
                             </div>
                         </div>
 
-                         <!-- Weekly Reports -->
                          <div class="card shadow mb-4">
-                            <!-- Card Header - Accordion -->
                             <a href="#dailyReports" class="d-block card-header py-3" data-toggle="collapse"
                                 role="button" aria-expanded="true" aria-controls="dailyReports">
                                 <h6 class="m-0 font-weight-bold text-primary">Weekly Reports</h6>
                             </a>
-                            <!-- Card Content - Collapse -->
                             <div class="collapse show" id="dailyReports">
                                 <div class="card-body">
                                     <div class="row mt-4">
@@ -280,7 +273,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Report data will be populated here by JavaScript -->
                                                 <tr>
                                                     <td colspan="4"> <p class="text-center">No Data</p> </td>
                                                 </tr>
@@ -298,14 +290,11 @@
                             </div>
                         </div>
 
-                        <!-- Monthly Reports -->
                         <div class="card shadow mb-4">
-                            <!-- Card Header - Accordion -->
                             <a href="#monthlyReports" class="d-block card-header py-3" data-toggle="collapse"
                                 role="button" aria-expanded="true" aria-controls="monthlyReports">
                                 <h6 class="m-0 font-weight-bold text-primary">Monthly Reports</h6>
                             </a>
-                            <!-- Card Content - Collapse -->
                             <div class="collapse show" id="monthlyReports">
                                 <div class="card-body">
                                     <div class="row">
@@ -331,7 +320,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Report data will be populated here by JavaScript -->
                                                 <tr>
                                                     <td colspan="4"> <p class="text-center">No Data</p> </td>
                                                 </tr>
@@ -348,14 +336,11 @@
                             </div>
                         </div>
 
-                         <!-- Yearly Reports -->
                          <div class="card shadow mb-4">
-                            <!-- Card Header - Accordion -->
                             <a href="#yearyReport" class="d-block card-header py-3" data-toggle="collapse"
                                 role="button" aria-expanded="true" aria-controls="yearyReport">
                                 <h6 class="m-0 font-weight-bold text-primary">Yearly Reports</h6>
                             </a>
-                            <!-- Card Content - Collapse -->
                             <div class="collapse show" id="yearyReport">
                                 <div class="card-body">
                                     <div class="row">
@@ -381,7 +366,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Report data will be populated here by JavaScript -->
                                                 <tr>
                                                     <td colspan="4"> <p class="text-center">No Data</p> </td>
                                                 </tr>
@@ -398,14 +382,11 @@
                             </div>
                         </div>
 
-                         <!-- Custom Date Reports -->
                          <div class="card shadow mb-4">
-                            <!-- Card Header - Accordion -->
                             <a href="#yearyReport" class="d-block card-header py-3" data-toggle="collapse"
                                 role="button" aria-expanded="true" aria-controls="yearyReport">
                                 <h6 class="m-0 font-weight-bold text-primary">Custom Date Reports</h6>
                             </a>
-                            <!-- Card Content - Collapse -->
                             <div class="collapse show" id="yearyReport">
                                 <div class="card-body">
                                     <div class="row">
@@ -431,7 +412,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Report data will be populated here by JavaScript -->
                                                 <tr>
                                                     <td colspan="4"> <p class="text-center">No Data</p> </td>
                                                 </tr>
@@ -446,7 +426,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         
 

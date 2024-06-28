@@ -10,7 +10,10 @@ spl_autoload_register(function ($class) {
 
   $instace = new Order;
   $data = $instace->getOrderAndOrderDetails($id);
-//   displayDataTest($data);
+
+  $couriers = Courier::getCouriers();
+
+//   displayDataTest($couriers);
  
     function getStatusText($status){
 
@@ -258,6 +261,34 @@ spl_autoload_register(function ($class) {
                                     <option value="11" <?= $data->order_details[0]['status'] == 11 ? 'selected' : '' ?>>Canceled</option>
                                 </select>
                             </div>
+                            <label for="courier_id" class="font-weight-bold text-primary">Courier</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3"> </span>
+                                </div>
+                                <select class="form-control" name="courier_id" id="courier_id" placeholder="..." value="">
+                                    <option value="" selected disabled></option>
+                                <?php foreach ($couriers as $key => $value) {
+                                    $isSelected = $data->courier_id == $value['id'] ? 'selected' : '';
+                                    echo '<option value="' . $value['id'] . '" ' . $isSelected . '>' . $value['name'] . '</option>';
+                                } ?>
+                                </select>
+                            </div>
+                            <label for="status" class="font-weight-bold text-primary">Tracking Number</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3"> </span>
+                                </div>
+                                <input value="<?= $data->tracking_number ? $data->tracking_number : '' ?>" type="text" name="tracking_number" id="tracking_number" class="form-control">
+                            </div>
+                            <label for="estimated_days_of_delivery" class="font-weight-bold text-primary">Estimated Days of Delivery</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3"> </span>
+                                </div>
+                                <input value="<?= $data->estimated_days_of_delivery ? $data->estimated_days_of_delivery : '' ?>" type="number" name="estimated_days_of_delivery" id="estimated_days_of_delivery" class="form-control">
+                            </div>
+
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
                                 <label class="form-check-label font-weight-bold text-primary" for="send_email">

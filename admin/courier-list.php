@@ -6,8 +6,7 @@ spl_autoload_register(function ($class) {
     include '../models/' . $class . '.php';
   });
 
-  $gender_age_category = new GenderAgeCategory;
-  $gender_age_categories = $gender_age_category->all();
+  $couriers = Courier::getCouriers();
 
 ?>
 
@@ -48,48 +47,96 @@ spl_autoload_register(function ($class) {
                             <h6 class="m-0 font-weight-bold text-primary">Courier List</h6>
                             
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Name </th>
-                                            <th>External Link </th>
-                                            <th>Date Created</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name </th>
-                                            <th>External Link </th>
-                                            <th>Date Created</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php foreach ($gender_age_categories as $key => $value) {  ?>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
                                             <tr>
-                                                <td> <?=$value['name'] ?> </td>
-                                                <td> <?=$value['created_at'] ?> </td>
-                                                <td>
-                                                    <form action="courier-delete.php" method="POST">
-                                                        <a href="courier-edit.php?id=<?=$value['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        <a href="courier-view.php?id=<?=$value['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                            <i class="fas fa-arrow-right"></i>
-                                                        </a>
-                                                        <input type="hidden" name="id" value="<?=$value['id']?>">
-                                                        <button type="submit" name="delete-courier" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
+                                                <th>Name</th>
+                                                <th>External Link</th>
+                                                <th>Date Created</th>
+                                                <th>Action</th>
                                             </tr>
-                                        <?php  } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>External Link</th>
+                                                <th>Date Created</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <?php foreach ($couriers as $key => $value) { ?>
+                                                <tr>
+                                                    <td><?=$value['name']?></td>
+                                                    <td><a href="<?=$value['link']?>" target="_blank"><?=$value['link']?></a></td>
+                                                    <td><?=$value['created_at']?></td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateModal" data-id="<?=$value['id']?>" data-name="<?=$value['name']?>" data-link="<?=$value['link']?>" data-date="<?=$value['created_at']?>">Update</button>
+                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" data-id="<?=$value['id']?>" data-name="<?=$value['name']?>">Delete</button>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Modal -->
+                    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateModalLabel">Update Courier</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="courier-edit.php" method="post">
+                                    <div class="modal-body">
+                                        <input type="hidden" name="id" id="update-id">
+                                        <div class="form-group">
+                                            <label for="update-name">Name</label>
+                                            <input type="text" class="form-control" id="update-name" name="name" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="update-link">External Link</label>
+                                            <input type="url" class="form-control" id="update-link" name="link" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary" name="courier-edit">Save changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Delete Courier</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="courier-delete.php" method="post">
+                                    <div class="modal-body">
+                                        <input type="hidden" name="id" id="delete-id">
+                                        <p>Are you sure you want to delete <strong id="delete-name"></strong>?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger" name="courier-delete">Delete</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -183,6 +230,30 @@ spl_autoload_register(function ($class) {
     $('#addModal').on('shown.bs.modal', function () {
         $('#addModal').trigger('focus')
     })
+</script>
+<script>
+    $('#updateModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var name = button.data('name');
+        var link = button.data('link');
+
+        var modal = $(this);
+        modal.find('#update-id').val(id);
+        modal.find('#update-name').val(name);
+        modal.find('#update-link').val(link);
+        // modal.find('#update-date').val(date);
+    });
+
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var name = button.data('name');
+
+        var modal = $(this);
+        modal.find('#delete-id').val(id);
+        modal.find('#delete-name').text(name);
+    });
 </script>
 
 

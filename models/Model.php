@@ -58,6 +58,7 @@ class Model
             
         } catch (PDOException $e) {
             echo $e->getMessage();
+            throw $e->getMessage();
         }
     }
 
@@ -70,6 +71,7 @@ class Model
             
         } catch (PDOException $e) {
             echo $e->getMessage();
+            throw $e->getMessage();
         }
     }
 
@@ -137,6 +139,7 @@ class Model
             $this->pdo->beginTransaction();
         } catch (PDOException $e) {
             echo $e->getMessage();
+            throw $e->getMessage();
         }
     }
 
@@ -145,6 +148,7 @@ class Model
             $this->pdo->commit();
         } catch (PDOException $e) {
             echo $e->getMessage();
+            throw $e->getMessage();
         }
     }
 
@@ -153,6 +157,7 @@ class Model
             $this->pdo->rollBack();
         } catch (PDOException $e) {
             echo $e->getMessage();
+            throw $e->getMessage();
         }
     }
 
@@ -165,6 +170,7 @@ class Model
         } catch (\Exception $e) {
             //throw $th;
             echo $e->getMessage();
+            throw $e->getMessage();
             exit();
         }
 
@@ -187,7 +193,9 @@ class Model
             $sql = "INSERT INTO $this->table ($columns) VALUES ($placeholders)";
 
             // echo "$sql";
+            // throw "$sql";
             // echo print_r($param);
+            // throw print_r($param);
     
             // Prepare statement
             $this->stmt = $this->pdo->prepare($sql);
@@ -210,6 +218,7 @@ class Model
         } catch (\Exception $e) {
             // Handle exception
             // echo "Error: " . $e->getMessage();
+            // throw "Error: " . $e->getMessage();
             return false;
         }
     }
@@ -257,6 +266,7 @@ class Model
         } catch (\Exception $e) {
             // Handle exception
             // echo "Error: " . $e->getMessage();
+            // throw "Error: " . $e->getMessage();
             return false;
 
         }
