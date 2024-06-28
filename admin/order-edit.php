@@ -15,37 +15,37 @@ spl_autoload_register(function ($class) {
 
 //   displayDataTest($couriers);
  
-    function getStatusText($status){
+    // function getStatusText($status){
 
-        switch ($status) {
-            case 0:
-                return "Added to cart";
-                break;
-            case 1:
-                return "Checked out";
-                break;
-            case 2:
-                return "Processing";
-                break;
-            case 3:
-                return "Shipped";
-                break;
-            case 4:
-                return "Delivered";
-                break;
-            case 10:
-                return "Declined";
-                break;
-            case 11:
-                return "Canceled";
-                break;
-            default:
-                return "Unknown status";
-                break;
-        }
+    //     switch ($status) {
+    //         case 0:
+    //             return "Added to cart";
+    //             break;
+    //         case 1:
+    //             return "Checked out";
+    //             break;
+    //         case 2:
+    //             return "Processing";
+    //             break;
+    //         case 3:
+    //             return "Shipped";
+    //             break;
+    //         case 4:
+    //             return "Delivered";
+    //             break;
+    //         case 10:
+    //             return "Declined";
+    //             break;
+    //         case 11:
+    //             return "Canceled";
+    //             break;
+    //         default:
+    //             return "Unknown status";
+    //             break;
+    //     }
         
 
-    }
+    // }
 
 
 ?>
