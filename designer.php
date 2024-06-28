@@ -367,6 +367,8 @@
                                             <!-- <input style="background-color: lightgrey;"  type="hidden" class="form-control" id="selected_price" name="price" readonly required> -->
                                         </div>
 
+                                        <p class="mt-2" style="color: red; display: none;" id="noteForNotColorPallete"><strong>NOTE:</strong> <em>Customize your design here if you would like a different color or if the specified color is not available.</em></p>
+
                                         <div class="col-md-12">
                                             <div class="my-2"  id="colorPallete">
                                                 <label for="">Shirt Color:</label>
@@ -680,7 +682,7 @@
                                             <label for="count" class="mr-2">Count:</label>
                                             <div class="d-flex align-items-center">
                                                 <button type="button" class="btn btn-sm btn-outline-dark" onclick="decrement()">-</button>
-                                                <input class="form-control mx-2" id="count" name="count" min="1" style="width: 60px;" value="1" type="number" readonly>
+                                                <input class="form-control text-center mx-3" id="count" name="count" min="1" style="width: 60px; max-width: 5rem" value="1" type="text" readonly>
                                                 <button type="button" class="btn btn-sm btn-outline-dark" onclick="increment()">+</button>
                                             </div>
                                         </div>
@@ -841,10 +843,13 @@
 
                     const selectedText = $("#tshirttype").find('option:selected').text();
                     const colorPallete = $('#colorPallete');
+                    const noteForNotColorPallete = $('#noteForNotColorPallete');
                     
                     if (selectedText.includes('DESIGN')) {
                         colorPallete.hide();
+                        noteForNotColorPallete.show();
                     } else {
+                        noteForNotColorPallete.hide();
                         colorPallete.show();
                     }
 

@@ -65,7 +65,7 @@ function getBadgeClass($status) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - TRENDY THREADS APPARELTORE</title>
+    <title>Admin - TRENDY THREADS APPAREL</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

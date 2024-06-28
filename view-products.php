@@ -278,7 +278,7 @@
                             <?php  if( $products->category_name != "CUSTOMIZED POLO SHIRT/UNIFORM" ){ ?>
 
                                 <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="decreaseQuantity()">-</button>
-                                    <input name="quantity" readonly placeholder="0" value="1" class="form-control text-center mx-3" id="inputQuantity" type="text" value="" style="width: 40px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
+                                    <input name="quantity" readonly placeholder="0" value="1" class="form-control text-center mx-3" id="inputQuantity" type="text" value="" style="width: 60px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
                                 <button type="button" class="btn btn-outline-secondary flex-shrink-0 me-5" onclick="increaseQuantity()">+</button>
                             <?php  } ?>
 

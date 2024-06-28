@@ -443,7 +443,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>TRENDY THREADS APPARELTORE</span>
+                        <span>TRENDY THREADS APPAREL</span>
                     </div>
                 </div>
             </footer>
@@ -825,7 +825,7 @@
                 
                 // Store name
                 doc.setFontSize(16);
-                centerText('TRENDY THREADS APPAREL BY LOVE J\'S STORE', 20);
+                centerText('TRENDY THREADS APPAREL', 20);
                 
                 // Address
                 doc.setFontSize(12);

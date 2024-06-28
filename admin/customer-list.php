@@ -112,7 +112,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>TRENDY THREADS APPARELTORE</span>
+                        <span>TRENDY THREADS APPAREL</span>
                     </div>
                 </div>
             </footer>

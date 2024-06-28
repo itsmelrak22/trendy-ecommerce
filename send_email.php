@@ -32,7 +32,7 @@ function sendCustomerEmail($MAIL_TO, $RECEIVER_NAME, $STATUS, $SUBJECT){
 
     $mail->Port = "2525";
     $mail->From = "admin@trendydressshop.online";
-    $mail->FromName = "TRENDY THREADS APPARELTORE";
+    $mail->FromName = "TRENDY THREADS APPAREL";
     $mail->addAddress($mailTo, $RECEIVER_NAME );
 
     $mail->isHTML('true');
@@ -91,7 +91,7 @@ function sendCustomerEmailCustomOrder($MAIL_TO, $RECEIVER_NAME, $STATUS, $SUBJEC
 
     $mail->Port = "2525";
     $mail->From = "admin@trendydressshop.online";
-    $mail->FromName = "TRENDY THREADS APPARELTORE";
+    $mail->FromName = "TRENDY THREADS APPAREL";
     $mail->addAddress($mailTo, $RECEIVER_NAME );
 
     $mail->isHTML('true');
