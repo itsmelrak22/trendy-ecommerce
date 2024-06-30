@@ -10,6 +10,8 @@
             </script>
         ";
     }
+     $couriers = Courier::getCouriers();
+
     require_once('customer-cart-cards.php');
 
     $checkedOutItems = $cartItem->getCustomerCartCheckedoutItems( $client_id );

@@ -54,23 +54,38 @@ Class Cart extends Model {
 
     public static function getCustomerCartCheckedoutItems($customer_id){
         $instance = new self;
-        $dataCarts = $instance->setQuery("
-            SELECT 
-                C.*, 
-                CM.first_name, 
-                CM.last_name, 
-                P.name AS product_name,
-                PC.name as color,
-                PC.image,
-                P.price
-            FROM carts AS C
-            LEFT JOIN customers AS CM ON CM.id = C.customer_id
-            INNER JOIN products AS P ON P.id = C.product_id
-            INNER JOIN product_colors AS PC ON C.color_id = PC.id
-            WHERE  C.customer_id = $customer_id
-            AND C.deleted_at IS NULL
-            AND C.status = 1
-            ORDER BY P.created_at DESC
+        $dataCarts = $instance->setQuery("SELECT 
+                                            C.*, 
+                                            CM.first_name, 
+                                            CM.last_name, 
+                                            P.name AS product_name,
+                                            PC.name AS color,
+                                            PC.image,
+                                            P.price,
+                                            O.tracking_number,
+                                            CR.name AS courier_name,
+                                            O.estimated_days_of_delivery
+                                        FROM 
+                                            carts AS C
+                                        LEFT JOIN 
+                                            customers AS CM ON CM.id = C.customer_id
+                                        INNER JOIN 
+                                            products AS P ON P.id = C.product_id
+                                        INNER JOIN 
+                                            product_colors AS PC ON C.color_id = PC.id
+                                        LEFT JOIN 
+                                            order_details AS OD ON C.id = OD.cart_id
+                                        LEFT JOIN 
+                                            orders AS O ON O.id = OD.order_id
+                                        LEFT JOIN 
+                                            couriers AS CR ON O.courier_id = CR.id
+                                        WHERE  
+                                            C.customer_id = $customer_id
+                                            AND C.deleted_at IS NULL
+                                            AND C.status = 1
+                                        ORDER BY 
+                                            P.created_at DESC;
+    
         ")->getAll();
         return $dataCarts;
     }
@@ -78,22 +93,37 @@ Class Cart extends Model {
     public static function getCustomerCartProcessingItems($customer_id){
         $instance = new self;
         $dataCarts = $instance->setQuery("
-            SELECT 
-                C.*, 
-                CM.first_name, 
-                CM.last_name, 
-                P.name AS product_name,
-                PC.name as color,
-                PC.image,
-                P.price
-            FROM carts AS C
-            LEFT JOIN customers AS CM ON CM.id = C.customer_id
-            INNER JOIN products AS P ON P.id = C.product_id
-            INNER JOIN product_colors AS PC ON C.color_id = PC.id
-            WHERE  C.customer_id = $customer_id
+        SELECT 
+            C.*, 
+            CM.first_name, 
+            CM.last_name, 
+            P.name AS product_name,
+            PC.name AS color,
+            PC.image,
+            P.price,
+            O.tracking_number,
+            CR.name AS courier_name,
+            O.estimated_days_of_delivery
+        FROM 
+            carts AS C
+        LEFT JOIN 
+            customers AS CM ON CM.id = C.customer_id
+        INNER JOIN 
+            products AS P ON P.id = C.product_id
+        INNER JOIN 
+            product_colors AS PC ON C.color_id = PC.id
+        LEFT JOIN 
+            order_details AS OD ON C.id = OD.cart_id
+        LEFT JOIN 
+            orders AS O ON O.id = OD.order_id
+        LEFT JOIN 
+            couriers AS CR ON O.courier_id = CR.id
+        WHERE  
+            C.customer_id = $customer_id
             AND C.deleted_at IS NULL
             AND C.status = 2
-            ORDER BY P.created_at DESC
+        ORDER BY 
+            P.created_at DESC;
         ")->getAll();
         return $dataCarts;
     }
@@ -101,22 +131,37 @@ Class Cart extends Model {
     public static function getCustomerCartShippedItems($customer_id){
         $instance = new self;
         $dataCarts = $instance->setQuery("
-            SELECT 
-                C.*, 
-                CM.first_name, 
-                CM.last_name, 
-                P.name AS product_name,
-                PC.name as color,
-                PC.image,
-                P.price
-            FROM carts AS C
-            LEFT JOIN customers AS CM ON CM.id = C.customer_id
-            INNER JOIN products AS P ON P.id = C.product_id
-            INNER JOIN product_colors AS PC ON C.color_id = PC.id
-            WHERE  C.customer_id = $customer_id
+        SELECT 
+            C.*, 
+            CM.first_name, 
+            CM.last_name, 
+            P.name AS product_name,
+            PC.name AS color,
+            PC.image,
+            P.price,
+            O.tracking_number,
+            CR.name AS courier_name,
+            O.estimated_days_of_delivery
+        FROM 
+            carts AS C
+        LEFT JOIN 
+            customers AS CM ON CM.id = C.customer_id
+        INNER JOIN 
+            products AS P ON P.id = C.product_id
+        INNER JOIN 
+            product_colors AS PC ON C.color_id = PC.id
+        LEFT JOIN 
+            order_details AS OD ON C.id = OD.cart_id
+        LEFT JOIN 
+            orders AS O ON O.id = OD.order_id
+        LEFT JOIN 
+            couriers AS CR ON O.courier_id = CR.id
+        WHERE  
+            C.customer_id = $customer_id
             AND C.deleted_at IS NULL
             AND C.status = 3
-            ORDER BY P.created_at DESC
+        ORDER BY 
+            P.created_at DESC;
         ")->getAll();
         return $dataCarts;
     }
@@ -124,44 +169,74 @@ Class Cart extends Model {
     public static function getCustomerCartReceivedItems($customer_id){
         $instance = new self;
         $dataCarts = $instance->setQuery("
-            SELECT 
-                C.*, 
-                CM.first_name, 
-                CM.last_name, 
-                P.name AS product_name,
-                PC.name as color,
-                PC.image,
-                P.price
-            FROM carts AS C
-            LEFT JOIN customers AS CM ON CM.id = C.customer_id
-            INNER JOIN products AS P ON P.id = C.product_id
-            INNER JOIN product_colors AS PC ON C.color_id = PC.id
-            WHERE  C.customer_id = $customer_id
+        SELECT 
+            C.*, 
+            CM.first_name, 
+            CM.last_name, 
+            P.name AS product_name,
+            PC.name AS color,
+            PC.image,
+            P.price,
+            O.tracking_number,
+            CR.name AS courier_name,
+            O.estimated_days_of_delivery
+        FROM 
+            carts AS C
+        LEFT JOIN 
+            customers AS CM ON CM.id = C.customer_id
+        INNER JOIN 
+            products AS P ON P.id = C.product_id
+        INNER JOIN 
+            product_colors AS PC ON C.color_id = PC.id
+        LEFT JOIN 
+            order_details AS OD ON C.id = OD.cart_id
+        LEFT JOIN 
+            orders AS O ON O.id = OD.order_id
+        LEFT JOIN 
+            couriers AS CR ON O.courier_id = CR.id
+        WHERE  
+            C.customer_id = $customer_id
             AND C.deleted_at IS NULL
             AND C.status = 4
-            ORDER BY P.created_at DESC
+        ORDER BY 
+            P.created_at DESC;
         ")->getAll();
         return $dataCarts;
     }
     public static function getCustomerCartCancelledItems($customer_id){
         $instance = new self;
         $dataCarts = $instance->setQuery("
-            SELECT 
-                C.*, 
-                CM.first_name, 
-                CM.last_name, 
-                P.name AS product_name,
-                PC.name as color,
-                PC.image,
-                P.price
-            FROM carts AS C
-            LEFT JOIN customers AS CM ON CM.id = C.customer_id
-            INNER JOIN products AS P ON P.id = C.product_id
-            INNER JOIN product_colors AS PC ON C.color_id = PC.id
-            WHERE  C.customer_id = $customer_id
+        SELECT 
+            C.*, 
+            CM.first_name, 
+            CM.last_name, 
+            P.name AS product_name,
+            PC.name AS color,
+            PC.image,
+            P.price,
+            O.tracking_number,
+            CR.name AS courier_name,
+            O.estimated_days_of_delivery
+        FROM 
+            carts AS C
+        LEFT JOIN 
+            customers AS CM ON CM.id = C.customer_id
+        INNER JOIN 
+            products AS P ON P.id = C.product_id
+        INNER JOIN 
+            product_colors AS PC ON C.color_id = PC.id
+        LEFT JOIN 
+            order_details AS OD ON C.id = OD.cart_id
+        LEFT JOIN 
+            orders AS O ON O.id = OD.order_id
+        LEFT JOIN 
+            couriers AS CR ON O.courier_id = CR.id
+        WHERE  
+            C.customer_id = $customer_id
             AND C.deleted_at IS NULL
             AND C.status = 11
-            ORDER BY P.created_at DESC
+        ORDER BY 
+            P.created_at DESC;
         ")->getAll();
         return $dataCarts;
     }

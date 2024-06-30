@@ -103,6 +103,7 @@ function generateCartCards($cart, $key, $img_link){
 
 function generateViewCards($cart, $key, $img_link){
     $cartID = $cart['id'];
+    // displayDataTest($cart);
 
     $product_info_ = Product::findProduct($cart['product_id'], $cart['color_id']);
     $site_setting = SiteSetting::getSiteSettingsLatest();
@@ -143,6 +144,17 @@ function generateViewCards($cart, $key, $img_link){
                                 <div>
                                     <h5 class="text-truncate font-size-18"><a href="#" class="text-dark">'.$product_name.'</a></h5>
                                     <p class="mb-0 mt-1">Color : <span class="fw-medium">'.$color.'</span></p>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 align-self-center overflow-hidden">
+                                <div>
+                                    <h5 class="text-truncate font-size-18"><a href="#" class="text-dark"> Tracking Number:  '.$cart['tracking_number'].'</a></h5>
+                                    <p class="mb-0 mt-1">Courier: <span class="fw-medium">  '.$cart['courier_name'].'</span></p>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 align-self-center overflow-hidden">
+                                <div>
+                                    <p class="mb-0 mt-1">Estimated Delivery Day/s: <span class="fw-medium">  '.$cart['estimated_days_of_delivery'].'</span></p>
                                 </div>
                             </div>
                             <div class="flex-shrink-0 ms-2">
