@@ -61,10 +61,7 @@ spl_autoload_register(function ($class) {
                                             </div>
                                             <label for="basic-url">Description</label>
                                             <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon3"> </span>
-                                                </div>
-                                                <input value="<?= $product_data->description; ?>" type="text" name="description" id="description" class="form-control" required>
+                                                <textarea type="text" name="description" id="description" class="form-control bg-light border-0 small" placeholder="Description" aria-label="Description" required aria-describedby="basic-addon2" required cols="15" rows="10"><?= $product_data->description; ?></textarea>
                                             </div>
                                             <label for="basic-url">Price</label>
                                             <div class="input-group mb-3">
@@ -148,3 +145,11 @@ spl_autoload_register(function ($class) {
 
 
 
+
+<script>
+  tinymce.init({
+    selector: '#description',
+    plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    // toolbar_mode: 'floating',
+  });
+</script>

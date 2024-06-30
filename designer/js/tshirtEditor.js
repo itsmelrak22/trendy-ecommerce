@@ -263,7 +263,16 @@ let line4;
 		      });
 		    }
 
-			estimatePrice();
+			let avatarLogoPrice = document.getElementById('avatarLogoPrice');
+            if(parseInt(avatarLogoPrice.textContent)){
+                getPricesByLogo()
+            };
+            let textPrice = document.getElementById('textPrice');
+            if(parseInt(textPrice.textContent)){
+                getPricesByText()
+            };
+
+            estimatePrice()
 	  };
 	  document.getElementById('bring-to-front').onclick = function() {		  
 		    let activeObject = canvas.getActiveObject(),

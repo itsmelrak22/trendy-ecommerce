@@ -160,4 +160,7 @@ function getBadgeClass($status) {
             z-index: 1050; /* Ensures dropdowns display above other content */
         }
     </style>
+    <script src="https://cdn.tiny.cloud/1/7s668lopwo28cxkecplxkvrx5clnsanfssk47cktburr6jbs/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+
 </head>

@@ -208,13 +208,6 @@
                                 <br>
                             </div>
 
-                            <!-- <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                <div class="input-group">
-                                    <input type="number" name="quantity" id="quantity" class="form-control bg-light border-0 small" placeholder="Quantity" aria-label="Quantity" aria-describedby="basic-addon2" required>
-                                </div>
-                                <br>
-                            </div> -->
-                            
                             <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="input-group">
                                     <input type="number" name="price" id="price" class="form-control bg-light border-0 small" placeholder="Price" aria-label="Price" aria-describedby="basic-addon2" required>
@@ -222,23 +215,12 @@
                                 <br>
                             </div>
 
-                            <!-- <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                <div class="input-group example square">
-                                    <input type="text" class="coloris form-control bg-light border-0 small" value="#00a5cc" name="color_selected" id="color_selected">
-                                </div>
-                                <br>
-                            </div> -->
-
                         </div>
                         <div class="input-group">
                             <textarea type="text" name="description" id="description" class="form-control bg-light border-0 small" placeholder="Description" aria-label="Description" aria-describedby="basic-addon2" required cols="15" rows="10"></textarea>
                         </div>
                        
                         <br>
-                        <!-- <div class="input-group">
-                            <input type="file" name="fileToUpload" id="fileToUpload" class="form-control bg-light border-0 small" placeholder="Image" aria-label="Image" required>
-                        </div> -->
-                        <!-- Image preview element -->
                         <div id="imagePreview"></div>
                     </div>
                 </div>
@@ -340,4 +322,12 @@ Coloris({
         }
     });
 
+</script>
+
+<script>
+  tinymce.init({
+    selector: '#description',
+    plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    // toolbar_mode: 'floating',
+  });
 </script>

@@ -256,6 +256,16 @@
                                         <button id="add-text" class="btn btn-outline-secondary" title="Add text"><i class="bi bi-send"></i></button>	  
                                     </div>
 
+                                    <script>
+                                        document.getElementById('text-string').addEventListener('input', function() {
+                                            const textInput = document.getElementById('text-string');
+                                            if (textInput.value.length > 50) {
+                                                textInput.value = '';
+                                                alert('Input exceeds 50 characters!');
+                                            } 
+                                        });
+                                    </script>
+
 
                                     <!-- <input class="span2 form-control" id="text-string" type="text" placeholder="Add text here...">
                                     <button id="add-text" class="btn" title="Add text"><i class="bi bi-send"></i></i></button>	   -->
@@ -598,7 +608,7 @@
                                                                 <th scope="col">Option</th>
                                                                 <th scope="col">Checkbox</th>
                                                                 <th scope="col">Options</th>
-                                                                <th scope="col">Dimension</th>
+                                                                <th scope="col">Dimension (Inches)</th>
                                                                 <th scope="col">Price</th>
                                                             </tr>
                                                         </thead>
@@ -637,7 +647,12 @@
                                                                 </td>
                                                                 <td>
                                                                     <div id="textSizeTD" style="display: none;">
-                                                                        <select class="form-select" name="text_sizing" id="prices_by_sizes_text" disabled> </select>
+                                                                        <select class="form-select" name="text_sizing" id="prices_by_sizes_text" disabled>
+                                                                            <option value="1">1 in</option>
+                                                                            <option value="2">2 in</option>
+                                                                            <option value="3">3 in</option>
+                                                                            <option value="4">4 in</option>
+                                                                        </select>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -665,12 +680,12 @@
 
                                         <div class="col-md-6">
                                             <label for="pricePerPiece">Price per piece</label>
-                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="pricePerPiece" name="pricePerPiece" value="0" readonly required>
+                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="pricePerPiece" name="pricePerPiece"  readonly required>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="estimatedPrice">Min. Estimated Price</label>
-                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="estimatedPrice" name="estimatedPrice" value="0" readonly required>
+                                            <input style="background-color: lightgrey;"  type="number" class="form-control" id="estimatedPrice" name="estimatedPrice"  readonly required>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="count" class="mr-2">Status:</label>
@@ -773,8 +788,9 @@
 
         <script type="text/javascript" src="./designer/js/tshirtEditor.js"></script>
 	    <script type="text/javascript" src="./designer/js/jquery.miniColors.min.js"></script>
-        <script src="./js/shirtOptions.js"></script>
-        <script src="./js/newShirtOptions.js"></script>
+        <!-- <script src="./js/shirtOptions.js"></script> -->
+        <!-- <script src="./js/newShirtOptions.js"></script> -->
+        <script src="./js/shirtOptions3.js"></script>
         <script type="text/javascript">
             jQuery.browser = {};
             (function () {
@@ -877,9 +893,57 @@
 
                     $("#shirt_selected").val(shirt.shirt_selected);
                     $("#shirt_price").val(shirt.shirt_price);
+
+                    let avatarLogoPrice = document.getElementById('avatarLogoPrice');
+                    if(parseInt(avatarLogoPrice.textContent)) {
+                        getPricesByLogo()
+                    };
+                    let textPrice = document.getElementById('textPrice');
+                    if(parseInt(textPrice.textContent)){
+                        getPricesByText()
+                    };
+
+                    estimatePrice()
+
+                }
+
+                function getPricesByLogo(){
+                    let selectedValue = document.getElementById('prices_by_sizes_avatar_logo').value;
+
+                    let shirt_selected = document.getElementById('shirt_selected').value;
+                    let selected_size = document.getElementById('selected_size').value;
+                    let customize_by = document.getElementById('customize_by').value;
+
+                    let avatarLogoPrice = document.getElementById('avatarLogoPrice');
+
+                    console.log("selected_size", selected_size)
+                    console.log("shirt_selected", shirt_selected)
+                    console.log("customize_by", customize_by)
+
+                    let data  = shirtOptions3['logoType'][customize_by][selected_size][selectedValue];
+                    avatarLogoPrice.textContent = data
+                }
+
+                function getPricesByText(){
+                    let selectedValue = document.getElementById('prices_by_sizes_text').value;
+
+                    let shirt_selected = document.getElementById('shirt_selected').value;
+                    let selected_size = document.getElementById('selected_size').value;
+                    let customize_by = document.getElementById('customize_by').value;
+
+                    let textPrice = document.getElementById('textPrice');
+
+                    console.log("selected_size", selected_size)
+                    console.log("shirt_selected", shirt_selected)
+                    console.log("customize_by", customize_by)
+
+                    let data  = shirtOptions3['textType'][customize_by][selected_size][selectedValue];
+                    console.log("data", data)
+                    textPrice.textContent = data
                 }
 
                 function estimatePrice(){   
+
                     let personalizedCount = countCheckedCheckboxes();
                     let personalizedCountPrice = personalizedCount * 50
                     let finalPrice = 0;
@@ -888,25 +952,30 @@
                     let textPrice = document.getElementById('textPrice').textContent;
                     let shirt_selected = document.getElementById('shirt_selected').value;
                     let selected_size = document.getElementById('selected_size').value;
-                    let customize_by = document.getElementById('customize_by').value;
-                    let prices_by_sizes_avatar_logo = document.getElementById('prices_by_sizes_avatar_logo').value;
                    
-
-                    // const selected_price = $("#selected_price").val();
+                    const shirtPrice = shirtOptions3.apparel[shirt_selected];
+                    console.log(`shirtPrice: ${shirtPrice}`)
+                    console.log(`shirtPrice: ${shirtPrice}`)
+                    console.log(`shirtPrice: ${shirtPrice}`)
                     const count = $("#count").val();
                     let netPrice = 0;
 
-                    netPrice = eval(+avatarLogoPrice + +textPrice  + personalizedCountPrice);
+                    finalPrice += shirtPrice;
 
-                    if(netPrice){
-                        finalPrice = eval( (+netPrice * count ) + personalizedCountPrice );
-                    }else{
-                        finalPrice = eval(+netPrice * count )
+
+                    if(avatarLogoPrice){
+                        finalPrice += parseInt(avatarLogoPrice);
+                    }
+                    if(textPrice){
+                        finalPrice += parseInt(textPrice);
+                    }
+                    if(parseInt(personalizedCountPrice) > 0){
+                        finalPrice += parseInt(personalizedCountPrice);
                     }
 
-
-                    $("#pricePerPiece").val(eval( (+netPrice )  ));
+                    $("#pricePerPiece").val(finalPrice);
                     $("#estimatedPrice").val(finalPrice);
+
 
                 }
 
@@ -1531,44 +1600,26 @@
         });
 
         document.getElementById('prices_by_sizes_avatar_logo').addEventListener('change', function() {
-            // let input = document.getElementById('selected_price');
-            // input.value = data.price
-            var selectedValue = this.value;
-
-            let shirt_selected = document.getElementById('shirt_selected').value;
-            let selected_size = document.getElementById('selected_size').value;
-            let customize_by = document.getElementById('customize_by').value;
-            let data 
-            if(shirt_selected.includes("DESIGN")){
-                data = newShirtOptions["Polo Shirts"][customize_by][selectedValue][selected_size];
-            }else{
-                data = newShirtOptions[shirt_selected][customize_by][selectedValue][selected_size];
-            }
-            
-            let avatarLogoPrice = document.getElementById('avatarLogoPrice')
-            avatarLogoPrice.textContent = data
+            getPricesByLogo()
             estimatePrice()
+        });
+        document.getElementById('customize_by').addEventListener('change', function() {
+            let avatarLogoPrice = document.getElementById('avatarLogoPrice');
+            if(parseInt(avatarLogoPrice.textContent)){
+                getPricesByLogo()
+            };
 
+            let textPrice = document.getElementById('textPrice');
+            if(parseInt(textPrice.textContent)){
+                getPricesByText()
+            };
+
+            estimatePrice()
         });
 
         document.getElementById('prices_by_sizes_text').addEventListener('change', function() {
-            // let input = document.getElementById('selected_price');
-            // input.value = data.price
-            var selectedValue = this.value;
-
-            let shirt_selected = document.getElementById('shirt_selected').value;
-            let selected_size = document.getElementById('selected_size').value;
-            let data
-            if(shirt_selected.includes("DESIGN")){
-                data = {...shirtOptions["Polo Shirts"][selected_size].find(res => res.dimension == selectedValue)};
-            }else{
-                data = {...shirtOptions[shirt_selected][selected_size].find(res => res.dimension == selectedValue)};
-            }
-            console.log('prices_by_sizes_text data:', data);
-            let textPrice = document.getElementById('textPrice')
-            textPrice.textContent = data.price
+            getPricesByText()
             estimatePrice()
-
         });
 
         function updateDimensions(size) {
@@ -1577,23 +1628,23 @@
 
             // Fetch the dimensions data for the selected size
             if(shirt_selected.includes("DESIGN")){
-                var sizeData = shirtOptions["Polo Shirts"][size];
+                // var sizeData = shirtOptions["Polo Shirts"][size];
             }else{
-                var sizeData = shirtOptions[shirt_selected][size];
+                // var sizeData = shirtOptions[shirt_selected][size];
             }
 
             // Populate the dimensions select with new options
-            if (sizeData) {
+            // if (sizeData) {
 
-                sizeData.forEach(item => {
-                    var option = document.createElement('option');
-                    option.value = item.dimension;
-                    option.text = item.dimension;
-                    shirtDimensionsSelectText.appendChild(option);
-                });
+            //     sizeData.forEach(item => {
+            //         var option = document.createElement('option');
+            //         option.value = item.dimension;
+            //         option.text = item.dimension;
+            //         shirtDimensionsSelectText.appendChild(option);
+            //     });
 
         
-            }
+            // }
             shirtDimensionsSelectText.value = null
             document.getElementById('textPrice').innerText = 0
             document.getElementById('avatarLogoPrice').innerText = 0
@@ -1603,10 +1654,16 @@
         }
 
         document.getElementById('selected_size').addEventListener('change', function() {
-            // let input = document.getElementById('selected_price');
-            // input.value = null;
-            var selectedSize = this.value;
-            updateDimensions(selectedSize);
+            let avatarLogoPrice = document.getElementById('avatarLogoPrice');
+            if(parseInt(avatarLogoPrice.textContent)){
+                getPricesByLogo()
+            };
+            let textPrice = document.getElementById('textPrice');
+            if(parseInt(textPrice.textContent)){
+                getPricesByText()
+            };
+
+            estimatePrice()
         });
 
         // Set default selected value to "xs" and initialize dimensions
@@ -1641,17 +1698,16 @@
     document.getElementById('avatar_logo_checkbox').addEventListener('change', function() {
         var avatarLogoButton = document.getElementById('avatarLogoButton');
         var avatarSizeTD = document.getElementById('avatarSizeTD');
-
-
+        let avatarLogoPrice = document.getElementById('avatarLogoPrice');
         if (this.checked) {
             avatarLogoButton.style.display = 'inline-block';
             // avatarSizeTD.style.display = 'inline-block';
 
-
         } else {
+            avatarLogoPrice.textContent = 0;
             avatarLogoButton.style.display = 'none';
             avatarSizeTD.style.display = 'none';
-
+            estimatePrice()
         }
     });
 
