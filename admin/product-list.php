@@ -408,7 +408,7 @@ Coloris({
                 }).flat();
 
                 // Define table columns
-                const tableColumns = ["Product Name" "Color", "Stock Quantity"];
+                const tableColumns = ["Product Name", "Color", "Stock Quantity"];
 
                 // Add the table to the PDF
                 doc.autoTable({
