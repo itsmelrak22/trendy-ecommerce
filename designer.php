@@ -930,8 +930,8 @@
                     let shirt_selected = document.getElementById('shirt_selected').value;
                     let selected_size = document.getElementById('selected_size').value;
                     let customize_by = document.getElementById('customize_by').value;
-
                     let textPrice = document.getElementById('textPrice');
+                    let textString = document.getElementById('text-string').value;
 
                     console.log("selected_size", selected_size)
                     console.log("shirt_selected", shirt_selected)
@@ -939,7 +939,10 @@
 
                     let data  = shirtOptions3['textType'][customize_by][selected_size][selectedValue];
                     console.log("data", data)
-                    textPrice.textContent = data
+                    console.log("textString", textString)
+
+                    
+                    textPrice.textContent = parseInt(data) * parseInt(textString.length)
                 }
 
                 function estimatePrice(){   
