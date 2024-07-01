@@ -86,10 +86,16 @@ Class Product extends Model {
         }
 
         $instance = new self;
-        $categories = $instance->setQuery( $qry )->getAll();
+        $products = $instance->setQuery( $qry )->getAll();
+
+        foreach ($products as $key => $product) {
+            $product_id = $product['id'];
+            $colors = $instance->setQuery("SELECT * FROM `product_colors` WHERE `product_id` = $product_id")->getAll();
+            $products[$key]["colors"] = $colors;
+        }
 
     
-        return $categories;
+        return $products;
     }
 
     public static function getProductWIthDistictColor(){

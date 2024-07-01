@@ -196,7 +196,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    Pending Customization Orders</div>
+                                                    Pending Customize Orders</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$customOrder_count?></div>
                                             </div>
                                             <div class="col-auto">
@@ -546,9 +546,7 @@
     <?php include_once("./includes/scripts.php"); ?>
 <?php include_once("./includes/footer.php"); ?>
  
-   <!-- Include jsPDF -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
 
     <!-- Include Bootstrap Datepicker -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
@@ -829,58 +827,134 @@
 
 
             // Function to generate PDF from report table
-            function generatePDF(table = "reportTable") {
-                let { jsPDF } = window.jspdf;
-                let doc = new jsPDF();
+            // function generatePDF(table = "reportTable") {
+            //     let { jsPDF } = window.jspdf;
+            //     let doc = new jsPDF();
                 
-                // Center alignment function
-                function centerText(text, yPosition) {
-                    const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-                    const textOffset = (doc.internal.pageSize.width - textWidth) / 2;
-                    doc.text(text, textOffset, yPosition);
-                }
+            //     // Center alignment function
+            //     function centerText(text, yPosition) {
+            //         const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            //         const textOffset = (doc.internal.pageSize.width - textWidth) / 2;
+            //         doc.text(text, textOffset, yPosition);
+            //     }
                 
-                // Store name
-                doc.setFontSize(16);
-                centerText('TRENDY THREADS APPAREL', 20);
+            //     // Store name
+            //     doc.setFontSize(16);
+            //     centerText('TRENDY THREADS APPAREL', 20);
                 
-                // Address
-                doc.setFontSize(12);
-                centerText('9070 DR. SOLIS STREET JULUGAN 8, TANZA, CAVITE', 30);
+            //     // Address
+            //     doc.setFontSize(12);
+            //     centerText('9070 DR. SOLIS STREET JULUGAN 8, TANZA, CAVITE', 30);
                 
-                // Contact number (if needed)
-                // doc.text('CONTACT NO: +639636099067', 14, 48);
+            //     // Contact number (if needed)
+            //     // doc.text('CONTACT NO: +639636099067', 14, 48);
                 
-                // Title of the report
-                doc.setFontSize(14);
-                centerText('Sales Report', 50);
+            //     // Title of the report
+            //     doc.setFontSize(14);
+            //     centerText('Sales Report', 50);
                 
-                // Adding the table from HTML
-                doc.autoTable({
-                    html: `#${table}`,
-                    startY: 60,
-                    theme: 'grid',
-                    footStyles: { fillColor: [0, 0, 0] }
-                });
+            //     // Adding the table from HTML
+            //     doc.autoTable({
+            //         html: `#${table}`,
+            //         startY: 60,
+            //         theme: 'grid',
+            //         footStyles: { fillColor: [0, 0, 0] }
+            //     });
                 
-                return doc;
+            //     return doc;
+            // }
+
+        function generatePDF(table = "reportTable") {
+            const { jsPDF } = window.jspdf;
+            let doc = new jsPDF();
+
+            // Center alignment function
+            function centerText(text, yPosition) {
+                const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                const textOffset = (doc.internal.pageSize.width - textWidth) / 2;
+                doc.text(text, textOffset, yPosition);
             }
 
-            function downloadPdf(table){
-                let doc = generatePDF(`${table}`);
-                let date = new Date();
-                doc.save(`report-${date.toISOString().split('T')[0]}.pdf`);
-            }
+            // Add image to the top right corner
+            const img = new Image();
+            img.src = '../assets/carousel/Logo2.jpeg';
 
-            function previewPdf(table){
-                let doc = generatePDF(`${table}`);
+            // Return a promise that resolves to the doc object
+            return new Promise((resolve) => {
+                img.onload = function () {
+                    doc.addImage(img, 'JPEG', 170, 10, 20, 10); // Adjusted position and size for a smaller logo
+
+                    // Store name
+                    doc.setFontSize(16);
+                    centerText('TRENDY THREADS APPAREL', 20);
+
+                    // Address
+                    doc.setFontSize(11);
+                    centerText('9070 DR. SOLIS STREET JULUGAN 8, TANZA, CAVITE', 30);
+
+     
+                    doc.setFontSize(11);
+                    centerText("Facebook: TRENDY THREADS APPAREL BY LOVE J'S", 35);
+                    doc.setFontSize(11);
+                    centerText("Instagram: TRENDTHREAD_APPAREL", 40);
+                    // Basic Info
+                    doc.setFontSize(11);
+                    centerText('Contact: 639636099067', 45);
+                    // Title of the report
+                    doc.setFontSize(14);
+                    centerText('Sales Report', 55);
+
+                    // Adding the table from HTML
+                    doc.autoTable({
+                        html: `#${table}`,
+                        startY: 60,
+                        theme: 'grid',
+                        footStyles: { fillColor: [0, 0, 0] }
+                    });
+
+                    // Footer
+                    doc.setFontSize(10);
+                    doc.text('Prepared by: Admin', 14, doc.internal.pageSize.height - 10);
+
+                    // Add page numbers
+                    const pageCount = doc.internal.getNumberOfPages();
+                    for (let i = 1; i <= pageCount; i++) {
+                        doc.setPage(i);
+                        doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width - 30, doc.internal.pageSize.height - 10);
+                    }
+
+                    resolve(doc);
+                };
+            });
+        }
+
+        // Function to preview the PDF
+        function previewPdf(table) {
+            generatePDF(table).then(doc => {
                 let string = doc.output('datauristring');
                 let iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>";
                 let x = window.open();
                 x.document.open();
                 x.document.write(iframe);
                 x.document.close();
-            }
+            });
+        }
+
+        function downloadPdf(table){
+            let doc = generatePDF(`${table}`);
+            let date = new Date();
+            doc.save(`report-${date.toISOString().split('T')[0]}.pdf`);
+        }
+
+            // function previewPdf(table){
+            //     let doc = generatePDF(`${table}`);
+            //     let string = doc.output('datauristring');
+            //     let iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>";
+            //     let x = window.open();
+            //     x.document.open();
+            //     x.document.write(iframe);
+            //     x.document.close();
+            // }
 
             $('#weekrange').daterangepicker({
                 locale: {

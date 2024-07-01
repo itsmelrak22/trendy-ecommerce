@@ -26,10 +26,9 @@ $location = basename($url);
 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
     <div class="sidebar-brand-icon">
         <!-- <i class="fas fa-laugh-wink"></i> -->
-        <img class="img-fluid rounded" loading="lazy" src="../assets/carousel/Logo2.jpeg" alt="About 1">
+        <img style="max-width: 60% !important;" class="img-fluid rounded" loading="lazy" src="../assets/carousel/Logo2.jpeg" alt="About 1">
 
     </div>
-    <div class="sidebar-brand-text mx-3 my-2">TRENDY THREADS APPAREL</div>
 </a>
 
 <!-- Divider -->
@@ -60,7 +59,7 @@ $location = basename($url);
 <li class="nav-item <?= $location ==  "custom-order-list.php" ? "active" : ""?>">
     <a class="nav-link" href="custom-order-list.php">
         <i class="fas fa-fw fa-table"></i>
-        <span>Customization Orders</span></a>
+        <span>Customize Orders</span></a>
 </li>
 
 <!-- Nav Item - Carts -->

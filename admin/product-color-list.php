@@ -16,6 +16,14 @@
     $product_colors = $product_color->getProductColors($product_id);
 
     
+    foreach ($product_colors as &$color) {
+        if ($color['stock_qty'] <= 10) {
+            $color['lowStock'] = true;
+            $hasLowStock = true;
+        }
+    }
+
+    
     $parent = new Product;
     $parentProduct = $parent->find($product_id);
 
@@ -111,7 +119,7 @@
                                     </tfoot>
                                     <tbody>
                                         <?php foreach ($product_colors as $key => $product_color) { ?>
-                                            <tr>
+                                            <tr <?= isset( $product_color['lowStock'] ) ? 'style="background-color: #a15b5b; color: black;"' : '' ?>>
                                                 <td> <?= $product_color['name'] ?> </td>
                                                 <td> <?= $product_color['code'] ?> </td>
                                                 <td style="max-width: 70px !important; background-color: <?= $product_color['code'] ?>">  </td>

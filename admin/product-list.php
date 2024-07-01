@@ -12,8 +12,25 @@
     $category = new Category;
     $categories = $category->all();
 
-    
-    // print_r($categories);
+
+
+    foreach ($products as &$product) {
+        $hasLowStock = false;
+
+        foreach ($product['colors'] as &$color) {
+            if ($color['stock_qty'] <= 10) {
+                $color['lowStock'] = true;
+                $hasLowStock = true;
+            }
+        }
+
+        if ($hasLowStock) {
+            $product['hasLowStock'] = true;
+        }
+    }
+
+    // displayDataTest( $products );
+    $jsonData = json_encode($products);
 ?>
 
 <style>
@@ -50,14 +67,21 @@
 
                     <!-- Page Heading -->
 
-                    <div>
-                        <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addModal">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            <span class="text">Add</span>
-                        </button>
+                    <div class="card-body row">
+                        <div class="col-md-4 d-flex justify-content-start">
+                            <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addModal">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span class="text">Add</span>
+                            </button>
+                        </div>
+                        <div class="col-md-8 d-flex justify-content-between">
+                            <button class="btn btn-danger btn-sm mx-1" id="previewPDF">View Critical Stock List PDF</button>
+                            <button class="btn btn-danger btn-sm mx-1" id="downloadPDF">Download Critical Stock List PDF</button>
+                        </div>
                     </div>
+
 
                     <hr>
                         <!-- DataTales Example -->
@@ -95,9 +119,9 @@
                                     </tfoot>
                                     <tbody>
                                         <?php foreach ($products as $key => $product) { ?>
-                                            <tr>
+                                            <tr <?= isset( $product['hasLowStock'] ) ? 'style="background-color: #a15b5b; color: black;"' : '' ?>>
                                                 <td> <?= $product['name'] ?> </td>
-                                                <td> <?= $product['category_name']  ?> </td>
+                                                <td> <?= $product['category_name'] ?> </td>
                                                 <td> <?= $product['description'] ?> </td>
                                                 <td> <?= $product['price'] ?> </td>
                                                 <!-- <td> <?php //$product['stock_qty'] ?> </td> -->
@@ -123,6 +147,7 @@
                                             </tr>
                                         <?php } ?>
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -320,6 +345,124 @@ Coloris({
             console.log('form', form)
             form.value = this.color
         }
+    });
+
+</script>
+
+<script>
+    $(document).ready(function() {
+
+        const { jsPDF } = window.jspdf;
+
+        // Parse JSON data from PHP
+        const data = <?php echo $jsonData; ?>;
+
+        // Filter products with low stock
+        const lowStockProducts = data.filter(product => product.hasLowStock);
+        function generatePDF() {
+        let doc = new jsPDF();
+
+        // Center alignment function
+        function centerText(text, yPosition) {
+            const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            const textOffset = (doc.internal.pageSize.width - textWidth) / 2;
+            doc.text(text, textOffset, yPosition);
+        }
+
+        // Add image to the top right corner
+        const img = new Image();
+        img.src = '../assets/carousel/Logo2.jpeg';
+
+        return new Promise((resolve) => {
+            img.onload = function () {
+                doc.addImage(img, 'JPEG', 170, 10, 20, 10);
+
+                // Store name
+                doc.setFontSize(16);
+                centerText('TRENDY THREADS APPAREL', 20);
+
+                // Address
+                doc.setFontSize(11);
+                centerText('9070 DR. SOLIS STREET JULUGAN 8, TANZA, CAVITE', 30);
+
+                doc.setFontSize(11);
+                centerText("Facebook: TRENDY THREADS APPAREL BY LOVE J'S", 35);
+                doc.setFontSize(11);
+                centerText("Instagram: TRENDTHREAD_APPAREL", 40);
+
+                // Basic Info
+                doc.setFontSize(11);
+                centerText('Contact: 639636099067', 45);
+
+                // Title of the report
+                doc.setFontSize(14);
+                centerText('Low Stock Report', 55);
+
+                // Prepare table data
+                const tableData = lowStockProducts.map(product => {
+                    return product.colors.filter(color => color.lowStock).map(color => [
+                        product.name,
+                        color.name,
+                        color.stock_qty
+                    ]);
+                }).flat();
+
+                // Define table columns
+                const tableColumns = ["Product Name" "Color", "Stock Quantity"];
+
+                // Add the table to the PDF
+                doc.autoTable({
+                    head: [tableColumns],
+                    body: tableData,
+                    startY: 60,
+                    theme: 'grid',
+                    footStyles: { fillColor: [0, 0, 0] }
+                });
+
+                // Footer
+                doc.setFontSize(10);
+                doc.text('Prepared by: Admin', 14, doc.internal.pageSize.height - 10);
+
+                // Add page numbers
+                const pageCount = doc.internal.getNumberOfPages();
+                for (let i = 1; i <= pageCount; i++) {
+                    doc.setPage(i);
+                    doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width - 30, doc.internal.pageSize.height - 10);
+                }
+
+                resolve(doc);
+            };
+        });
+    }
+
+        function previewPdf() {
+            generatePDF().then(doc => {
+                let string = doc.output('datauristring');
+                let iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>";
+                let x = window.open();
+                x.document.open();
+                            x.document.write(iframe);
+                x.document.close();
+            });
+        }
+
+        function downloadPdf() {
+            generatePDF().then(doc => {
+                let date = new Date();
+                doc.save(`low-stock-report-${date.toISOString().split('T')[0]}.pdf`);
+            });
+        }
+
+            
+        // Attach click event to download PDF button
+        $('#downloadPDF').click(function() {
+            downloadPdf()
+        });
+
+        // Attach click event to preview PDF button
+        $('#previewPDF').click(function() {
+            previewPdf()
+        });
     });
 
 </script>

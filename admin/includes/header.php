@@ -160,7 +160,12 @@ function getBadgeClass($status) {
             z-index: 1050; /* Ensures dropdowns display above other content */
         }
     </style>
-    <script src="https://cdn.tiny.cloud/1/7s668lopwo28cxkecplxkvrx5clnsanfssk47cktburr6jbs/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    
 
+       <!-- Include jsPDF -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <!-- <script src="https://cdn.tiny.cloud/1/7s668lopwo28cxkecplxkvrx5clnsanfssk47cktburr6jbs/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script> -->
+    <script src="https://cdn.tiny.cloud/1/7s668lopwo28cxkecplxkvrx5clnsanfssk47cktburr6jbs/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
 </head>

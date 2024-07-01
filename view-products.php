@@ -94,7 +94,7 @@
                             }
                             ?>
                         </div>
-                        <div class="small mb-1 lead"><?= 'Stock'. ': '. $products->stock_qty  ?></div>
+                        <div class="small mb-1 lead"> Stock: <?= $products->stock_qty <= 10 ? " <span class='text-danger'> " .$products->stock_qty ." left in the stock</span>" : $products->stock_qty ?></div>
                     </div>
 
                     <div class="small mb-1 lead"><?= 'Color Name'. ': '. $products->color_name  ?></div>

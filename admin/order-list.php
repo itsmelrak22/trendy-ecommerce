@@ -104,11 +104,21 @@
                             </style>
                             <span class="legend-container" >
                                 <p class="lead">Legends: </p>
-                                <span class="badge badge-primary">Checked out</span>
-                                <span class="badge badge-info">Processing</span>
-                                <span class="badge badge-warning">Shipped</span>
-                                <span class="badge badge-success">Delivered</span>
-                                <span class="badge badge-danger">Cancelled</span>
+                                <a href="order-list.php?sortBy=checked out">
+                                    <span class="badge badge-primary">Checked out</span>
+                                </a>
+                                <a href="order-list.php?sortBy=processing">
+                                    <span class="badge badge-info">Processing</span>
+                                </a>
+                                <a href="order-list.php?sortBy=shipped">
+                                    <span class="badge badge-warning">Shipped</span>
+                                </a>
+                                <a href="order-list.php?sortBy=delivered">
+                                    <span class="badge badge-success">Delivered</span>
+                                </a>
+                                <a href="order-list.php?sortBy=cancelled">
+                                    <span class="badge badge-danger">Cancelled</span>
+                                </a>
                             </span>
 
                             <div class="card-body">
@@ -153,7 +163,7 @@
                                                     </td>
                                                     <td><?= $order['email'] ?></td>
                                                     <td><?= $order['phone_no'] ?></td>
-                                                    <td><?= $order['complete_address'] ?></td>
+                                                    <td><?= $order['complete_address'] ? $order['complete_address'] : "N/A" ?></td>
                                                     <td><?= findNameByCode($barangaysArray, $order['barangay']) ?></td>
                                                     <td><?= findNameByCode($citiesMunicipalitiesArray, $order['city_municipality']) ?></td>
                                                     <td><?= findNameByCode($provincesArray, $order['province']) ?></td>
@@ -287,9 +297,20 @@
     })
 
     $(document).ready(function() {
-        $('#orderTable').DataTable();
-        
+        let table = $('#orderTable').DataTable();
+                // Function to get query parameter
+        function getQueryParameter(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
 
+        // Get the 'sortBy' query parameter value
+        var sortBy = getQueryParameter('sortBy');
+
+        // If 'sortBy' exists, use it as the search value in DataTable
+        if (sortBy) {
+            table.search(sortBy).draw();
+        }
     });
 
     async function getProvinces(){
