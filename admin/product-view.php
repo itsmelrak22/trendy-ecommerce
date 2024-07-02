@@ -62,13 +62,11 @@ spl_autoload_register(function ($class) {
                                                     </div>
                                                     <input value="<?= $products->name; ?>" type="text" name="product_name" id="product_name" class="form-control" required readonly disabled>
                                                 </div>
-                                                <label for="basic-url">Description</label>
+                                                <!-- <label for="basic-url">Description</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <!-- <span class="input-group-text" id="basic-addon3">Male/Female/Unisex</span> -->
                                                     </div>
-                                                    <textarea type="text"  cols="30" rows="10" name="description" id="description" class="form-control" required readonly disabled > <?= $products->description; ?> </textarea>
-                                                </div>
+                                                </div> -->
                                                 <label for="basic-url">Price</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
