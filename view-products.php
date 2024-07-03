@@ -269,41 +269,99 @@
                             ?>
                             
                         <hr>
+
+                        <div class="container mt-3">
+                            <div class="input-group">
+                                    <input class="form-check-input mx-2" type="checkbox" name="isWholesale" id="isWholesale" onclick="toggleCheckboxes(event)">
+                                <label class="form-check-label" for="isWholesale">Buy as Wholesale?</label>
+                            </div>
+                            <div class="input-group mt-2">
+                                    <input class="form-check-input mx-2" type="checkbox" name="isBulk" id="isBulk" onclick="toggleCheckboxes(event)">
+                                <label class="form-check-label" for="isBulk">Buy as Bulk?</label>
+                            </div>
+                        </div>
                                                             
+                        <hr>
 
                         <div class="d-flex">
                             <input type="hidden" name="product_id" value="<?=$id?>">
                             <input type="hidden" name="color_id" value="<?=$products->color_id?>">
                             <input type="hidden" name="price" value="0" id="final_price">
                             <?php  if( $products->category_name != "CUSTOMIZED POLO SHIRT/UNIFORM" ){ ?>
-
                                 <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="decreaseQuantity()">-</button>
-                                    <input name="quantity" readonly placeholder="0" value="1" class="form-control text-center mx-3" id="inputQuantity" type="text" value="" style="width: 60px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
+                                <input name="quantity" readonly placeholder="0" value="1" class="form-control text-center mx-3" id="inputQuantity" type="text" value="" style="width: 60px; max-width: 5rem" <?= $products->stock_qty < 1 ? 'disabled' : '' ?> />
                                 <button type="button" class="btn btn-outline-secondary flex-shrink-0 me-5" onclick="increaseQuantity()">+</button>
                             <?php  } ?>
 
-                                <script>
-                                    function increaseQuantity() {
-                                        const input = document.getElementById('inputQuantity');
-                                        
-                                        let currentValue = parseInt(input.value, 10);
-                                        if (!isNaN(currentValue)) {
+                            <script>
+                                function increaseQuantity() {
+                                    const input = document.getElementById('inputQuantity');
+                                    const isWholesale = document.getElementById('isWholesale').checked;
+                                    const isBulk = document.getElementById('isBulk').checked;
+                                    
+                                    let currentValue = parseInt(input.value, 10);
+                                    if (!isNaN(currentValue)) {
+                                        if (isWholesale) {
+                                            if (currentValue < 99) {
+                                                input.value = currentValue + 1;
+                                            } else {
+                                                alert("The maximum quantity for wholesale is 99.");
+                                            }
+                                        } else if (isBulk) {
+                                            input.value = currentValue + 1;
+                                        } else {
                                             if((currentValue + 1) > <?= $products->stock_qty ?>){
-                                                alert("Sorry, insufficient stocks for this item.")
+                                                alert("Sorry, insufficient stocks for this item.");
                                                 return;
                                             }
                                             input.value = currentValue + 1;
                                         }
                                     }
+                                }
 
-                                    function decreaseQuantity() {
-                                        const input = document.getElementById('inputQuantity');
-                                        let currentValue = parseInt(input.value, 10);
-                                        if (!isNaN(currentValue) && currentValue > 1) {
-                                            input.value = currentValue - 1;
+                                function decreaseQuantity() {
+                                    const input = document.getElementById('inputQuantity');
+                                    const isWholesale = document.getElementById('isWholesale').checked;
+                                    const isBulk = document.getElementById('isBulk').checked;
+                                    
+                                    let currentValue = parseInt(input.value, 10);
+                                    if (!isNaN(currentValue)) {
+                                        if (isWholesale) {
+                                            if (currentValue > 10) {
+                                                input.value = currentValue - 1;
+                                            } else {
+                                                alert("The minimum quantity for wholesale is 10.");
+                                            }
+                                        } else if (isBulk) {
+                                            if (currentValue > 100) {
+                                                input.value = currentValue - 1;
+                                            } else {
+                                                alert("The minimum quantity for bulk is 100.");
+                                            }
+                                        } else {
+                                            if (currentValue > 1) {
+                                                input.value = currentValue - 1;
+                                            }
                                         }
                                     }
-                                </script>
+                                }
+
+                                function toggleCheckboxes(event) {
+                                    const isWholesale = document.getElementById('isWholesale');
+                                    const isBulk = document.getElementById('isBulk');
+                                    const input = document.getElementById('inputQuantity');
+                                    
+                                    if (event.target === isWholesale && isWholesale.checked) {
+                                        isBulk.checked = false;
+                                        input.value = Math.max(10, input.value);
+                                    } else if (event.target === isBulk && isBulk.checked) {
+                                        isWholesale.checked = false;
+                                        input.value = Math.max(100, input.value);
+                                    } else if (!isWholesale.checked && !isBulk.checked) {
+                                        input.value = 1;
+                                    }
+                                }
+                            </script>
 
                             <?php if( isset($_SESSION["loggedInUser"]) ) { ?>
                                 <input type="hidden" name="customer_id" value="<?=$client_id?>">

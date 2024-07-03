@@ -1535,8 +1535,43 @@
             img.alt = '';
 
             img.addEventListener("click", function(e){
-                checkCanvasObjects()
-                removeAllImages()
+                // checkCanvasImages()
+
+                removeAllImages(canvas) 
+
+                function removeAllImages(canvas){
+                    canvas.getObjects().forEach(function(o) {
+                        if (o.type === 'image') {
+                            canvas.remove(o);
+                        }
+                    });
+                }
+                function checkCanvasImages(canvas){
+                    let positionObject = [...canvas.getObjects()];
+                    const avatarSizeTD = document.querySelector("#avatarSizeTD");
+                    const prices_by_sizes_avatar_logo = document.querySelector("#prices_by_sizes_avatar_logo");
+                    const avatarLogoPrice = document.querySelector("#avatarLogoPrice");
+                    positionObject.forEach(function(object) {
+                        if (object.type === 'image') {
+                            avatarSizeTD.style.display = 'inline-block';
+                            prices_by_sizes_avatar_logo.value = null;
+                            avatarLogoPrice.textContent = 0;
+                            prices_by_sizes_avatar_logo.disabled = false
+                            return;
+                        }
+
+                    });
+
+                }
+
+                function inchesToPixels(inches) {
+                    const dpi = 20; // Change this based on your canvas DPI\
+                    return inches * dpi;
+                }
+
+                let fixedWidth = inchesToPixels(3);
+                let fixedHeight = inchesToPixels(3); 
+                
                 let el = e.target;
                 console.log('tshirtEditor - el', el)
                 /*temp code*/
@@ -1546,6 +1581,15 @@
                 let angle = fabric.util.getRandomInt(-20, 40);
                 let width = fabric.util.getRandomInt(30, 50);
                 let opacity = (function(min, max){ return Math.random() * (max - min) + min; })(0.5, 1);
+                const imgProperties = {
+                    left: left,
+                    top: top,
+                    angle: 0,
+                        // hasRotatingPoint:true,
+                    selectable: true, // make sure it's selectable
+                    lockScalingX: true,
+                    lockScalingY: true,
+                }
                 fabric.Image.fromURL(el.src, function(image) {
 		          image.set({
 		            left: left,
@@ -1558,9 +1602,13 @@
 					resizable: false,   // disable resizing
 		          });
                   image.scaleToWidth(fixedWidth);
-					image.scaleToHeight(fixedHeight);
+                  image.set(imgProperties);
+                    image.scaleToWidth(fixedWidth);
+                    image.scaleToHeight(fixedHeight);
 					// image.scale(getRandomNum(0.1, 0.25)).setCoords();
 					canvas.add(image);
+
+                    checkCanvasImages(canvas)
 		        });
 
             })

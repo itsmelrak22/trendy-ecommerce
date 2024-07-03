@@ -62,18 +62,18 @@
                                     </tr>
                                     <tr>
                                         <td>Item Total : </td>
-                                        <td class="text-end">₱  <span id="itemTotal">0</span></td>
+                                        <td class="text-end">₱  <span id="itemTotal">0.00</span></td>
                                     </tr>
                                     <tr>
                                         <td>Shipping Fee :</td>
-                                        <td class="text-end">₱ <span id="shippingFee">0</span></td>
+                                        <td class="text-end">₱ <span id="shippingFee">0.00</span></td>
                                     </tr>
                                 
                                     <tr class="bg-light">
                                         <th>Total :</th>
                                         <td class="text-end">
                                             <span class="fw-bold">
-                                                <span id="subtotal">0</span>
+                                                <span id="subtotal">0.00</span>
                                             </span>
                                         </td>
                                     </tr>
@@ -354,19 +354,19 @@
         let totalText = document.getElementById(totalId);
         let priceText = document.getElementById(priceId);
         let quantityText = document.getElementById(quantityId).value;
-        totalText.innerHTML = +priceText.innerHTML * quantityText ;
+        totalText.innerHTML = Number(+priceText.innerHTML * quantityText).toFixed(2) ;
     }
 
     function calculateSubtotal() {
         let checkboxes = document.getElementsByName('cartCheckbox');
         let quantities = document.getElementsByName('quantity');
         let prices = document.getElementsByName('price');
-        let subtotal = 0;
-        let itemTotal = 0;
+        let subtotal = 0.00;
+        let itemTotal = 0.00;
         let hiddenInput = document.getElementById('hiddenSubtotal');
 
         let mop = document.getElementById('mop');
-        let shippingfee = 0
+        let shippingfee = 0.00
 
         for(let i=0, n=checkboxes.length;i<n;i++) {
             if (checkboxes[i].checked) {
@@ -374,7 +374,7 @@
             }
         }
 
-        document.getElementById('itemTotal').innerHTML = itemTotal;
+        document.getElementById('itemTotal').innerHTML = Number(itemTotal).toFixed(2);
 
 
         if( mop.value == 'cod' ){ // + 75
@@ -382,13 +382,13 @@
             togglePaypalDiv(false, 0)
         }else if (mop.value == "online"){
             shippingfee = 75;
-            togglePaypalDiv(true, itemTotal)
+            togglePaypalDiv(true, Number(itemTotal).toFixed(2))
         }
 
-        subtotal = eval(itemTotal + shippingfee);
-        document.getElementById('shippingFee').innerHTML = shippingfee;
-        document.getElementById('subtotal').innerHTML = subtotal;
-        hiddenInput.value = subtotal;
+        subtotal = Number(eval(itemTotal + shippingfee)).toFixed(2);
+        document.getElementById('shippingFee').innerHTML = Number(shippingfee).toFixed(2);
+        document.getElementById('subtotal').innerHTML = Number(subtotal).toFixed(2);
+        hiddenInput.value = Number(subtotal).toFixed(2);
 
         if((Number(subtotal) && itemTotal) && hasSelectedModeOfPayment()){
             document.getElementById('checkout-btn').disabled = false;

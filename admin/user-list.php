@@ -1,14 +1,24 @@
-
 <?php 
-    include_once("./includes/header.php"); 
+include_once("./includes/header.php"); 
 
-    spl_autoload_register(function ($class) {
-        include '../models/' . $class . '.php';
-    });
+if($_SESSION['email'] != 'admin@admin.com'){
+    echo "<script>
+        alert('Permission Denied, Page access not permitted');
+        location.href = 'index.php';
+    </script>";
+}
 
-    $user = new AdminUser;
-    $users = $user->all();
+
+spl_autoload_register(function ($class) {
+    include '../models/' . $class . '.php';
+  });
+
+  $user = new AdminUser;
+  $users = $user->all();
+
 ?>
+
+
 
 <body id="page-top">
 
@@ -27,13 +37,12 @@
 
                     <?php include_once("./includes/topbar-nav.php"); ?>
 
+                <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Product Page</h1>
-
                     <div>
                         <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addModal">
                             <span class="icon text-white-50">
@@ -47,7 +56,7 @@
                         <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">User List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Category List</h6>
                             
                         </div>
                         <div class="card-body">
@@ -57,7 +66,6 @@
                                         <tr>
                                             <th>First Name </th>
                                             <th>Last Name</th>
-                                            <th>Username</th>
                                             <th>Email</th>
                                             <th>Action</th>
                                         </tr>
@@ -66,26 +74,20 @@
                                         <tr>
                                             <th>First Name </th>
                                             <th>Last Name</th>
-                                            <th>Username</th>
                                             <th>Email</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php foreach ($users as $key => $user) { ?>
+                                        <?php foreach ($users as $key => $user) { 
+                                                if($user['email'] == 'admin@admin.com') continue;
+                                                ?>
                                             <tr>
                                                 <td> <?= $user['first_name'] ?> </td>
                                                 <td> <?= $user['last_name'] ?> </td>
-                                                <td> <?= $user['username'] ?> </td>
                                                 <td> <?= $user['email'] ?> </td>
                                                 <td>
                                                     <form action="user-delete.php" method="POST">
-                                                        <a href="user-edit.php?id=<?=$user['id']?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                        <a href="user-view.php?id=<?=$user['id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                            <i class="fas fa-arrow-right"></i>
-                                                        </a>
                                                         <input type="hidden" name="id" value="<?=$user['id']?>">
                                                         <button type="submit" name="delete-user" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
                                                             <i class="fas fa-trash"></i>
@@ -110,7 +112,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>TRENDY THREADS APPAREL</span>
                     </div>
                 </div>
             </footer>
@@ -141,14 +143,16 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="login.php?logout=yes">Logout</a>
+
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODALS -->
-    <form method="POST" action="user-insert.php">
+
+     <!-- MODALS -->
+     <form method="POST" action="user-insert.php">
         <div class="modal" tabindex="-1" id="addModal">
             <div class="modal-dialog modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -169,10 +173,6 @@
                         </div>
                         <br>
                         <div class="input-group">
-                            <input type="text" name="username" id="username" class="form-control bg-light border-0 small" placeholder="Username" aria-label="Username" aria-describedby="basic-addon2" required>
-                        </div>
-                        <br>
-                        <div class="input-group">
                             <input type="text" name="email" id="email" class="form-control bg-light border-0 small" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2" required>
                         </div>
                         <br>
@@ -189,6 +189,7 @@
             </div>
         </div>
     </form>
+
 
     <?php include_once("./includes/scripts.php"); ?>
 <?php include_once("./includes/footer.php"); ?>

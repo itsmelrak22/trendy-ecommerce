@@ -22,7 +22,9 @@ Class AdminUser extends Model {
     public static function authenticateUser($email, $password) {
         $instance = new self;
     
-        $query = "SELECT * FROM admin WHERE email = '$email' AND password = '$password'";
+        // $query = "SELECT * FROM admin WHERE email = '$email' AND password = '$password'";
+        $query = "SELECT * FROM admin WHERE email = '$email' AND password = '$password' AND deleted_at IS NULL";
+
         $stmt = $instance->pdo->prepare($query);
         
         $stmt->execute();

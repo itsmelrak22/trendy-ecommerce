@@ -76,7 +76,7 @@
         }
     }
 
-    // displayDataTest($null_orders);
+    // displayDataTest($checked_out_orders);
 ?>
 
     <!-- Daterangepicker CSS -->
@@ -212,193 +212,6 @@
                     <hr>
                         <!-- DataTales Example -->
 
-                         <!-- <div class="card shadow mb-4">
-                            <a href="#dailyReports" class="d-block card-header py-3" data-toggle="collapse"
-                                role="button" aria-expanded="true" aria-controls="dailyReports">
-                                <h6 class="m-0 font-weight-bold text-primary">Daily Reports</h6>
-                            </a>
-                            <div class="collapse show" id="dailyReports">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control datepicker" id="reportDate" placeholder="Select date" readonly>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <button class="btn btn-primary btn-sm" id="generateReport">Generate Report</button>
-                                        </div>
-                                        <div class="col-md-4 my-2">
-                                            <button class="btn btn-secondary btn-sm" id="previewPDF" disabled>Preview PDF</button>
-                                            <button class="btn btn-primary btn-sm" id="downloadPDF" disabled>Download PDF</button>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive mt-4">
-                                        
-
-                                        <table class="table table-bordered" id="reportTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>MOP</th>
-                                                    <th>Order Date</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="3">Total Revenue</th>
-                                                    <th id="totalRevenue">0.00</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                         <div class="card shadow mb-4">
-                            <a href="#dailyReports" class="d-block card-header py-3" data-toggle="collapse"
-                                role="button" aria-expanded="true" aria-controls="dailyReports">
-                                <h6 class="m-0 font-weight-bold text-primary">Weekly Reports</h6>
-                            </a>
-                            <div class="collapse show" id="dailyReports">
-                                <div class="card-body">
-                                    <div class="row mt-4">
-                                        <div class="col-md-4">
-                                            <input type="text" id="weekrange" class="form-control">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <button class="btn btn-primary btn-sm" id="generateWeekReport">Generate Weekly Report</button>
-                                        </div>
-                                        <div class="col-md-4 my-2">
-                                            <button class="btn btn-secondary btn-sm" id="previewWeekPDF" disabled>Preview PDF</button>
-                                            <button class="btn btn-primary btn-sm" id="downloadWeekPDF" disabled>Download PDF</button>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive mt-4">
-                                        <table class="table table-bordered" id="weekTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>MOP</th>
-                                                    <th>Order Date</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="3">Total Revenue</th>
-                                                    <th id="weekTotalRevenue">0.00</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card shadow mb-4">
-                            <a href="#monthlyReports" class="d-block card-header py-3" data-toggle="collapse"
-                                role="button" aria-expanded="true" aria-controls="monthlyReports">
-                                <h6 class="m-0 font-weight-bold text-primary">Monthly Reports</h6>
-                            </a>
-                            <div class="collapse show" id="monthlyReports">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control datemonthpicker" id="reportMonth" placeholder="Select month and year">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <button class="btn btn-primary btn-sm" id="generateMonthReport">Generate Report</button>
-                                        </div>
-                                        <div class="col-md-4 my-2">
-                                            <button class="btn btn-secondary btn-sm" id="previewMonthPDF" disabled>Preview PDF</button>
-                                            <button class="btn btn-primary btn-sm" id="downloaMonthdPDF" disabled>Download PDF</button>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive mt-4">
-                                        <table class="table table-bordered" id="monthTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>MOP</th>
-                                                    <th>Order Date</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="3">Total Revenue</th>
-                                                    <th id="monthTotalRevenue">0.00</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                         <div class="card shadow mb-4">
-                            <a href="#yearyReport" class="d-block card-header py-3" data-toggle="collapse"
-                                role="button" aria-expanded="true" aria-controls="yearyReport">
-                                <h6 class="m-0 font-weight-bold text-primary">Yearly Reports</h6>
-                            </a>
-                            <div class="collapse show" id="yearyReport">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control" name="reportYear" id="reportYear">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <button class="btn btn-primary btn-sm" id="generateYearReport">Generate Report</button>
-                                        </div>
-                                        <div class="col-md-4 my-2">
-                                            <button class="btn btn-secondary btn-sm" id="previewYearPDF" disabled>Preview PDF</button>
-                                            <button class="btn btn-primary btn-sm" id="downloadYeadPDF" disabled>Download PDF</button>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive mt-4">
-                                        <table class="table table-bordered" id="yearTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Customer</th>
-                                                    <th>MOP</th>
-                                                    <th>Order Date</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="4"> <p class="text-center">No Data</p> </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="3">Total Revenue</th>
-                                                    <th id="yearTotalRevenue">0.00</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
                          <div class="card shadow mb-4">
                             <a href="#customReport" class="d-block card-header py-3" data-toggle="collapse"
                                 role="button" aria-expanded="true" aria-controls="customReport">
@@ -414,7 +227,7 @@
                                             <button class="btn btn-primary btn-sm" id="generateCustomReport">Generate Report</button>
                                         </div>
                                         <div class="col-md-4 my-2">
-                                            <button class="btn btn-secondary btn-sm" id="previewCustomPDF" disabled>Preview PDF</button>
+                                            <button class="btn btn-primary btn-sm" id="previewCustomPDF" disabled>Preview PDF</button>
                                             <button class="btn btn-primary btn-sm" id="downloadCustomPDF"  disabled>Download PDF</button>
                                         </div>
                                     </div>
@@ -445,10 +258,80 @@
                             </div>
                         </div>
 
-                        
-
-                         
-                        
+                        <div class="card shadow mb-4">
+                            <a href="#recentOrders" class="d-block card-header py-3" data-toggle="collapse"
+                                role="button" aria-expanded="true" aria-controls="recentOrders">
+                                <h6 class="m-0 font-weight-bold text-primary">Recent Orders</h6>
+                            </a>
+                            <div class="collapse show" id="recentOrders">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div class="alert alert-warning" role="alert">
+                                            Items that has highlight with this color notify you that an order submitted "Days" still awaits approval. Please review and approve at your earliest convenience.
+                                        </div>
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order ID</th>
+                                                    <th style="width:150px !important;">Date Ordered</th>
+                                                    <th>Customer</th>
+                                                    <th>Email</th>
+                                                    <th>Phone</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Order ID</th>
+                                                    <th>Date Ordered</th>
+                                                    <th>Customer</th>
+                                                    <th>Email</th>
+                                                    <th>Phone</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                <?php 
+                                                foreach ($checked_out_orders as $order) { 
+                                                    $created_at = new DateTime($order['created_at']);
+                                                    $current_date = new DateTime();
+                                                    $interval = $created_at->diff($current_date);
+                                                    $is_older_than_two_days = $interval->days > 2;
+                                                ?>
+                                                    <tr <?= $is_older_than_two_days ? 'style="background-color: #fdf3d8;"' : '' ?>>
+                                                        <td><?= $order['id'] ?></td>
+                                                        <td <?= $is_older_than_two_days ? 'class="text-danger"' : '' ?>><?= $order['created_at'] ?></td>
+                                                        <td>
+                                                            <?= $order['first_name']. " " . $order['last_name'] ?>
+                                                        </td>
+                                                        <td><?= $order['email'] ?></td>
+                                                        <td><?= $order['phone_no'] ?></td>
+                                                        <td>
+                                                            <span class="badge <?= getBadgeClass($order['cart_status']) ?>">
+                                                                <?= htmlspecialchars($order['cart_status']) ?>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <form action="order-delete.php" method="POST">
+                                                                <a href="order-edit.php?id=<?= $order['id'] ?>" class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                    <i class="bi bi-box-arrow-right"></i>
+                                                                </a>
+                                                                <input type="hidden" name="id" value="<?= $order['id'] ?>">
+                                                                <!-- <button type="submit" name="delete-cart" class="btn btn-danger btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="Delete" value="submit">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button> -->
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -491,7 +374,8 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="login.php?logout=yes">Logout</a>
+
                 </div>
             </div>
         </div>
@@ -567,6 +451,8 @@
 
     $(document).ready(function() {
         $('#productTable').DataTable();
+        let table = $('#orderTable').DataTable();
+
     });
 </script>
 

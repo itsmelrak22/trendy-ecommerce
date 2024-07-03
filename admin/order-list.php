@@ -127,6 +127,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Order ID</th>
+                                                <th>Date Ordered</th>
                                                 <th>Customer</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
@@ -134,7 +135,6 @@
                                                 <th>Barangay</th>
                                                 <th>City / Municipality</th>
                                                 <th>Provice</th>
-                                                <th>Date Ordered</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -142,6 +142,7 @@
                                         <tfoot>
                                             <tr>
                                                 <th>Order ID</th>
+                                                <th>Date Ordered</th>
                                                 <th>Customer</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
@@ -149,16 +150,20 @@
                                                 <th>Barangay</th>
                                                 <th>City / Municipality</th>
                                                 <th>Provice</th>
-                                                <th>Date Ordered</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <?php foreach ($orders as $order) { ?>
-                                                <tr>
+                                            <?php foreach ($orders as $order) { 
+                                                $created_at = new DateTime($order['created_at']);
+                                                $current_date = new DateTime();
+                                                $interval = $created_at->diff($current_date);
+                                                $is_older_than_two_days = $interval->days > 2;?>
+                                                <tr <?= $is_older_than_two_days ? 'style="background-color: yellow;"' : '' ?>>
                                                     <td><?= $order['id'] ?></td>
-                                                    <td>
+                                                    <td <?= $is_older_than_two_days ? 'class="text-danger"' : '' ?>><?= $order['created_at'] ?></td>
+                                                        <td>    
                                                         <?= $order['first_name']. " " . $order['last_name'] ?>
                                                     </td>
                                                     <td><?= $order['email'] ?></td>
@@ -167,7 +172,6 @@
                                                     <td><?= findNameByCode($barangaysArray, $order['barangay']) ?></td>
                                                     <td><?= findNameByCode($citiesMunicipalitiesArray, $order['city_municipality']) ?></td>
                                                     <td><?= findNameByCode($provincesArray, $order['province']) ?></td>
-                                                    <td><?= $order['created_at'] ?></td>
                                                     <td>
                                                         <span class="badge <?= getBadgeClass($order['cart_status']) ?>">
                                                             <?= htmlspecialchars($order['cart_status']) ?>
@@ -235,7 +239,8 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="login.php?logout=yes">Logout</a>
+
                 </div>
             </div>
         </div>

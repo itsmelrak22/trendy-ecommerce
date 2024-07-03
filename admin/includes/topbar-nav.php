@@ -31,6 +31,9 @@
             case 'courier-list.php':
                 return "COURIER LIST";
                 break;
+            case 'user-list.php':
+                return "USER LIST";
+                break;
    
             default:
                 # code...

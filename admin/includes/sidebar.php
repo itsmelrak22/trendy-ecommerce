@@ -34,6 +34,9 @@ $location = basename($url);
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
 
+
+
+
 <!-- Nav Item - Dashboard -->
 <li class="nav-item <?= $location ==  "index.php" ? "active" : ""?>">
     <a class="nav-link" href="index.php">
@@ -41,13 +44,16 @@ $location = basename($url);
         <span>Dashboard</span></a>
 </li>
 
-
+<?php if($_SESSION['email'] == 'admin@admin.com'){ ?>
+      
 <!-- Nav Item - Sales-->
 <li class="nav-item <?= $location ==  "sale-list.php" ? "active" : ""?>">
     <a class="nav-link" href="sale-list.php">
         <i class="fas fa-fw fa-table"></i>
         <span>Sales</span></a>
 </li>
+
+<?php  } ?>
 
 <!-- Nav Item - Product List Menu -->
 <li class="nav-item <?= $location ==  "order-list.php" ? "active" : ""?>">
@@ -67,6 +73,7 @@ $location = basename($url);
 
 <!-- Divider -->
 <hr class="sidebar-divider">
+<?php if($_SESSION['email'] == 'admin@admin.com'){ ?>
 
 <!-- Nav Item - Customers -->
 <li class="nav-item <?= $location ==  "customer-list.php" ? "active" : ""?>">
@@ -74,6 +81,8 @@ $location = basename($url);
         <i class="fas fa-fw fa-table"></i>
         <span>Customer List</span></a>
 </li>
+
+<?php  } ?>
 
 
 <!-- Nav Item - Product List Menu -->
@@ -91,6 +100,7 @@ $location = basename($url);
 </li>
 
 
+<?php if($_SESSION['email'] == 'admin@admin.com'){ ?>
 
 
 <!-- Divider -->
@@ -100,11 +110,18 @@ $location = basename($url);
         <i class="fas fa-fw fa-table"></i>
         <span>Couriers</span></a>
 </li>
+<li class="nav-item <?php echo $location ==  "user-list.php" ? "active" : ""?>">
+    <a class="nav-link" href="user-list.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Users</span></a>
+</li>
 <li class="nav-item <?php echo $location ==  "site-settings.php" ? "active" : ""?>">
     <a class="nav-link" href="site-settings.php">
         <i class="fas fa-fw fa-table"></i>
         <span>Site Settings</span></a>
 </li>
+
+<?php  } ?>
 
 
 <!-- Sidebar Toggler (Sidebar) -->

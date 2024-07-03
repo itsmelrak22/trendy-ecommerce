@@ -69,16 +69,16 @@ function generateCartCards($cart, $key, $img_link){
                                                 <span class="fw-bold  text-success">(-'.$site_setting->discountPercentage.' Promo)</span>';
                                         }
                                         
-                                        echo '<h5 class="mb-0 mt-2" >₱ <span id="price-id-'.$key.'" name="price"> '.$price.' </span> </h5>
+                                        echo '<h5 class="mb-0 mt-2" >₱ <span id="price-id-'.$key.'" name="price"> '.number_format($price, 2).' </span> </h5>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="mt-3">
                                         <p class="text-muted mb-2">Quantity</p>
                                         <div class="d-inline-flex">
-                                        <button class="btn btn-md btn-outline-dark"  type="button" onClick="updateCartQuantity(`quantity-id-'.$key.'`, '.$price.', `total-id-'.$key.'`, '.$key.', `minus`, '.$product_info_->stock_qty.')">-</button>
+                                        <button class="btn btn-md btn-outline-dark"  type="button" onClick="updateCartQuantity(`quantity-id-'.$key.'`, '.number_format($price, 2).', `total-id-'.$key.'`, '.$key.', `minus`, '.$product_info_->stock_qty.')">-</button>
                                         <input style=" width: 70px; " readonly class="mx-2 form-control form-control-sm text-center" id="quantity-id-'.$key.'" type="number" min="1" value="'.$quantity.'" name="quantity" >
-                                        <button class="btn btn-md btn-outline-dark" type="button" onClick="updateCartQuantity(`quantity-id-'.$key.'`, '.$price.', `total-id-'.$key.'`, '.$key.', `add`, '.$product_info_->stock_qty.')">+</button>
+                                        <button class="btn btn-md btn-outline-dark" type="button" onClick="updateCartQuantity(`quantity-id-'.$key.'`, '.number_format($price, 2).', `total-id-'.$key.'`, '.$key.', `add`, '.$product_info_->stock_qty.')">+</button>
                                         
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@ function generateCartCards($cart, $key, $img_link){
                                 <div class="col-md-3">
                                     <div class="mt-3">
                                         <p class="text-muted mb-2">Total</p>
-                                        <h5 >₱ <span id="total-id-'.$key.'">'.($quantity * $price).'</span></h5>
+                                        <h5 >₱ <span id="total-id-'.$key.'">'.number_format(($quantity * $price), 2).'</span></h5>
                                     </div>
                                 </div>
                             </div>
@@ -170,11 +170,11 @@ function generateViewCards($cart, $key, $img_link){
                                 <div class="col-md-4">
                                     <div class="mt-3">
                                         <p class="text-muted mb-2">Price</p>
-                                        <h5 class="mb-0 mt-2" >₱ <span id="price-id-'.$key.'" name="price"> '.$price.' </span> </h5>
+                                        <h5 class="mb-0 mt-2" >₱ <span id="price-id-'.$key.'" name="price"> '. number_format($price, 2) .' </span> </h5>
                                     </div>
                                     <div class="mt-1">
                                         <p class="text-muted mb-2">Shipping Fee</p>
-                                        <h5 class="mb-0 mt-2" >₱ <span id="price-id-'.$key.'" name="price"> '.$shippingFee.' </span> </h5>
+                                        <h5 class="mb-0 mt-2" >₱ <span id="price-id-'.$key.'" name="price"> '.number_format($shippingFee, 2) .' </span> </h5>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
@@ -189,7 +189,7 @@ function generateViewCards($cart, $key, $img_link){
                                 <div class="col-md-3">
                                     <div class="mt-3">
                                         <p class="text-muted mb-2">Total</p>
-                                        <h5 >₱ <span id="total-id-'.$key.'">'.($total_price + $shippingFee).'</span></h5>
+                                        <h5 >₱ <span id="total-id-'.$key.'">'.number_format(($total_price + $shippingFee), 2) .'</span></h5>
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +222,7 @@ function generateViewCards($cart, $key, $img_link){
         console.log(input.value)
 
         if (input.value < 1) input.value = 1;
-        total.innerHTML = price * input.value;
+        total.innerHTML = Number((price * input.value).toFixed(2));
         calculateSubtotal();
         updateSpecificTotal(key)
         

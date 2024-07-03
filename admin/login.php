@@ -2,14 +2,22 @@
     require_once  '../vendor/autoload.php';
     session_start();
 
+
+    spl_autoload_register(function ($class) {
+        include '../models/' . $class . '.php';
+    });
+
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        header("Location: index.php");
+        exit();
+    }
     if (isset($_SESSION['email'])) {
         header("Location: index.php");
         exit();
     }
 
-    spl_autoload_register(function ($class) {
-        include '../models/' . $class . '.php';
-    });
+
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST["email"];
@@ -27,6 +35,7 @@
         }
     }
 ?>
+
 
 
 <!DOCTYPE html>
