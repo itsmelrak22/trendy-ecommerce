@@ -414,7 +414,7 @@
                                     <div class="container">
 
                                         <div class="accordion" id="accordionExample">
-                                            <div class="accordion-item">
+                                            <div class="accordion-item"  id="personalizeAccordion" style="display: none;">
                                                 <h2 class="accordion-header">
                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                                     Personalize Your Shirt
@@ -844,6 +844,7 @@
 
                 var selectedOptionText = $("#tshirttype").find('option:selected').text();
                 // Extract the design name in parenthesis
+
                 var designMatch = selectedOptionText.match(/\((.*?)\)/);
                 if (designMatch && designMatch[1]) {
                     var selectedDesign = designMatch[1];
@@ -851,6 +852,7 @@
                 } else {
                     $('#designColors').hide();
                 }
+      
 
 		            document.getElementById("shirtDiv").style.backgroundColor = "#ffffff";		   
 
@@ -861,6 +863,14 @@
                     const colorPallete = $('#colorPallete');
                     const noteForNotColorPallete = $('#noteForNotColorPallete');
                     
+                    console.log('selectedText', selectedText)
+                    if ( selectedOptionText.includes("Polo Shirts") || selectedOptionText.includes("DESIGN")) {
+                        $('#personalizeAccordion').show();
+                    } else {
+                        $('#personalizeAccordion').hide();
+                    }
+
+
                     if (selectedText.includes('DESIGN')) {
                         colorPallete.hide();
                         noteForNotColorPallete.show();
