@@ -102,10 +102,10 @@
                                                 <th>Customer</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
-                                                <th>Additional Address</th>
+                                                <th>Block & lot, street/subd.</th>
                                                 <th>Barangay</th>
                                                 <th>City / Municipality</th>
-                                                <th>Provice</th>
+                                                <th>Province</th>
                                                 <th>Status </th>
                                                 <th>Date Ordered</th>
                                                 <th>Action</th>
@@ -117,10 +117,10 @@
                                                 <th>Customer</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
-                                                <th>Additional Address</th>
+                                                <th>Block & lot, street/subd.</th>
                                                 <th>Barangay</th>
                                                 <th>City / Municipality</th>
-                                                <th>Provice</th>
+                                                <th>Province</th>
                                                 <th>Status </th>
                                                 <th>Date Ordered</th>
                                                 <th>Action</th>
@@ -139,7 +139,7 @@
                                                     </td>
                                                     <td><?= $order['email'] ?></td>
                                                     <td><?= $order['phone_no'] ?></td>
-                                                    <td><?= $order['complete_address'] ?></td>
+                                                    <td><?= $order['complete_address'] ? $order['complete_address'] : 'N/A' ?></td>
                                                     <td><?= findNameByCode($barangaysArray, $order['barangay']) ?></td>
                                                     <td><?= findNameByCode($citiesMunicipalitiesArray, $order['city_municipality']) ?></td>
                                                     <td><?= findNameByCode($provincesArray, $order['province']) ?></td>

@@ -386,7 +386,7 @@ Coloris({
                 centerText('9070 DR. SOLIS STREET JULUGAN 8, TANZA, CAVITE', 30);
 
                 doc.setFontSize(11);
-                centerText("Facebook: TRENDY THREADS APPAREL BY LOVE J'S", 35);
+                centerText("Facebook: TRENDY THREADS APPAREL", 35);
                 doc.setFontSize(11);
                 centerText("Instagram: TRENDTHREAD_APPAREL", 40);
 

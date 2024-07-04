@@ -14,7 +14,7 @@ Class Product extends Model {
 
         foreach ($products as $key => $product) {
             $product_id = $product['product_id'];
-            $colors = $intance->setQuery("SELECT * FROM `product_colors` WHERE `product_id` = $product_id")->getAll();
+            $colors = $intance->setQuery("SELECT * FROM `product_colors` WHERE `product_id` = $product_id AND `deleted_at` IS NULL")->getAll();
             $products[$key]["colors"] = $colors;
         }
 
@@ -90,7 +90,7 @@ Class Product extends Model {
 
         foreach ($products as $key => $product) {
             $product_id = $product['id'];
-            $colors = $instance->setQuery("SELECT * FROM `product_colors` WHERE `product_id` = $product_id")->getAll();
+            $colors = $instance->setQuery("SELECT * FROM `product_colors` WHERE `product_id` = $product_id AND `deleted_at` IS NULL")->getAll();
             $products[$key]["colors"] = $colors;
         }
 

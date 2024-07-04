@@ -123,6 +123,9 @@
 
                             <div class="card-body">
                                 <div class="table-responsive">
+                                    <div class="alert alert-warning" role="alert">
+                                        Items that has highlight with this color notify you that an order submitted "Days" still awaits approval. Please review and approve at your earliest convenience.
+                                    </div>
                                     <table class="table table-bordered" width="100%" cellspacing="0" id="orderTable">
                                         <thead>
                                             <tr>
@@ -131,10 +134,10 @@
                                                 <th>Customer</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
-                                                <th>Additional Address</th>
+                                                <th>Block & lot, street/subd.</th>
                                                 <th>Barangay</th>
                                                 <th>City / Municipality</th>
-                                                <th>Provice</th>
+                                                <th>Province</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -146,10 +149,10 @@
                                                 <th>Customer</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
-                                                <th>Additional Address</th>
+                                                <th>Block & lot, street/subd.</th>
                                                 <th>Barangay</th>
                                                 <th>City / Municipality</th>
-                                                <th>Provice</th>
+                                                <th>Province</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -160,7 +163,7 @@
                                                 $current_date = new DateTime();
                                                 $interval = $created_at->diff($current_date);
                                                 $is_older_than_two_days = $interval->days > 2;?>
-                                                <tr <?= $is_older_than_two_days ? 'style="background-color: yellow;"' : '' ?>>
+                                                    <tr <?= $is_older_than_two_days ? 'style="background-color: #fdf3d8;"' : '' ?>>
                                                     <td><?= $order['id'] ?></td>
                                                     <td <?= $is_older_than_two_days ? 'class="text-danger"' : '' ?>><?= $order['created_at'] ?></td>
                                                         <td>    
@@ -323,7 +326,7 @@
             url: 'https://psgc.gitlab.io/api/provinces.json',
             type: 'GET',
             success: function(data) {
-                proviceArray = data;
+                ProvinceArray = data;
                 var provinces = data;
 
                 // Sort the provinces array by the "name" property

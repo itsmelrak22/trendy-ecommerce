@@ -780,7 +780,7 @@
 
      
                     doc.setFontSize(11);
-                    centerText("Facebook: TRENDY THREADS APPAREL BY LOVE J'S", 35);
+                    centerText("Facebook: TRENDY THREADS APPAREL", 35);
                     doc.setFontSize(11);
                     centerText("Instagram: TRENDTHREAD_APPAREL", 40);
                     // Basic Info
