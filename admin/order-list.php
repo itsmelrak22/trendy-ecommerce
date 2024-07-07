@@ -102,24 +102,35 @@
                                 }
 
                             </style>
-                            <span class="legend-container" >
-                                <p class="lead">Legends: </p>
-                                <a href="order-list.php?sortBy=checked out">
-                                    <span class="badge badge-primary">Checked out</span>
-                                </a>
-                                <a href="order-list.php?sortBy=processing">
-                                    <span class="badge badge-info">Processing</span>
-                                </a>
-                                <a href="order-list.php?sortBy=shipped">
-                                    <span class="badge badge-warning">Shipped</span>
-                                </a>
-                                <a href="order-list.php?sortBy=delivered">
-                                    <span class="badge badge-success">Delivered</span>
-                                </a>
-                                <a href="order-list.php?sortBy=cancelled">
-                                    <span class="badge badge-danger">Cancelled</span>
-                                </a>
-                            </span>
+                                <span class="legend-container">
+                                    <p class="lead">Legends: </p>
+                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'checked out' ? 'style="background-color: #4e73df; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                        <a href="order-list.php?sortBy=checked out">
+                                            <span class="badge badge-primary">Checked out</span>
+                                        </a>
+                                    </div>
+                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'processing' ? 'style="background-color: #36b9cc; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                        <a href="order-list.php?sortBy=processing">
+                                            <span class="badge badge-info">Processing</span>
+                                        </a>
+                                    </div>
+                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'shipped' ? 'style="background-color: #f6c23e; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                        <a href="order-list.php?sortBy=shipped">
+                                            <span class="badge badge-warning">Shipped</span>
+                                        </a>
+                                    </div>
+                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'delivered' ? 'style="background-color: #1cc88a; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                        <a href="order-list.php?sortBy=delivered">
+                                            <span class="badge badge-success">Delivered</span>
+                                        </a>
+                                    </div>
+                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'cancelled' ? 'style="background-color: #e74a3b; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                        <a href="order-list.php?sortBy=cancelled">
+                                            <span class="badge badge-danger">Cancelled</span>
+                                        </a>
+                                    </div>
+                                </span>
+
 
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -163,7 +174,7 @@
                                                 $current_date = new DateTime();
                                                 $interval = $created_at->diff($current_date);
                                                 $is_older_than_two_days = $interval->days > 2;?>
-                                                    <tr <?= $is_older_than_two_days ? 'style="background-color: #fdf3d8;"' : '' ?>>
+                                                <tr <?= $is_older_than_two_days && $order['cart_status'] == 'Checked out' ? 'style="background-color: #fdf3d8;"' : '' ?>>
                                                     <td><?= $order['id'] ?></td>
                                                     <td <?= $is_older_than_two_days ? 'class="text-danger"' : '' ?>><?= $order['created_at'] ?></td>
                                                         <td>    
