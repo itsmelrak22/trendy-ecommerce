@@ -9,6 +9,8 @@ spl_autoload_register(function ($class) {
     include '../models/' . $class . '.php';
 });
 
+header('Content-Type: application/json; charset=utf-8');
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
