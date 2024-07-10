@@ -300,7 +300,7 @@
                                                     $interval = $created_at->diff($current_date);
                                                     $is_older_than_two_days = $interval->days > 2;
                                                 ?>
-                                                    <tr <?= $is_older_than_two_days ? 'style="background-color: #fdf3d8;"' : '' ?>>
+                                                    <tr <?= $is_older_than_two_days && $order['cart_status'] == 'Checked out' ? 'style="background-color: #fdf3d8;"' : '' ?>>
                                                         <td><?= $order['id'] ?></td>
                                                         <td <?= $is_older_than_two_days ? 'class="text-danger"' : '' ?>><?= $order['created_at'] ?></td>
                                                         <td>
