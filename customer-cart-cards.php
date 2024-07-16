@@ -1,6 +1,5 @@
 <?php 
 function generateCartCards($cart, $key, $img_link){
-    echo "key: $key";
     $cartID = $cart['id'];
 
     $product_info_ = Product::findProduct($cart['product_id'], $cart['color_id']);

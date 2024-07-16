@@ -102,34 +102,34 @@
                                 }
 
                             </style>
-                                <span class="legend-container">
-                                    <p class="lead">Legends: </p>
-                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'checked out' ? 'style="background-color: #4e73df; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
-                                        <a href="order-list.php?sortBy=checked out">
-                                            <span class="badge badge-primary">Checked out</span>
-                                        </a>
-                                    </div>
-                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'processing' ? 'style="background-color: #36b9cc; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
-                                        <a href="order-list.php?sortBy=processing">
-                                            <span class="badge badge-info">Processing</span>
-                                        </a>
-                                    </div>
-                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'shipped' ? 'style="background-color: #f6c23e; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
-                                        <a href="order-list.php?sortBy=shipped">
-                                            <span class="badge badge-warning">Shipped</span>
-                                        </a>
-                                    </div>
-                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'delivered' ? 'style="background-color: #1cc88a; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
-                                        <a href="order-list.php?sortBy=delivered">
-                                            <span class="badge badge-success">Delivered</span>
-                                        </a>
-                                    </div>
-                                    <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'cancelled' ? 'style="background-color: #e74a3b; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
-                                        <a href="order-list.php?sortBy=cancelled">
-                                            <span class="badge badge-danger">Cancelled</span>
-                                        </a>
-                                    </div>
-                                </span>
+                            <span class="legend-container">
+                                <p class="lead">Legends: </p>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'checked out' ? 'style="background-color: #4e73df; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="order-list.php?sortBy=checked out">
+                                        <span class="badge badge-primary">Checked out</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'processing' ? 'style="background-color: #36b9cc; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="order-list.php?sortBy=processing">
+                                        <span class="badge badge-info">Processing</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'shipped' ? 'style="background-color: #f6c23e; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="order-list.php?sortBy=shipped">
+                                        <span class="badge badge-warning">Shipped</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'delivered' ? 'style="background-color: #1cc88a; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="order-list.php?sortBy=delivered">
+                                        <span class="badge badge-success">Delivered</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'cancelled' ? 'style="background-color: #e74a3b; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="order-list.php?sortBy=cancelled">
+                                        <span class="badge badge-danger">Cancelled</span>
+                                    </a>
+                                </div>
+                            </span>
 
 
                             <div class="card-body">
@@ -141,6 +141,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Order ID</th>
+                                                <th>Order Item Overview</th>
                                                 <th>Date Ordered</th>
                                                 <th>Customer</th>
                                                 <th>Email</th>
@@ -156,6 +157,7 @@
                                         <tfoot>
                                             <tr>
                                                 <th>Order ID</th>
+                                                <th>Order Item Overview</th>
                                                 <th>Date Ordered</th>
                                                 <th>Customer</th>
                                                 <th>Email</th>
@@ -176,8 +178,18 @@
                                                 $is_older_than_two_days = $interval->days > 2;?>
                                                 <tr <?= $is_older_than_two_days && $order['cart_status'] == 'Checked out' ? 'style="background-color: #fdf3d8;"' : '' ?>>
                                                     <td><?= $order['id'] ?></td>
+                                                    <td class="order-item-overview">
+                                                        <?php foreach ($order['order_details'] as $key => $data) {
+                                                            $productName = $data['product_name'];
+                                                            echo "<div> $productName </div> ";
+                                                                echo "<hr>";
+                                                                if ($key < count($order['order_details']) - 1) {
+                                                                echo "<hr>";
+                                                            }
+                                                        } ?>
+                                                    </td>
                                                     <td <?= $is_older_than_two_days ? 'class="text-danger"' : '' ?>><?= $order['created_at'] ?></td>
-                                                        <td>    
+                                                    <td>    
                                                         <?= $order['first_name']. " " . $order['last_name'] ?>
                                                     </td>
                                                     <td><?= $order['email'] ?></td>
@@ -206,6 +218,7 @@
                                             <?php } ?>
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
@@ -421,6 +434,36 @@
             }
         });
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.order-item-overview').forEach(function (overview) {
+        const divs = overview.querySelectorAll('div');
+        const hrs = overview.querySelectorAll('hr');
+        
+        if (hrs.length > 1) {
+            for (let i = 1; i < divs.length; i++) {
+                divs[i].style.display = 'none';
+            }
+            for (let i = 0; i < hrs.length; i++) {
+                hrs[i].style.display = 'none';
+            }
+            const seeMoreBtn = document.createElement('button');
+            seeMoreBtn.textContent = 'See More';
+            seeMoreBtn.className = 'btn btn-link';
+            seeMoreBtn.style.padding = '0';
+            seeMoreBtn.addEventListener('click', function () {
+                for (let i = 1; i < divs.length; i++) {
+                    divs[i].style.display = 'block';
+                }
+                for (let i = 0; i < hrs.length; i++) {
+                    hrs[i].style.display = 'block';
+                }
+                seeMoreBtn.style.display = 'none';
+            });
+            overview.appendChild(seeMoreBtn);
+        }
+    });
+});
 
 
 </script>

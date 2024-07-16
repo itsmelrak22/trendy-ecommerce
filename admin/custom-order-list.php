@@ -34,11 +34,11 @@
     $ungrouped_data = [];
 
     // Define the desired order of statuses
-    $status_order = ['Pending','Confirmed', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
+    $status_order = ['For Approval','Confirmed', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 
     foreach ($orders as $order) {
         if($order['status'] == '' || $order['status'] == null){
-            $cart_status = "Pending";
+            $cart_status = "For Approval";
         }else{
             $cart_status = $order['status'];
         }
@@ -93,9 +93,58 @@
                             
                         </div>
                         <div class=" card-body">
+                        <style>
+                                .legend-container {
+                                    display: flex;
+                                    flex-direction: row;
+                                    align-items: center; /* Align items vertically centered */
+                                }
+
+                                .legend-container .lead {
+                                    margin-right: 10px; /* Add some spacing between the text and the badges */
+                                }
+
+                                .legend-container .badge {
+                                    margin-left: 5px; /* Add some spacing between the badges */
+                                }
+
+                            </style>
+                            <span class="legend-container">
+                                <p class="lead">Legends: </p>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'For Approval' ? 'style="background-color: #5a5c69; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=For Approval">
+                                        <span class="badge badge-dark">For Approval</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'checked out' ? 'style="background-color: #4e73df; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=checked out">
+                                        <span class="badge badge-primary">Checked out</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'processing' ? 'style="background-color: #36b9cc; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=processing">
+                                        <span class="badge badge-info">Processing</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'shipped' ? 'style="background-color: #f6c23e; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=shipped">
+                                        <span class="badge badge-warning">Shipped</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'delivered' ? 'style="background-color: #1cc88a; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=delivered">
+                                        <span class="badge badge-success">Delivered</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'cancelled' ? 'style="background-color: #e74a3b; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=cancelled">
+                                        <span class="badge badge-danger">Cancelled</span>
+                                    </a>
+                                </div>
+                            </span>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="cartTable" width="100%" cellspacing="0">
+                                    <table class="table table-bordered" id="customOrderTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Order ID </th>
@@ -129,7 +178,7 @@
                                         <tbody>
                                             <?php foreach ($orders as $key => &$cart) { 
                                                 $jsonData = json_encode($cart);
-                                                $cart['status'] ? $cart['status'] : $cart['status'] = 'Pending' 
+                                                $cart['status'] ? $cart['status'] : $cart['status'] = 'For Approval' 
                                             ?>
                                                 
                                                 <tr>
@@ -524,7 +573,7 @@
     });
 
     $(document).ready(function() {
-        $('#cartTable').DataTable();
+        $('#customOrderTable').DataTable();
 
     });
 </script>
@@ -825,6 +874,25 @@
             backCanvasTextObjects.appendChild(div);
         });
     }
+
+
+    $(document).ready(function() {
+        let table = $('#customOrderTable').DataTable();
+                // Function to get query parameter
+        function getQueryParameter(param) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Get the 'sortBy' query parameter value
+        var sortBy = getQueryParameter('sortBy');
+
+        // If 'sortBy' exists, use it as the search value in DataTable
+        if (sortBy) {
+            table.search(sortBy).draw();
+        }
+    });
+
 
 
 </script>
