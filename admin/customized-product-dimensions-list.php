@@ -63,7 +63,7 @@ spl_autoload_register(function ($class) {
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Dimension</th>
+                                                <th>Dimension (Inches)</th>
                                                 <th>Shirt Option Type</th>
                                                 <th>Customized By</th>
                                                 <th>Size</th>
@@ -73,7 +73,7 @@ spl_autoload_register(function ($class) {
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Dimension</th>
+                                                <th>Dimension (Inches)</th>
                                                 <th>Shirt Option Type</th>
                                                 <th>Customized By</th>
                                                 <th>Size</th>
@@ -84,7 +84,7 @@ spl_autoload_register(function ($class) {
                                         <tbody>
                                             <?php foreach ($couriers as $key => $value) { ?>
                                                 <tr>
-                                                    <td><?=$value['dimension']?></td>
+                                                    <td><?=$value['dimension']?> </td>
                                                     <td><?=$value['shirt_option_type']?></td>
                                                     <td><?=$value['customized_by']?></td>
                                                     <td><?=$value['size']?></td>

@@ -37,6 +37,7 @@ Class CustomizeOrder extends Model {
         return $self->setQuery($qry)->getAll();
     }
 
+
     public static function getSpecificCustomOrders($id = null){
         $self = new self;
 

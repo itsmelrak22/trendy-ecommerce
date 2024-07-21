@@ -97,9 +97,11 @@
 
     
     
-    $customizeOrder = new CustomizeOrder;
-    $confirmedCustomizeItems = $customizeOrder->getCustomerCustomOrders($client_id, 'Confirmed');
-    $confirmedCustomizeItemsCount = count($confirmedCustomizeItems);
+    if( isset($client_id) ){
+        $customizeOrder = new CustomizeOrder;
+        $confirmedCustomizeItems = $customizeOrder->getCustomerCustomOrders($client_id, 'Confirmed');
+        $confirmedCustomizeItemsCount = count($confirmedCustomizeItems);
+    }
 
 ?>
 <!DOCTYPE html>
@@ -317,8 +319,8 @@
                                     </select>
                                 </div>
                                 <div class="mb-3 col-sm-6">
-                                    <label for="complete_add">Street Name/Brgy/Sbdv/Lot/Block/</label>
-                                    <textarea id="complete_add" name="complete_add" class="form-control" placeholder="Street Name/Brgy./Sbdv/Lot/Blk"></textarea>
+                                    <label for="complete_add">Other Address Info (Subdivision/Street/Lot/Block/House No.)</label>
+                                    <textarea id="complete_add" name="complete_add" class="form-control" placeholder="Subdivision/Street/Lot/Block/House No."></textarea>
                                 </div>
                             </div>
                             <div class="row">

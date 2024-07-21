@@ -143,7 +143,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <div class="" >
-                                    <label for="complete_address" class="form-label">Other Address Info</label>
+                                    <label for="complete_address" class="form-label">Other Address Info (Subdivision/Street/Lot/Block/House No.)</label>
                                     <textarea  name="complete_address" class="form-control" cols="30" rows="4" required><?=$customer->complete_address ?></textarea>
                                 </div>
                             </div>
