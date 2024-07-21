@@ -105,6 +105,11 @@ $location = basename($url);
 
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
+<li class="nav-item <?php echo $location ==  "customized-product-dimensions-list.php" ? "active" : ""?>">
+    <a class="nav-link" href="customized-product-dimensions-list.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Product Dimensions</span></a>
+</li>
 <li class="nav-item <?php echo $location ==  "courier-list.php" ? "active" : ""?>">
     <a class="nav-link" href="courier-list.php">
         <i class="fas fa-fw fa-table"></i>

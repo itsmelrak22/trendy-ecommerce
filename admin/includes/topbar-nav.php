@@ -34,6 +34,9 @@
             case 'user-list.php':
                 return "USER LIST";
                 break;
+            case 'customized-product-dimensions-list.php':
+                return "CUSTOMIZED PRODUCT DIMENSIONS";
+                break;
    
             default:
                 # code...

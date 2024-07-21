@@ -95,6 +95,12 @@
     $site_setting = $site_setting_->getSiteSettingsLatest();
     $site_setting = json_decode($site_setting->json_data);
 
+    
+    
+    $customizeOrder = new CustomizeOrder;
+    $confirmedCustomizeItems = $customizeOrder->getCustomerCustomOrders($client_id, 'Confirmed');
+    $confirmedCustomizeItemsCount = count($confirmedCustomizeItems);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -182,13 +188,31 @@
                             <?php echo isset($cartItemCount) ? $cartItemCount : "0"; ?>
                         </span>
                     </a>
-                    <button type="button" class="btn btn-outline-dark btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                        <i class="bi-person me-1"></i>
-                        <span class="d-none d-sm-inline"><?php echo $client_username; ?></span>
-                    </button>
+
+                    <!-- Example split danger button with badge -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                            <i class="bi-person me-1"></i>
+                            <span class="d-none d-sm-inline"><?php echo $client_username; ?></span>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle dropdown-toggle-split  me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                            <span class="badge bg-secondary"><?= $confirmedCustomizeItemsCount ?></span>
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <?php foreach ($confirmedCustomizeItems as $key => $value) {
+                                echo '<li><hr class="dropdown-divider"></li>';
+                                echo '<li><a class="dropdown-item" href="customer-cart.php">Customer Order: #'.$value['id'].' - '.$value['status'].'</a></li>';
+                            } ?>
+                            
+                        </ul>
+                    </div>
+
+
                     <a href="./client/logout-customer.php" class="btn btn-outline-dark btn-sm">
                         <i class="bi-box-arrow-right me-1"></i>
-                        <span class="d-none d-sm-inline">Logout</span>
+                        <!-- <span class="d-none d-sm-inline">Logout</span> -->
                     </a>
                 <?php } else { ?>
                     <button class="btn btn-outline-dark btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">

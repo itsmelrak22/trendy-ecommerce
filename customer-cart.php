@@ -59,10 +59,6 @@
     $customizeItems = $customizeOrder->getCustomerCustomOrders($client_id);
     $customizeItemsCount = count($customizeItems);
 
-    
-    $customizeOrder = new CustomizeOrder;
-    $confirmedCustomizeItems = $customizeOrder->getCustomerCustomOrders($client_id, 'Confirmed');
-    $confirmedCustomizeItemsCount = count($confirmedCustomizeItems);
 
 ?>
 <style>

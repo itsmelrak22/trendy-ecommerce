@@ -77,6 +77,57 @@
         </script>";
     }
 
+    $dimensions_ = new CustomizedProductDimensions;
+    $dimensions = $dimensions_->all();
+
+    $logoType = [];
+    $textType = [];
+
+    // Function to process data into desired structure
+    function process_data($dimensions) {
+        $result = [];
+        foreach ($dimensions as $row) {
+            $customized_by = $row['customized_by'];
+            $size = $row['size'];
+            $dimension = $row['dimension'];
+            $price = $row['price'];
+
+            if (!isset($result[$customized_by])) {
+                $result[$customized_by] = [];
+            }
+            if (!isset($result[$customized_by][$size])) {
+                $result[$customized_by][$size] = [];
+            }
+
+            $result[$customized_by][$size][$dimension] = $price;
+        }
+        return $result;
+    }
+
+    // Separate data based on 'shirt_option_type'
+    foreach ($dimensions as $row) {
+        if ($row['shirt_option_type'] == 'Logo') {
+            $logoType[] = $row;
+        } elseif ($row['shirt_option_type'] == 'Text') {
+            $textType[] = $row;
+        }
+    }
+
+    // Process data
+    $logoTypeProcessed = process_data($logoType);
+    $textTypeProcessed = process_data($textType);
+
+    // Combine into final structure
+    $final_data = [
+        "logoType" => $logoTypeProcessed,
+        "textType" => $textTypeProcessed
+    ];
+
+    // Convert to JSON
+    $json_data = json_encode($final_data, JSON_PRETTY_PRINT);
+    // echo "<pre>";
+    // print_r($json_data);
+    // echo "</pre>";
 ?>
 
 
@@ -791,6 +842,12 @@
         <!-- <script src="./js/shirtOptions.js"></script> -->
         <!-- <script src="./js/newShirtOptions.js"></script> -->
         <script src="./js/shirtOptions3.js"></script>
+        <script>
+        shirtOptions3["logoType"]  = <?=json_encode($logoTypeProcessed, JSON_PRETTY_PRINT)?>;
+        shirtOptions3["textType"]  = <?=json_encode($textTypeProcessed, JSON_PRETTY_PRINT)?>;
+        console.log(" shirtOptions3 ", shirtOptions3)
+
+        </script>
         <script type="text/javascript">
             jQuery.browser = {};
             (function () {
@@ -1760,6 +1817,26 @@
         var avatarLogoButton = document.getElementById('avatarLogoButton');
         var avatarSizeTD = document.getElementById('avatarSizeTD');
         let avatarLogoPrice = document.getElementById('avatarLogoPrice');
+
+        const prices_by_sizes_avatar_logo = document.getElementById('prices_by_sizes_avatar_logo');
+        const customize_by = document.getElementById('customize_by');
+        const selected_size = document.getElementById('selected_size');
+        // const options = shirtOptions3.keys(logoType[customizeByValue].xs);
+        const options = Object.keys(shirtOptions3['logoType'][customize_by.value][selected_size.value]);
+
+
+        prices_by_sizes_avatar_logo.innerHTML = '';
+
+        options.forEach(optionValue => {
+            const optionElement = document.createElement('option');
+            optionElement.value = optionValue;
+            optionElement.text = optionValue;
+            prices_by_sizes_avatar_logo.appendChild(optionElement);
+        });
+
+        // Enable the select element
+        prices_by_sizes_avatar_logo.disabled = false;
+
         if (this.checked) {
             avatarLogoButton.style.display = 'inline-block';
             // avatarSizeTD.style.display = 'inline-block';
@@ -1773,14 +1850,36 @@
     });
 
     document.getElementById('text_checkbox').addEventListener('change', function() {
+
+        const prices_by_sizes_text = document.getElementById('prices_by_sizes_text');
+        const customize_by = document.getElementById('customize_by');
+        const selected_size = document.getElementById('selected_size');
+        // const options = shirtOptions3.keys(logoType[customizeByValue].xs);
+        const options = Object.keys(shirtOptions3['textType'][customize_by.value][selected_size.value]);
+        let textPrice = document.getElementById('textPrice');
+
+
+        prices_by_sizes_text.innerHTML = '';
+
+        options.forEach(optionValue => {
+            const optionElement = document.createElement('option');
+            optionElement.value = optionValue;
+            optionElement.text = `${optionValue} in`;
+            prices_by_sizes_text.appendChild(optionElement);
+        });
+
+
         var textButton = document.getElementById('textButton');
         var textSizeTD = document.getElementById('textSizeTD');
         if (this.checked) {
             textButton.style.display = 'inline-block';
             textSizeTD.style.display = 'inline-block';
         } else {
+            textPrice.textContent = 0;
             textButton.style.display = 'none';
             textSizeTD.style.display = 'none';
+            estimatePrice()
+
         }
     });
     document.getElementById('discard').addEventListener('click', function() {
