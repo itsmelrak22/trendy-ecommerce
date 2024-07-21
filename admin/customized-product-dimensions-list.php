@@ -126,12 +126,12 @@ spl_autoload_register(function ($class) {
                                         <label for="shirt_option_type">Shirt Option Type</label>
                                         <div class="input-group">
                                             <select name="shirt_option_type" id="update-shirt_option_type" class="form-control bg-light border-0 small" required>
-                                                <option value="logo">Logo</option>
-                                                <option value="text">Text</option>
+                                                <option value="Logo">Logo</option>
+                                                <option value="Text">Text</option>
                                             </select>
                                         </div>
                                         <br>
-                                        <label for="shirt_option_type">Customized By</label>
+                                        <label for="update-customized_by">Customized By</label>
                                         <div class="input-group">
                                             <select name="customized_by" id="update-customized_by" class="form-control bg-light border-0 small" required>
                                                 <option value="embroidered">Embroidered</option>
@@ -330,6 +330,7 @@ spl_autoload_register(function ($class) {
         var price = button.data('price');
 
         var modal = $(this);
+        console.log('shirt_option_type', shirt_option_type)
 
         modal.find('#update-id').val(id);
         modal.find('#update-dimension').val(dimension);
