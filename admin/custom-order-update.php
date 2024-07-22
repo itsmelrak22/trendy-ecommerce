@@ -10,7 +10,6 @@ require("../models/PHPMailer/src/PHPMailer.php");
 require("../models/PHPMailer/src/SMTP.php");
 require("../send_email.php");
 
-displayDataTest($_POST);
 // exit();
 if ( isset( $_POST['custom-edit-order-detail'] ) && $_POST['custom-edit-order-detail'] ){
     try {
@@ -23,7 +22,19 @@ if ( isset( $_POST['custom-edit-order-detail'] ) && $_POST['custom-edit-order-de
         $send_email = isset( $_POST['send_email'] ) ? true : false;
 
         $order = new CustomizeOrder;
-        $order_ = $order->getSpecificCustomOrders($id);
+        $order_ = $order->getSpecificCustomOrdersById($id);
+
+
+
+        if( empty($order_->customer_confirmation) && ( $status != 'Confirmed' || $status != 'Canceled' ) ){
+            echo '<script> alert("Cannot Proceed with `'.$status.'` status, Customer have not confirmed. Please Select `Confirmed` first."); window.location.href = "custom-order-list.php";</script>';
+            exit();
+        }
+
+        if( $order_->customer_confirmation == 'decline' && $status != 'Canceled'   ){
+            echo '<script> alert("Cannot Proceed with updating status other than Cancelled, customer already declined."); window.location.href = "custom-order-list.php";</script>';
+            exit();
+        }
         $param = [
             'status' => "$status",
             'shipping_fee' => "$shipping_fee",

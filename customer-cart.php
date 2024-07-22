@@ -258,7 +258,47 @@
 
     <script>
     $(document).ready(function() {
-        $('#customerCartTable').DataTable();
+        $('#customerCartTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF'
+                    }
+                ]
+            });
     });
 
+    document.addEventListener("DOMContentLoaded", function() {
+        // Function to get query parameters from the URL
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const regex = /([^&=]+)=([^&]*)/g;
+            let m;
+            while (m = regex.exec(queryString)) {
+                params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+            }
+            return params;
+        }
+
+        const queryParams = getQueryParams();
+
+        // Check if the "confirmed-customize-order-tab" query parameter exists
+        if (queryParams["confirmed-customize-order-tab"] !== undefined) {
+            const button = document.getElementById("confirmed-customize-order-tab");
+            if (button) {
+                button.click();
+            }
+        }
+    });
+
+
     </script>
+

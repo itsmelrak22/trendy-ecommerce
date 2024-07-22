@@ -24,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || isset($_POST['customize-page-submit'
     try {
         $customize_by = $_POST['customize_by'];
         // $sizing = $_POST['sizing'];
-        $avatar_sizing = $_POST['avatar_sizing'];
-        $text_sizing = $_POST['text_sizing'];
+        $avatar_sizing = isset($_POST['avatar_sizing']) ? $_POST['avatar_sizing'] : null;
+        $text_sizing = isset($_POST['text_sizing']) ? $_POST['text_sizing'] : null;
         $estimatedPrice = $_POST['estimatedPrice'];
         $shirt_selected = $_POST['shirt_selected'];
         $sizes = [$_POST['selected_size'] => $_POST['count']];

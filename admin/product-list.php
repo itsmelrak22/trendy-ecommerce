@@ -271,7 +271,21 @@
     })
 
     $(document).ready(function() {
-        $('#productTable').DataTable();
+        $('#productTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF'
+                    }
+                ]
+            });
     });
 
     // document.getElementById("fileToUpload").onchange = function (e) {

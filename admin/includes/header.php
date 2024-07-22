@@ -44,6 +44,8 @@ function getBadgeClass($status) {
         case 'Delivered':
             return 'badge-success';
         case 'Cancelled':
+        case 'Canceled':
+        case 'canceled':
             return 'badge-danger';
         default:
             return 'badge-secondary'; // default class for any unexpected status
@@ -168,4 +170,6 @@ function getBadgeClass($status) {
     <!-- <script src="https://cdn.tiny.cloud/1/7s668lopwo28cxkecplxkvrx5clnsanfssk47cktburr6jbs/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script> -->
     <script src="https://cdn.tiny.cloud/1/7s668lopwo28cxkecplxkvrx5clnsanfssk47cktburr6jbs/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 </head>

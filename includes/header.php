@@ -205,7 +205,7 @@
                         <ul class="dropdown-menu">
                             <?php foreach ($confirmedCustomizeItems as $key => $value) {
                                 echo '<li><hr class="dropdown-divider"></li>';
-                                echo '<li><a class="dropdown-item" href="customer-cart.php">Customer Order: #'.$value['id'].' - '.$value['status'].'</a></li>';
+                                echo '<li><a class="dropdown-item" href="customer-cart.php?confirmed-customize-order-tab=true">Order: #'.$value['id'].' - '.$value['status'].'</a></li>';
                             } ?>
                             
                         </ul>

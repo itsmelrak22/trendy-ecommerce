@@ -59,7 +59,7 @@
             $grouped_data[$status] = [];
         }
     }
-    // displayDataTest($grouped_data);
+    // displayDataTest($orders);
 
 ?>
 
@@ -116,9 +116,9 @@
                                         <span class="badge badge-dark">For Approval</span>
                                     </a>
                                 </div>
-                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'checked out' ? 'style="background-color: #4e73df; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
-                                    <a href="custom-order-list.php?sortBy=checked out">
-                                        <span class="badge badge-primary">Checked out</span>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'Confirmed' ? 'style="background-color: #4e73df; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=Confirmed">
+                                        <span class="badge badge-primary">Confirmed</span>
                                     </a>
                                 </div>
                                 <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'processing' ? 'style="background-color: #36b9cc; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
@@ -136,12 +136,32 @@
                                         <span class="badge badge-success">Delivered</span>
                                     </a>
                                 </div>
-                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'cancelled' ? 'style="background-color: #e74a3b; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
-                                    <a href="custom-order-list.php?sortBy=cancelled">
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'canceled' ? 'style="background-color: #e74a3b; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=canceled">
                                         <span class="badge badge-danger">Cancelled</span>
                                     </a>
                                 </div>
                             </span>
+                            <span class="legend-container">
+                            <p class="lead">Customer Confirmation: </p>
+
+                            <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'Accepted' ? 'style="background-color: #1cc88a; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=Accepted">
+                                        <span class="badge badge-success">Accepted</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'Declined' ? 'style="background-color: #e74a3b; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=Declined">
+                                        <span class="badge badge-danger">Declined</span>
+                                    </a>
+                                </div>
+                                <div <?= isset($_GET['sortBy'])  && $_GET['sortBy'] == 'N/A' ? 'style="background-color: #5a5c69; border-radius: 5%; border: 3px solid black;"' : ''  ?>>
+                                    <a href="custom-order-list.php?sortBy=N/A">
+                                        <span class="badge badge-dark">N/A</span>
+                                    </a>
+                                </div>
+                            </span>
+
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="customOrderTable" width="100%" cellspacing="0">
@@ -155,6 +175,7 @@
                                                 <th>Barangay</th>
                                                 <th>City / Municipality</th>
                                                 <th>Province</th>
+                                                <th>Confirmation </th>
                                                 <th>Status </th>
                                                 <th>Date Ordered</th>
                                                 <th>Action</th>
@@ -170,6 +191,7 @@
                                                 <th>Barangay</th>
                                                 <th>City / Municipality</th>
                                                 <th>Province</th>
+                                                <th>Confirmation </th>
                                                 <th>Status </th>
                                                 <th>Date Ordered</th>
                                                 <th>Action</th>
@@ -179,19 +201,38 @@
                                             <?php foreach ($orders as $key => &$cart) { 
                                                 $jsonData = json_encode($cart);
                                                 $cart['status'] ? $cart['status'] : $cart['status'] = 'For Approval' 
+                                                
                                             ?>
                                                 
                                                 <tr>
                                                     <td> <?= $cart['id'] ?> </td>
                                                     <td>
-                                                        <?= $order['first_name']. " " . $order['last_name'] ?>
+                                                        <?= $cart['first_name']. " " . $cart['last_name'] ?>
                                                     </td>
-                                                    <td><?= $order['email'] ?></td>
-                                                    <td><?= $order['phone_no'] ?></td>
-                                                    <td><?= $order['complete_address'] ? $order['complete_address'] : 'N/A' ?></td>
-                                                    <td><?= findNameByCode($barangaysArray, $order['barangay']) ?></td>
-                                                    <td><?= findNameByCode($citiesMunicipalitiesArray, $order['city_municipality']) ?></td>
-                                                    <td><?= findNameByCode($provincesArray, $order['province']) ?></td>
+                                                    <td><?= $cart['email'] ?></td>
+                                                    <td><?= $cart['phone_no'] ?></td>
+                                                    <td><?= $cart['complete_address'] ? $cart['complete_address'] : 'N/A' ?></td>
+                                                    <td><?= findNameByCode($barangaysArray, $cart['barangay']) ?></td>
+                                                    <td><?= findNameByCode($citiesMunicipalitiesArray, $cart['city_municipality']) ?></td>
+                                                    <td><?= findNameByCode($provincesArray, $cart['province']) ?></td>
+                                                    <td> 
+                                                        <?php
+                                                            if( $cart['customer_confirmation'] == 'accept' ){
+                                                                echo '<span class="badge badge-success" >
+                                                                        Accepted
+                                                                    </span>';
+                                                                
+                                                            }else if( $cart['customer_confirmation'] == 'decline' ){
+                                                                echo '<span class="badge badge-danger" >
+                                                                    Declined
+                                                                </span>';
+                                                            }else {
+                                                                echo '<span class="badge badge-dark" >
+                                                                    N/A
+                                                                </span>';
+                                                            }
+                                                        ?>
+                                                    </td>
                                                     <td>
                                                         
                                                         <span class="badge <?= getBadgeClass($cart['status']) ?>">
@@ -282,107 +323,117 @@
                 </div>
                 <div class="modal-body">
                     <div class="" id="viewOrderCard">
+                        <div class=" card container">
+                            <div class="card-header bg-transparent border-bottom">
+                                <h6 class="modal-title font-weight-bold text-primary">Customer Information</h6>
+                            </div>
+                            <div class="card-body row">
+                                <div class="col-6">
+                                    <label for="email">CUSTOMER EMAIL:</label>
+                                    <input type="text" name="email" id="email" class="form-control bg-light border-0 small" placeholder="Customer Email" aria-label="Customer Email" aria-describedby="basic-addon2" required readonly>
+                                </div>
+                                <div class="col-6">
+                                    <label for="phone_no">CONTACT NUMBER:</label>
+                                    <input type="text" name="phone_no" id="phone_no" class="form-control bg-light border-0 small" placeholder="Customer Email" aria-label="Customer Email" aria-describedby="basic-addon2" required readonly>
+                                </div>
+                            </div>
+                        </div>
                         <br>
                         <input type="hidden" name="customer_id" id="customer_id">
                         <input type="hidden" name="id" id="id">
-                        <div class="input-group row">
-                            <div class="col-6">
-                                <label for="email">CUSTOMER EMAIL:</label>
-                                <input type="text" name="email" id="email" class="form-control bg-light border-0 small" placeholder="Customer Email" aria-label="Customer Email" aria-describedby="basic-addon2" required readonly>
+                        <div class="card container">
+                            <div class="card-header bg-transparent border-bottom">
+                                <h6 class="modal-title font-weight-bold text-primary">Custom Order Details</h6>
                             </div>
-                            <div class="col-6">
-                                <label for="status">STATUS:</label>
-                                <select class="form-control bg-light border-0 small" name="status" id="status" placeholder="Select Status " required>
-                                    <option value="" disabled selected>Select Status</option>
-                                    <option value="Confirmed">Confirmed</option>
-                                    <option value="Processing">Processing</option>
-                                    <option value="Shipped">Shipped</option>
-                                    <option value="Delivered">Delivered</option>
-                                    <option value="Canceled">Canceled</option>
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="input-group row">
-                            <div class="col-6">
-                                <label for="shirt_selected">SHIRT SELECTED:</label>
-                                <input type="text" 
-                                name="shirt_selected" 
-                                id="shirt_selected" 
-                                class="form-control bg-light border-0 small" 
-                                placeholder="Shirt Selected" 
-                                aria-label="Shirt Selected" 
-                                aria-describedby="basic-addon2" 
-                                required 
-                                readonly
-                                >
-                            </div>
-                            <div class="col-6">
-                                <label for="shirt_selected">Customization Method:</label>
-                                <input type="text" 
-                                name="customize_by" 
-                                id="customize_by" 
-                                class="form-control bg-light border-0 small" 
-                                placeholder="Customized By" 
-                                aria-label="Customized By" 
-                                aria-describedby="basic-addon2" 
-                                required 
-                                readonly
-                                >
-                            </div>
-                        </div>
-                        <br>
-                        <div class="input-group row">
-                        <div class="col-6">
-                                <label for="shirt_selected">Avatar/Logo sizing:</label>
-                                <input type="text" 
-                                name="avatar_sizing" 
-                                id="avatar_sizing" 
-                                class="form-control bg-light border-0 small" 
-                                placeholder="Size" 
-                                aria-label="Size" 
-                                aria-describedby="basic-addon2" 
-                                required 
-                                readonly
-                                >
-                            </div>
-                            <div class="col-6">
-                                <label for="shirt_selected">Text sizing:</label>
-                                <input type="text" 
-                                name="text_sizing" 
-                                id="text_sizing" 
-                                class="form-control bg-light border-0 small" 
-                                placeholder="Size" 
-                                aria-label="Size" 
-                                aria-describedby="basic-addon2" 
-                                required 
-                                readonly
-                                >
-                            </div>
-                        </div>
-                        <br>
-                        <div class="input-group row">
-                            <div class="col-12">
-                                <label for="remarks">REMARKS:</label>
-                                <textarea name="remarks" id="remarks" class="form-control bg-light border-0 small" placeholder="Remarks" row="30" col="30"></textarea>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="form-check col-12 mx-4">
-                                <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
-                                <label class="form-check-label font-weight-bold text-primary" for="send_email">
-                                    Send Email?
-                                </label>
+                            <div class="card-body">
+                                <div class=" input-group row">
+                                    <div class="col-6 mt-3">
+                                        <label for="status">STATUS:</label>
+                                        <select class="form-control bg-light border-0 small" name="status" id="status" placeholder="Select Status " required>
+                                            <option value="" disabled selected>Select Status</option>
+                                            <option value="Confirmed">Confirmed</option>
+                                            <option value="Processing">Processing</option>
+                                            <option value="Shipped">Shipped</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Canceled">Canceled</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <label for="shirt_selected">SHIRT SELECTED:</label>
+                                        <input type="text" 
+                                        name="shirt_selected" 
+                                        id="shirt_selected" 
+                                        class="form-control bg-light border-0 small" 
+                                        placeholder="Shirt Selected" 
+                                        aria-label="Shirt Selected" 
+                                        aria-describedby="basic-addon2" 
+                                        required 
+                                        readonly
+                                        >
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <label for="shirt_selected">CUSTOMIZATION METHOD:</label>
+                                        <input type="text" 
+                                        name="customize_by" 
+                                        id="customize_by" 
+                                        class="form-control bg-light border-0 small" 
+                                        placeholder="Customized By" 
+                                        aria-label="Customized By" 
+                                        aria-describedby="basic-addon2" 
+                                        required 
+                                        readonly
+                                        >
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <label for="shirt_selected">Avatar/Logo sizing:</label>
+                                        <input type="text" 
+                                        name="avatar_sizing" 
+                                        id="avatar_sizing" 
+                                        class="form-control bg-light border-0 small" 
+                                        placeholder="Size" 
+                                        aria-label="Size" 
+                                        aria-describedby="basic-addon2" 
+                                        required 
+                                        readonly
+                                        >
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <label for="shirt_selected">Text sizing:</label>
+                                        <input type="text" 
+                                        name="text_sizing" 
+                                        id="text_sizing" 
+                                        class="form-control bg-light border-0 small" 
+                                        placeholder="Size" 
+                                        aria-label="Size" 
+                                        aria-describedby="basic-addon2" 
+                                        required 
+                                        readonly
+                                        >
+                                    </div>
+                                </div>
+                                <div class="input-group row  mt-3">
+                                    <br>
+                                    <div class="col-12">
+                                        <label for="remarks">REMARKS:</label>
+                                        <textarea name="remarks" id="remarks" class="form-control bg-light border-0 small" placeholder="Remarks" row="30" col="30"></textarea>
+                                    </div>
+                                    <br>
+                                    <div class="form-check col-12 mx-4">
+                                        <input class="form-check-input" type="checkbox" value="" id="send_email" name="send_email">
+                                        <label class="form-check-label font-weight-bold text-primary" for="send_email">
+                                            Send Email?
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <hr>
+                            <hr>
                         <div class="input-group row" >
                             <div class="col-6">
                                 <div class="my-2" style="width: 500px;">
                                     <div class="card border shadow-none">
                                         <div class="card-header bg-transparent border-bottom">
-                                            <h5 class="font-size-16 mb-0">Order Summary 
+                                                <h6 class="modal-title font-weight-bold text-primary">Order Summary</h6>
                                             <!-- <span class="float-end">#MN0124</span> -->
                                             </h5>
                                         </div>
@@ -487,7 +538,7 @@
                                 <div class="container mt-4">
                                     <div class="card border shadow-none">
                                         <div class="card-header bg-transparent border-bottom">
-                                            <h5 class="font-size-16 mb-0">Personalized Items</h5>
+                                                <h6 class="modal-title font-weight-bold text-primary">Personalized Items</h6>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -569,13 +620,24 @@
     })
 
     $(document).ready(function() {
-        $('#productTable').DataTable();
+        $('#productTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF'
+                    }
+                ]
+            });
     });
 
-    $(document).ready(function() {
-        $('#customOrderTable').DataTable();
-
-    });
+ 
 </script>
 
 <script>
@@ -716,6 +778,7 @@
         let id = document.getElementById('id');
         let customerId = document.getElementById('customer_id');
         let email = document.getElementById('email');
+        let phone_no = document.getElementById('phone_no');
         let status = document.getElementById('status');
         let total_price = document.getElementById('total_price');
         let personalized_items_total = document.getElementById('personalized_items_total');
@@ -789,6 +852,7 @@
         
         customerId.value = cart.customer_id;
         email.value = cart.email;
+        phone_no.value = cart.phone_no;
         id.value = cart.id;
 
         if(cart.status){
@@ -877,7 +941,21 @@
 
 
     $(document).ready(function() {
-        let table = $('#customOrderTable').DataTable();
+        let table = $('#customOrderTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF'
+                    }
+                ]
+            });
                 // Function to get query parameter
         function getQueryParameter(param) {
             var urlParams = new URLSearchParams(window.location.search);

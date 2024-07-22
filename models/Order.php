@@ -29,7 +29,8 @@ Class Order extends Model {
                         PC.image, 
                         P.name as product_name,
                         C.status,
-                        C.total_price    
+                        C.total_price,
+                        C.size
                     FROM `order_details` as OD
                     LEFT JOIN `product_colors` as PC
                     ON PC.id = OD.color_id
@@ -58,7 +59,9 @@ Class Order extends Model {
                         PC.image, 
                         P.name as product_name,
                         C.status,
-                        C.total_price    
+                        C.total_price,    
+                        C.size
+
                     FROM `order_details` as OD
                     LEFT JOIN `product_colors` as PC
                     ON PC.id = OD.color_id

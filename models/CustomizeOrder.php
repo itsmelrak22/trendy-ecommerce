@@ -52,5 +52,20 @@ Class CustomizeOrder extends Model {
         return $self->setQuery($qry)->getFirst();
     }
 
+    public static function getSpecificCustomOrdersById($id = null){
+        $self = new self;
+
+            $qry = "
+                SELECT A.*, B.first_name, B.last_name, B.email  , B.first_name, B.last_name, B.phone_no, B.province, B.city_municipality, B.barangay, B.complete_address
+                FROM `customize_orders` as A 
+                LEFT JOIN `customers` as B 
+                ON A.customer_id = B.id
+                WHERE A.id = $id
+            ";
+
+        return $self->setQuery($qry)->getFirst();
+    }
+
+
 
 }

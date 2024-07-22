@@ -329,7 +329,21 @@
     })
 
     $(document).ready(function() {
-        let table = $('#orderTable').DataTable();
+        let table = $('#orderTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF'
+                    }
+                ]
+            });
                 // Function to get query parameter
         function getQueryParameter(param) {
             var urlParams = new URLSearchParams(window.location.search);
