@@ -286,13 +286,25 @@
                             <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Login Credentials </h6>
                             <hr>
                             <div class="row">
+                                <style>
+                                    .is-invalid {
+                                        border-color: #dc3545;
+                                    }
+                                </style>
                                 <div class="mb-3 col-sm-6">
                                     <label for="username" class="form-label">Username</label>
                                     <input type="text" class="form-control" id="username" name="reg_username" required>
                                 </div>
                                 <div class="mb-3 col-sm-6">
-                                    <label for="reg_password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="reg_password" name="reg_password" required>
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="reg_password" name="password" required>
+                                </div>
+                                <div class="mb-3 col-sm-6">
+                                    <label for="confirm_password" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                </div>
+                                <div class="mb-3 col-sm-6">
+                                    <span id="passwordMatchText"></span>
                                 </div>
                             </div>
                             <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
@@ -330,6 +342,7 @@
                                         <input id="verification_code" type="text" class="form-control" placeholder="Enter Verification Code Here" aria-label="Enter Verification Code Here" aria-describedby="button-addon2">
                                         <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendVerificationCode()">Send Verification Code</button> 
                                     </div>
+                                    <input type="hidden" name="isVerified" id="isVerified" value="false">
                                     <button type="button" class="btn btn-secondary mt-2" onclick="verifyCode()">Verify Code</button>
                                 </div>
                                 <div class="mb-3 col-sm-6">
@@ -386,6 +399,23 @@
 
 
 <script>
+     document.getElementById('phone_number').addEventListener('input', function (e) {
+            let value = e.target.value;
+
+            // Remove any non-numeric characters
+            value = value.replace(/\D/g, '');
+
+            // Ensure the number starts with 9
+            if (value.length === 0) {
+                value = '9';
+            } else if (value[0] !== '9') {
+                value = '9' + value.slice(1);
+            }
+
+            // Update the input value
+            e.target.value = value;
+        });
+
     $(document).ready(function() {
 
             var userDetails = <?php echo isset($customer) ? json_encode($customer) : json_encode(([])); ?>;
@@ -682,13 +712,13 @@
         }
     }
 </script>
-<script>
+<!-- <script>
     function toggleSubmitButton() {
         const submitBtn = document.getElementById('submitBtn');
         const userAgreement = document.getElementById('userAgreement');
         submitBtn.disabled = !userAgreement.checked;
     }
-</script>
+</script> -->
 
 <script>
 
@@ -736,18 +766,68 @@
         const userCode = document.getElementById('verification_code').value;
         console.log(`userCode: ${userCode}`)
         console.log(`verificationCode: ${verificationCode}`)
+        if(!userCode && !verificationCode){
+            alert('Invalid verification code. Please try again.');
+            return
+        }
+
         if (userCode == verificationCode) {
             alert('Email verified successfully!');
-            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('isVerified').value = 'true';
+            toggleSubmitButton()
         } else {
             alert('Invalid verification code. Please try again.');
         }
     }
 
+    // function toggleSubmitButton() {
+    //     const submitBtn = document.getElementById('submitBtn');
+    //     const userAgreement = document.getElementById('userAgreement');
+    //     const emailVerified = !document.getElementById('submitBtn').disabled; // Check if email is verified
+    //     submitBtn.disabled = !(userAgreement.checked && emailVerified);
+    // }
+
     function toggleSubmitButton() {
-        const submitBtn = document.getElementById('submitBtn');
-        const userAgreement = document.getElementById('userAgreement');
-        const emailVerified = !document.getElementById('submitBtn').disabled; // Check if email is verified
-        submitBtn.disabled = !(userAgreement.checked && emailVerified);
-    }
+            const submitBtn = document.getElementById('submitBtn');
+            const passwordMatchText = document.getElementById('passwordMatchText');
+            const userAgreement = document.getElementById('userAgreement');
+            const isVerified = document.getElementById('isVerified');
+
+            // const emailVerified = !submitBtn.disabled; // Check if email is verified (assuming some logic sets this)
+            
+            const reg_password = document.getElementById('reg_password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            let passwordsMatch = false
+            if((reg_password && confirmPassword) &&  reg_password === confirmPassword){
+                passwordsMatch = true;
+            }
+
+            if(passwordsMatch){
+                passwordMatchText.innerText = 'Password match.'
+            }else{
+                passwordMatchText.innerText = 'Password does not match.'
+                submitBtn.disabled = true
+                return false;
+            }
+
+            console.log('isVerified', isVerified.value)
+            if(isVerified.value != 'true'){
+                submitBtn.disabled = true
+                return false;
+            }
+
+            console.log('passwordsMatch', passwordsMatch)
+            
+            submitBtn.disabled = !(userAgreement.checked && isVerified.value == 'true' && passwordsMatch);
+
+            return true;
+        }
+
+        document.getElementById('reg_password').addEventListener('input', function() {
+            toggleSubmitButton()
+        });
+        document.getElementById('confirm_password').addEventListener('input', function() {
+            toggleSubmitButton()
+        });
+
 </script>

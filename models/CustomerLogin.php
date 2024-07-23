@@ -9,8 +9,8 @@ Class CustomerLogin extends Model {
         $instance = new self;
     
         $query = "SELECT * FROM customers 
-            WHERE `email` = '$email' 
-            AND `password` = '$password' 
+            WHERE BINARY `email` = '$email' 
+            AND BINARY `password` = '$password' 
             AND `deleted_at` IS NULL";
         $stmt = $instance->pdo->prepare($query);
         
@@ -22,8 +22,8 @@ Class CustomerLogin extends Model {
         $instance = new self;
     
         $query = "SELECT * FROM customers 
-            WHERE `username` = '$username' 
-            AND `password` = '$password' 
+            WHERE BINARY `username`  = '$username' 
+            AND BINARY `password` = '$password' 
             AND `deleted_at` IS NULL";
         $stmt = $instance->pdo->prepare($query);
         
