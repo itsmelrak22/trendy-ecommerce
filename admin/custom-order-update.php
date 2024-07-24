@@ -26,7 +26,7 @@ if ( isset( $_POST['custom-edit-order-detail'] ) && $_POST['custom-edit-order-de
 
 
 
-        if( empty($order_->customer_confirmation) && ( $status != 'Confirmed' || $status != 'Canceled' ) ){
+        if( ( empty($order_->customer_confirmation) && $order_->status == 'Confirmed' ) && ( $status != 'Confirmed' || $status != 'Canceled' ) ){
             echo '<script> alert("Cannot Proceed with `'.$status.'` status, Customer have not confirmed. Please Select `Confirmed` first."); window.location.href = "custom-order-list.php";</script>';
             exit();
         }
