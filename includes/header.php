@@ -211,11 +211,18 @@
                         </ul>
                     </div>
 
-
-                    <a href="./client/logout-customer.php" class="btn btn-outline-dark btn-sm">
+                    <a href="./client/logout-customer.php" class="btn btn-outline-dark btn-sm" id="logoutLink">
                         <i class="bi-box-arrow-right me-1"></i>
                         <!-- <span class="d-none d-sm-inline">Logout</span> -->
                     </a>
+
+                    <script>
+                    document.getElementById('logoutLink').onclick = function(event) {
+                        if (!confirm('Are you sure you want to log out?')) {
+                            event.preventDefault();
+                        }
+                    };
+                    </script>
                 <?php } else { ?>
                     <button class="btn btn-outline-dark btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
                         <i class="bi bi-box-arrow-in-right me-1"></i>
@@ -229,150 +236,307 @@
 </nav>
 
         
-
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header ">
-                        <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loginForm">
+                <form method="POST" action="./client/login-client.php">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" required>
                     </div>
-                    <div class="modal-body" id="loginForm">
-                        <form method="POST" action="./client/login-client.php">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
-                        </form>
-                        <div class="text-center mt-3">
-                            <p class="mb-0">New to our site? <a href="#" onclick="showRegisterForm()" class="link-primary">Create an account</a></p>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
+                </form>
+                <div class="text-center mt-3">
+                    <p class="mb-0">New to our site? <a href="#" onclick="showRegisterForm()" class="link-primary">Create an account</a></p>
+                </div>
+            </div>
+            <div class="modal-body" id="registerForm" style="display: none;">
+                <div id="myOverlay2" class="overlay" style="display: none;"></div>
+
+                <form method="POST" action="./client/register-customer.php">
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Basic Information </h6>
+                    <hr>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="first_name" class="form-label">Firstname <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="last_name" class="form-label">Lastname <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required>
                         </div>
                     </div>
-                    <div class="modal-body" id="registerForm" style="display: none;">
-                        <div id="myOverlay2" class="overlay" style="display: none;"></div>
-
-                        <form method="POST" action="./client/register-customer.php">
-                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Basic Information </h6>
-                            <hr>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="first_name" class="form-label">Firstname</label>
-                                    <input type="text" class="form-control" id="first_name" name="first_name" required>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="last_name" class="form-label">Lastname</label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="phone_number" class="form-label">Phone Number</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">+63</span>
-                                        <input type="tel" class="form-control" id="phone_number" name="phone_number" required maxlength="10">
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="reg_email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="reg_email" name="reg_email" required>
-                                </div>
-                            </div>
-                         
-                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Login Credentials </h6>
-                            <hr>
-                            <div class="row">
-                                <style>
-                                    .is-invalid {
-                                        border-color: #dc3545;
-                                    }
-                                </style>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="reg_username" required>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="reg_password" name="password" required>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="confirm_password" class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <span id="passwordMatchText"></span>
-                                </div>
-                            </div>
-                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
-                            <hr>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="provinceDropdown">Province</label>
-                                    <select id="provinceDropdown" name="province" class="form-control" onchange="populateCitiesMunicipalities(this.value)">
-                                        <option value="" selected disabled readonly>Select Province</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="cityDropdown">City/Municipality</label>
-                                    <select id="cityDropdown" name="city_municipality" class="form-control" onchange="populateBarangays(this.value)">
-                                        <option value="" selected disabled readonly>Select City/Municipality</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="barangayDropdown">Barangay</label>
-                                    <select id="barangayDropdown" name="barangay" class="form-control">
-                                        <option value="" selected disabled readonly>Select Barangay</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="complete_add">Other Address Info (Subdivision/Street/Lot/Block/House No.)</label>
-                                    <textarea id="complete_add" name="complete_add" class="form-control" placeholder="Subdivision/Street/Lot/Block/House No."></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-12">
-                                        <label for="verification_code" class="form-label">Verification Code</label>
-                                    <div class="input-group mb-3">
-                                        <input id="verification_code" type="text" class="form-control" placeholder="Enter Verification Code Here" aria-label="Enter Verification Code Here" aria-describedby="button-addon2">
-                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendVerificationCode()">Send Verification Code</button> 
-                                    </div>
-                                    <input type="hidden" name="isVerified" id="isVerified" value="false">
-                                    <button type="button" class="btn btn-secondary mt-2" onclick="verifyCode()">Verify Code</button>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="userAgreement" onclick="toggleSubmitButton()">
-                                        <label class="form-check-label" for="userAgreement">
-                                            I hereby declare that the information provided is true and correct.
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-12">
-                                    <input type="submit" class="btn btn-primary" name="add-customer" value="Submit" disabled id="submitBtn">
-                                </div>
-                            </div>
-                        </form>
-                        <div class="row">
-                            <div class="col-sm-12 text-center">
-                                <p>Already have an account? <a href="#" onclick="showLoginForm()" class="text-warning">Sign in here</a></p>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="phone_number" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text">+63</span>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" required maxlength="10">
                             </div>
                         </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="reg_email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="reg_email" name="reg_email" required>
+                        </div>
+                    </div>
+
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Login Credentials </h6>
+                    <hr>
+                    <div class="row">
+                        <style>
+                            .is-invalid {
+                                border-color: #dc3545;
+                            }
+                        </style>
+                        <div class="mb-3 col-sm-6">
+                            <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" name="reg_username" required>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="reg_password" name="reg_password" required maxlength="16">
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="confirm_password" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required maxlength="16">
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <span id="passwordMatchText"></span>
+                        </div>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
+                    <hr>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="provinceDropdown">Province <span class="text-danger">*</span></label>
+                            <select id="provinceDropdown" name="province" class="form-control" onchange="populateCitiesMunicipalities(this.value)" required>
+                                <option value="" selected disabled readonly>Select Province</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="cityDropdown">City/Municipality <span class="text-danger">*</span></label>
+                            <select id="cityDropdown" name="city_municipality" class="form-control" onchange="populateBarangays(this.value)" required>
+                                <option value="" selected disabled readonly>Select City/Municipality</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="barangayDropdown">Barangay <span class="text-danger">*</span></label>
+                            <select id="barangayDropdown" name="barangay" class="form-control" required>
+                                <option value="" selected disabled readonly>Select Barangay</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="landmark">Landmark</label>
+                            <textarea id="landmark" name="landmark" class="form-control" placeholder="Landmark"></textarea>
+                        </div>
+                        <div class="mb-3 col-sm-12">
+                            <label for="complete_add">Other Address Info (Subdivision/Street/Lot/Block/House No.) <span class="text-danger">*</span></label>
+                            <textarea id="complete_add" name="complete_add" class="form-control" placeholder="Subdivision/Street/Lot/Block/House No." required></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <label for="verification_code" class="form-label">Verification Code <span class="text-danger">*</span></label>
+                            <div class="input-group mb-3">
+                                <input id="verification_code" type="text" class="form-control" placeholder="Enter Verification Code Here" aria-label="Enter Verification Code Here" aria-describedby="button-addon2" required>
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendVerificationCode()">Send Verification Code</button>
+                                <div class="mb-3 col-sm-12">
+                                    <label class="form-check-label" for="">
+                                        NOTE: this will send an email containing the verification code.
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="hidden" name="isVerified" id="isVerified" value="false">
+                            <button type="button" class="btn btn-secondary mt-2" onclick="verifyCode()">Verify Code</button>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="userAgreement" onclick="toggleSubmitButton()" required>
+                                <label class="form-check-label" for="userAgreement">
+                                    I hereby declare that the information provided is true and correct. <span class="text-danger">*</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <input type="submit" class="btn btn-primary" name="add-customer" value="Submit" disabled id="submitBtn">
+                        </div>
+                        
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p>Already have an account? <a href="#" onclick="showLoginForm()" class="text-warning">Sign in here</a></p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loginForm">
+                <form method="POST" action="./client/login-client.php">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
+                </form>
+                <div class="text-center mt-3">
+                    <p class="mb-0">New to our site? <a href="#" onclick="showRegisterForm()" class="link-primary">Create an account</a></p>
+                </div>
+            </div>
+            <div class="modal-body" id="registerForm" style="display: none;">
+                <div id="myOverlay2" class="overlay" style="display: none;"></div>
+
+                <form method="POST" action="./client/register-customer.php">
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Basic Information </h6>
+                    <hr>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="first_name" class="form-label">Firstname <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="last_name" class="form-label">Lastname <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="phone_number" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text">+63</span>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" required maxlength="10">
+                            </div>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="reg_email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="reg_email" name="reg_email" required>
+                        </div>
+                    </div>
+
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Login Credentials </h6>
+                    <hr>
+                    <div class="row">
+                        <style>
+                            .is-invalid {
+                                border-color: #dc3545;
+                            }
+                        </style>
+                        <div class="mb-3 col-sm-6">
+                            <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" name="reg_username" required>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="reg_password" name="reg_password" required maxlength="16">
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="confirm_password" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required maxlength="16">
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <span id="passwordMatchText"></span>
+                        </div>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
+                    <hr>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="provinceDropdown">Province <span class="text-danger">*</span></label>
+                            <select id="provinceDropdown" name="province" class="form-control" onchange="populateCitiesMunicipalities(this.value)" required>
+                                <option value="" selected disabled readonly>Select Province</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="cityDropdown">City/Municipality <span class="text-danger">*</span></label>
+                            <select id="cityDropdown" name="city_municipality" class="form-control" onchange="populateBarangays(this.value)" required>
+                                <option value="" selected disabled readonly>Select City/Municipality</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="barangayDropdown">Barangay <span class="text-danger">*</span></label>
+                            <select id="barangayDropdown" name="barangay" class="form-control" required>
+                                <option value="" selected disabled readonly>Select Barangay</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="landmark">Landmark</label>
+                            <textarea id="landmark" name="landmark" class="form-control" placeholder="Landmark"></textarea>
+                        </div>
+                        <div class="mb-3 col-sm-12">
+                            <label for="complete_add">Other Address Info (Subdivision/Street/Lot/Block/House No.) <span class="text-danger">*</span></label>
+                            <textarea id="complete_add" name="complete_add" class="form-control" placeholder="Subdivision/Street/Lot/Block/House No." required></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <label for="verification_code" class="form-label">Verification Code <span class="text-danger">*</span></label>
+                            <div class="input-group mb-3">
+                                <input id="verification_code" type="text" class="form-control" placeholder="Enter Verification Code Here" aria-label="Enter Verification Code Here" aria-describedby="button-addon2" required>
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendVerificationCode()">Send Verification Code</button>
+                            </div>
+                            <input type="hidden" name="isVerified" id="isVerified" value="false">
+                            <button type="button" class="btn btn-secondary mt-2" onclick="verifyCode()">Verify Code</button>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="userAgreement" onclick="toggleSubmitButton()" required>
+                                <label class="form-check-label" for="userAgreement">
+                                    I hereby declare that the information provided is true and correct. <span class="text-danger">*</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <input type="submit" class="btn btn-primary" name="add-customer" value="Submit" disabled id="submitBtn">
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p>Already have an account? <a href="#" onclick="showLoginForm()" class="text-warning">Sign in here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         <?php if( isset($client_id) ){ ?>
             <!-- Edit Profile Modal -->

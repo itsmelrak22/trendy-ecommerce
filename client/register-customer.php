@@ -41,6 +41,7 @@
                 'city_municipality' => $_POST['city_municipality'],
                 'barangay' => $_POST['barangay'],
                 'complete_address' => $_POST['complete_add'],
+                'landmark' => $_POST['landmark'],
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             ];

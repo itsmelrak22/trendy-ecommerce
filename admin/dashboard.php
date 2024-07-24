@@ -359,7 +359,7 @@
                     data.forEach(function(item) {
                         reportTableBody.append(
                             '<tr>' +
-                                '<td>' + item.email + '</td>' +
+                                '<td>' + item.first_name + ' ' + item.last_name + '</td>' +
                                 '<td>' + item.mop + '</td>' +
                                 '<td>' + item.created_at + '</td>' +
                                 '<td>' + item.total + '</td>' +

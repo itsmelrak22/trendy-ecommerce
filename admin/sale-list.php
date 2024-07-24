@@ -88,7 +88,7 @@
                                     <tbody>
                                         <?php foreach ($sales_ as $key => $sale) { ?>
                                             <tr>
-                                                <td> <?= $sale['email'] ?> </td>
+                                                <td> <?= $sale['first_name'] .' '. $sale['last_name'] ?> </td>
                                                 <td> <?= $sale['order_id'] ?> </td>
                                                 <td>
                                                     <a href="order-view.php?id=<?=$sale['order_id']?>" class="btn btn-primary btn-circle btn-sm" data-toggle="tooltip" data-placement="top" title="View Order Details">

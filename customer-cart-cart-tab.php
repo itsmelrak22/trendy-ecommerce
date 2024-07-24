@@ -100,11 +100,12 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="confirmCheckoutLabel">Confirm Payment?</h1>
+                        <h1 class="modal-title fs-5" id="confirmCheckoutLabel">Order Confirmation </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row mt-3">
+                            <div class="row mx-3">Are you sure you want to purchase the item?</div>
                             <div class="row" id="paypalContainer" style="display: none;">
                                 <div class="col-lg-12">
                                     <div class="p-5">

@@ -336,6 +336,31 @@
                                     <label for="phone_no">CONTACT NUMBER:</label>
                                     <input type="text" name="phone_no" id="phone_no" class="form-control bg-light border-0 small" placeholder="Customer Email" aria-label="Customer Email" aria-describedby="basic-addon2" required readonly>
                                 </div>
+                                <br>
+                                <div class="col-6 mt-3">
+                                    <label for="province">PROVINCE:</label>
+                                    <input type="text" name="province" id="province" class="form-control bg-light border-0 small" placeholder="" aria-label="" aria-describedby="basic-addon2" required readonly>
+                                </div>
+                                <br>
+                                <div class="col-6 mt-3">
+                                    <label for="city_municipality">CITY / MUNICIPALITY:</label>
+                                    <input type="text" name="city_municipality" id="city_municipality" class="form-control bg-light border-0 small" placeholder="" aria-label="CITY / MUNICIPALITY" aria-describedby="basic-addon2" required readonly>
+                                </div>
+                                <br>
+                                <div class="col-6 mt-3">
+                                    <label for="barangay">BARANGAY:</label>
+                                    <input type="text" name="barangay" id="barangay" class="form-control bg-light border-0 small" placeholder="" aria-label="BARANGAY" aria-describedby="basic-addon2" required readonly>
+                                </div>
+                                <br>
+                                <div class="col-6 mt-3">
+                                    <label for="complete_address">ADDITIONAL ADDRESS:</label>
+                                    <input type="text" name="complete_address" id="complete_address" class="form-control bg-light border-0 small" placeholder="" aria-label="ADDITIONAL ADDRESS" aria-describedby="basic-addon2" required readonly>
+                                </div>
+                                <br>
+                                <div class="col-6 mt-3">
+                                    <label for="landmark">LANDMARK:</label>
+                                    <input type="text" name="landmark" id="landmark" class="form-control bg-light border-0 small" placeholder="" aria-label="LANDMARK" aria-describedby="basic-addon2" required readonly>
+                                </div>
                             </div>
                         </div>
                         <br>
@@ -654,7 +679,7 @@
         total_price.value = total;
 
         // Check if the value is a number and greater than 1
-        if (isNaN(numValue) || numValue <= 0) {
+        if (isNaN(numValue) || numValue < 0) {
             // If not, clear the input
             e.target.value = '';
             shipping_fee = 0;
@@ -758,6 +783,21 @@
         tableBody.innerHTML = '';
     }
 
+    const BARANGAY_LIST = <?= json_encode($barangaysArray) ?>;
+    const CITY_MUNI_LIST = <?= json_encode($citiesMunicipalitiesArray) ?>;
+    const PROVINCE_LIST = <?= json_encode($provincesArray) ?>;
+    // console.log('BARANGAY_LIST', BARANGAY_LIST)
+    function findNameByCode(arrayList, code) {
+        let name = null
+         arrayList.forEach(item => {
+            if ( item.code == code ){
+                name = item.name
+            }
+        });
+        
+        return name; // Return null if code is not found
+    }
+
     function viewData(cart){
         removeTable()
         
@@ -792,6 +832,11 @@
         let cutomize_sizing = document.getElementById('cutomize_sizing');
         let estimatedPrice = document.getElementById('estimatedPrice');
         let shipping_fee = document.getElementById('shipping_fee');
+        let province = document.getElementById('province');
+        let city_municipality = document.getElementById('city_municipality');
+        let barangay = document.getElementById('barangay');
+        let landmark = document.getElementById('landmark');
+        let complete_address = document.getElementById('complete_address');
 
         for (const key in jsonData.sizes_ordered) {
             if (Object.hasOwnProperty.call(jsonData.sizes_ordered, key)) {
@@ -853,7 +898,18 @@
         customerId.value = cart.customer_id;
         email.value = cart.email;
         phone_no.value = cart.phone_no;
+        province.value = findNameByCode(PROVINCE_LIST, cart.province);
+        city_municipality.value = findNameByCode(CITY_MUNI_LIST, cart.city_municipality);
+        barangay.value = findNameByCode(BARANGAY_LIST, cart.barangay);
+        landmark.value = cart.landmark;
+        complete_address.value = cart.complete_address;
         id.value = cart.id;
+
+        shipping_fee.value = null
+        total_price.value = null
+        status.value = null
+        total_price.value = null
+
 
         if(cart.status){
             status.value = cart.status

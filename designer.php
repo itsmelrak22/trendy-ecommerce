@@ -1023,9 +1023,12 @@
                     let shirt_selected = document.getElementById('shirt_selected').value;
                     let selected_size = document.getElementById('selected_size').value;
                    
+                    if( shirt_selected.includes('DESIGN') ){
+                        shirt_selected = "Polo Shirts"
+                    }
+
                     const shirtPrice = shirtOptions3.apparel[shirt_selected];
-                    console.log(`shirtPrice: ${shirtPrice}`)
-                    console.log(`shirtPrice: ${shirtPrice}`)
+                    console.log(`shirt_selected: ${shirt_selected}`)
                     console.log(`shirtPrice: ${shirtPrice}`)
                     const count = $("#count").val();
                     let netPrice = 0;

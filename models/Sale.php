@@ -20,7 +20,7 @@ Class Sale extends Model {
         $instance = new self;
 
              $sales = $instance->setQuery("
-                SELECT A.*, C.username, C.email, B.mop, B.total, B.status, B.payment_id, B.paid
+                SELECT A.*, C.username, C.email, C.first_name, C.last_name, B.mop, B.total, B.status, B.payment_id, B.paid
                 FROM `sales` as A
                 LEFT JOIN `orders` as B
                 ON A.order_id = B.id
@@ -51,7 +51,7 @@ Class Sale extends Model {
     
     
         $sales = $instance->setQuery("
-            SELECT A.*, C.username, C.email, B.mop, B.total, B.status, B.payment_id, B.paid
+            SELECT A.*, C.username, C.email, C.first_name, C.last_name, B.mop, B.total, B.status, B.payment_id, B.paid
             FROM `sales` as A
             LEFT JOIN `orders` as B
             ON A.order_id = B.id
@@ -138,7 +138,7 @@ Class Sale extends Model {
         $instance = new self;
     
         $sales = $instance->setQuery("
-            SELECT A.*, C.username, C.email, B.mop, B.total, B.status, B.payment_id, B.paid
+            SELECT A.*, C.username, C.email, C.first_name, C.last_name, B.mop, B.total, B.status, B.payment_id, B.paid
             FROM `sales` as A
             LEFT JOIN `orders` as B
             ON A.order_id = B.id
