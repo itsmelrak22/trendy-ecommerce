@@ -329,36 +329,36 @@
                             </div>
                             <div class="card-body row">
                                 <div class="col-6">
-                                    <label for="email">CUSTOMER EMAIL:</label>
+                                    <label for="email">Email:</label>
                                     <input type="text" name="email" id="email" class="form-control bg-light border-0 small" placeholder="Customer Email" aria-label="Customer Email" aria-describedby="basic-addon2" required readonly>
                                 </div>
                                 <div class="col-6">
-                                    <label for="phone_no">CONTACT NUMBER:</label>
+                                    <label for="phone_no">Contact Number:</label>
                                     <input type="text" name="phone_no" id="phone_no" class="form-control bg-light border-0 small" placeholder="Customer Email" aria-label="Customer Email" aria-describedby="basic-addon2" required readonly>
                                 </div>
                                 <br>
                                 <div class="col-6 mt-3">
-                                    <label for="province">PROVINCE:</label>
+                                    <label for="province">Province:</label>
                                     <input type="text" name="province" id="province" class="form-control bg-light border-0 small" placeholder="" aria-label="" aria-describedby="basic-addon2" required readonly>
                                 </div>
                                 <br>
                                 <div class="col-6 mt-3">
-                                    <label for="city_municipality">CITY / MUNICIPALITY:</label>
+                                    <label for="city_municipality">City / Municipality:</label>
                                     <input type="text" name="city_municipality" id="city_municipality" class="form-control bg-light border-0 small" placeholder="" aria-label="CITY / MUNICIPALITY" aria-describedby="basic-addon2" required readonly>
                                 </div>
                                 <br>
                                 <div class="col-6 mt-3">
-                                    <label for="barangay">BARANGAY:</label>
+                                    <label for="barangay">Barangay:</label>
                                     <input type="text" name="barangay" id="barangay" class="form-control bg-light border-0 small" placeholder="" aria-label="BARANGAY" aria-describedby="basic-addon2" required readonly>
                                 </div>
                                 <br>
                                 <div class="col-6 mt-3">
-                                    <label for="complete_address">ADDITIONAL ADDRESS:</label>
+                                    <label for="complete_address">Additional Orderes:</label>
                                     <input type="text" name="complete_address" id="complete_address" class="form-control bg-light border-0 small" placeholder="" aria-label="ADDITIONAL ADDRESS" aria-describedby="basic-addon2" required readonly>
                                 </div>
                                 <br>
                                 <div class="col-6 mt-3">
-                                    <label for="landmark">LANDMARK:</label>
+                                    <label for="landmark">Landmark:</label>
                                     <input type="text" name="landmark" id="landmark" class="form-control bg-light border-0 small" placeholder="" aria-label="LANDMARK" aria-describedby="basic-addon2" required readonly>
                                 </div>
                             </div>
