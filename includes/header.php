@@ -234,6 +234,7 @@
         </div>
     </div>
 </nav>
+<div id="myOverlay2" class="overlay" style="display: none;"></div>
 
         
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static">
@@ -255,12 +256,20 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
                 </form>
+
                 <div class="text-center mt-3">
                     <p class="mb-0">New to our site? <a href="#" onclick="showRegisterForm()" class="link-primary">Create an account</a></p>
+                </div>  
+                <div class="text-center mt-3">
+                    <p class="mb-0">Forgot your password?
+                        <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">
+                                Reset Password
+                        </a> 
+                    </p>
                 </div>
+
             </div>
             <div class="modal-body" id="registerForm" style="display: none;">
-                <div id="myOverlay2" class="overlay" style="display: none;"></div>
 
                 <form method="POST" action="./client/register-customer.php">
                     <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Basic Information </h6>
@@ -555,14 +564,85 @@
                 </div>
             </div>
 
+            
+
  
         <?php } ?>
+
+        <!-- Reset Password Mod`al -->
+        <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- <form id="resetPasswordForm" action="send_verification.php" method="post"> -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Enter your email:</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="sendVerificationCode('email')">Send Verification Code</button>
+                        <!-- </form> -->
+                    </div>
+                    <div class="modal-body" style="display: none;" id="verifyForm">
+                        <form id="verificationCodeForm" action="verify_code.php" method="post">
+                            <div class="mb-3">
+                                <label for="forgot_verification_code" class="form-label">Verification Code:</label>
+                                <input type="text" class="form-control" id="forgot_verification_code" name="forgot_verification_code" required>
+                                <input type="hidden" id="response_verification_code" name="response_verification_code" value="">
+                                <input type="hidden" class="form-control" id="forgot_email" name="forgot_email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="new_password" class="form-label">New Password:</label>
+                                <input type="password" class="form-control" id="new_password" name="new_password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm_new_password" class="form-label">Confirm New Password:</label>
+                                <input type="password" class="form-control" id="confirm_new_password" name="confirm_new_password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="confirm_reset_password" disabled >Reset Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 <script>
+    function checkPasswordMatch (){
+        let  confirm_reset_password = document.getElementById('confirm_reset_password')
+        const new_password = document.getElementById('new_password').value;
+        const confirm_new_password = document.getElementById('confirm_new_password').value;
+        let response_verification_code = document.getElementById('response_verification_code');
+        let forgot_verification_code = document.getElementById('forgot_verification_code');
+
+        if( !response_verification_code.value || (response_verification_code.value != forgot_verification_code.value)){
+            confirm_reset_password.disabled = true;
+            return false;
+        }
+
+        if((new_password && confirm_new_password) &&  new_password === confirm_new_password){
+        //   passwordMatchText.innerText = 'Password match.'
+            confirm_reset_password.disabled = false;
+            return true;
+        }
+
+        // passwordMatchText.innerText = 'Password does not match.'
+
+        
+        confirm_reset_password.disabled = true;
+        return false;
+        
+    }
+     document.getElementById('new_password').addEventListener('input', checkPasswordMatch)
+     document.getElementById('confirm_new_password').addEventListener('input', checkPasswordMatch)
+     document.getElementById('forgot_verification_code').addEventListener('input', checkPasswordMatch)
+
      document.getElementById('phone_number').addEventListener('input', function (e) {
             let value = e.target.value;
 
@@ -896,12 +976,31 @@
         }
     }
 
+
     let verificationCode = "";
 
-    function sendVerificationCode() {
+
+
+    function sendVerificationCode(reg_mail = 'reg_email') {
+
+
+        let email = document.getElementById(reg_mail).value;
+    
+        if (!email) {
+            alert('Please input an email.');
+            return;
+        }
+        
+        // Regular expression to validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailRegex.test(email)) {
+            alert('Please input a valid email.');
+            return;
+        }
+
         toggleOverlay2(true)
 
-        const email = document.getElementById('reg_email').value;
         if (email) {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "./client/send-verification.php", true);
@@ -912,6 +1011,16 @@
                     if (response.success) {
                         verificationCode = response.verificationCode;
                         alert('Verification code sent to ' + email);
+
+                        if(reg_mail != 'reg_mail'){
+                            let verifyForm = document.getElementById('verifyForm');
+                            let response_verification_code = document.getElementById('response_verification_code');
+                            let forgot_email = document.getElementById('forgot_email');
+                            verifyForm.style.display = 'block';
+                            response_verification_code.value = response.verificationCode;
+                            forgot_email.value = email;
+                        }
+
                         toggleOverlay2(false)
                     } else {
                         alert('Failed to send verification code. Please try again.');

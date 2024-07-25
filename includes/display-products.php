@@ -29,8 +29,11 @@
     
     if ($productCount > $initialDisplayCount) {
         echo '<div class="col-12 text-center">
-                  <button id="seeMoreButton" class="btn btn-primary">See More</button>
+                    <a type="btn" href="browse-products.php" class="btn btn-primary">Browse More</a>
               </div>';
+
+            //   <button id="seeMoreButton" class="btn btn-primary">See More</button>
+
     }
     
     function addItemInProductList($name, $price, $id, $color_name, $image, $color_id, $category_id, $category_name ){
