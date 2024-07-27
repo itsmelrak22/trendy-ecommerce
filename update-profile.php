@@ -136,10 +136,15 @@
                             </div>
                         </div>
                         <div class="row gutters mt-2">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                                 <div class="text-right">
-                                    <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Update">
+                                    <input type="submit" id="submit" name="submit" class="btn btn-primary btn-sm" value="Update">
                                 </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">
+                                        Reset Password
+                                </a> 
                             </div>
                         </div>
                     </div>

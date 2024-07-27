@@ -15,27 +15,28 @@
     }
 
 
-    displayDataTest($_POST); exit;
 
 
     try {
+        // $_POST['forgot_email'] = 'testsss@sdf.com';
+            $user = Customer::findByEmail($_POST['forgot_email']);
+            // displayDataTest($_POST); exit;
 
-            $existingUser = Customer::findByEmail($_POST['forgot_email']);
+            if (!isset($user['id'])) {
 
-            if ($existingUser) {
                 $_SESSION['snackbar_color'] = "red";
-                $_SESSION['error_message'] = "User with this email already exists";
+                $_SESSION['error_message'] = "Email is not used by any user accounts";
                 header("Location: ../index.php");
                 exit;
             }
+
             $param = [
-                
                 'password' => $_POST['new_password'],
                 'updated_at' => new \DateTime,
             ];
         
             $customers = new Customer;
-            $result = $customers->save($param);
+            $result = $customers->update($param, $user['id']);
         
         
             if ($result) {

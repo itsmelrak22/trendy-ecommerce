@@ -65,6 +65,7 @@
 
         $customers = new Customer;
         $customer = $customers->find($client_id);
+        // print_r($customer);
 
     }
 
@@ -325,6 +326,15 @@
                     <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
                     <hr>
                     <div class="row">
+                            <div class="mb-3 col-sm-6">
+                            <label for="islandGroupDropdown">Island Group <span class="text-danger">*</span></label>
+                            <!-- <select id="islandGroupDropdown" name="island_group" class="form-control" onchange="initPopulate(this.value)" required>
+                                <option value="" selected disabled readonly>Select Island Group</option>
+                                <option value="luzon">Luzon</option>
+                                <option value="visayas">Visayas</option>
+                                <option value="mindanao">Mindanao</option>
+                            </select> -->
+                        </div>
                         <div class="mb-3 col-sm-6">
                             <label for="provinceDropdown">Province <span class="text-danger">*</span></label>
                             <select id="provinceDropdown" name="province" class="form-control" onchange="populateCitiesMunicipalities(this.value)" required>
@@ -398,7 +408,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static">
+<!-- <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header ">
@@ -478,6 +488,7 @@
                     <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
                     <hr>
                     <div class="row">
+
                         <div class="mb-3 col-sm-6">
                             <label for="provinceDropdown">Province <span class="text-danger">*</span></label>
                             <select id="provinceDropdown" name="province" class="form-control" onchange="populateCitiesMunicipalities(this.value)" required>
@@ -544,7 +555,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
         <?php if( isset($client_id) ){ ?>
@@ -580,14 +591,18 @@
                     <div class="modal-body">
                         <!-- <form id="resetPasswordForm" action="send_verification.php" method="post"> -->
                             <div class="mb-3">
-                                <label for="email" class="form-label">Enter your email:</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <label for="email" class="form-label">Send verification code to your email:</label>
+                                <?php  if( isset($client_id) ){ ?>
+                                    <input type="email" class="form-control" id="email" name="email" required value="<?=$customer->email ?>" readonly>
+                                <?php } else { ?>
+                                    <input type="email" class="form-control" id="email" name="email" required >
+                                <?php } ?>
                             </div>
                             <button type="button" class="btn btn-primary" onclick="sendVerificationCode('email')">Send Verification Code</button>
                         <!-- </form> -->
                     </div>
                     <div class="modal-body" style="display: none;" id="verifyForm">
-                        <form id="verificationCodeForm" action="verify_code.php" method="post">
+                        <form id="verificationCodeForm" action="./client/verify_code.php" method="post">
                             <div class="mb-3">
                                 <label for="forgot_verification_code" class="form-label">Verification Code:</label>
                                 <input type="text" class="form-control" id="forgot_verification_code" name="forgot_verification_code" required>
@@ -660,45 +675,63 @@
             e.target.value = value;
         });
 
+
+
     $(document).ready(function() {
 
+        
+            let islandCode = null;
+
             var userDetails = <?php echo isset($customer) ? json_encode($customer) : json_encode(([])); ?>;
+
+            function setIslandCode(value){
+                if(value) populateProvinces(islandGroup);
+                return null;
+            }
+
+
+
+            
+            
+            // let islandGroupArg = 
             // Fetch provinces and populate the province dropdown
-            $.ajax({
-                url: 'https://psgc.gitlab.io/api/provinces.json',
-                type: 'GET',
-                success: function(data) {
-                    var provinces = data;
-                    var provinceDropdown = $('#edit_provinceDropdown');
+            function populateProvinces(islandGroup){
+                    $.ajax({
+                    url: `https://psgc.gitlab.io/api/island-groups/${islandGroup}provinces.json`,
+                    type: 'GET',
+                    success: function(data) {
+                        var provinces = data;
+                        var provinceDropdown = $('#edit_provinceDropdown');
 
-                    // Sort the provinces array by the "name" property
-                    provinces.sort(function(a, b) {
-                        var nameA = a.name.toUpperCase(); // Ignore case
-                        var nameB = b.name.toUpperCase(); // Ignore case
-                        if (nameA < nameB) {
-                            return -1;
+                        // Sort the provinces array by the "name" property
+                        provinces.sort(function(a, b) {
+                            var nameA = a.name.toUpperCase(); // Ignore case
+                            var nameB = b.name.toUpperCase(); // Ignore case
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0; // Names must be equal
+                        });
+
+
+                        $.each(provinces, function(index, province) {
+                            provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
+                        });
+
+
+                        if( typeof userDetails.province != 'undefined' && userDetails.province ){
+                            $('#edit_provinceDropdown').val(userDetails.province);
+                            editPopulateCitiesMunicipalities(userDetails.province);
                         }
-                        if (nameA > nameB) {
-                            return 1;
-                        }
-                        return 0; // Names must be equal
-                    });
-
-
-                    $.each(provinces, function(index, province) {
-                        provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
-                    });
-
-
-                    if( typeof userDetails.province != 'undefined' && userDetails.province ){
-                        $('#edit_provinceDropdown').val(userDetails.province);
-                        editPopulateCitiesMunicipalities(userDetails.province);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching provinces: ' + error);
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching provinces: ' + error);
-                }
-            });
+                });
+            }
 
         // Function to fetch and populate cities/municipalities based on the selected province
             function editPopulateCitiesMunicipalities(provinceCode) {
@@ -803,10 +836,6 @@
         });
 
 
-
-
-
-
         function populateCitiesMunicipalities(provinceCode) {
             
             $.ajax({
@@ -876,39 +905,10 @@
                     console.error('Error fetching cities/municipalities: ' + error);
                 }
             });
-        }
-            $(document).ready(function() {
+    }
+        $(document).ready(function() {
             // Fetch provinces and populate the province dropdown
-            $.ajax({
-                url: 'https://psgc.gitlab.io/api/provinces.json',
-                type: 'GET',
-                success: function(data) {
-                    var provinces = data;
-                    var provinceDropdown = $('#provinceDropdown');
-
-                    // Sort the provinces array by the "name" property
-                    provinces.sort(function(a, b) {
-                        var nameA = a.name.toUpperCase(); // Ignore case
-                        var nameB = b.name.toUpperCase(); // Ignore case
-                        if (nameA < nameB) {
-                            return -1;
-                        }
-                        if (nameA > nameB) {
-                            return 1;
-                        }
-                        return 0; // Names must be equal
-                    });
-
-                    provinceDropdown.empty(); // Clear existing options
-                    provinceDropdown.append($('<option></option>').val('').text('Select Province')); // Add default option
-                    $.each(provinces, function(index, province) {
-                        provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching provinces: ' + error);
-                }
-            });
+            // function whiye,
             // Function to fetch and populate cities/municipalities based on the selected province
 
 
