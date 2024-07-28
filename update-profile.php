@@ -133,13 +133,13 @@
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="landmark" class="form-label">Landmark</label>
+                                    <label for="landmark" class="form-label">Landmark <span class="text-danger">*</span></label>
                                     <textarea name="landmark" class="form-control" cols="30" rows="4" required><?=$customer->landmark ?></textarea>
                                 </div>
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="form-group">
-                                    <label for="complete_address" class="form-label">Other Address Info (Subdivision/Street/Lot/Block/House No.)</label>
+                                    <label for="complete_address" class="form-label">Other Address Info (Subdivision/Street/Lot/Block/House No.) <span class="text-danger">*</span></label>
                                     <textarea name="complete_address" class="form-control" cols="30" rows="4" required><?=$customer->complete_address ?></textarea>
                                 </div>
                             </div>
