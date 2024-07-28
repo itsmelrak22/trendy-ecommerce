@@ -25,6 +25,8 @@
                 'first_name' => $_POST['first_name'],
                 'last_name' => $_POST['last_name'],
                 'phone_no' => $_POST['phone_no'],
+                'landmark' => $_POST['landmark'],
+                'island_group' => $_POST['island_group'],
                 'province' => $_POST['province'],
                 'city_municipality' => $_POST['city_municipality'],
                 'barangay' => $_POST['barangay'],

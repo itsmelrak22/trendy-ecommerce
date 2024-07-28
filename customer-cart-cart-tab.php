@@ -65,14 +65,14 @@
                                         <td class="text-end">₱  <span id="itemTotal">0.00</span></td>
                                     </tr>
                                     <tr>
-                                        <td>Shipping Fee :</td>
+                                        <td>Shipping Fee : <span id="islandGroupInfo"></span></td>
                                         <td class="text-end">₱ <span id="shippingFee">0.00</span></td>
                                     </tr>
                                 
                                     <tr class="bg-light">
                                         <th>Total :</th>
                                         <td class="text-end">
-                                            <span class="fw-bold">
+                                            <span class="fw-bold"> ₱ 
                                                 <span id="subtotal">0.00</span>
                                             </span>
                                         </td>
@@ -359,6 +359,19 @@
     }
 
     function calculateSubtotal() {
+        console.log(userDetails)
+        
+        if( !userDetails.island_group ||  
+            !userDetails.province ||
+            !userDetails.city_municipality ||
+            !userDetails.barangay ||
+            !userDetails.complete_address ||
+            !userDetails.email 
+        ){
+            alert("Please complete your profile details first.")
+            return;
+        }
+
         let checkboxes = document.getElementsByName('cartCheckbox');
         let quantities = document.getElementsByName('quantity');
         let prices = document.getElementsByName('price');
@@ -376,13 +389,19 @@
         }
 
         document.getElementById('itemTotal').innerHTML = Number(itemTotal).toFixed(2);
+        document.getElementById('islandGroupInfo').innerText = `( ${userDetails.island_group} )`;
 
+        if( userDetails.island_group == 'luzon' ){
+            shippingfee = 150;
+        }else if ( userDetails.island_group == 'visayas' ){
+            shippingfee = 250;
+        }else if ( userDetails.island_group == 'mindanao' ){
+            shippingfee = 350;
+        }
 
-        if( mop.value == 'cod' ){ // + 75
-            shippingfee = 75;
+        if( mop.value == 'cod' ){ 
             togglePaypalDiv(false, 0)
         }else if (mop.value == "online"){
-            shippingfee = 75;
             togglePaypalDiv(true, Number(itemTotal).toFixed(2))
         }
 

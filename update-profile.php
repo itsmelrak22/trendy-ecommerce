@@ -68,25 +68,25 @@
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="first_name" class="form-label">Firstname</label>
+                                    <label for="first_name" class="form-label">Firstname  <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="first_name" name="first_name" required value="<?= $customer->first_name ?>">
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="last_name" class="form-label">Lastname</label>
+                                    <label for="last_name" class="form-label">Lastname  <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="last_name" name="last_name" required value="<?= $customer->last_name ?>">
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="reg_email" class="form-label">Email</label>
+                                    <label for="reg_email" class="form-label">Email  <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control" id="reg_email" name="reg_email" required value="<?= $customer->email; ?>" readonly>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="phone_no" class="form-label">Phone</label>
+                                    <label for="phone_no" class="form-label">Phone  <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text">+63</span>
                                         <input type="tel" class="form-control" id="phone_no" name="phone_no" required maxlength="10" value="<?= $customer->phone_no; ?>">
@@ -99,8 +99,17 @@
                                 <h6 class="mt-3 mb-2 text-primary">Address</h6>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <label for="islandGroupDropdown">Island Group <span class="text-danger">*</span></label>
+                                <select id="edit_islandGroupDropdown" name="island_group" class="form-control" onchange="populateProvinces(this.value)" required>
+                                    <option value="" selected disabled readonly>Select Island Group</option>
+                                    <option value="luzon">Luzon</option>
+                                    <option value="visayas">Visayas</option>
+                                    <option value="mindanao">Mindanao</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="province" class="form-label">Province</label>
+                                    <label for="province" class="form-label">Province  <span class="text-danger">*</span></label>
                                     <select name="province" id="edit_provinceDropdown" class="form-control" required>
                                         <option selected disabled readonly>Select Province</option>
                                     </select>
@@ -108,7 +117,7 @@
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="edit_cityDropdown" class="form-label">City/Municipality</label>
+                                    <label for="edit_cityDropdown" class="form-label">City/Municipality  <span class="text-danger">*</span></label>
                                     <select name="city_municipality" id="edit_cityDropdown" class="form-control" required>
                                         <option selected disabled readonly>Select City</option>
                                     </select>
@@ -116,7 +125,7 @@
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="edit_barangayDropdown" class="form-label">Barangay</label>
+                                    <label for="edit_barangayDropdown" class="form-label">Barangay  <span class="text-danger">*</span></label>
                                     <select name="barangay" id="edit_barangayDropdown" class="form-control" required>
                                         <option selected disabled readonly>Select Barangay</option>
                                     </select>
@@ -141,11 +150,16 @@
                                     <input type="submit" id="submit" name="submit" class="btn btn-primary btn-sm" value="Update">
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                            
+                        </div>
+                        <div class="row gutters mt-2">
+                                <p class="mb-0">Forgot your password?
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                                 <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">
                                         Reset Password
                                 </a> 
                             </div>
+                            
                         </div>
                     </div>
                 </div>

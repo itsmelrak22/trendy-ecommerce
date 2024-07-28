@@ -37,6 +37,7 @@
                 'email' => $_POST['reg_email'],
                 'password' => $_POST['reg_password'],
                 'phone_no' => $_POST['phone_number'],
+                'island_group' => $_POST['island_group'],
                 'province' => $_POST['province'],
                 'city_municipality' => $_POST['city_municipality'],
                 'barangay' => $_POST['barangay'],
