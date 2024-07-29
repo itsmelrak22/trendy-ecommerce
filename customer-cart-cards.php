@@ -127,7 +127,7 @@ function generateViewCards($cart, $key, $img_link){
                 $price += $value['size_price'];
             }
         }
-    $shippingFee = 75;
+    $shippingFee = $cart['shipping_fee'];
     // $price += $shippingFee; 
     echo '
     

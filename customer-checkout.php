@@ -21,27 +21,20 @@ function displayDataTest($array){
         $checkoutOrders = $_POST['checkoutOrders'];
         $clientId = $_POST['client_id'];
         $subTotal = $_POST['subtotal'];
+        $shipping_fee = $_POST['shipping_fee'];
         $mop = $_POST['mop'];
         
         if(isset($_POST['payment_id'])){
             $payment_id = $_POST['payment_id'];
         }
 
-        // foreach ($checkoutOrders as $key => $checkoutOrder) {
-     
-        //     displayDataTest( $checkoutOrder['id'] );
-        //     displayDataTest( $checkoutOrder['product_id'] );
-        //     displayDataTest( $checkoutOrder['cart_id'] );
-        //     displayDataTest( $checkoutOrder['quantity'] );
-        //     displayDataTest( $checkoutOrder['price'] );
-        //     displayDataTest( $checkoutOrder['subtotal'] );
-        // }
 
         $order = new Order;
         $param = [
             'mop'           => $mop,
             'payment_id'    => isset($payment_id) ? $payment_id : null,
             'customer_id'   => $clientId,
+            'shipping_fee'   => $shipping_fee,
             'created_at'    => new \DateTime,
             'updated_at'    => new \DateTime,
         ];
@@ -100,7 +93,7 @@ function displayDataTest($array){
                 if(!$result){
                     echo json_encode( 
                         [    "status" => 500,
-                            "message" => "Saving Order Details Failed!"]
+                            "message" => "Saving  Order Details Failed!"]
                         );
                     exit();
                 }
@@ -118,7 +111,7 @@ function displayDataTest($array){
                 if(!$result){
                     echo json_encode( 
                         [    "status" => 500,
-                            "message" => "Saving Order Details Failed!"]
+                            "message" => "Updating Order Details Failed!"]
                         );
                     exit();
                 }

@@ -238,6 +238,7 @@
         let product_ids = document.getElementsByName('product_id');
         let color_ids = document.getElementsByName('color_id');
         let cart_ids = document.getElementsByName('cart_id');
+        let shipping_fee = document.getElementById('shippingFee');
         const checkoutOrders = [];
 
 
@@ -266,6 +267,8 @@
                 formData.append(`checkoutOrders[${index}][${key}]`, item[key]);
             }
         });
+
+        formData.append(`shipping_fee`, Number(shipping_fee.textContent));
 
         // Use fetch or XMLHttpRequest to send the form data
         fetch('customer-checkout.php', {
