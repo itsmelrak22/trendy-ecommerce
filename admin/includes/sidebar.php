@@ -92,7 +92,13 @@ $location = basename($url);
         <span>Product List</span></a>
 </li>
 
-<!-- Nav Item - Catergory Master -->
+
+<hr class="sidebar-divider d-none d-md-block">
+
+
+<?php if($_SESSION['email'] == 'admin@admin.com'){ ?>
+
+    <!-- Nav Item - Catergory Master -->
 <li class="nav-item <?= $location ==  "category-list.php" ? "active" : ""?>">
     <a class="nav-link" href="category-list.php">
         <i class="fas fa-fw fa-table"></i>
@@ -100,11 +106,7 @@ $location = basename($url);
 </li>
 
 
-<?php if($_SESSION['email'] == 'admin@admin.com'){ ?>
-
-
 <!-- Divider -->
-<hr class="sidebar-divider d-none d-md-block">
 <li class="nav-item <?php echo $location ==  "customized-product-dimensions-list.php" ? "active" : ""?>">
     <a class="nav-link" href="customized-product-dimensions-list.php">
         <i class="fas fa-fw fa-table"></i>

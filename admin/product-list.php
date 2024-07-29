@@ -29,7 +29,7 @@
         }
     }
 
-    // displayDataTest( $products );
+    // displayDataTest( $categories );
     $jsonData = json_encode($products);
 ?>
 

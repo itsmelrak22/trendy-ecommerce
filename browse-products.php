@@ -3,6 +3,8 @@
     
     $category = new Category;
     $categories = $category->getCategories();
+
+    // displayDataTest($categories);
 ?>
     <style>
         #categories-wrapper .btn-group .btn.active {
