@@ -392,14 +392,14 @@
         }
 
         document.getElementById('itemTotal').innerHTML = Number(itemTotal).toFixed(2);
-        document.getElementById('islandGroupInfo').innerText = `( ${userDetails.island_group} )`;
+        document.getElementById('islandGroupInfo').innerText = `(${userDetails.island_group})`;
 
         if( userDetails.island_group == 'luzon' ){
-            shippingfee = 150;
+            shippingfee = <?=isset($islandGroupShippingFee) ? $islandGroupShippingFee->luzon : 150?>;
         }else if ( userDetails.island_group == 'visayas' ){
-            shippingfee = 250;
+            shippingfee = <?=isset($islandGroupShippingFee) ? $islandGroupShippingFee->visayas : 250?>;
         }else if ( userDetails.island_group == 'mindanao' ){
-            shippingfee = 350;
+            shippingfee = <?=isset($islandGroupShippingFee) ? $islandGroupShippingFee->mindanao : 350?>;
         }
 
         if( mop.value == 'cod' ){ 

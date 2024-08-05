@@ -97,6 +97,12 @@
     $site_setting = json_decode($site_setting->json_data);
 
     
+    if( isset($site_setting->islandGroupShippingFee) ){
+        $islandGroupShippingFee = $site_setting->islandGroupShippingFee;
+
+        // displayDataTest($islandGroupShippingFee);
+    }
+    
     
     if( isset($client_id) ){
         $customizeOrder = new CustomizeOrder;

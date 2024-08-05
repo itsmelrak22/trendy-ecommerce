@@ -7,7 +7,15 @@ spl_autoload_register(function ($class) {
 
 
 if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] ){
+
+    $islandGroupShippingFee = [
+        'luzon' => $_POST['luzon'],
+        'visayas' => $_POST['visayas'],
+        'mindanao' => $_POST['mindanao'],
+    ];
+
     $data = [
+        "islandGroupShippingFee" => $islandGroupShippingFee,
         "productSelect" => $_POST["product-select"],
         "color_id" => $_POST["color_id"],
         "discountPercentage" => $_POST["discountPercentage"],
@@ -24,9 +32,9 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
         "uploadedBanner2" => "",
     ];
 
-    displayDataTest($_POST);
-    displayDataTest($data);
-    displayDataTest($_FILES);
+    // displayDataTest($_POST);
+    // displayDataTest($data);
+    // displayDataTest($_FILES);
 
     try {
         echo "a";
@@ -115,7 +123,9 @@ if ( isset( $_POST['update-site-settings'] ) && $_POST['update-site-settings'] )
     $result = $instance->save($param);
     echo "3";
 
-    header("Location: site-settings.php");
+    // header("Location: site-settings.php");
+    echo '<script> alert("Site settings updated."); window.location.href = "site-settings.php";</script>';
+    
 
 
     // displayDataTest($_POST);
