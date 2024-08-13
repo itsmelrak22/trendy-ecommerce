@@ -42,12 +42,12 @@
                     <!-- Page Heading -->
 
                     <div>
-                        <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addModal">
+                        <!-- <button type="button" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#addModal">
                             <span class="icon text-white-50">
                                 <i class="fas fa-plus"></i>
                             </span>
                             <span class="text">Add</span>
-                        </button>
+                        </button> -->
                     </div>
 
                     <hr>
