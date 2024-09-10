@@ -194,7 +194,7 @@
                         <i class="bi-cart me-1"></i>
                         <span class="d-none d-sm-inline">Cart</span>
                         <span class="badge bg-dark text-white ms-1 rounded-pill">
-                            <?php echo isset($cartItemCount) ? $cartItemCount : "0"; ?>
+                            <?php echo isset($cartItems) ? count($cartItems) : "0"; ?>
                         </span>
                     </a>
 

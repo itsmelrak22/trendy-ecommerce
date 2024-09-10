@@ -187,87 +187,98 @@
         </div>
     </header>
 
+    <?php
+// Get category_id from URL parameters
+$categoryId = isset($_GET['category_id']) ? $_GET['category_id'] : null;
 
-    <section class="py-2" id="categories-wrapper">
-        <div class="container text-center">
-            <div class="btn-group" role="group" aria-label="Category Buttons">
-                <style>
-                     a:link {
-                        text-decoration: none;
-                    }
+// Default dropdown text
+$selectedCategoryName = "Select Category";
 
-                    a:visited {
-                        text-decoration: none;
-                    }
+// Search for the category name that matches the category_id
+if ($categoryId !== null) {
+    foreach ($categories as $category) {
+        if ($category['id'] == $categoryId) {
+            $selectedCategoryName = $category['name'];
+            break;
+        }
+    }
+}
+?>
 
-                    a:hover {
-                        text-decoration: none;
-                    }
+<section class="py-2" id="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Categories Dropdown -->
+            <div class="col-md-3 mb-3">
+                <div class="dropdown w-100">
+                    <button class="btn btn-outline-dark dropdown-toggle w-100" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php echo $selectedCategoryName; // Display the selected category name ?>
+                    </button>
+                    <ul class="dropdown-menu w-100" aria-labelledby="categoriesDropdown">
+                        <style>
+                            a:link,
+                            a:visited,
+                            a:hover,
+                            a:active {
+                                text-decoration: none;
+                            }
 
-                    a:active {
-                        text-decoration: none;
-                    }
+                            .btn.active,
+                            .btn:active {
+                                background-color: #454e57 !important;
+                                font-weight: bold;
+                                color: white !important;
+                            }
+                        </style>
 
-                .btn.active,
-                .btn:active {
-                    background-color: #454e57 !important;
-                    font-weight: bold;
-                    color: white !important;
-                    /* Add other styles as needed */
-                }
-                </style>
-                <a href="browse-products.php">
-                    <button style="width: 290px !important;" type="button" class="mx-2 my-2 btn btn-outline-dark active" id="allCategory">All</button>
-                </a>
-                <?php 
-                    function sortByName($a, $b) {
-                        return strcasecmp($a['name'], $b['name']);
-                    }
-                    
-                    usort($categories, 'sortByName');
-
-                    function sortCategories($a, $b) {
-                        $specialCategory = "CUSTOMIZED POLO SHIRT/UNIFORM";
-                        
-                        if ($a['name'] == $specialCategory) {
-                            return 1;
+                        <li>
+                            <a class="dropdown-item" href="browse-products.php" data-category-name="All">
+                                All
+                            </a>
+                        </li>
+                        <?php 
+                        // Sort categories by name
+                        function sortByName($a, $b) {
+                            return strcasecmp($a['name'], $b['name']);
                         }
-                        if ($b['name'] == $specialCategory) {
-                            return -1;
+                        usort($categories, 'sortByName');
+
+                        // Special sorting for a specific category
+                        function sortCategories($a, $b) {
+                            $specialCategory = "CUSTOMIZED POLO SHIRT/UNIFORM";
+                            if ($a['name'] == $specialCategory) return 1;
+                            if ($b['name'] == $specialCategory) return -1;
+                            return 0;
                         }
-                        return 0;
-                    }
+                        usort($categories, "sortCategories");
 
-                    usort($categories, "sortCategories");
-
-                    foreach ($categories as $key => $category): ?>
-                        <a href="browse-products.php?category_id=<?=$category['id']?>">
-                            <button style="width: 290px !important;" type="button" class="mx-2 my-2 btn btn-outline-dark" id="<?php echo $category['id']; ?>">
-                                <?php echo $category['name']; ?>
-                            </button>
-                        </a>
-                    <?php endforeach; ?>
-
-
+                        // Display category buttons
+                        foreach ($categories as $key => $category): ?>
+                            <li>
+                                <a class="dropdown-item" href="browse-products.php?category_id=<?=$category['id']?>" data-category-name="<?php echo $category['name']; ?>">
+                                    <?php echo $category['name']; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
 
-
-    <hr>
-
-    <!-- Section-->
-    <section class="py-2">
-        <div class="container px-2 px-lg-5">
-            <div class="row gx-2 gx-lg-3 justify-content-center">
-                <div class="col-md-12">
-                    <div class="row gx-2 gx-lg-3 row-cols-2 row-cols-md-4 justify-content-center" id="productContainer">
-                        <?php include_once("./includes/display-browse-products.php"); ?>
+            <!-- Products Section -->
+            <div class="col-md-9">
+                <div class="row gx-2 gx-lg-3 justify-content-center">
+                    <div class="col-md-12">
+                        <div class="row gx-2 gx-lg-3 row-cols-2 row-cols-md-4 justify-content-center" id="productContainer">
+                            <?php include_once("./includes/display-browse-products.php"); ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+
 
 
     <?php include_once("./includes/scripts.php"); ?>

@@ -273,11 +273,11 @@
                         <div class="container mt-3">
                             <div class="input-group">
                                     <input class="form-check-input mx-2" type="checkbox" name="isWholesale" id="isWholesale" onclick="toggleCheckboxes(event)">
-                                <label class="form-check-label" for="isWholesale">Buy as Wholesale?</label>
+                                <label class="form-check-label" for="isWholesale">Buy as Wholesale? (10 - 99)</label>
                             </div>
                             <div class="input-group mt-2">
                                     <input class="form-check-input mx-2" type="checkbox" name="isBulk" id="isBulk" onclick="toggleCheckboxes(event)">
-                                <label class="form-check-label" for="isBulk">Buy as Bulk?</label>
+                                <label class="form-check-label" for="isBulk">Buy as Bulk? (100+)</label>
                             </div>
                         </div>
                                                             
