@@ -24,7 +24,10 @@
             $existingUser = Customer::findByEmail($_POST['reg_email']);
 
             if ($existingUser) {
-                throw new Exception("User with this email already exists");
+                $_SESSION['snackbar_color'] = "red";
+                $_SESSION['error_message'] = "User with this email already exists";
+                header("Location: ../index.php");
+                exit;
             }
             $param = [
                 
@@ -34,10 +37,12 @@
                 'email' => $_POST['reg_email'],
                 'password' => $_POST['reg_password'],
                 'phone_no' => $_POST['phone_number'],
+                'island_group' => $_POST['island_group'],
                 'province' => $_POST['province'],
                 'city_municipality' => $_POST['city_municipality'],
                 'barangay' => $_POST['barangay'],
                 'complete_address' => $_POST['complete_add'],
+                'landmark' => $_POST['landmark'],
                 'created_at' => new \DateTime,
                 'updated_at' => new \DateTime,
             ];

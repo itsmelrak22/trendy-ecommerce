@@ -65,14 +65,14 @@
                                         <td class="text-end">₱  <span id="itemTotal">0.00</span></td>
                                     </tr>
                                     <tr>
-                                        <td>Shipping Fee :</td>
+                                        <td>Shipping Fee : <span id="islandGroupInfo"></span></td>
                                         <td class="text-end">₱ <span id="shippingFee">0.00</span></td>
                                     </tr>
                                 
                                     <tr class="bg-light">
                                         <th>Total :</th>
                                         <td class="text-end">
-                                            <span class="fw-bold">
+                                            <span class="fw-bold"> ₱ 
                                                 <span id="subtotal">0.00</span>
                                             </span>
                                         </td>
@@ -100,11 +100,12 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="confirmCheckoutLabel">Confirm Payment?</h1>
+                        <h1 class="modal-title fs-5" id="confirmCheckoutLabel">Order Confirmation </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row mt-3">
+                            <div class="row mx-3">Are you sure you want to purchase the item?</div>
                             <div class="row" id="paypalContainer" style="display: none;">
                                 <div class="col-lg-12">
                                     <div class="p-5">
@@ -237,6 +238,7 @@
         let product_ids = document.getElementsByName('product_id');
         let color_ids = document.getElementsByName('color_id');
         let cart_ids = document.getElementsByName('cart_id');
+        let shipping_fee = document.getElementById('shippingFee');
         const checkoutOrders = [];
 
 
@@ -265,6 +267,8 @@
                 formData.append(`checkoutOrders[${index}][${key}]`, item[key]);
             }
         });
+
+        formData.append(`shipping_fee`, Number(shipping_fee.textContent));
 
         // Use fetch or XMLHttpRequest to send the form data
         fetch('customer-checkout.php', {
@@ -358,6 +362,19 @@
     }
 
     function calculateSubtotal() {
+        console.log(userDetails)
+        
+        if( !userDetails.island_group ||  
+            !userDetails.province ||
+            !userDetails.city_municipality ||
+            !userDetails.barangay ||
+            !userDetails.complete_address ||
+            !userDetails.email 
+        ){
+            alert("Please complete your profile details first.")
+            return;
+        }
+
         let checkboxes = document.getElementsByName('cartCheckbox');
         let quantities = document.getElementsByName('quantity');
         let prices = document.getElementsByName('price');
@@ -375,13 +392,19 @@
         }
 
         document.getElementById('itemTotal').innerHTML = Number(itemTotal).toFixed(2);
+        document.getElementById('islandGroupInfo').innerText = `(${userDetails.island_group})`;
 
+        if( userDetails.island_group == 'luzon' ){
+            shippingfee = <?=isset($islandGroupShippingFee) ? $islandGroupShippingFee->luzon : 150?>;
+        }else if ( userDetails.island_group == 'visayas' ){
+            shippingfee = <?=isset($islandGroupShippingFee) ? $islandGroupShippingFee->visayas : 250?>;
+        }else if ( userDetails.island_group == 'mindanao' ){
+            shippingfee = <?=isset($islandGroupShippingFee) ? $islandGroupShippingFee->mindanao : 350?>;
+        }
 
-        if( mop.value == 'cod' ){ // + 75
-            shippingfee = 75;
+        if( mop.value == 'cod' ){ 
             togglePaypalDiv(false, 0)
         }else if (mop.value == "online"){
-            shippingfee = 75;
             togglePaypalDiv(true, Number(itemTotal).toFixed(2))
         }
 

@@ -147,123 +147,99 @@
   </div> -->
 
 
-  <div id="carouselExampleIndicators" class="carousel slide">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner" >
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
 
-      <div class="carousel-item active">
+    <div class="carousel-item active">
       <img src="./assets/carousel/1.png" alt="">
-
-        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg> -->
-        <div class="container">
-          <div class="carousel-caption text-start">
-            <!-- <h1>Example headline.</h1> -->
-            <!-- <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p> -->
-            <!-- <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p> -->
-          </div>
+      <div class="container">
+        <div class="carousel-caption text-start">
         </div>
       </div>
-      <div class="carousel-item">
-        <?php
-          switch ($site_setting->customRadio) {
-            case 'setDefaultImage':
-              if($site_setting->productSelect){
-                  $id = $site_setting->productSelect;
-                  $color_id = $site_setting->color_id;
-                  echo '<a href="view-products.php?id='.$id.'&color_id='.$color_id.'">';
-                  echo '<img src="./assets/carousel/2.jpg" alt="">';
-                  echo      '</a>';
-                }else{
-                echo '<img src="./assets/carousel/2.jpg" alt="">';
-              }
-
-              break;
-            case 'uploadSelectedBanner':
-              # code...
-              if($site_setting->productSelect){
-                  $id = $site_setting->productSelect;
-                  $color_id = $site_setting->color_id;
-                  echo '<a href="view-products.php?id='.$id.'&color_id='.$color_id.'">';
-                  echo '<img src="./admin/'.$Banner.'" alt="">';
-                  echo      '</a>';
-                }else{
-              }
-
-              break;
-            case 'setSelectedProductBanner':
-              // Remove '%' from the string
-              $Banner = str_replace('./uploads', 'uploads', $Banner);
-              if($site_setting->productSelect){
+    </div>
+    <div class="carousel-item">
+      <?php
+        switch ($site_setting->customRadio) {
+          case 'setDefaultImage':
+            if($site_setting->productSelect){
                 $id = $site_setting->productSelect;
                 $color_id = $site_setting->color_id;
-                echo '<a href="view-products.php?id='.$id.'&color_id='.$color_id.'">
-                        <img src="./admin/'.$Banner.'" alt="">
-                      </a>';
+                echo '<a href="view-products.php?id='.$id.'&color_id='.$color_id.'">';
+                echo '<img src="./assets/carousel/2.jpg" alt="">';
+                echo '</a>';
               }else{
-                echo '<img src="./admin/'.$Banner.'" alt="">';
-              }
-
-              # code...
-              break;
-            
-            default:
               echo '<img src="./assets/carousel/2.jpg" alt="">';
-              break;
-          }
-        ?>
-        
-        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg> -->
-        <div class="container">
-          <div class="carousel-caption text-start">
-            <!-- <h1>Example headline.</h1>
-            <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p> -->
-            <!-- <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p> -->
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-      <?php
-          switch ($site_setting->customRadio2) {
-            case 'setDefaultImage2':
-              echo '<a href="browse-products.php">';
-              echo '<img src="./assets/carousel/3.jpg" alt="">';
-              echo '</a>';
-              break;
-            case 'uploadSelectedBanner2':
-              # code...
-              echo '<a href="browse-products.php">';
-              echo '<img src="./admin/'.$Banner2.'" alt="">';
-              echo '</a>';
-
-              break;
-            
-            default:
-              echo '<img src="./assets/carousel/3.jpg" alt="">';
-              break;
-          }
-        ?>
-        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg> -->
-        <div class="container">
-          <div class="carousel-caption text-start">
-            <!-- <h1>Example headline.</h1>
-            <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p> -->
-            <!-- <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p> -->
-          </div>
+            }
+            break;
+          case 'uploadSelectedBanner':
+            if($site_setting->productSelect){
+                $id = $site_setting->productSelect;
+                $color_id = $site_setting->color_id;
+                echo '<a href="view-products.php?id='.$id.'&color_id='.$color_id.'">';
+                echo '<img src="./admin/'.$Banner.'" alt="">';
+                echo '</a>';
+              }
+            break;
+          case 'setSelectedProductBanner':
+            $Banner = str_replace('./uploads', 'uploads', $Banner);
+            if($site_setting->productSelect){
+              $id = $site_setting->productSelect;
+              $color_id = $site_setting->color_id;
+              echo '<a href="view-products.php?id='.$id.'&color_id='.$color_id.'">
+                      <img src="./admin/'.$Banner.'" alt="">
+                    </a>';
+            }else{
+              echo '<img src="./admin/'.$Banner.'" alt="">';
+            }
+            break;
+          default:
+            echo '<img src="./assets/carousel/2.jpg" alt="">';
+            break;
+        }
+      ?>
+      <div class="container">
+        <div class="carousel-caption text-start">
         </div>
       </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+    <div class="carousel-item">
+      <?php
+        switch ($site_setting->customRadio2) {
+          case 'setDefaultImage2':
+            echo '<a href="browse-products.php">';
+            echo '<img src="./assets/carousel/3.jpg" alt="">';
+            echo '</a>';
+            break;
+          case 'uploadSelectedBanner2':
+            echo '<a href="browse-products.php">';
+            echo '<img src="./admin/'.$Banner2.'" alt="">';
+            echo '</a>';
+            break;
+          default:
+            echo '<img src="./assets/carousel/3.jpg" alt="">';
+            break;
+        }
+      ?>
+      <div class="container">
+        <div class="carousel-caption text-start">
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
+
 
 

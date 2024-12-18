@@ -13,7 +13,7 @@ spl_autoload_register(function ($class) {
 
   $couriers = Courier::getCouriers();
 
-//   displayDataTest($couriers);
+//   displayDataTest($data);
  
     // function getStatusText($status){
 
@@ -137,6 +137,7 @@ spl_autoload_register(function ($class) {
                                                                         <th>Order ID </th>
                                                                         <th>Product </th>
                                                                         <th>Image</th>
+                                                                        <th>Size</th>
                                                                         <th>Color</th>
                                                                         <th>Color Name</th>
                                                                         <th>Quantity</th>
@@ -157,6 +158,7 @@ spl_autoload_register(function ($class) {
                                                                         <th>Order ID </th>
                                                                         <th>Product</th>
                                                                         <th>Image</th>
+                                                                        <th>Size</th>
                                                                         <th>Color</th>
                                                                         <th>Color Name</th>
                                                                         <th>Quantity</th>
@@ -176,6 +178,7 @@ spl_autoload_register(function ($class) {
                                                                             <td style="text-align: center; vertical-align: middle;">
                                                                                 <img style="" width="75" height="75" src="<?= $img_link ?>" alt="..." />
                                                                             </td>
+                                                                            <td style="text-align: center; vertical-align: middle;"> <?= $order_detail['size'] ?> </td>
 
                                                                             <td style="background-color:<?= $order_detail['color_code'] ?> ">  </td>
                                                                             <td style="text-align: center; vertical-align: middle;"> <?= $order_detail['color_name'] ?> </td>

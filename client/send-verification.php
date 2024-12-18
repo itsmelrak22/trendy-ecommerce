@@ -1,15 +1,14 @@
 <?php
 session_start();
-function displayDataTest($array){
-    echo "<pre>";
-    echo print_r($array);
-    echo "</pre>";
-}
 
-echo getcwd();
-require("PHPMailer/src/PHPMailer.php");
-require("PHPMailer/src/SMTP.php");
-require("PHPMailer/src/Exception.php");
+require("../models/PHPMailer/src/PHPMailer.php");
+require("../models/PHPMailer/src/SMTP.php");
+require("../send_email.php");
+require_once  '../vendor/autoload.php';
+spl_autoload_register(function ($class) {
+    include '../models/' . $class . '.php';
+});
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

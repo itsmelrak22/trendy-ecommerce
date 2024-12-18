@@ -20,7 +20,10 @@ spl_autoload_register(function ($class) {
   $products = $product_->getProductWIthDistictColor();
 //   $products2 = $product_->getRankedProducts();
 
-//   displayDataTest($site_setting);
+
+  if( isset($site_setting->islandGroupShippingFee) ){
+    $islandGroupShippingFee = $site_setting->islandGroupShippingFee;
+  }
 ?>
    <!-- Select2 CSS -->
    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
@@ -80,6 +83,27 @@ spl_autoload_register(function ($class) {
                         <div class="card-body">
                             <form action="update-site-settings.php" method="post" enctype="multipart/form-data" >     
                                 <button class="my-4 btn btn-primary" type="submit" name="update-site-settings" value="update-site-settings">Update Site Settings</button>                          
+                                
+                                <div class="card mb-2 py-3 border-left-primary">
+                                    <h5 class="mx-2 m-0 font-weight-bold text-primary">Island Group Shipping Fee Settings</h5>
+                                    <div class="card-body form-group">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label class="font-weight-bold">Luzon</label>
+                                                <input type="number" name="luzon" id="luzon" class="form-control" value="<?=isset($islandGroupShippingFee) ? $islandGroupShippingFee->luzon : 0?>">
+                                            </div>
+                                            <div class="col-4">
+                                                <label class="font-weight-bold">Visayas</label>
+                                                <input type="number" name="visayas" id="visayas" class="form-control" value="<?=isset($islandGroupShippingFee) ? $islandGroupShippingFee->visayas : 0?>">
+                                            </div>
+                                            <div class="col-4">
+                                                <label class="font-weight-bold">Mindanao</label>
+                                                <input type="number" name="mindanao" id="mindanao" class="form-control" value="<?=isset($islandGroupShippingFee) ? $islandGroupShippingFee->mindanao : 0?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <div class="card mb-2 py-3 border-left-primary">
                                     <h5 class="mx-2 m-0 font-weight-bold text-primary">Banner Settings</h5>
                                     <div class="card-body form-group">

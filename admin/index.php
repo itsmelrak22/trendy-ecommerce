@@ -75,8 +75,20 @@
             $customOrder_count += 1;
         }
     }
+    $overdues = [];
+    foreach ($checked_out_orders as $key => $order) {
+        $created_at = new DateTime($order['created_at']);
+        $current_date = new DateTime();
+        $interval = $created_at->diff($current_date);
+        $is_older_than_two_days = $interval->days > 2;
+        $is_older_than_three_days = $interval->days > 3;
+        
+        if( $is_older_than_three_days && $order['cart_status'] == 'Checked out' ){
+            array_push( $overdues, $order );
+        }
+    }
 
-    // displayDataTest($checked_out_orders);
+    // displayDataTest($overdues);
 ?>
 
     <!-- Daterangepicker CSS -->
@@ -188,7 +200,7 @@
                                 </div>
                             </a>
                         </div>
-                        <!-- Pending Requests Card Example -->
+                        <!-- For Approval Requests Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <a href="custom-order-list.php">
                                 <div class="card border-left-warning shadow h-100 py-2">
@@ -196,7 +208,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    Pending Customize Orders</div>
+                                                    For Approval Customize Orders</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$customOrder_count?></div>
                                             </div>
                                             <div class="col-auto">
@@ -299,6 +311,7 @@
                                                     $current_date = new DateTime();
                                                     $interval = $created_at->diff($current_date);
                                                     $is_older_than_two_days = $interval->days > 2;
+                                                    $is_older_than_three_days = $interval->days > 3;
                                                 ?>
                                                     <tr <?= $is_older_than_two_days && $order['cart_status'] == 'Checked out' ? 'style="background-color: #fdf3d8;"' : '' ?>>
                                                         <td><?= $order['id'] ?></td>
@@ -450,8 +463,36 @@
     })
 
     $(document).ready(function() {
-        $('#productTable').DataTable();
-        let table = $('#orderTable').DataTable();
+        $('#productTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF'
+                    }
+                ]
+            });
+        let table = $('#orderTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Export CSV',
+                        titleAttr: 'CSV'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Export PDF',
+                        titleAttr: 'PDF'
+                    }
+                ]
+            });
 
     });
 </script>
@@ -591,7 +632,7 @@
                             data.forEach(function(item) {
                                 tableBody.append(
                                     '<tr>' +
-                                        '<td>' + item.email + '</td>' +
+                                        '<td>' + item.first_name + ' ' + item.last_name + '</td>' +
                                         '<td>' + item.mop + '</td>' +
                                         '<td>' + item.created_at + '</td>' +
                                         '<td>' + item.total + '</td>' +

@@ -63,6 +63,7 @@ Class Cart extends Model {
                                             PC.image,
                                             P.price,
                                             O.tracking_number,
+                                            O.shipping_fee,
                                             CR.name AS courier_name,
                                             O.estimated_days_of_delivery
                                         FROM 
@@ -102,6 +103,7 @@ Class Cart extends Model {
             PC.image,
             P.price,
             O.tracking_number,
+            O.shipping_fee,
             CR.name AS courier_name,
             O.estimated_days_of_delivery
         FROM 
@@ -140,6 +142,7 @@ Class Cart extends Model {
             PC.image,
             P.price,
             O.tracking_number,
+            O.shipping_fee,
             CR.name AS courier_name,
             O.estimated_days_of_delivery
         FROM 
@@ -178,6 +181,7 @@ Class Cart extends Model {
             PC.image,
             P.price,
             O.tracking_number,
+            O.shipping_fee,
             CR.name AS courier_name,
             O.estimated_days_of_delivery
         FROM 
@@ -215,6 +219,7 @@ Class Cart extends Model {
             PC.image,
             P.price,
             O.tracking_number,
+            O.shipping_fee,
             CR.name AS courier_name,
             O.estimated_days_of_delivery
         FROM 

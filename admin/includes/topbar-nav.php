@@ -34,6 +34,9 @@
             case 'user-list.php':
                 return "USER LIST";
                 break;
+            case 'customized-product-dimensions-list.php':
+                return "CUSTOMIZED PRODUCT DIMENSIONS";
+                break;
    
             default:
                 # code...
@@ -58,7 +61,77 @@
 <ul  class="navbar-nav ml-auto">
     <div class="topbar-divider d-none d-sm-block"></div>
 
-    <!-- Nav Item - User Information -->
+    <?php if( $location == 'index.php' ){ ?>
+
+    <!-- Nav Item - Alerts -->
+    <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #858796">
+            Checked Out Overdue
+            <i class="fas fa-bell fa-fw"></i>
+            <!-- Counter - Alerts -->
+            <span class="badge badge-danger badge-counter"><?= count($overdues) ?></span>
+        </a>
+        <!-- Dropdown - Alerts -->
+        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+            aria-labelledby="alertsDropdown">
+            <h6 class="dropdown-header">
+                Checked Out Overdue (2+ days Pending)
+            </h6>
+            <?php foreach ($overdues as $key => $value) { ?>
+                <a class="dropdown-item d-flex align-items-center" href="order-edit.php?id=<?=$value['id']?>">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-danger">
+                            <i class="fas fa-exclamation-triangle text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500"> <?=$value['created_at'] ?> </div>
+                        Order Alert: <?=$value['username']?> ( <?=$value['email']?> ) .
+                    </div>
+                </a>
+             <?php } ?>
+
+            <a class="dropdown-item text-center small text-gray-500" href="#">Orders</a>
+        </div>
+    </li>
+    <!-- Nav Item - Alerts -->
+    <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #858796">
+            For approval of customize
+             <i class="fas fa-bell fa-fw"></i>
+            <!-- Counter - Alerts -->
+            <span class="badge badge-danger badge-counter"><?= count($null_orders) ?></span>
+        </a>
+        <!-- Dropdown - Alerts -->
+        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+            aria-labelledby="alertsDropdown">
+            <h6 class="dropdown-header">
+                Custom Order Approval
+            </h6>
+            <?php foreach ($null_orders as $key => $value) { ?>
+                <a class="dropdown-item d-flex align-items-center" href="custom-order-list.php">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-danger">
+                            <i class="fas fa-exclamation-triangle text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500"> <?=$value['created_at'] ?> </div>
+                        Approval Attendtion Alert: <?=$value['email']?> .
+                    </div>
+                </a>
+             <?php } ?>
+
+            <a class="dropdown-item text-center small text-gray-500" href="#">Orders</a>
+        </div>
+    </li>
+    <?php }?>
+
+    
+    
+                        <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

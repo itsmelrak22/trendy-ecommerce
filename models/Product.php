@@ -42,6 +42,8 @@ Class Product extends Model {
                 LEFT JOIN product_colors AS PC 
                     ON P.id = PC.product_id
                 WHERE P.deleted_at IS NULL
+                AND C.deleted_at IS NULL
+
             )
             SELECT 
                 RP.*
@@ -81,6 +83,7 @@ Class Product extends Model {
                 LEFT JOIN categories AS C 
                 ON P.category_id = C.id
                 WHERE P.deleted_at IS NULL
+                AND C.deleted_at IS NULL
                 ORDER BY P.name
             ";
         }
@@ -121,6 +124,8 @@ Class Product extends Model {
             LEFT JOIN product_colors AS PC 
                 ON PC.id = PCSub.id
             WHERE P.deleted_at IS NULL
+            AND C.deleted_at IS NULL
+
             ORDER BY P.name;
         ";
 
@@ -148,6 +153,7 @@ Class Product extends Model {
                         ON P.id = PC.product_id
                     WHERE P.deleted_at IS NULL
                     AND PC.deleted_at IS NULL
+                    AND C.deleted_at IS NULL
                     AND C.id = $category_id
                     ORDER BY P.name;
                     ";
@@ -166,6 +172,7 @@ Class Product extends Model {
             ON P.id = PC.product_id
         WHERE P.deleted_at IS NULL
         AND PC.deleted_at IS NULL
+        AND C.deleted_at IS NULL
         ORDER BY P.name;
             ";
         }
@@ -240,6 +247,8 @@ Class Product extends Model {
             WHERE P.id = $id
             AND P.deleted_at IS NULL
             AND PC.deleted_at IS NULL
+            AND C.deleted_at IS NULL
+
             ORDER BY P.created_at DESC
         ";
 
@@ -260,6 +269,8 @@ Class Product extends Model {
                 AND PC.id = $color_id
                 AND P.deleted_at IS NULL
                 AND PC.deleted_at IS NULL
+                AND C.deleted_at IS NULL
+
                 ORDER BY P.created_at DESC
             ";
         }
@@ -286,6 +297,8 @@ Class Product extends Model {
             WHERE C.name = '$category_name'
             AND P.deleted_at IS NULL
             AND PC.deleted_at IS NULL
+            AND C.deleted_at IS NULL
+
             ORDER BY P.created_at DESC
         ";
 
@@ -307,6 +320,7 @@ Class Product extends Model {
                 AND PC.id = $color_id
                 AND P.deleted_at IS NULL
                 AND PC.deleted_at IS NULL
+                AND C.deleted_at IS NULL
                 ORDER BY P.created_at DESC
             ";
         }

@@ -6,6 +6,14 @@ spl_autoload_register(function ($class) {
     include '../models/' . $class . '.php';
   });
 
+  if($_SESSION['email'] != 'admin@admin.com'){
+    echo "<script>
+        alert('Permission Denied, Page access not permitted');
+        location.href = 'index.php';
+    </script>";
+}
+
+
   $category = new Category;
   $categories = $category->all();
 
@@ -50,6 +58,10 @@ spl_autoload_register(function ($class) {
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Category List</h6>
+
+                            <div class="alert alert-warning" role="alert">
+                                Always double check if a category is bind to a product before doing changes.
+                            </div>
                             
                         </div>
                         <div class="card-body">

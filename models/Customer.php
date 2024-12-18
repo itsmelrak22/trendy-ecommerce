@@ -10,6 +10,7 @@ Class Customer extends Model {
     
         $query = "SELECT * FROM customers 
             WHERE `email` = '$email' 
+            AND `deleted_at` IS NULL
             LIMIT 1 ";
         $stmt = $instance->pdo->prepare($query);
         

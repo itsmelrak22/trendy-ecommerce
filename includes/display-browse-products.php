@@ -1,6 +1,8 @@
 <?php
     $product = new Product;
     $products = $product->getDisplayProducts($_GET['category_id'] ?? null);
+
+    // displayDataTest($products);
    
     foreach ($products as $key => &$value) {
         $value['image_link'] = getImageLink($value['image']);

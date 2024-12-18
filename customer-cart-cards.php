@@ -1,6 +1,5 @@
 <?php 
 function generateCartCards($cart, $key, $img_link){
-    echo "key: $key";
     $cartID = $cart['id'];
 
     $product_info_ = Product::findProduct($cart['product_id'], $cart['color_id']);
@@ -128,7 +127,7 @@ function generateViewCards($cart, $key, $img_link){
                 $price += $value['size_price'];
             }
         }
-    $shippingFee = 75;
+    $shippingFee = $cart['shipping_fee'];
     // $price += $shippingFee; 
     echo '
     

@@ -65,6 +65,7 @@
 
         $customers = new Customer;
         $customer = $customers->find($client_id);
+        // print_r($customer);
 
     }
 
@@ -94,6 +95,20 @@
     $site_setting_ = new SiteSetting;
     $site_setting = $site_setting_->getSiteSettingsLatest();
     $site_setting = json_decode($site_setting->json_data);
+
+    
+    if( isset($site_setting->islandGroupShippingFee) ){
+        $islandGroupShippingFee = $site_setting->islandGroupShippingFee;
+
+        // displayDataTest($islandGroupShippingFee);
+    }
+    
+    
+    if( isset($client_id) ){
+        $customizeOrder = new CustomizeOrder;
+        $confirmedCustomizeItems = $customizeOrder->getCustomerCustomOrders($client_id, 'Confirmed');
+        $confirmedCustomizeItemsCount = count($confirmedCustomizeItems);
+    }
 
 ?>
 <!DOCTYPE html>
@@ -179,17 +194,42 @@
                         <i class="bi-cart me-1"></i>
                         <span class="d-none d-sm-inline">Cart</span>
                         <span class="badge bg-dark text-white ms-1 rounded-pill">
-                            <?php echo isset($cartItemCount) ? $cartItemCount : "0"; ?>
+                            <?php echo isset($cartItems) ? count($cartItems) : "0"; ?>
                         </span>
                     </a>
-                    <button type="button" class="btn btn-outline-dark btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                        <i class="bi-person me-1"></i>
-                        <span class="d-none d-sm-inline"><?php echo $client_username; ?></span>
-                    </button>
-                    <a href="./client/logout-customer.php" class="btn btn-outline-dark btn-sm">
+
+                    <!-- Example split danger button with badge -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                            <i class="bi-person me-1"></i>
+                            <span class="d-none d-sm-inline"><?php echo $client_username; ?></span>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle dropdown-toggle-split  me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                            <span class="badge bg-secondary"><?= $confirmedCustomizeItemsCount ?></span>
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <?php foreach ($confirmedCustomizeItems as $key => $value) {
+                                echo '<li><hr class="dropdown-divider"></li>';
+                                echo '<li><a class="dropdown-item" href="customer-cart.php?confirmed-customize-order-tab=true">Order: #'.$value['id'].' - '.$value['status'].'</a></li>';
+                            } ?>
+                            
+                        </ul>
+                    </div>
+
+                    <a href="./client/logout-customer.php" class="btn btn-outline-dark btn-sm" id="logoutLink">
                         <i class="bi-box-arrow-right me-1"></i>
-                        <span class="d-none d-sm-inline">Logout</span>
+                        <!-- <span class="d-none d-sm-inline">Logout</span> -->
                     </a>
+
+                    <script>
+                    document.getElementById('logoutLink').onclick = function(event) {
+                        if (!confirm('Are you sure you want to log out?')) {
+                            event.preventDefault();
+                        }
+                    };
+                    </script>
                 <?php } else { ?>
                     <button class="btn btn-outline-dark btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
                         <i class="bi bi-box-arrow-in-right me-1"></i>
@@ -201,139 +241,328 @@
         </div>
     </div>
 </nav>
+<div id="myOverlay2" class="overlay" style="display: none;"></div>
 
         
-
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header ">
-                        <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loginForm">
+                <form method="POST" action="./client/login-client.php">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" required>
                     </div>
-                    <div class="modal-body" id="loginForm">
-                        <form method="POST" action="./client/login-client.php">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
-                        </form>
-                        <div class="text-center mt-3">
-                            <p class="mb-0">New to our site? <a href="#" onclick="showRegisterForm()" class="link-primary">Create an account</a></p>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <p class="mb-0">New to our site? <a href="#" onclick="showRegisterForm()" class="link-primary">Create an account</a></p>
+                </div>  
+                <div class="text-center mt-3">
+                    <p class="mb-0">Forgot your password?
+                        <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">
+                                Reset Password
+                        </a> 
+                    </p>
+                </div>
+
+            </div>
+            <div class="modal-body" id="registerForm" style="display: none;">
+
+                <form method="POST" action="./client/register-customer.php">
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Basic Information </h6>
+                    <hr>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="first_name" class="form-label">Firstname <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="last_name" class="form-label">Lastname <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required>
                         </div>
                     </div>
-                    <div class="modal-body" id="registerForm" style="display: none;">
-                        <div id="myOverlay2" class="overlay" style="display: none;"></div>
-
-                        <form method="POST" action="./client/register-customer.php">
-                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Basic Information </h6>
-                            <hr>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="first_name" class="form-label">Firstname</label>
-                                    <input type="text" class="form-control" id="first_name" name="first_name" required>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="last_name" class="form-label">Lastname</label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="phone_number" class="form-label">Phone Number</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">+63</span>
-                                        <input type="tel" class="form-control" id="phone_number" name="phone_number" required maxlength="10">
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="reg_email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="reg_email" name="reg_email" required>
-                                </div>
-                            </div>
-                         
-                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Login Credentials </h6>
-                            <hr>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="reg_username" required>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="reg_password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="reg_password" name="reg_password" required>
-                                </div>
-                            </div>
-                            <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
-                            <hr>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="provinceDropdown">Province</label>
-                                    <select id="provinceDropdown" name="province" class="form-control" onchange="populateCitiesMunicipalities(this.value)">
-                                        <option value="" selected disabled readonly>Select Province</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="cityDropdown">City/Municipality</label>
-                                    <select id="cityDropdown" name="city_municipality" class="form-control" onchange="populateBarangays(this.value)">
-                                        <option value="" selected disabled readonly>Select City/Municipality</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-6">
-                                    <label for="barangayDropdown">Barangay</label>
-                                    <select id="barangayDropdown" name="barangay" class="form-control">
-                                        <option value="" selected disabled readonly>Select Barangay</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                    <label for="complete_add">Street Name/Brgy/Sbdv/Lot/Block/</label>
-                                    <textarea id="complete_add" name="complete_add" class="form-control" placeholder="Street Name/Brgy./Sbdv/Lot/Blk"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-12">
-                                        <label for="verification_code" class="form-label">Verification Code</label>
-                                    <div class="input-group mb-3">
-                                        <input id="verification_code" type="text" class="form-control" placeholder="Enter Verification Code Here" aria-label="Enter Verification Code Here" aria-describedby="button-addon2">
-                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendVerificationCode()">Send Verification Code</button> 
-                                    </div>
-                                    <button type="button" class="btn btn-secondary mt-2" onclick="verifyCode()">Verify Code</button>
-                                </div>
-                                <div class="mb-3 col-sm-6">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="userAgreement" onclick="toggleSubmitButton()">
-                                        <label class="form-check-label" for="userAgreement">
-                                            I hereby declare that the information provided is true and correct.
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-sm-12">
-                                    <input type="submit" class="btn btn-primary" name="add-customer" value="Submit" disabled id="submitBtn">
-                                </div>
-                            </div>
-                        </form>
-                        <div class="row">
-                            <div class="col-sm-12 text-center">
-                                <p>Already have an account? <a href="#" onclick="showLoginForm()" class="text-warning">Sign in here</a></p>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="phone_number" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text">+63</span>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" required maxlength="10">
                             </div>
                         </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="reg_email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="reg_email" name="reg_email" required>
+                        </div>
+                    </div>
+
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Login Credentials </h6>
+                    <hr>
+                    <div class="row">
+                        <style>
+                            .is-invalid {
+                                border-color: #dc3545;
+                            }
+                        </style>
+                        <div class="mb-3 col-sm-6">
+                            <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" name="reg_username" required>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="reg_password" name="reg_password" required maxlength="16">
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="confirm_password" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required maxlength="16">
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <span id="passwordMatchText"></span>
+                        </div>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
+                    <hr>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="islandGroupDropdown">Island Group <span class="text-danger">*</span></label>
+                            <select id="islandGroupDropdown" name="island_group" class="form-control" onchange="populateProvinces(this.value)" required>
+                                <option value="" selected disabled readonly>Select Island Group</option>
+                                <option value="luzon">Luzon</option>
+                                <option value="visayas">Visayas</option>
+                                <option value="mindanao">Mindanao</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="provinceDropdown">Province <span class="text-danger">*</span></label>
+                            <select id="provinceDropdown" name="province" class="form-control" onchange="populateCitiesMunicipalities(this.value)" required>
+                                <option value="" selected disabled readonly>Select Province</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="cityDropdown">City/Municipality <span class="text-danger">*</span></label>
+                            <select id="cityDropdown" name="city_municipality" class="form-control" onchange="populateBarangays(this.value)" required>
+                                <option value="" selected disabled readonly>Select City/Municipality</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="barangayDropdown">Barangay <span class="text-danger">*</span></label>
+                            <select id="barangayDropdown" name="barangay" class="form-control" required>
+                                <option value="" selected disabled readonly>Select Barangay</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="landmark">Landmark</label>
+                            <textarea id="landmark" name="landmark" class="form-control" placeholder="Landmark"></textarea>
+                        </div>
+                        <div class="mb-3 col-sm-12">
+                            <label for="complete_add">Other Address Info (Subdivision/Street/Lot/Block/House No.) <span class="text-danger">*</span></label>
+                            <textarea id="complete_add" name="complete_add" class="form-control" placeholder="Subdivision/Street/Lot/Block/House No." required></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <label for="verification_code" class="form-label">Verification Code <span class="text-danger">*</span></label>
+                            <div class="input-group mb-3">
+                                <input id="verification_code" type="text" class="form-control" placeholder="Enter Verification Code Here" aria-label="Enter Verification Code Here" aria-describedby="button-addon2" required>
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendVerificationCode()">Send Verification Code</button>
+                                <div class="mb-3 col-sm-12">
+                                    <label class="form-check-label" for="">
+                                        NOTE: this will send an email containing the verification code.
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="hidden" name="isVerified" id="isVerified" value="false">
+                            <button type="button" class="btn btn-secondary mt-2" onclick="verifyCode()">Verify Code</button>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="userAgreement" onclick="toggleSubmitButton()" required>
+                                <label class="form-check-label" for="userAgreement">
+                                    I hereby declare that the information provided is true and correct. <span class="text-danger">*</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <input type="submit" class="btn btn-primary" name="add-customer" value="Submit" disabled id="submitBtn">
+                        </div>
+                        
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p>Already have an account? <a href="#" onclick="showLoginForm()" class="text-warning">Sign in here</a></p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<!-- <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loginForm">
+                <form method="POST" action="./client/login-client.php">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
+                </form>
+                <div class="text-center mt-3">
+                    <p class="mb-0">New to our site? <a href="#" onclick="showRegisterForm()" class="link-primary">Create an account</a></p>
+                </div>
+            </div>
+            <div class="modal-body" id="registerForm" style="display: none;">
+                <div id="myOverlay2" class="overlay" style="display: none;"></div>
+
+                <form method="POST" action="./client/register-customer.php">
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Basic Information </h6>
+                    <hr>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="first_name" class="form-label">Firstname <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="last_name" class="form-label">Lastname <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="phone_number" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text">+63</span>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" required maxlength="10">
+                            </div>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="reg_email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="reg_email" name="reg_email" required>
+                        </div>
+                    </div>
+
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Login Credentials </h6>
+                    <hr>
+                    <div class="row">
+                        <style>
+                            .is-invalid {
+                                border-color: #dc3545;
+                            }
+                        </style>
+                        <div class="mb-3 col-sm-6">
+                            <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" name="reg_username" required>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="reg_password" name="reg_password" required maxlength="16">
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="confirm_password" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required maxlength="16">
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <span id="passwordMatchText"></span>
+                        </div>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"> Address Information </h6>
+                    <hr>
+                    <div class="row">
+
+                        <div class="mb-3 col-sm-6">
+                            <label for="provinceDropdown">Province <span class="text-danger">*</span></label>
+                            <select id="provinceDropdown" name="province" class="form-control" onchange="populateCitiesMunicipalities(this.value)" required>
+                                <option value="" selected disabled readonly>Select Province</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="cityDropdown">City/Municipality <span class="text-danger">*</span></label>
+                            <select id="cityDropdown" name="city_municipality" class="form-control" onchange="populateBarangays(this.value)" required>
+                                <option value="" selected disabled readonly>Select City/Municipality</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-6">
+                            <label for="barangayDropdown">Barangay <span class="text-danger">*</span></label>
+                            <select id="barangayDropdown" name="barangay" class="form-control" required>
+                                <option value="" selected disabled readonly>Select Barangay</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                            <label for="landmark">Landmark</label>
+                            <textarea id="landmark" name="landmark" class="form-control" placeholder="Landmark"></textarea>
+                        </div>
+                        <div class="mb-3 col-sm-12">
+                            <label for="complete_add">Other Address Info (Subdivision/Street/Lot/Block/House No.) <span class="text-danger">*</span></label>
+                            <textarea id="complete_add" name="complete_add" class="form-control" placeholder="Subdivision/Street/Lot/Block/House No." required></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <label for="verification_code" class="form-label">Verification Code <span class="text-danger">*</span></label>
+                            <div class="input-group mb-3">
+                                <input id="verification_code" type="text" class="form-control" placeholder="Enter Verification Code Here" aria-label="Enter Verification Code Here" aria-describedby="button-addon2" required>
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendVerificationCode()">Send Verification Code</button>
+                            </div>
+                            <input type="hidden" name="isVerified" id="isVerified" value="false">
+                            <button type="button" class="btn btn-secondary mt-2" onclick="verifyCode()">Verify Code</button>
+                        </div>
+                        <div class="mb-3 col-sm-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="userAgreement" onclick="toggleSubmitButton()" required>
+                                <label class="form-check-label" for="userAgreement">
+                                    I hereby declare that the information provided is true and correct. <span class="text-danger">*</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-sm-12">
+                            <input type="submit" class="btn btn-primary" name="add-customer" value="Submit" disabled id="submitBtn">
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p>Already have an account? <a href="#" onclick="showLoginForm()" class="text-warning">Sign in here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
 
         <?php if( isset($client_id) ){ ?>
             <!-- Edit Profile Modal -->
@@ -352,263 +581,406 @@
                 </div>
             </div>
 
+            
+
  
         <?php } ?>
+
+        <!-- Reset Password Mod`al -->
+        <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- <form id="resetPasswordForm" action="send_verification.php" method="post"> -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Send verification code to your email:</label>
+                                <?php  if( isset($client_id) ){ ?>
+                                    <input type="email" class="form-control" id="email" name="email" required value="<?=$customer->email ?>" readonly>
+                                <?php } else { ?>
+                                    <input type="email" class="form-control" id="email" name="email" required >
+                                <?php } ?>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="sendVerificationCode('email')">Send Verification Code</button>
+                        <!-- </form> -->
+                    </div>
+                    <div class="modal-body" style="display: none;" id="verifyForm">
+                        <form id="verificationCodeForm" action="./client/verify_code.php" method="post">
+                            <div class="mb-3">
+                                <label for="forgot_verification_code" class="form-label">Verification Code:</label>
+                                <input type="text" class="form-control" id="forgot_verification_code" name="forgot_verification_code" required>
+                                <input type="hidden" id="response_verification_code" name="response_verification_code" value="">
+                                <input type="hidden" class="form-control" id="forgot_email" name="forgot_email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="new_password" class="form-label">New Password:</label>
+                                <input type="password" class="form-control" id="new_password" name="new_password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm_new_password" class="form-label">Confirm New Password:</label>
+                                <input type="password" class="form-control" id="confirm_new_password" name="confirm_new_password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="confirm_reset_password" disabled >Reset Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 <script>
-    $(document).ready(function() {
+    var userDetails = <?php echo isset($customer) ? json_encode($customer) : json_encode(([])); ?>;
 
-            var userDetails = <?php echo isset($customer) ? json_encode($customer) : json_encode(([])); ?>;
-            // Fetch provinces and populate the province dropdown
-            $.ajax({
-                url: 'https://psgc.gitlab.io/api/provinces.json',
-                type: 'GET',
-                success: function(data) {
-                    var provinces = data;
-                    var provinceDropdown = $('#edit_provinceDropdown');
+    function checkPasswordMatch (){
+        let  confirm_reset_password = document.getElementById('confirm_reset_password')
+        const new_password = document.getElementById('new_password').value;
+        const confirm_new_password = document.getElementById('confirm_new_password').value;
+        let response_verification_code = document.getElementById('response_verification_code');
+        let forgot_verification_code = document.getElementById('forgot_verification_code');
 
-                    // Sort the provinces array by the "name" property
-                    provinces.sort(function(a, b) {
-                        var nameA = a.name.toUpperCase(); // Ignore case
-                        var nameB = b.name.toUpperCase(); // Ignore case
-                        if (nameA < nameB) {
-                            return -1;
-                        }
-                        if (nameA > nameB) {
-                            return 1;
-                        }
-                        return 0; // Names must be equal
-                    });
+        if( !response_verification_code.value || (response_verification_code.value != forgot_verification_code.value)){
+            confirm_reset_password.disabled = true;
+            return false;
+        }
 
+        if((new_password && confirm_new_password) &&  new_password === confirm_new_password){
+        //   passwordMatchText.innerText = 'Password match.'
+            confirm_reset_password.disabled = false;
+            return true;
+        }
 
-                    $.each(provinces, function(index, province) {
-                        provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
-                    });
+        // passwordMatchText.innerText = 'Password does not match.'
 
+        
+        confirm_reset_password.disabled = true;
+        return false;
+        
+    }
+    document.getElementById('new_password').addEventListener('input', checkPasswordMatch)
+    document.getElementById('confirm_new_password').addEventListener('input', checkPasswordMatch)
+    document.getElementById('forgot_verification_code').addEventListener('input', checkPasswordMatch)
+    document.getElementById('phone_number').addEventListener('input', function (e) {
+        let value = e.target.value;
 
-                    if( typeof userDetails.province != 'undefined' && userDetails.province ){
-                        $('#edit_provinceDropdown').val(userDetails.province);
-                        editPopulateCitiesMunicipalities(userDetails.province);
+        // Remove any non-numeric characters
+        value = value.replace(/\D/g, '');
+
+        // Ensure the number starts with 9
+        if (value.length === 0) {
+            value = '9';
+        } else if (value[0] !== '9') {
+            value = '9' + value.slice(1);
+        }
+
+        // Update the input value
+        e.target.value = value;
+    });
+
+    function setIslandCode(value){
+        if(value) populateProvinces(islandGroup);
+        return null;
+    }
+
+    function populateProvinces(islandGroup){
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/island-groups/${islandGroup}/provinces.json`,
+            type: 'GET',
+            success: function(data) {
+                var provinces = data;
+                var provinceDropdown = $('#provinceDropdown');
+                var cityDropdown = $('#cityDropdown');
+                var barangayDropdown = $('#barangayDropdown');
+
+                // Sort the provinces array by the "name" property
+                provinces.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching provinces: ' + error);
-                }
-            });
-
-        // Function to fetch and populate cities/municipalities based on the selected province
-            function editPopulateCitiesMunicipalities(provinceCode) {
-                $.ajax({
-                    url: `https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities.json`,
-                    type: 'GET',
-                    success: function(data) {
-                        var citiesMunicipalities = data;
-                        var cityDropdown = $('#edit_cityDropdown');
-
-                        // Sort the provinces array by the "name" property
-                        citiesMunicipalities.sort(function(a, b) {
-                            var nameA = a.name.toUpperCase(); // Ignore case
-                            var nameB = b.name.toUpperCase(); // Ignore case
-                            if (nameA < nameB) {
-                                return -1;
-                            }
-                            if (nameA > nameB) {
-                                return 1;
-                            }
-                            return 0; // Names must be equal
-                        });
-
-
-                        cityDropdown.empty(); // Clear existing options
-                        cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
-                        $.each(citiesMunicipalities, function(index, cityMunicipality) {
-                            cityDropdown.append($('<option></option>').val(cityMunicipality.code).text(cityMunicipality.name));
-                        });
-
-                        if( typeof userDetails.city_municipality != 'undefined' && userDetails.city_municipality ){
-                            $('#edit_cityDropdown').val(userDetails.city_municipality);
-                            editPopulateBarangays(userDetails.city_municipality)
-                        }
-
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching cities/municipalities: ' + error);
+                    if (nameA > nameB) {
+                        return 1;
                     }
+                    return 0; // Names must be equal
                 });
+
+                provinceDropdown.empty(); // Clear existing options
+                cityDropdown.empty(); // Clear existing options
+                barangayDropdown.empty(); // Clear existing options
+                $.each(provinces, function(index, province) {
+                    provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
+                });
+
+
+                if( typeof userDetails.province != 'undefined' && userDetails.province ){
+                    $('#provinceDropdown').val(userDetails.province);
+                    populateCitiesMunicipalities(userDetails.province);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching provinces: ' + error);
+            }
+        });
+    }
+
+    function populateCitiesMunicipalities(provinceCode) {
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities.json`,
+            type: 'GET',
+            success: function(data) {
+                
+                var citiesMunicipalities = data;
+                var cityDropdown = $('#cityDropdown');
+                var barangayDropdown = $('#barangayDropdown');
+
+                // Sort the provinces array by the "name" property
+                citiesMunicipalities.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
+                cityDropdown.empty(); // Clear existing options
+                barangayDropdown.empty(); // Clear existing options
+                cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
+                $.each(citiesMunicipalities, function(index, cityMunicipality) {
+                    cityDropdown.append($('<option></option>').val(cityMunicipality.code).text(cityMunicipality.name));
+                });
+
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    }
+
+    function populateBarangays(cityCode){
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}/barangays.json`,
+            type: 'GET',
+            success: function(data) {
+                var barangays = data;
+                var barangayDropdown = $('#barangayDropdown');
+
+                // Sort the provinces array by the "name" property
+                barangays.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
+                barangayDropdown.empty(); // Clear existing options
+                barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
+                $.each(barangays, function(index, barangay) {
+                    barangayDropdown.append($('<option></option>').val(barangay.code).text(barangay.name));
+                });
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    }
+
+
+    function editPopulateProvinces(islandGroup){
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/island-groups/${islandGroup}/provinces.json`,
+            type: 'GET',
+            success: function(data) {
+                var provinces = data;
+                var provinceDropdown = $('#edit_provinceDropdown');
+                var edit_cityDropdown = $('#edit_cityDropdown');
+                var edit_barangayDropdown = $('#edit_barangayDropdown');
+
+                // Sort the provinces array by the "name" property
+                provinces.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
+
+                provinceDropdown.empty(); // Clear existing options
+                edit_cityDropdown.empty(); // Clear existing options
+                edit_barangayDropdown.empty(); // Clear existing options
+
+                $.each(provinces, function(index, province) {
+                    provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
+                });
+
+                
+                if( typeof userDetails.province != 'undefined' && userDetails.province  ){
+                    $('#edit_provinceDropdown').val(userDetails.province);
+                }
+
+                if( $('#edit_provinceDropdown').val() == userDetails.province ){
+                    editPopulateCitiesMunicipalities(userDetails.province)
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching provinces: ' + error);
+            }
+        });
+    }
+
+    function editPopulateCitiesMunicipalities(provinceCode) {
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities.json`,
+            type: 'GET',
+            success: function(data) {
+                var citiesMunicipalities = data;
+                var cityDropdown = $('#edit_cityDropdown');
+                var edit_barangayDropdown = $('#edit_barangayDropdown');
+
+                // Sort the provinces array by the "name" property
+                citiesMunicipalities.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
+                console.log('citiesMunicipalities', citiesMunicipalities);
+
+
+                cityDropdown.empty(); // Clear existing options
+                edit_barangayDropdown.empty(); // Clear existing options
+                
+                cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
+
+                $.each(citiesMunicipalities, function(index, cityMunicipality) {
+                    cityDropdown.append($('<option></option>').val(cityMunicipality.code).text(cityMunicipality.name));
+                });
+
+                if( typeof userDetails.city_municipality != 'undefined' && userDetails.city_municipality ){
+                    $('#edit_cityDropdown').val(userDetails.city_municipality);
+                }
+
+                if($('#edit_cityDropdown').val() == userDetails.city_municipality){
+                    editPopulateBarangays(userDetails.city_municipality)
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    }
+
+    function editPopulateBarangays(cityCode){
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}/barangays.json`,
+            type: 'GET',
+            success: function(data) {
+                var barangays = data;
+                var barangayDropdown = $('#edit_barangayDropdown');
+
+                // Sort the provinces array by the "name" property
+                barangays.sort(function(a, b) {
+                    var nameA = a.name.toUpperCase(); // Ignore case
+                    var nameB = b.name.toUpperCase(); // Ignore case
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0; // Names must be equal
+                });
+
+
+                barangayDropdown.empty(); // Clear existing options
+                barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
+                $.each(barangays, function(index, barangay) {
+                    barangayDropdown.append($('<option></option>').val(barangay.code).text(barangay.name));
+                });
+
+                if( typeof userDetails.barangay != 'undefined' && userDetails.barangay ){
+                    $('#edit_barangayDropdown').val(userDetails.barangay);
+
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    }   
+
+
+    $(document).ready(function() {
+        
+            let islandCode = null;
+
+            // Event listener for province dropdown change
+            if(userDetails.island_group){
+                $('#edit_islandGroupDropdown').val(userDetails.island_group)
+                editPopulateProvinces(userDetails.island_group);
             }
 
-            function editPopulateBarangays(cityCode){
-                $.ajax({
-                    url: `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}/barangays.json`,
-                    type: 'GET',
-                    success: function(data) {
-                        var barangays = data;
-                        var barangayDropdown = $('#edit_barangayDropdown');
-
-                        // Sort the provinces array by the "name" property
-                        barangays.sort(function(a, b) {
-                            var nameA = a.name.toUpperCase(); // Ignore case
-                            var nameB = b.name.toUpperCase(); // Ignore case
-                            if (nameA < nameB) {
-                                return -1;
-                            }
-                            if (nameA > nameB) {
-                                return 1;
-                            }
-                            return 0; // Names must be equal
-                        });
-
-
-                        barangayDropdown.empty(); // Clear existing options
-                        barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
-                        $.each(barangays, function(index, barangay) {
-                            barangayDropdown.append($('<option></option>').val(barangay.code).text(barangay.name));
-                        });
-
-                        if( typeof userDetails.barangay != 'undefined' && userDetails.barangay ){
-                            $('#edit_barangayDropdown').val(userDetails.barangay);
-                        }
-
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching cities/municipalities: ' + error);
-                    }
-                });
-            }   
+            // Event listener for province dropdown change
+            $('#edit_islandGroupDropdown').change(function() {
+                let selectedCode = $(this).val();
+                if(selectedCode){
+                    editPopulateProvinces(selectedCode);
+                }
+            });
 
             // Event listener for province dropdown change
             $('#edit_provinceDropdown').change(function() {
                 let selectedCode = $(this).val();
-                if (selectedCode) {
+                console.log('selectedCode', selectedCode)
+                if(selectedCode){
                     editPopulateCitiesMunicipalities(selectedCode);
-                } else {
-                    // Clear cities/municipalities dropdown if no province is selected
-                    $('#edit_cityDropdown').empty();
                 }
             });
+
+
             // Event listener for province dropdown change
             $('#edit_cityDropdown').change(function() {
                 let selectedCode = $(this).val();
-                if (selectedCode) {
+                if(selectedCode){
                     editPopulateBarangays(selectedCode);
-                } else {
-                    // Clear cities/municipalities dropdown if no province is selected
-                    $('#edit_cityDropdown').empty();
                 }
             });
+
         });
 
 
-
-
-
-
-        function populateCitiesMunicipalities(provinceCode) {
-            
-            $.ajax({
-                url: `https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities.json`,
-                type: 'GET',
-                success: function(data) {
-                    
-                    var citiesMunicipalities = data;
-                    var cityDropdown = $('#cityDropdown');
-
-                    // Sort the provinces array by the "name" property
-                    citiesMunicipalities.sort(function(a, b) {
-                        var nameA = a.name.toUpperCase(); // Ignore case
-                        var nameB = b.name.toUpperCase(); // Ignore case
-                        if (nameA < nameB) {
-                            return -1;
-                        }
-                        if (nameA > nameB) {
-                            return 1;
-                        }
-                        return 0; // Names must be equal
-                    });
-
-                    cityDropdown.empty(); // Clear existing options
-                    cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
-                    $.each(citiesMunicipalities, function(index, cityMunicipality) {
-                        cityDropdown.append($('<option></option>').val(cityMunicipality.code).text(cityMunicipality.name));
-                    });
-
-
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching cities/municipalities: ' + error);
-                }
-            });
-        }
-
-        function populateBarangays(cityCode){
-            $.ajax({
-                url: `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}/barangays.json`,
-                type: 'GET',
-                success: function(data) {
-                    var barangays = data;
-                    var barangayDropdown = $('#barangayDropdown');
-
-                    // Sort the provinces array by the "name" property
-                    barangays.sort(function(a, b) {
-                        var nameA = a.name.toUpperCase(); // Ignore case
-                        var nameB = b.name.toUpperCase(); // Ignore case
-                        if (nameA < nameB) {
-                            return -1;
-                        }
-                        if (nameA > nameB) {
-                            return 1;
-                        }
-                        return 0; // Names must be equal
-                    });
-
-                    barangayDropdown.empty(); // Clear existing options
-                    barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
-                    $.each(barangays, function(index, barangay) {
-                        barangayDropdown.append($('<option></option>').val(barangay.code).text(barangay.name));
-                    });
-
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching cities/municipalities: ' + error);
-                }
-            });
-        }
-            $(document).ready(function() {
+        $(document).ready(function() {
             // Fetch provinces and populate the province dropdown
-            $.ajax({
-                url: 'https://psgc.gitlab.io/api/provinces.json',
-                type: 'GET',
-                success: function(data) {
-                    var provinces = data;
-                    var provinceDropdown = $('#provinceDropdown');
-
-                    // Sort the provinces array by the "name" property
-                    provinces.sort(function(a, b) {
-                        var nameA = a.name.toUpperCase(); // Ignore case
-                        var nameB = b.name.toUpperCase(); // Ignore case
-                        if (nameA < nameB) {
-                            return -1;
-                        }
-                        if (nameA > nameB) {
-                            return 1;
-                        }
-                        return 0; // Names must be equal
-                    });
-
-                    provinceDropdown.empty(); // Clear existing options
-                    provinceDropdown.append($('<option></option>').val('').text('Select Province')); // Add default option
-                    $.each(provinces, function(index, province) {
-                        provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching provinces: ' + error);
-                }
-            });
+            // function whiye,
             // Function to fetch and populate cities/municipalities based on the selected province
 
 
@@ -656,13 +1028,6 @@
         }
     }
 </script>
-<script>
-    function toggleSubmitButton() {
-        const submitBtn = document.getElementById('submitBtn');
-        const userAgreement = document.getElementById('userAgreement');
-        submitBtn.disabled = !userAgreement.checked;
-    }
-</script>
 
 <script>
 
@@ -676,12 +1041,31 @@
         }
     }
 
+
     let verificationCode = "";
 
-    function sendVerificationCode() {
+
+
+    function sendVerificationCode(reg_mail = 'reg_email') {
+
+
+        let email = document.getElementById(reg_mail).value;
+    
+        if (!email) {
+            alert('Please input an email.');
+            return;
+        }
+        
+        // Regular expression to validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailRegex.test(email)) {
+            alert('Please input a valid email.');
+            return;
+        }
+
         toggleOverlay2(true)
 
-        const email = document.getElementById('reg_email').value;
         if (email) {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "./client/send-verification.php", true);
@@ -692,6 +1076,16 @@
                     if (response.success) {
                         verificationCode = response.verificationCode;
                         alert('Verification code sent to ' + email);
+
+                        if(reg_mail != 'reg_mail'){
+                            let verifyForm = document.getElementById('verifyForm');
+                            let response_verification_code = document.getElementById('response_verification_code');
+                            let forgot_email = document.getElementById('forgot_email');
+                            verifyForm.style.display = 'block';
+                            response_verification_code.value = response.verificationCode;
+                            forgot_email.value = email;
+                        }
+
                         toggleOverlay2(false)
                     } else {
                         alert('Failed to send verification code. Please try again.');
@@ -710,18 +1104,68 @@
         const userCode = document.getElementById('verification_code').value;
         console.log(`userCode: ${userCode}`)
         console.log(`verificationCode: ${verificationCode}`)
+        if(!userCode && !verificationCode){
+            alert('Invalid verification code. Please try again.');
+            return
+        }
+
         if (userCode == verificationCode) {
             alert('Email verified successfully!');
-            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('isVerified').value = 'true';
+            toggleSubmitButton()
         } else {
             alert('Invalid verification code. Please try again.');
         }
     }
 
+    // function toggleSubmitButton() {
+    //     const submitBtn = document.getElementById('submitBtn');
+    //     const userAgreement = document.getElementById('userAgreement');
+    //     const emailVerified = !document.getElementById('submitBtn').disabled; // Check if email is verified
+    //     submitBtn.disabled = !(userAgreement.checked && emailVerified);
+    // }
+
     function toggleSubmitButton() {
-        const submitBtn = document.getElementById('submitBtn');
-        const userAgreement = document.getElementById('userAgreement');
-        const emailVerified = !document.getElementById('submitBtn').disabled; // Check if email is verified
-        submitBtn.disabled = !(userAgreement.checked && emailVerified);
-    }
+            const submitBtn = document.getElementById('submitBtn');
+            const passwordMatchText = document.getElementById('passwordMatchText');
+            const userAgreement = document.getElementById('userAgreement');
+            const isVerified = document.getElementById('isVerified');
+
+            // const emailVerified = !submitBtn.disabled; // Check if email is verified (assuming some logic sets this)
+            
+            const reg_password = document.getElementById('reg_password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            let passwordsMatch = false
+            if((reg_password && confirmPassword) &&  reg_password === confirmPassword){
+                passwordsMatch = true;
+            }
+
+            if(passwordsMatch){
+                passwordMatchText.innerText = 'Password match.'
+            }else{
+                passwordMatchText.innerText = 'Password does not match.'
+                submitBtn.disabled = true
+                return false;
+            }
+
+            console.log('isVerified', isVerified.value)
+            if(isVerified.value != 'true'){
+                submitBtn.disabled = true
+                return false;
+            }
+
+            console.log('passwordsMatch', passwordsMatch)
+            
+            submitBtn.disabled = !(userAgreement.checked && isVerified.value == 'true' && passwordsMatch);
+
+            return true;
+        }
+
+        document.getElementById('reg_password').addEventListener('input', function() {
+            toggleSubmitButton()
+        });
+        document.getElementById('confirm_password').addEventListener('input', function() {
+            toggleSubmitButton()
+        });
+
 </script>
